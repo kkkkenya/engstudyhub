@@ -9,6 +9,8 @@ import logoImg from "@/assets/logo.png";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
+const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
+const EMAIL = "gregorykimemiah@gmail.com";
 
 const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
