@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import heroLabImg from "@/assets/hero-lab.jpg";
 import heroAboutImg from "@/assets/hero-about.jpg";
+import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254XXXXXXXXX";
