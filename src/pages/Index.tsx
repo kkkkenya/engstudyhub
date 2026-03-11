@@ -144,7 +144,7 @@ const Index = () => {
               <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start md:items-end">
                 <div className="w-full md:w-2/3">
                   <h1 className="font-display text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4">
-                    Stop Engineering <span className="text-primary">Alone.</span>
+                    Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
                   <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mt-4">
                     The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.
