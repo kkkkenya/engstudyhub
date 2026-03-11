@@ -312,7 +312,7 @@ const Index = () => {
                       </span>
                     </div>
                     <div className="h-48 md:h-64 border-b-4 border-gray-700 group-hover:border-primary overflow-hidden relative transition-colors">
-                      <img src={project.img} alt={project.title} className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
+                      <img src={project.img} alt={project.title} loading="lazy" className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
                     </div>
                     <div className="p-5 md:p-8 flex-1 flex flex-col">
                       <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
