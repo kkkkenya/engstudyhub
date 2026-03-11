@@ -113,9 +113,9 @@ const Index = () => {
             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
             <div className="relative z-10 flex flex-col md:flex-row gap-8 justify-between items-end">
               <div className="w-full md:w-2/3">
-                <div className="inline-block bg-foreground text-card font-mono text-xs px-3 py-1 mb-6 border-2 border-primary">
-                  &gt; COMMUNITY_ACTIVE
-                </div>
+                
+
+                
                 <h1 className="font-display text-6xl md:text-8xl lg:text-[9rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4">
                   Study <br />
                   <span className="text-primary">Smarter.</span><br />
