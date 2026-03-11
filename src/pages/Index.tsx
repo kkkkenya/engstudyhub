@@ -80,7 +80,7 @@ const Index = () => {
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
       {/* Marquee ticker */}
-      <div className="fixed top-0 left-0 w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground z-50 overflow-hidden flex whitespace-nowrap">
+      <div className="w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden flex whitespace-nowrap">
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) => (
             <span key={i} className="flex">
@@ -93,7 +93,7 @@ const Index = () => {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-[28px] left-0 w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+      <nav className="w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="w-10 h-10 bg-primary border-2 border-foreground shadow-brutal-sm flex items-center justify-center font-bold font-mono text-xl">EH</div>
           <span className="font-display font-bold text-lg md:text-xl uppercase tracking-tight hidden md:block">The Engineering Hub</span>
