@@ -84,9 +84,10 @@ const Index = () => {
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) => (
             <span key={i} className="flex">
-              <span className="mx-4">/// LOC: 01.2921° S, 36.8219° E</span>
-              <span className="mx-4">/// ACTIVE SQUADS: 14</span>
-              <span className="mx-4">/// VERSION: 2.1.0</span>
+              <span className="mx-4">★ NOW OPEN FOR NEW MEMBERS</span>
+              <span className="mx-4">/// NAIROBI, KENYA</span>
+              <span className="mx-4">/// 450+ ENGINEERS & COUNTING</span>
+              <span className="mx-4">/// STUDY · BUILD · LAUNCH</span>
             </span>
           ))}
         </div>
