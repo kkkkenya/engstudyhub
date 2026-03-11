@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import heroLabImg from "@/assets/hero-lab.jpg";
 import heroAboutImg from "@/assets/hero-about.jpg";
 import trussBridgeImg from "@/assets/truss-bridge.jpg";
+import avatarBrian from "@/assets/avatar-brian.jpg";
+import avatarAisha from "@/assets/avatar-aisha.jpg";
+import avatarDenis from "@/assets/avatar-denis.jpg";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
@@ -54,11 +57,39 @@ const FadeIn = ({ children, className = "" }: { children: React.ReactNode; class
 };
 
 const TESTIMONIALS = [
-  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU" },
-  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU" },
-  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU" },
+  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
+  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
+  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis },
 ];
 
+const AutoplayVideo = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { video.play().catch(() => {}); }
+        else { video.pause(); }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(video);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <video
+      ref={videoRef}
+      src="/videos/hub-intro.mp4"
+      controls
+      muted
+      playsInline
+      loop
+      poster={heroAboutImg}
+      className="w-full h-full object-contain border-2 border-foreground bg-foreground"
+    />
+  );
+};
 const PROJECTS = [
   { tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
   { tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
@@ -208,12 +239,7 @@ const Index = () => {
               </div>
               <div className="w-full md:w-2/3">
                 <div className="border-4 border-foreground bg-primary p-2 shadow-brutal group relative aspect-video">
-                  <video
-                    src="/videos/hub-intro.mp4"
-                    controls
-                    className="w-full h-full object-cover border-2 border-foreground"
-                    poster={heroAboutImg}
-                  />
+                  <AutoplayVideo />
                 </div>
               </div>
             </div>
@@ -332,8 +358,11 @@ const Index = () => {
                 <div className="border-4 border-foreground bg-card p-6 md:p-8 shadow-brutal hover:shadow-brutal-primary transition-shadow h-full flex flex-col">
                   <Quote className="text-primary mb-4" size={32} />
                   <p className="font-body text-base md:text-lg text-foreground font-medium mb-6 flex-1 leading-relaxed">"{t.quote}"</p>
-                  <div className="flex items-center justify-between border-t-4 border-foreground pt-4">
-                    <span className="font-display font-bold text-lg uppercase">— {t.name}</span>
+                  <div className="flex items-center gap-3 border-t-4 border-foreground pt-4">
+                    <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full border-2 border-foreground object-cover" />
+                    <div className="flex-1">
+                      <span className="font-display font-bold text-sm uppercase block">— {t.name}</span>
+                    </div>
                     <span className="font-mono text-xs bg-primary text-foreground border-2 border-foreground px-3 py-1 font-bold">{t.uni}</span>
                   </div>
                 </div>
