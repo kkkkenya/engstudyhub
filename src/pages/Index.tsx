@@ -5,15 +5,15 @@ import heroAboutImg from "@/assets/hero-about.jpg";
 const WHATSAPP_URL = "https://wa.me/254XXXXXXXXX";
 
 const NAV_LINKS = [
-  { href: "#about", label: "About" },
-  { href: "#features", label: "Inside the Hub" },
-  { href: "#projects", label: "Projects" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#join", label: "How to Join" },
-  { href: "#faq", label: "FAQ" },
-];
+{ href: "#about", label: "About" },
+{ href: "#features", label: "Inside the Hub" },
+{ href: "#projects", label: "Projects" },
+{ href: "#pricing", label: "Pricing" },
+{ href: "#join", label: "How to Join" },
+{ href: "#faq", label: "FAQ" }];
 
-const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
+
+const FAQItem = ({ question, answer }: {question: string;answer: string;}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="border-b-4 border-foreground group cursor-pointer last:border-b-0" onClick={() => setOpen(!open)}>
@@ -21,13 +21,13 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
         <h4 className="font-display text-xl font-bold uppercase">{question}</h4>
         <span className="font-mono text-2xl font-black">{open ? "−" : "+"}</span>
       </div>
-      {open && (
-        <div className="p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
+      {open &&
+      <div className="p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
           {answer}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const Index = () => {
@@ -38,15 +38,15 @@ const Index = () => {
       {/* Marquee ticker */}
       <div className="fixed top-0 left-0 w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground z-50 overflow-hidden flex whitespace-nowrap">
         <div className="flex animate-marquee">
-          {[...Array(2)].map((_, i) => (
-            <span key={i} className="flex">
+          {[...Array(2)].map((_, i) =>
+          <span key={i} className="flex">
               <span className="mx-4">/// SYS.STATE: ONLINE</span>
-              <span className="mx-4">/// ACTIVE SQUADS: 14</span>
+              
               <span className="mx-4">/// LOC: 01.2921° S, 36.8219° E</span>
               <span className="mx-4">/// VERSION: 2.1.0</span>
               <span className="mx-4">/// PROTOCOL: ACTIVE</span>
             </span>
-          ))}
+          )}
         </div>
       </div>
 
@@ -60,9 +60,9 @@ const Index = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8 font-mono text-sm font-bold uppercase">
-          {NAV_LINKS.map(link => (
-            <a key={link.href} href={link.href} className="hover:text-primary transition-colors">{link.label}</a>
-          ))}
+          {NAV_LINKS.map((link) =>
+          <a key={link.href} href={link.href} className="hover:text-primary transition-colors">{link.label}</a>
+          )}
         </div>
 
         {/* Desktop CTA */}
@@ -81,30 +81,30 @@ const Index = () => {
       </nav>
 
       {/* Mobile drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+      {mobileMenuOpen &&
+      <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
           <div className="absolute inset-0 bg-foreground/50" />
-          <div className="absolute top-[76px] right-0 w-72 bg-card border-l-4 border-foreground h-[calc(100vh-76px)] p-8 flex flex-col gap-2" onClick={e => e.stopPropagation()}>
-            {NAV_LINKS.map(link => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors"
-              >
+          <div className="absolute top-[76px] right-0 w-72 bg-card border-l-4 border-foreground h-[calc(100vh-76px)] p-8 flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
+            {NAV_LINKS.map((link) =>
+          <a
+            key={link.href}
+            href={link.href}
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
+            
                 {link.label}
               </a>
-            ))}
+          )}
             <a
-              href="#join"
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn-brutal mt-4 bg-accent text-foreground border-2 border-foreground font-mono font-bold uppercase text-lg px-6 py-4 shadow-brutal-sm text-center"
-            >
+            href="#join"
+            onClick={() => setMobileMenuOpen(false)}
+            className="btn-brutal mt-4 bg-accent text-foreground border-2 border-foreground font-mono font-bold uppercase text-lg px-6 py-4 shadow-brutal-sm text-center">
+            
               Join Now
             </a>
           </div>
         </div>
-      )}
+      }
 
       <main className="pt-[100px]">
         {/* HERO */}
@@ -205,13 +205,13 @@ const Index = () => {
 
           <div className="border-t-4 border-foreground flex flex-col">
             {[
-              { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated rigidly by university, year, and specific unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
-              { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
-              { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
-              { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated syntax and logic help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
-              { num: "05", tag: "CHK", title: "Daily Accountability", desc: "Automated question threads and check-ins. Report your progress. State your blockers. Move forward.", hoverBg: "hover:bg-accent" },
-            ].map((item) => (
-              <div key={item.num} className={`group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center ${item.hoverBg} transition-colors p-6 md:p-8 cursor-default`}>
+            { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated rigidly by university, year, and specific unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
+            { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
+            { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
+            { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated syntax and logic help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
+            { num: "05", tag: "CHK", title: "Daily Accountability", desc: "Automated question threads and check-ins. Report your progress. State your blockers. Move forward.", hoverBg: "hover:bg-accent" }].
+            map((item) =>
+            <div key={item.num} className={`group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center ${item.hoverBg} transition-colors p-6 md:p-8 cursor-default`}>
                 <div className="font-mono text-5xl font-black text-outline-dark md:w-32 mb-4 md:mb-0 group-hover:text-foreground transition-all">{item.num}</div>
                 <div className="md:w-1/3 pr-8 mb-4 md:mb-0">
                   <div className="font-mono text-xs font-bold border-2 border-foreground inline-block px-2 py-1 mb-3 group-hover:bg-foreground group-hover:text-primary transition-colors">{item.tag}</div>
@@ -221,7 +221,7 @@ const Index = () => {
                   {item.desc}
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </section>
 
@@ -248,12 +248,12 @@ const Index = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
-                { tag: "Hardware Project #1", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Autonomous Line-Following Robot", desc: "Squad-based build focusing on PID control systems, sensor calibration, and chassis fabrication.", accent: "primary" },
-                { tag: "IoT System #2", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent" },
-                { tag: "Software Dashboard #3", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "white" },
-                { tag: "Drone Simulation #4", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "primary" },
-              ].map((project, i) => (
-                <div key={i} className={`border-4 border-gray-700 bg-gray-900 group hover:border-${project.accent} transition-colors duration-300 relative flex flex-col h-full`}>
+              { tag: "Hardware Project #1", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Autonomous Line-Following Robot", desc: "Squad-based build focusing on PID control systems, sensor calibration, and chassis fabrication.", accent: "primary" },
+              { tag: "IoT System #2", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent" },
+              { tag: "Software Dashboard #3", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "white" },
+              { tag: "Drone Simulation #4", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "primary" }].
+              map((project, i) =>
+              <div key={i} className={`border-4 border-gray-700 bg-gray-900 group hover:border-${project.accent} transition-colors duration-300 relative flex flex-col h-full`}>
                   <div className={`absolute top-0 right-0 bg-gray-700 group-hover:bg-${project.accent} text-card group-hover:text-foreground font-mono text-xs px-3 py-1 font-bold transition-colors z-10`}>
                     {project.tag}
                   </div>
@@ -262,9 +262,9 @@ const Index = () => {
                   </div>
                   <div className="p-8 flex-1 flex flex-col">
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {project.techs.map(t => (
-                        <span key={t} className={`border border-gray-600 font-mono text-xs px-2 py-1 text-${project.accent === "white" ? "card" : project.accent}`}>{t}</span>
-                      ))}
+                      {project.techs.map((t) =>
+                    <span key={t} className={`border border-gray-600 font-mono text-xs px-2 py-1 text-${project.accent === "white" ? "card" : project.accent}`}>{t}</span>
+                    )}
                     </div>
                     <h3 className={`font-display text-3xl font-bold uppercase mb-4 text-card group-hover:text-${project.accent} transition-colors`}>{project.title}</h3>
                     <p className="font-body text-gray-400 mb-6 flex-1">{project.desc}</p>
@@ -273,7 +273,7 @@ const Index = () => {
                     </a>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -338,16 +338,16 @@ const Index = () => {
                 <div className="font-mono text-xl text-destructive line-through font-bold">KES 1000</div>
               </div>
               <ul className="font-mono text-sm space-y-4 mb-12 flex-1">
-                {["Access to all university channels", "Curated notes & past papers archive", "Live Pomodoro study rooms"].map(item => (
-                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                ))}
+                {["Access to all university channels", "Curated notes & past papers archive", "Live Pomodoro study rooms"].map((item) =>
+                <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
+                )}
                 <li className="flex items-center gap-3 bg-primary/10 p-2 -mx-2 border border-primary/30">
                   <span className="text-primary font-black text-lg">&gt;</span>
                   <strong className="text-primary">Join project build squads</strong>
                 </li>
-                {["Daily Q&A syntax/logic help", "Career, portfolio & internship pipeline"].map(item => (
-                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                ))}
+                {["Daily Q&A syntax/logic help", "Career, portfolio & internship pipeline"].map((item) =>
+                <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
+                )}
               </ul>
               <a href="#join" className="btn-brutal block w-full text-center border-4 border-primary bg-primary text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
                 Select Premium
@@ -403,9 +403,9 @@ const Index = () => {
                 We are actively looking for ambitious engineering students to help run the community. Gain leadership experience, build your portfolio, and impact the Kenyan engineering ecosystem.
               </p>
               <div className="flex flex-wrap gap-3 mb-12">
-                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map(role => (
-                  <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
-                ))}
+                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map((role) =>
+                <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
+                )}
               </div>
               <a href="#" className="btn-brutal inline-block border-4 border-accent text-accent bg-transparent font-mono font-bold text-lg uppercase px-8 py-4 shadow-brutal-accent hover:bg-accent hover:text-foreground transition-colors w-full md:w-auto text-center">
                 Apply to Join ↗
@@ -447,8 +447,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
