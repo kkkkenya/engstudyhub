@@ -9,6 +9,8 @@ import logoImg from "@/assets/logo.png";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
+const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
+const EMAIL = "gregorykimemiah@gmail.com";
 
 const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
@@ -310,7 +312,7 @@ const Index = () => {
                       </span>
                     </div>
                     <div className="h-48 md:h-64 border-b-4 border-gray-700 group-hover:border-primary overflow-hidden relative transition-colors">
-                      <img src={project.img} alt={project.title} className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
+                      <img src={project.img} alt={project.title} loading="lazy" className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
                     </div>
                     <div className="p-5 md:p-8 flex-1 flex flex-col">
                       <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
@@ -490,7 +492,7 @@ const Index = () => {
                   <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
                 ))}
               </div>
-              <a href="#" className="btn-brutal inline-block border-4 border-accent text-accent bg-transparent font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal-accent hover:bg-accent hover:text-foreground transition-colors w-full md:w-auto text-center">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-block border-4 border-accent text-accent bg-transparent font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal-accent hover:bg-accent hover:text-foreground transition-colors w-full md:w-auto text-center">
                 Apply to Join ↗
               </a>
             </FadeIn>
@@ -523,9 +525,9 @@ const Index = () => {
               <div className="text-muted-foreground">Building Kenya's Technical Future</div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-              <a href="#" className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">Discord</a>
+              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">Discord</a>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">WhatsApp</a>
-              <a href="#" className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">Email</a>
+              <a href={`mailto:${EMAIL}`} className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">Email</a>
             </div>
             <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-2 border-foreground px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform">
               Join Now
