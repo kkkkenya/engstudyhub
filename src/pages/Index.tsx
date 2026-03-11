@@ -135,7 +135,7 @@ const Index = () => {
       )}
 
 
-      <main className="pt-[90px] md:pt-[100px] pb-16 md:pb-0">
+      <main className="pb-0">
         {/* HERO */}
         <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-24">
           <FadeIn>
