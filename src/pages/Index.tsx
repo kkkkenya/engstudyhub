@@ -5,6 +5,7 @@ import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
+import logoImg from "@/assets/logo.png";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
