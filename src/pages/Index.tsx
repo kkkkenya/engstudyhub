@@ -134,19 +134,6 @@ const Index = () => {
         </div>
       )}
 
-      {/* Sticky mobile bottom bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-foreground border-t-4 border-primary z-50 md:hidden flex items-center justify-between px-3 py-2 gap-2">
-        {NAV_LINKS.slice(0, 4).map((link) => (
-          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="flex flex-col items-center gap-0.5 text-card font-mono text-[10px] uppercase font-bold py-1 px-2 hover:text-primary transition-colors">
-            <link.icon size={18} />
-            {link.label}
-          </a>
-        ))}
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 bg-[#25D366] text-foreground font-mono text-xs font-bold uppercase px-4 py-2.5 rounded-none border-2 border-foreground">
-          <MessageCircle size={16} />
-          WhatsApp
-        </a>
-      </div>
 
       <main className="pt-[90px] md:pt-[100px] pb-16 md:pb-0">
         {/* HERO */}
