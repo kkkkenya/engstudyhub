@@ -330,8 +330,11 @@ const Index = () => {
                 <div className="border-4 border-foreground bg-card p-6 md:p-8 shadow-brutal hover:shadow-brutal-primary transition-shadow h-full flex flex-col">
                   <Quote className="text-primary mb-4" size={32} />
                   <p className="font-body text-base md:text-lg text-foreground font-medium mb-6 flex-1 leading-relaxed">"{t.quote}"</p>
-                  <div className="flex items-center justify-between border-t-4 border-foreground pt-4">
-                    <span className="font-display font-bold text-lg uppercase">— {t.name}</span>
+                  <div className="flex items-center gap-3 border-t-4 border-foreground pt-4">
+                    <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full border-2 border-foreground object-cover" />
+                    <div className="flex-1">
+                      <span className="font-display font-bold text-sm uppercase block">— {t.name}</span>
+                    </div>
                     <span className="font-mono text-xs bg-primary text-foreground border-2 border-foreground px-3 py-1 font-bold">{t.uni}</span>
                   </div>
                 </div>
