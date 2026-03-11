@@ -4,7 +4,7 @@ import heroAboutImg from "@/assets/hero-about.jpg";
 import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/254XXXXXXXXX";
+const WHATSAPP_URL = "https://wa.me/254745947704";
 
 const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
