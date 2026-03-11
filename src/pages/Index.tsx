@@ -140,22 +140,24 @@ const Index = () => {
         {/* HERO */}
         <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-24">
           <FadeIn>
-            <div className="border-4 border-foreground bg-card p-6 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+            <div className="border-4 border-foreground bg-foreground p-6 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+              <div className="absolute top-4 right-4 md:top-6 md:right-6 font-mono text-xs text-primary/60 uppercase tracking-widest hidden md:block">[ 001 / HOME ]</div>
               <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start md:items-end">
                 <div className="w-full md:w-2/3">
-                  <h1 className="font-display text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4">
+                  <span className="inline-block font-mono text-xs font-bold text-foreground bg-primary px-3 py-1 mb-4 md:mb-6 border-2 border-primary">/// FOR ENGINEERS, BY ENGINEERS</span>
+                  <h1 className="font-display text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4 text-card">
                     Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
-                  <p className="font-body text-lg md:text-xl text-muted-foreground max-w-xl mt-4">
+                  <p className="font-body text-lg md:text-xl text-card/60 max-w-xl mt-4">
                     The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.
                   </p>
                 </div>
-                <div className="w-full md:w-1/3 md:border-l-4 md:border-foreground md:pl-8 py-4 flex flex-col gap-4">
-                  <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-4 border-foreground font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 text-center shadow-brutal hover:-translate-y-1 transition-transform w-full">
+                <div className="w-full md:w-1/3 md:border-l-4 md:border-primary/30 md:pl-8 py-4 flex flex-col gap-4">
+                  <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform w-full">
                     Join the Hub ↗
                   </a>
-                  <a href="#about" onClick={(e) => handleNavClick(e, "#about")} className="bg-transparent text-foreground border-4 border-foreground font-mono font-bold text-sm uppercase px-6 md:px-8 py-3 text-center hover:bg-foreground hover:text-card transition-colors w-full">
+                  <a href="#about" onClick={(e) => handleNavClick(e, "#about")} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 md:px-8 py-3 text-center hover:bg-card hover:text-foreground transition-colors w-full">
                     Learn More
                   </a>
                 </div>
