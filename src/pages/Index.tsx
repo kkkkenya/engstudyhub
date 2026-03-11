@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import heroLabImg from "@/assets/hero-lab.jpg";
 import heroAboutImg from "@/assets/hero-about.jpg";
+import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254XXXXXXXXX";
@@ -59,7 +60,7 @@ const TESTIMONIALS = [
 ];
 
 const PROJECTS = [
-  { tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80" },
+  { tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
   { tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
   { tag: "Software #3", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "primary", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" },
   { tag: "Drone Simulation #4", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80" },
@@ -79,7 +80,7 @@ const Index = () => {
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
       {/* Marquee ticker */}
-      <div className="fixed top-0 left-0 w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground z-50 overflow-hidden flex whitespace-nowrap">
+      <div className="w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden flex whitespace-nowrap">
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) => (
             <span key={i} className="flex">
@@ -92,7 +93,7 @@ const Index = () => {
       </div>
 
       {/* Nav */}
-      <nav className="fixed top-[28px] left-0 w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+      <nav className="w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="w-10 h-10 bg-primary border-2 border-foreground shadow-brutal-sm flex items-center justify-center font-bold font-mono text-xl">EH</div>
           <span className="font-display font-bold text-lg md:text-xl uppercase tracking-tight hidden md:block">The Engineering Hub</span>
@@ -120,7 +121,7 @@ const Index = () => {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
           <div className="absolute inset-0 bg-foreground/50" />
-          <div className="absolute top-[72px] right-0 w-72 bg-card border-l-4 border-foreground h-[calc(100vh-72px)] p-6 flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
+          <div className="absolute top-0 right-0 w-72 bg-card border-l-4 border-foreground h-full p-6 pt-20 flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
             {NAV_LINKS.map((link) => (
               <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
                 {link.label}
@@ -133,21 +134,8 @@ const Index = () => {
         </div>
       )}
 
-      {/* Sticky mobile bottom bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-foreground border-t-4 border-primary z-50 md:hidden flex items-center justify-between px-3 py-2 gap-2">
-        {NAV_LINKS.slice(0, 4).map((link) => (
-          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="flex flex-col items-center gap-0.5 text-card font-mono text-[10px] uppercase font-bold py-1 px-2 hover:text-primary transition-colors">
-            <link.icon size={18} />
-            {link.label}
-          </a>
-        ))}
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 bg-[#25D366] text-foreground font-mono text-xs font-bold uppercase px-4 py-2.5 rounded-none border-2 border-foreground">
-          <MessageCircle size={16} />
-          WhatsApp
-        </a>
-      </div>
 
-      <main className="pt-[90px] md:pt-[100px] pb-16 md:pb-0">
+      <main className="pb-0">
         {/* HERO */}
         <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-24">
           <FadeIn>
@@ -193,24 +181,8 @@ const Index = () => {
           {/* Hero image grid */}
           <FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-              <div className="md:col-span-3 border-4 border-foreground bg-primary p-2 shadow-brutal group relative h-[250px] md:h-[400px] overflow-hidden">
-                <img src={heroLabImg} alt="Kenyan engineering students collaborating in a lab" className="w-full h-full object-cover border-2 border-foreground tech-img" />
-                <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-foreground text-primary font-mono text-xs md:text-sm px-3 md:px-4 py-2 border-2 border-primary">
-                  LIVE: CAMPUS LAB
-                </div>
-              </div>
-              <div className="md:col-span-1 flex flex-row md:flex-col gap-4 md:gap-6">
-                <div className="border-4 border-foreground bg-card p-4 md:p-6 shadow-brutal-sm flex-1 flex flex-col justify-center">
-                  <div className="font-mono text-xs text-muted-foreground mb-1">MEMBERS</div>
-                  <div className="font-display text-4xl md:text-5xl font-bold text-foreground">450<span className="text-primary">+</span></div>
-                </div>
-                <div className="border-4 border-foreground bg-foreground text-card p-4 md:p-6 shadow-brutal-sm flex-1 flex flex-col justify-center">
-                  <div className="font-mono text-xs text-primary mb-1">STATUS</div>
-                  <div className="font-display text-xl md:text-2xl font-bold uppercase flex items-center gap-2 md:gap-3">
-                    <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
-                    Active
-                  </div>
-                </div>
+              <div className="md:col-span-4 border-4 border-foreground bg-primary p-2 shadow-brutal group relative h-[250px] md:h-[400px] overflow-hidden">
+                <img src={heroLabImg} alt="Kenyan engineering students collaborating in a makerspace on a robotics project" className="w-full h-full object-cover border-2 border-foreground tech-img" />
               </div>
             </div>
           </FadeIn>
