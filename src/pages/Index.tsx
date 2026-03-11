@@ -4,7 +4,7 @@ import heroAboutImg from "@/assets/hero-about.jpg";
 import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/254XXXXXXXXX";
+const WHATSAPP_URL = "https://wa.me/254745947704";
 
 const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
@@ -207,14 +207,13 @@ const Index = () => {
                 </p>
               </div>
               <div className="w-full md:w-2/3">
-                <div className="border-4 border-foreground bg-primary p-2 shadow-brutal group relative aspect-video cursor-pointer">
-                  <img src={heroAboutImg} alt="Students collaborating on hardware projects" className="w-full h-full object-cover border-2 border-foreground tech-img" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-foreground border-4 border-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-brutal-sm">
-                      <div className="w-0 h-0 border-t-[12px] md:border-t-[15px] border-t-transparent border-l-[20px] md:border-l-[24px] border-l-primary border-b-[12px] md:border-b-[15px] border-b-transparent ml-2" />
-                    </div>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-foreground text-card font-mono text-xs px-3 py-1 border border-primary">INTRO VIDEO</div>
+                <div className="border-4 border-foreground bg-primary p-2 shadow-brutal group relative aspect-video">
+                  <video
+                    src="/videos/hub-intro.mp4"
+                    controls
+                    className="w-full h-full object-cover border-2 border-foreground"
+                    poster={heroAboutImg}
+                  />
                 </div>
               </div>
             </div>
