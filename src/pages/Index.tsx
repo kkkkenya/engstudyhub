@@ -57,9 +57,9 @@ const FadeIn = ({ children, className = "" }: { children: React.ReactNode; class
 };
 
 const TESTIMONIALS = [
-  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU" },
-  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU" },
-  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU" },
+  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
+  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
+  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis },
 ];
 
 const PROJECTS = [
