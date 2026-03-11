@@ -211,12 +211,7 @@ const Index = () => {
               </div>
               <div className="w-full md:w-2/3">
                 <div className="border-4 border-foreground bg-primary p-2 shadow-brutal group relative aspect-video">
-                  <video
-                    src="/videos/hub-intro.mp4"
-                    controls
-                    className="w-full h-full object-cover border-2 border-foreground"
-                    poster={heroAboutImg}
-                  />
+                  <AutoplayVideo />
                 </div>
               </div>
             </div>
