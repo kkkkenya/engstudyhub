@@ -181,24 +181,8 @@ const Index = () => {
           {/* Hero image grid */}
           <FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-              <div className="md:col-span-3 border-4 border-foreground bg-primary p-2 shadow-brutal group relative h-[250px] md:h-[400px] overflow-hidden">
-                <img src={heroLabImg} alt="Kenyan engineering students collaborating in a lab" className="w-full h-full object-cover border-2 border-foreground tech-img" />
-                <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-foreground text-primary font-mono text-xs md:text-sm px-3 md:px-4 py-2 border-2 border-primary">
-                  LIVE: CAMPUS LAB
-                </div>
-              </div>
-              <div className="md:col-span-1 flex flex-row md:flex-col gap-4 md:gap-6">
-                <div className="border-4 border-foreground bg-card p-4 md:p-6 shadow-brutal-sm flex-1 flex flex-col justify-center">
-                  <div className="font-mono text-xs text-muted-foreground mb-1">MEMBERS</div>
-                  <div className="font-display text-4xl md:text-5xl font-bold text-foreground">450<span className="text-primary">+</span></div>
-                </div>
-                <div className="border-4 border-foreground bg-foreground text-card p-4 md:p-6 shadow-brutal-sm flex-1 flex flex-col justify-center">
-                  <div className="font-mono text-xs text-primary mb-1">STATUS</div>
-                  <div className="font-display text-xl md:text-2xl font-bold uppercase flex items-center gap-2 md:gap-3">
-                    <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
-                    Active
-                  </div>
-                </div>
+              <div className="md:col-span-4 border-4 border-foreground bg-primary p-2 shadow-brutal group relative h-[250px] md:h-[400px] overflow-hidden">
+                <img src={heroLabImg} alt="Kenyan engineering students collaborating in a makerspace on a robotics project" className="w-full h-full object-cover border-2 border-foreground tech-img" />
               </div>
             </div>
           </FadeIn>
