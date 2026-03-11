@@ -40,7 +40,7 @@ const Index = () => {
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) =>
           <span key={i} className="flex">
-              <span className="mx-4">/// SYS.STATE: ONLINE</span>
+              
               
               <span className="mx-4">/// LOC: 01.2921° S, 36.8219° E</span>
               <span className="mx-4">/// VERSION: 2.1.0</span>
