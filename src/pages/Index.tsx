@@ -268,9 +268,9 @@ const Index = () => {
                     </div>
                     <h3 className={`font-display text-3xl font-bold uppercase mb-4 text-card group-hover:text-${project.accent} transition-colors`}>{project.title}</h3>
                     <p className="font-body text-gray-400 mb-6 flex-1">{project.desc}</p>
-                    <a href="#" className={`inline-flex items-center gap-2 font-mono text-sm font-bold uppercase text-card hover:text-${project.accent} transition-colors mt-auto`}>
-                      View Documentation <span className={`text-${project.accent}`}>→</span>
-                    </a>
+                    
+
+                  
                   </div>
                 </div>
               )}
