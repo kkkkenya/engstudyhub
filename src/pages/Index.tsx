@@ -13,14 +13,14 @@ const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
 const EMAIL = "gregorykimemiah@gmail.com";
 
 const NAV_LINKS = [
-  { href: "#home", label: "Home", icon: Home },
-  { href: "#about", label: "About", icon: Info },
-  { href: "#projects", label: "Projects", icon: FolderOpen },
-  { href: "#pricing", label: "Pricing", icon: CreditCard },
-  { href: "#join", label: "Join", icon: UserPlus },
-];
+{ href: "#home", label: "Home", icon: Home },
+{ href: "#about", label: "About", icon: Info },
+{ href: "#projects", label: "Projects", icon: FolderOpen },
+{ href: "#pricing", label: "Pricing", icon: CreditCard },
+{ href: "#join", label: "Join", icon: UserPlus }];
 
-const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
+
+const FAQItem = ({ question, answer }: {question: string;answer: string;}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="border-b-4 border-foreground group cursor-pointer last:border-b-0" onClick={() => setOpen(!open)}>
@@ -28,13 +28,13 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
         <h4 className="font-display text-lg md:text-xl font-bold uppercase">{question}</h4>
         <span className="font-mono text-2xl font-black">{open ? "−" : "+"}</span>
       </div>
-      {open && (
-        <div className="p-4 md:p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
+      {open &&
+      <div className="p-4 md:p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
           {answer}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 // Scroll-triggered fade-in hook
@@ -45,7 +45,7 @@ const useFadeIn = () => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.unobserve(el); } },
+      ([entry]) => {if (entry.isIntersecting) {setVisible(true);obs.unobserve(el);}},
       { threshold: 0.1 }
     );
     obs.observe(el);
@@ -54,16 +54,16 @@ const useFadeIn = () => {
   return { ref, className: `transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}` };
 };
 
-const FadeIn = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+const FadeIn = ({ children, className = "" }: {children: React.ReactNode;className?: string;}) => {
   const fade = useFadeIn();
   return <div ref={fade.ref} className={`${fade.className} ${className}`}>{children}</div>;
 };
 
 const TESTIMONIALS = [
-  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
-  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
-  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis },
-];
+{ quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
+{ quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
+{ quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis }];
+
 
 const AutoplayVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -72,8 +72,8 @@ const AutoplayVideo = () => {
     if (!video) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) { video.play().catch(() => {}); }
-        else { video.pause(); }
+        if (entry.isIntersecting) {video.play().catch(() => {});} else
+        {video.pause();}
       },
       { threshold: 0.3 }
     );
@@ -89,16 +89,16 @@ const AutoplayVideo = () => {
       playsInline
       loop
       poster={heroAboutImg}
-      className="w-full h-full object-contain border-2 border-foreground bg-foreground"
-    />
-  );
+      className="w-full h-full object-contain border-2 border-foreground bg-foreground" />);
+
+
 };
 const PROJECTS = [
-  { tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
-  { tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
-  { tag: "Software #3", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "primary", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" },
-  { tag: "Drone Simulation #4", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80" },
-];
+{ tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
+{ tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
+{ tag: "Software #3", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "primary", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" },
+{ tag: "Drone Simulation #4", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80" }];
+
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -116,14 +116,14 @@ const Index = () => {
       {/* Marquee ticker */}
       <div className="w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden flex whitespace-nowrap">
         <div className="flex animate-marquee">
-          {[...Array(2)].map((_, i) => (
-            <span key={i} className="flex">
+          {[...Array(2)].map((_, i) =>
+          <span key={i} className="flex">
               <span className="mx-4">★ NOW OPEN FOR NEW MEMBERS</span>
               <span className="mx-4">/// NAIROBI, KENYA</span>
               <span className="mx-4">/// 450+ ENGINEERS & COUNTING</span>
               <span className="mx-4">/// STUDY · BUILD · LAUNCH</span>
             </span>
-          ))}
+          )}
         </div>
       </div>
 
@@ -133,11 +133,11 @@ const Index = () => {
           <img src={logoImg} alt="Student Engineering Hub" className="h-10 md:h-12 w-auto" />
         </div>
         <div className="hidden md:flex items-center gap-6 font-mono text-sm font-bold uppercase">
-          {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+          {NAV_LINKS.map((link) =>
+          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
               {link.label}
             </a>
-          ))}
+          )}
         </div>
         <div className="hidden md:block">
           <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal inline-block bg-primary text-foreground border-2 border-foreground font-mono font-bold uppercase text-sm px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform">
@@ -152,21 +152,21 @@ const Index = () => {
       </nav>
 
       {/* Mobile drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+      {mobileMenuOpen &&
+      <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
           <div className="absolute inset-0 bg-foreground/50" />
           <div className="absolute top-0 right-0 w-72 bg-card border-l-4 border-foreground h-full p-6 pt-20 flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
-            {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
+            {NAV_LINKS.map((link) =>
+          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
                 {link.label}
               </a>
-            ))}
+          )}
             <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal mt-4 bg-primary text-foreground border-2 border-foreground font-mono font-bold uppercase text-lg px-6 py-4 shadow-brutal-sm text-center">
               Join Now
             </a>
           </div>
         </div>
-      )}
+      }
 
 
       <main className="pb-0">
@@ -202,15 +202,15 @@ const Index = () => {
           <FadeIn>
             <div className="border-4 border-foreground bg-foreground text-card shadow-brutal-sm mb-8 md:mb-12 flex flex-col sm:flex-row divide-y-4 sm:divide-y-0 sm:divide-x-4 divide-primary">
               {[
-                { value: "450+", label: "Members" },
-                { value: "4", label: "Universities" },
-                { value: "20+", label: "Projects Shipped" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex-1 p-4 md:p-6 text-center">
+              { value: "450+", label: "Members" },
+              { value: "4", label: "Universities" },
+              { value: "20+", label: "Projects Shipped" }].
+              map((stat) =>
+              <div key={stat.label} className="flex-1 p-4 md:p-6 text-center">
                   <div className="font-mono text-3xl md:text-4xl font-black text-primary">{stat.value}</div>
                   <div className="font-mono text-xs uppercase tracking-wider text-card/70 mt-1">{stat.label}</div>
                 </div>
-              ))}
+              )}
             </div>
           </FadeIn>
 
@@ -260,13 +260,13 @@ const Index = () => {
 
           <div className="border-t-4 border-foreground flex flex-col">
             {[
-              { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated by university, year, and unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
-              { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
-              { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
-              { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
-              { num: "05", tag: "CHK", title: "Daily Accountability", desc: "Automated question threads and check-ins. Report progress. State blockers. Move forward.", hoverBg: "hover:bg-accent" },
-            ].map((item) => (
-              <FadeIn key={item.num}>
+            { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated by university, year, and unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
+            { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
+            { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
+            { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
+            { num: "05", tag: "CHK", title: "Daily Accountability", desc: "Automated question threads and check-ins. Report progress. State blockers. Move forward.", hoverBg: "hover:bg-accent" }].
+            map((item) =>
+            <FadeIn key={item.num}>
                 <div className={`group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center ${item.hoverBg} transition-colors p-4 md:p-8 cursor-default`}>
                   <div className="font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{item.num}</div>
                   <div className="md:w-1/3 pr-4 md:pr-8 mb-2 md:mb-0">
@@ -278,7 +278,7 @@ const Index = () => {
                   </div>
                 </div>
               </FadeIn>
-            ))}
+            )}
           </div>
         </section>
 
@@ -299,8 +299,8 @@ const Index = () => {
             </FadeIn>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {PROJECTS.map((project, i) => (
-                <FadeIn key={i}>
+              {PROJECTS.map((project, i) =>
+              <FadeIn key={i}>
                   <div className="border-4 border-gray-700 bg-gray-900 group hover:border-primary transition-colors duration-300 relative flex flex-col h-full">
                     {/* Status + Timeline badges */}
                     <div className="absolute top-0 left-0 right-0 flex justify-between items-start z-10">
@@ -316,16 +316,16 @@ const Index = () => {
                     </div>
                     <div className="p-5 md:p-8 flex-1 flex flex-col">
                       <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-                        {project.techs.map((t) => (
-                          <span key={t} className="border border-gray-600 font-mono text-xs px-2 py-1 text-primary">{t}</span>
-                        ))}
+                        {project.techs.map((t) =>
+                      <span key={t} className="border border-gray-600 font-mono text-xs px-2 py-1 text-primary">{t}</span>
+                      )}
                       </div>
                       <h3 className="font-display text-2xl md:text-3xl font-bold uppercase mb-3 md:mb-4 text-card group-hover:text-primary transition-colors">{project.title}</h3>
                       <p className="font-body text-sm md:text-base text-gray-400 flex-1">{project.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -355,8 +355,8 @@ const Index = () => {
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {TESTIMONIALS.map((t, i) => (
-              <FadeIn key={i}>
+            {TESTIMONIALS.map((t, i) =>
+            <FadeIn key={i}>
                 <div className="border-4 border-foreground bg-card p-6 md:p-8 shadow-brutal hover:shadow-brutal-primary transition-shadow h-full flex flex-col">
                   <Quote className="text-primary mb-4" size={32} />
                   <p className="font-body text-base md:text-lg text-foreground font-medium mb-6 flex-1 leading-relaxed">"{t.quote}"</p>
@@ -369,7 +369,7 @@ const Index = () => {
                   </div>
                 </div>
               </FadeIn>
-            ))}
+            )}
           </div>
         </section>
 
@@ -390,7 +390,7 @@ const Index = () => {
                 <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
                   <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Basic Access</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black">KES 200</span>
+                    <span className="font-mono text-4xl md:text-5xl font-black">KES 0  </span>
                     <span className="font-mono text-base md:text-lg text-muted-foreground font-bold">/ semester</span>
                   </div>
                   <div className="font-mono text-lg md:text-xl text-destructive line-through font-bold">KES 300</div>
@@ -421,16 +421,16 @@ const Index = () => {
                   <div className="font-mono text-lg md:text-xl text-destructive line-through font-bold">KES 1000</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  {["All university channels", "Notes & past papers archive", "Live Pomodoro study rooms"].map((item) => (
-                    <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                  ))}
+                  {["All university channels", "Notes & past papers archive", "Live Pomodoro study rooms"].map((item) =>
+                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
+                  )}
                   <li className="flex items-center gap-3 bg-primary/10 p-2 -mx-2 border border-primary/30">
                     <span className="text-primary font-black text-lg">&gt;</span>
                     <strong className="text-primary">Join project build squads</strong>
                   </li>
-                  {["Daily Q&A syntax/logic help", "Career & internship pipeline"].map((item) => (
-                    <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                  ))}
+                  {["Daily Q&A syntax/logic help", "Career & internship pipeline"].map((item) =>
+                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
+                  )}
                 </ul>
                 <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal block w-full text-center border-4 border-primary bg-primary text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
                   Select Premium
@@ -488,9 +488,9 @@ const Index = () => {
                 We are actively looking for ambitious engineering students to help run the community. Gain leadership experience, build your portfolio, and impact the Kenyan engineering ecosystem.
               </p>
               <div className="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-12">
-                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map((role) => (
-                  <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
-                ))}
+                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map((role) =>
+                <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
+                )}
               </div>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-block border-4 border-accent text-accent bg-transparent font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal-accent hover:bg-accent hover:text-foreground transition-colors w-full md:w-auto text-center">
                 Apply to Join ↗
@@ -535,8 +535,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
