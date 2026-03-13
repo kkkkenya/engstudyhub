@@ -390,7 +390,7 @@ const Index = () => {
                 <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
                   <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Basic Access</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black">KES 100  </span>
+                    <span className="font-mono text-4xl md:text-5xl font-black">KES 50  </span>
                     <span className="font-mono text-base md:text-lg text-muted-foreground font-bold">/ semester</span>
                   </div>
                   <div className="font-mono text-lg md:text-xl text-destructive line-through font-bold">KES 300</div>
