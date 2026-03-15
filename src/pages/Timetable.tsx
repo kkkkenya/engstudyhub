@@ -197,9 +197,14 @@ const getTodayDayName = (): DayName => {
 const getCurrentMinutes = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
 
 // Time slots for the weekly grid (7am to 6pm)
-const GRID_HOURS = Array.from({ length: 12 }, (_, i) => i + 7); // 7–18
+
 
 // ─── Weekly Grid View (Desktop) ───
+const HOUR_HEIGHT = 64; // px per hour
+const GRID_START = 7; // 7am
+const GRID_END = 19; // 7pm
+const GRID_TOTAL_HOURS = GRID_END - GRID_START;
+
 const WeeklyGrid = ({
   schedule,
   todayName,
@@ -213,14 +218,14 @@ const WeeklyGrid = ({
   onEventClick: (event: TimetableEvent) => void;
   onAddClick: (day: DayName) => void;
 }) => {
-  const minHour = 7;
-  const maxHour = 18;
-  const totalSlots = maxHour - minHour; // 11 hours
+  const nowOffset = now >= GRID_START * 60 && now <= GRID_END * 60
+    ? ((now - GRID_START * 60) / 60) * HOUR_HEIGHT
+    : -1;
 
   return (
     <div className="border-2 border-foreground bg-card overflow-auto">
       {/* Header row */}
-      <div className="grid grid-cols-[60px_repeat(5,1fr)] border-b-2 border-foreground sticky top-0 z-10 bg-card">
+      <div className="grid grid-cols-[56px_repeat(5,1fr)] border-b-2 border-foreground sticky top-0 z-10 bg-card">
         <div className="border-r-2 border-foreground p-2" />
         {DAYS.map(day => (
           <div
@@ -240,55 +245,88 @@ const WeeklyGrid = ({
         ))}
       </div>
 
-      {/* Time rows */}
-      {GRID_HOURS.map(hour => (
-        <div key={hour} className="grid grid-cols-[60px_repeat(5,1fr)] min-h-[60px] border-b border-foreground/20 last:border-b-0">
-          <div className="border-r-2 border-foreground p-1 font-mono text-[10px] text-muted-foreground text-right pr-2 pt-0.5">
-            {hour.toString().padStart(2, "0")}:00
-          </div>
-          {DAYS.map(day => {
-            const dayEvents = schedule[day].filter(e => {
-              const startH = Math.floor(timeToMin(e.startTime) / 60);
-              return startH === hour;
-            });
-            return (
-              <div key={day} className={`border-r-2 last:border-r-0 border-foreground/10 relative p-0.5 ${day === todayName ? "bg-primary/5" : ""}`}>
-                {dayEvents.map(event => {
-                  const startMin = timeToMin(event.startTime);
-                  const endMin = timeToMin(event.endTime);
-                  const durationHours = (endMin - startMin) / 60;
-                  const heightPx = Math.max(durationHours * 60 - 4, 24);
-                  const isNow = day === todayName && now >= startMin && now < endMin;
-
-                  return (
-                    <button
-                      key={event.id}
-                      onClick={() => onEventClick(event)}
-                      className={`w-full text-left p-1.5 border-2 border-foreground mb-0.5 transition-all hover:shadow-brutal-sm
-                        ${event.completed ? "opacity-40" : ""} ${isNow ? "ring-2 ring-primary" : ""}`}
-                      style={{
-                        backgroundColor: getSubjectColor(event.subject),
-                        height: `${heightPx}px`,
-                        minHeight: "24px",
-                      }}
-                    >
-                      <div className="font-mono text-[10px] font-bold text-foreground leading-tight truncate">
-                        {event.subject}
-                      </div>
-                      <div className="font-mono text-[9px] text-foreground/70 truncate">
-                        {event.startTime}–{event.endTime}
-                      </div>
-                      <div className="font-mono text-[9px] text-foreground/60 truncate">
-                        {event.location}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          })}
+      {/* Grid body — absolute positioned events */}
+      <div className="grid grid-cols-[56px_repeat(5,1fr)]" style={{ height: GRID_TOTAL_HOURS * HOUR_HEIGHT }}>
+        {/* Time labels column */}
+        <div className="border-r-2 border-foreground relative">
+          {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => i + GRID_START).map(hour => (
+            <div
+              key={hour}
+              className="absolute right-0 pr-1.5 font-mono text-[10px] text-muted-foreground"
+              style={{ top: (hour - GRID_START) * HOUR_HEIGHT - 6 }}
+            >
+              {hour.toString().padStart(2, "0")}:00
+            </div>
+          ))}
         </div>
-      ))}
+
+        {/* Day columns */}
+        {DAYS.map(day => (
+          <div
+            key={day}
+            className={`border-r-2 last:border-r-0 border-foreground/10 relative ${day === todayName ? "bg-primary/5" : ""}`}
+          >
+            {/* Hour gridlines */}
+            {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => (
+              <div
+                key={i}
+                className="absolute left-0 right-0 border-t border-foreground/10"
+                style={{ top: i * HOUR_HEIGHT }}
+              />
+            ))}
+
+            {/* Now indicator */}
+            {day === todayName && nowOffset >= 0 && (
+              <div
+                className="absolute left-0 right-0 h-0.5 bg-destructive z-10"
+                style={{ top: nowOffset }}
+              >
+                <div className="absolute -left-1 -top-1 w-2.5 h-2.5 rounded-full bg-destructive" />
+              </div>
+            )}
+
+            {/* Events */}
+            {schedule[day].map(event => {
+              const startMin = timeToMin(event.startTime);
+              const endMin = timeToMin(event.endTime);
+              const topPx = ((startMin - GRID_START * 60) / 60) * HOUR_HEIGHT;
+              const heightPx = ((endMin - startMin) / 60) * HOUR_HEIGHT;
+              const isNow = day === todayName && now >= startMin && now < endMin;
+
+              return (
+                <button
+                  key={event.id}
+                  onClick={() => onEventClick(event)}
+                  className={`absolute left-0.5 right-0.5 text-left p-1.5 border-2 border-foreground overflow-hidden transition-all hover:shadow-brutal-sm hover:z-20
+                    ${event.completed ? "opacity-40" : ""} ${isNow ? "ring-2 ring-primary z-10" : ""}`}
+                  style={{
+                    top: `${topPx}px`,
+                    height: `${heightPx - 2}px`,
+                    backgroundColor: getSubjectColor(event.subject),
+                  }}
+                >
+                  <div className="font-mono text-[10px] font-bold text-foreground leading-tight truncate">
+                    {event.subject}
+                  </div>
+                  <div className="font-mono text-[9px] text-foreground/70 truncate">
+                    {event.startTime}–{event.endTime}
+                  </div>
+                  {heightPx > 50 && (
+                    <div className="font-mono text-[9px] text-foreground/60 truncate">
+                      {event.location}
+                    </div>
+                  )}
+                  {heightPx > 80 && (
+                    <div className="font-mono text-[8px] text-foreground/50 truncate mt-0.5">
+                      {event.description}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -588,9 +626,8 @@ const Timetable = () => {
         </div>
       )}
 
-      {/* ══════ DAY VIEW (mobile default + desktop day mode) ══════ */}
-      {(viewMode === "day" || typeof window !== "undefined") && (
-        <div className={viewMode === "week" ? "md:hidden" : ""}>
+      {/* ══════ DAY VIEW (always on mobile, on desktop when day mode) ══════ */}
+      <div className={viewMode === "week" ? "md:hidden" : ""}>
           {/* Day tabs */}
           <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
             {DAYS.map(day => (
@@ -661,8 +698,7 @@ const Timetable = () => {
               })
             )}
           </div>
-        </div>
-      )}
+      </div>
 
       {/* Stats toggle */}
       <div className="fixed bottom-0 left-0 right-0 z-30">
