@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import heroLabImg from "@/assets/hero-lab.jpg";
 import heroAboutImg from "@/assets/hero-about.jpg";
 import trussBridgeImg from "@/assets/truss-bridge.jpg";
