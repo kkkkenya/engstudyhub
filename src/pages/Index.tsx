@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import heroLabImg from "@/assets/hero-lab.jpg";
 import heroAboutImg from "@/assets/hero-about.jpg";
 import trussBridgeImg from "@/assets/truss-bridge.jpg";
@@ -6,7 +7,7 @@ import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
 import logoImg from "@/assets/logo.png";
-import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus } from "lucide-react";
+import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -17,6 +18,7 @@ const NAV_LINKS = [
 { href: "#about", label: "About", icon: Info },
 { href: "#projects", label: "Projects", icon: FolderOpen },
 { href: "#pricing", label: "Pricing", icon: CreditCard },
+{ href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
 { href: "#join", label: "Join", icon: UserPlus }];
 
 
@@ -134,9 +136,15 @@ const Index = () => {
         </div>
         <div className="hidden md:flex items-center gap-6 font-mono text-sm font-bold uppercase">
           {NAV_LINKS.map((link) =>
-          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
-              {link.label}
-            </a>
+            link.isRoute ? (
+              <Link key={link.href} to={link.href} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+                {link.label}
+              </a>
+            )
           )}
         </div>
         <div className="hidden md:block">
@@ -157,10 +165,16 @@ const Index = () => {
           <div className="absolute inset-0 bg-foreground/50" />
           <div className="absolute top-0 right-0 w-72 bg-card border-l-4 border-foreground h-full p-6 pt-20 flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
             {NAV_LINKS.map((link) =>
-          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
-                {link.label}
-              </a>
-          )}
+              link.isRoute ? (
+                <Link key={link.href} to={link.href} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
+                  {link.label}
+                </a>
+              )
+            )}
             <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal mt-4 bg-primary text-foreground border-2 border-foreground font-mono font-bold uppercase text-lg px-6 py-4 shadow-brutal-sm text-center">
               Join Now
             </a>
