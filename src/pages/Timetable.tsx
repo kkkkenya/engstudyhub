@@ -626,9 +626,8 @@ const Timetable = () => {
         </div>
       )}
 
-      {/* ══════ DAY VIEW (mobile default + desktop day mode) ══════ */}
-      {(viewMode === "day" || typeof window !== "undefined") && (
-        <div className={viewMode === "week" ? "md:hidden" : ""}>
+      {/* ══════ DAY VIEW (always on mobile, on desktop when day mode) ══════ */}
+      <div className={viewMode === "week" ? "md:hidden" : ""}>
           {/* Day tabs */}
           <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
             {DAYS.map(day => (
