@@ -1,6 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Clock, MapPin, BookOpen, ChevronDown, ChevronUp, X, Check, Plus, Trash2, Edit3, GraduationCap, Grid3X3, List, Settings2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Clock,
+  MapPin,
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Check,
+  Plus,
+  Trash2,
+  Edit3,
+  GraduationCap,
+  Grid3X3,
+  List,
+  Settings2,
+} from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
 // ─── Types ───
@@ -27,7 +43,13 @@ interface Department {
 }
 
 const DAYS: DayName[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-const DAY_SHORT: Record<DayName, string> = { Monday: "Mon", Tuesday: "Tue", Wednesday: "Wed", Thursday: "Thu", Friday: "Fri" };
+const DAY_SHORT: Record<DayName, string> = {
+  Monday: "Mon",
+  Tuesday: "Tue",
+  Wednesday: "Wed",
+  Thursday: "Thu",
+  Friday: "Fri",
+};
 
 // ─── Subject color helper ───
 const PALETTE = [
@@ -58,48 +80,66 @@ const getSubjectColor = (subject: string) => {
 let idCounter = 0;
 const genId = () => `evt-${++idCounter}`;
 
-const evt = (subject: string, start: string, end: string, location: string, desc: string, tag: EventTag = "lecture"): TimetableEvent => ({
-  id: genId(), subject, startTime: start, endTime: end, location, description: desc, tag, completed: false,
+const evt = (
+  subject: string,
+  start: string,
+  end: string,
+  location: string,
+  desc: string,
+  tag: EventTag = "lecture",
+): TimetableEvent => ({
+  id: genId(),
+  subject,
+  startTime: start,
+  endTime: end,
+  location,
+  description: desc,
+  tag,
+  completed: false,
 });
 
 // ─── Department schedules ───
 const DEPARTMENTS: Department[] = [
   {
-    id: "mechanical", name: "Mechanical Engineering", shortName: "Mech",
+    id: "mechanical",
+    name: "Mechanical Engineering",
+    shortName: "Mech",
     schedule: {
       Monday: [
-        evt("EMM 211", "09:00", "11:00", "SC10", "Engineering Mathematics"),
-        evt("EMM 219", "11:00", "13:00", "SC10", "Thermodynamics"),
-        evt("EMM 214", "14:00", "17:00", "TBA", "Fluid Mechanics"),
+        evt("EMM 211", "09:00", "11:00", "SC10", "mechanic 2"),
+        evt("EMM 219", "11:00", "13:00", "SC10", "engineering materials 2"),
+        evt("EMM 214", "14:00", "17:00", "TBA", "electrical engineering 2"),
       ],
       Tuesday: [
-        evt("ECU 203", "07:00", "09:00", "SC2", "Communication Skills"),
-        evt("EMM 205", "09:00", "12:00", "TBA", "Strength of Materials"),
-        evt("EMM 216", "15:00", "17:00", "Workshop", "Workshop Technology", "lab"),
+        evt("ECU 203", "07:00", "09:00", "SC2", "Transform Methods"),
+        evt("EMM 205", "09:00", "12:00", "TBA", "Fluid Mechanics II"),
+        evt("EMM 216", "15:00", "17:00", "Workshop", "Workshop Processes and Practice III", "lab"),
       ],
       Wednesday: [
-        evt("EMM 200", "09:00", "12:00", "C.LAB", "Computer Applications", "lab"),
-        evt("EMM 216", "14:00", "17:00", "TBA", "Workshop Technology"),
+        evt("EMM 200", "09:00", "12:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
+        evt("EMM 216", "14:00", "17:00", "TBA", "Workshop Processes and Practice III"),
       ],
       Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
-        evt("EMM 211", "14:00", "17:00", "TBA", "Engineering Mathematics"),
+        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
+        evt("EMM 211", "14:00", "17:00", "TBA", "mechanic 2"),
       ],
       Friday: [
-        evt("EMM 214", "07:00", "09:00", "OML2", "Fluid Mechanics", "lab"),
-        evt("ECU 203", "09:00", "11:00", "SC2", "Communication Skills"),
-        evt("EMM 205", "15:00", "17:00", "SC13", "Strength of Materials"),
-        evt("EMM 219", "17:00", "18:00", "SC13", "Thermodynamics"),
+        evt("EMM 214", "07:00", "09:00", "OML2", "electrical engineering 2", "lab"),
+        evt("ECU 203", "09:00", "11:00", "SC2", "Transform Methods"),
+        evt("EMM 205", "15:00", "17:00", "SC13", "Fluid Mechanics II"),
+        evt("EMM 219", "17:00", "18:00", "SC13", "engineering materials 2"),
       ],
     },
   },
   {
-    id: "electrical", name: "Electrical Engineering", shortName: "Elec",
+    id: "electrical",
+    name: "Electrical Engineering",
+    shortName: "Elec",
     schedule: {
       Monday: [
         evt("EEE 201", "07:00", "09:00", "SC3", "Circuit Analysis"),
         evt("EEE 210", "10:00", "12:00", "E.LAB", "Electronics Lab", "lab"),
-        evt("ECU 203", "14:00", "16:00", "SC2", "Communication Skills"),
+        evt("ECU 203", "14:00", "16:00", "SC2", "Transform Methods"),
       ],
       Tuesday: [
         evt("EEE 205", "08:00", "10:00", "SC5", "Electromagnetic Theory"),
@@ -108,7 +148,7 @@ const DEPARTMENTS: Department[] = [
       ],
       Wednesday: [
         evt("EEE 201", "09:00", "11:00", "SC3", "Circuit Analysis"),
-        evt("ECU 202", "13:00", "15:00", "SC2", "Development Studies"),
+        evt("ECU 202", "13:00", "15:00", "SC2", "Ordinary Differential Equations for Engineers"),
       ],
       Thursday: [
         evt("EEE 205", "07:00", "09:00", "SC5", "Electromagnetic Theory"),
@@ -117,12 +157,14 @@ const DEPARTMENTS: Department[] = [
       ],
       Friday: [
         evt("EEE 220", "08:00", "10:00", "SC3", "Electrical Machines"),
-        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Applications", "lab"),
+        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
       ],
     },
   },
   {
-    id: "civil", name: "Civil Engineering", shortName: "Civil",
+    id: "civil",
+    name: "Civil Engineering",
+    shortName: "Civil",
     schedule: {
       Monday: [
         evt("ECE 201", "07:00", "09:00", "SC4", "Structural Analysis"),
@@ -130,7 +172,7 @@ const DEPARTMENTS: Department[] = [
       ],
       Tuesday: [
         evt("ECE 205", "08:00", "10:00", "SC4", "Geotechnics"),
-        evt("ECU 203", "11:00", "13:00", "SC2", "Communication Skills"),
+        evt("ECU 203", "11:00", "13:00", "SC2", "Transform Methods"),
         evt("ECE 215", "14:00", "17:00", "TBA", "Hydraulics"),
       ],
       Wednesday: [
@@ -138,19 +180,21 @@ const DEPARTMENTS: Department[] = [
         evt("ECE 220", "13:00", "16:00", "C.LAB", "CAD Lab", "lab"),
       ],
       Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
+        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
         evt("ECE 205", "10:00", "12:00", "SC4", "Geotechnics"),
         evt("ECE 215", "14:00", "16:00", "TBA", "Hydraulics"),
       ],
       Friday: [
         evt("ECE 210", "08:00", "10:00", "SC4", "Surveying"),
-        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Applications", "lab"),
+        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
         evt("ECE 220", "14:00", "16:00", "TBA", "Construction Technology"),
       ],
     },
   },
   {
-    id: "mechatronics", name: "Mechatronics Engineering", shortName: "Mech-tronics",
+    id: "mechatronics",
+    name: "Mechatronics Engineering",
+    shortName: "Mech-tronics",
     schedule: {
       Monday: [
         evt("EMT 201", "08:00", "10:00", "SC6", "Control Systems"),
@@ -159,15 +203,15 @@ const DEPARTMENTS: Department[] = [
       ],
       Tuesday: [
         evt("EMT 205", "07:00", "09:00", "SC6", "Microprocessors"),
-        evt("ECU 203", "10:00", "12:00", "SC2", "Communication Skills"),
+        evt("ECU 203", "10:00", "12:00", "SC2", "Transform Methods"),
         evt("EMT 215", "14:00", "17:00", "E.LAB", "Sensors & Actuators", "lab"),
       ],
       Wednesday: [
         evt("EMT 201", "09:00", "11:00", "SC6", "Control Systems"),
-        evt("EMM 200", "13:00", "16:00", "C.LAB", "Computer Applications", "lab"),
+        evt("EMM 200", "13:00", "16:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
       ],
       Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
+        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
         evt("EMT 205", "10:00", "12:00", "SC6", "Microprocessors"),
         evt("EMT 210", "14:00", "16:00", "R.LAB", "Robotics Lab", "lab"),
       ],
@@ -180,7 +224,10 @@ const DEPARTMENTS: Department[] = [
 ];
 
 // ─── Helpers ───
-const timeToMin = (t: string) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const timeToMin = (t: string) => {
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + m;
+};
 const formatCountdown = (mins: number) => {
   if (mins < 0) return "Now";
   const h = Math.floor(mins / 60);
@@ -194,10 +241,12 @@ const getTodayDayName = (): DayName => {
   return map[d] || "Monday";
 };
 
-const getCurrentMinutes = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
+const getCurrentMinutes = () => {
+  const n = new Date();
+  return n.getHours() * 60 + n.getMinutes();
+};
 
 // Time slots for the weekly grid (7am to 6pm)
-
 
 // ─── Weekly Grid View (Desktop) ───
 const HOUR_HEIGHT = 64; // px per hour
@@ -218,16 +267,14 @@ const WeeklyGrid = ({
   onEventClick: (event: TimetableEvent) => void;
   onAddClick: (day: DayName) => void;
 }) => {
-  const nowOffset = now >= GRID_START * 60 && now <= GRID_END * 60
-    ? ((now - GRID_START * 60) / 60) * HOUR_HEIGHT
-    : -1;
+  const nowOffset = now >= GRID_START * 60 && now <= GRID_END * 60 ? ((now - GRID_START * 60) / 60) * HOUR_HEIGHT : -1;
 
   return (
     <div className="border-2 border-foreground bg-card overflow-auto">
       {/* Header row */}
       <div className="grid grid-cols-[56px_repeat(5,1fr)] border-b-2 border-foreground sticky top-0 z-10 bg-card">
         <div className="border-r-2 border-foreground p-2" />
-        {DAYS.map(day => (
+        {DAYS.map((day) => (
           <div
             key={day}
             className={`border-r-2 last:border-r-0 border-foreground p-2 text-center font-mono text-xs font-bold uppercase
@@ -249,7 +296,7 @@ const WeeklyGrid = ({
       <div className="grid grid-cols-[56px_repeat(5,1fr)]" style={{ height: GRID_TOTAL_HOURS * HOUR_HEIGHT }}>
         {/* Time labels column */}
         <div className="border-r-2 border-foreground relative">
-          {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => i + GRID_START).map(hour => (
+          {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => i + GRID_START).map((hour) => (
             <div
               key={hour}
               className="absolute right-0 pr-1.5 font-mono text-[10px] text-muted-foreground"
@@ -261,7 +308,7 @@ const WeeklyGrid = ({
         </div>
 
         {/* Day columns */}
-        {DAYS.map(day => (
+        {DAYS.map((day) => (
           <div
             key={day}
             className={`border-r-2 last:border-r-0 border-foreground/10 relative ${day === todayName ? "bg-primary/5" : ""}`}
@@ -277,16 +324,13 @@ const WeeklyGrid = ({
 
             {/* Now indicator */}
             {day === todayName && nowOffset >= 0 && (
-              <div
-                className="absolute left-0 right-0 h-0.5 bg-destructive z-10"
-                style={{ top: nowOffset }}
-              >
+              <div className="absolute left-0 right-0 h-0.5 bg-destructive z-10" style={{ top: nowOffset }}>
                 <div className="absolute -left-1 -top-1 w-2.5 h-2.5 rounded-full bg-destructive" />
               </div>
             )}
 
             {/* Events */}
-            {schedule[day].map(event => {
+            {schedule[day].map((event) => {
               const startMin = timeToMin(event.startTime);
               const endMin = timeToMin(event.endTime);
               const topPx = ((startMin - GRID_START * 60) / 60) * HOUR_HEIGHT;
@@ -312,14 +356,10 @@ const WeeklyGrid = ({
                     {event.startTime}–{event.endTime}
                   </div>
                   {heightPx > 50 && (
-                    <div className="font-mono text-[9px] text-foreground/60 truncate">
-                      {event.location}
-                    </div>
+                    <div className="font-mono text-[9px] text-foreground/60 truncate">{event.location}</div>
                   )}
                   {heightPx > 80 && (
-                    <div className="font-mono text-[8px] text-foreground/50 truncate mt-0.5">
-                      {event.description}
-                    </div>
+                    <div className="font-mono text-[8px] text-foreground/50 truncate mt-0.5">{event.description}</div>
                   )}
                 </button>
               );
@@ -352,19 +392,24 @@ const ManageMode = ({
           <X className="w-5 h-5" /> Close
         </button>
         <h1 className="font-display font-bold text-sm uppercase tracking-wider">Manage Timetable</h1>
-        <button onClick={onAdd} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
+        <button
+          onClick={onAdd}
+          className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+        >
           <Plus className="w-5 h-5" />
         </button>
       </header>
 
       <div className="p-3 space-y-4 pb-8">
-        {DAYS.map(day => {
+        {DAYS.map((day) => {
           const events = schedule[day];
           return (
             <div key={day}>
               <h3 className="font-display font-black text-sm uppercase mb-2 flex items-center gap-2">
                 <span className="bg-foreground text-card px-2 py-0.5 font-mono text-xs">{day}</span>
-                <span className="font-mono text-xs text-muted-foreground">{events.length} class{events.length !== 1 ? "es" : ""}</span>
+                <span className="font-mono text-xs text-muted-foreground">
+                  {events.length} class{events.length !== 1 ? "es" : ""}
+                </span>
               </h3>
               {events.length === 0 ? (
                 <div className="text-muted-foreground font-mono text-xs py-2 pl-2 border-l-2 border-dashed border-muted-foreground/30">
@@ -372,14 +417,14 @@ const ManageMode = ({
                 </div>
               ) : (
                 <div className="space-y-1.5">
-                  {events.map(event => (
-                    <div
-                      key={event.id}
-                      className="flex items-center gap-2 bg-card border-2 border-foreground p-2"
-                    >
+                  {events.map((event) => (
+                    <div key={event.id} className="flex items-center gap-2 bg-card border-2 border-foreground p-2">
                       <span
                         className="w-3 h-3 rounded-full flex-shrink-0 border-2"
-                        style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
+                        style={{
+                          backgroundColor: getSubjectColor(event.subject),
+                          borderColor: "hsl(var(--foreground))",
+                        }}
                       />
                       <div className="flex-1 min-w-0">
                         <div className="font-display font-bold text-xs truncate">{event.subject}</div>
@@ -417,8 +462,8 @@ const ManageMode = ({
 const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(DEPARTMENTS[0].id);
   const [showDeptPicker, setShowDeptPicker] = useState(false);
-  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(
-    () => Object.fromEntries(DEPARTMENTS.map(d => [d.id, d.schedule]))
+  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() =>
+    Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule])),
   );
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
@@ -430,7 +475,7 @@ const Timetable = () => {
   const [showManage, setShowManage] = useState(false);
   const [addDay, setAddDay] = useState<DayName | null>(null);
 
-  const dept = DEPARTMENTS.find(d => d.id === deptId)!;
+  const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
   const schedule = schedules[deptId];
 
   useEffect(() => {
@@ -442,7 +487,7 @@ const Timetable = () => {
   const todayEvents = schedule[todayName] || [];
 
   const getNextClass = useCallback(() => {
-    const events = todayEvents.filter(e => !e.completed);
+    const events = todayEvents.filter((e) => !e.completed);
     for (const e of events) {
       const start = timeToMin(e.startTime);
       if (start > now) return { event: e, minsUntil: start - now };
@@ -458,32 +503,34 @@ const Timetable = () => {
   const nextClass = getNextClass();
 
   const totalHoursToday = todayEvents.reduce((sum, e) => sum + (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60, 0);
-  const completedToday = todayEvents.filter(e => e.completed).length;
+  const completedToday = todayEvents.filter((e) => e.completed).length;
   const weeklyHours: Record<string, number> = {};
-  Object.values(schedule).flat().forEach(e => {
-    const hrs = (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60;
-    weeklyHours[e.subject] = (weeklyHours[e.subject] || 0) + hrs;
-  });
+  Object.values(schedule)
+    .flat()
+    .forEach((e) => {
+      const hrs = (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60;
+      weeklyHours[e.subject] = (weeklyHours[e.subject] || 0) + hrs;
+    });
 
   const updateSchedule = (updater: (prev: Record<DayName, TimetableEvent[]>) => Record<DayName, TimetableEvent[]>) => {
-    setSchedules(prev => ({ ...prev, [deptId]: updater(prev[deptId]) }));
+    setSchedules((prev) => ({ ...prev, [deptId]: updater(prev[deptId]) }));
   };
 
   const toggleComplete = (id: string) => {
-    updateSchedule(prev => {
+    updateSchedule((prev) => {
       const updated = { ...prev };
       for (const day of DAYS) {
-        updated[day] = updated[day].map(e => e.id === id ? { ...e, completed: !e.completed } : e);
+        updated[day] = updated[day].map((e) => (e.id === id ? { ...e, completed: !e.completed } : e));
       }
       return updated;
     });
   };
 
   const deleteEvent = (id: string) => {
-    updateSchedule(prev => {
+    updateSchedule((prev) => {
       const updated = { ...prev };
       for (const day of DAYS) {
-        updated[day] = updated[day].filter(e => e.id !== id);
+        updated[day] = updated[day].filter((e) => e.id !== id);
       }
       return updated;
     });
@@ -491,11 +538,11 @@ const Timetable = () => {
   };
 
   const saveEvent = (day: DayName, event: TimetableEvent) => {
-    updateSchedule(prev => {
+    updateSchedule((prev) => {
       const updated = { ...prev };
       if (editEvent) {
         for (const d of DAYS) {
-          updated[d] = updated[d].filter(e => e.id !== editEvent.id);
+          updated[d] = updated[d].filter((e) => e.id !== editEvent.id);
         }
       }
       updated[day] = [...updated[day], event].sort((a, b) => timeToMin(a.startTime) - timeToMin(b.startTime));
@@ -550,7 +597,14 @@ const Timetable = () => {
             <Settings2 className="w-5 h-5" />
           </button>
           {/* Add button */}
-          <button onClick={() => { setEditEvent(null); setAddDay(null); setShowAddModal(true); }} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
+          <button
+            onClick={() => {
+              setEditEvent(null);
+              setAddDay(null);
+              setShowAddModal(true);
+            }}
+            className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+          >
             <Plus className="w-5 h-5" />
           </button>
         </div>
@@ -570,10 +624,14 @@ const Timetable = () => {
         </button>
         {showDeptPicker && (
           <div className="border-2 border-t-0 border-foreground bg-card divide-y-2 divide-foreground">
-            {DEPARTMENTS.map(d => (
+            {DEPARTMENTS.map((d) => (
               <button
                 key={d.id}
-                onClick={() => { setDeptId(d.id); setShowDeptPicker(false); setSelectedEvent(null); }}
+                onClick={() => {
+                  setDeptId(d.id);
+                  setShowDeptPicker(false);
+                  setSelectedEvent(null);
+                }}
                 className={`w-full text-left px-3 py-3 font-mono text-sm font-bold transition-colors active:bg-primary/20
                   ${d.id === deptId ? "bg-primary/10 text-primary" : "hover:bg-muted"}`}
               >
@@ -604,7 +662,8 @@ const Timetable = () => {
           <div className="mt-1.5 flex items-center justify-between">
             <span className="font-display font-bold text-base">{nextClass.event.subject}</span>
             <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
-              <MapPin className="w-3 h-3" />{nextClass.event.location}
+              <MapPin className="w-3 h-3" />
+              {nextClass.event.location}
             </span>
           </div>
           <div className="font-mono text-xs text-muted-foreground mt-0.5">
@@ -628,76 +687,90 @@ const Timetable = () => {
 
       {/* ══════ DAY VIEW (always on mobile, on desktop when day mode) ══════ */}
       <div className={viewMode === "week" ? "md:hidden" : ""}>
-          {/* Day tabs */}
-          <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
-            {DAYS.map(day => (
-              <button
-                key={day}
-                onClick={() => setActiveDay(day)}
-                className={`flex-1 min-w-[56px] py-2.5 font-mono text-xs font-bold uppercase border-2 border-foreground transition-all active:translate-y-0.5
-                  ${activeDay === day
-                    ? "bg-primary text-foreground shadow-brutal-sm"
-                    : day === todayName
-                      ? "bg-card text-foreground border-dashed"
-                      : "bg-muted text-muted-foreground"
+        {/* Day tabs */}
+        <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
+          {DAYS.map((day) => (
+            <button
+              key={day}
+              onClick={() => setActiveDay(day)}
+              className={`flex-1 min-w-[56px] py-2.5 font-mono text-xs font-bold uppercase border-2 border-foreground transition-all active:translate-y-0.5
+                  ${
+                    activeDay === day
+                      ? "bg-primary text-foreground shadow-brutal-sm"
+                      : day === todayName
+                        ? "bg-card text-foreground border-dashed"
+                        : "bg-muted text-muted-foreground"
                   }`}
-              >
-                {DAY_SHORT[day]}
-                {day === todayName && <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto mt-1" />}
-              </button>
-            ))}
-          </div>
+            >
+              {DAY_SHORT[day]}
+              {day === todayName && <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto mt-1" />}
+            </button>
+          ))}
+        </div>
 
-          {/* Events list */}
-          <div className="flex-1 px-3 py-3 space-y-2 pb-24">
-            {dayEvents.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground font-mono text-sm">
-                No classes on {activeDay}. Tap + to add one.
-              </div>
-            ) : (
-              dayEvents.map(event => {
-                const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
-                const isNow = activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
-                const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
-                return (
-                  <button
-                    key={event.id}
-                    onClick={() => setSelectedEvent(event)}
-                    className={`w-full text-left border-2 border-foreground p-3 transition-all active:translate-y-0.5
+        {/* Events list */}
+        <div className="flex-1 px-3 py-3 space-y-2 pb-24">
+          {dayEvents.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground font-mono text-sm">
+              No classes on {activeDay}. Tap + to add one.
+            </div>
+          ) : (
+            dayEvents.map((event) => {
+              const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
+              const isNow =
+                activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
+              const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
+              return (
+                <button
+                  key={event.id}
+                  onClick={() => setSelectedEvent(event)}
+                  className={`w-full text-left border-2 border-foreground p-3 transition-all active:translate-y-0.5
                       ${isNow ? "bg-primary/10 border-primary shadow-brutal-sm" : "bg-card shadow-brutal-sm"}
                       ${event.completed ? "opacity-50" : ""}
                       ${isPast && !event.completed ? "opacity-70" : ""}
                     `}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                            style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
-                          />
-                          <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
-                            {event.subject}
-                          </span>
-                          {isNow && <span className="font-mono text-[10px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase">Live</span>}
-                        </div>
-                        <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-3">
-                          <span>{event.startTime}–{event.endTime}</span>
-                          <span className="flex items-center gap-0.5"><MapPin className="w-3 h-3" />{event.location}</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold">
-                          {event.tag}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-3 h-3 rounded-full border-2 flex-shrink-0"
+                          style={{
+                            backgroundColor: getSubjectColor(event.subject),
+                            borderColor: "hsl(var(--foreground))",
+                          }}
+                        />
+                        <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
+                          {event.subject}
                         </span>
-                        <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
+                        {isNow && (
+                          <span className="font-mono text-[10px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase">
+                            Live
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-3">
+                        <span>
+                          {event.startTime}–{event.endTime}
+                        </span>
+                        <span className="flex items-center gap-0.5">
+                          <MapPin className="w-3 h-3" />
+                          {event.location}
+                        </span>
                       </div>
                     </div>
-                  </button>
-                );
-              })
-            )}
-          </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold">
+                        {event.tag}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })
+          )}
+        </div>
       </div>
 
       {/* Stats toggle */}
@@ -722,25 +795,35 @@ const Timetable = () => {
               </div>
               <div className="border-2 border-foreground p-2.5 bg-card col-span-2">
                 <div className="font-mono text-[10px] uppercase text-muted-foreground">Completed</div>
-                <div className="font-display font-black text-2xl">{completedToday}/{todayEvents.length}</div>
+                <div className="font-display font-black text-2xl">
+                  {completedToday}/{todayEvents.length}
+                </div>
               </div>
             </div>
             <div>
               <div className="font-mono text-[10px] uppercase text-muted-foreground mb-2">Weekly Hours by Subject</div>
               <div className="space-y-1.5">
-                {Object.entries(weeklyHours).sort((a, b) => b[1] - a[1]).map(([subj, hrs]) => (
-                  <div key={subj} className="flex items-center gap-2">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: getSubjectColor(subj) }}
-                    />
-                    <span className="font-mono text-xs font-bold flex-1">{subj}</span>
-                    <div className="flex-1 h-2 bg-muted border border-foreground">
-                      <div className="h-full" style={{ width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`, backgroundColor: getSubjectColor(subj) }} />
+                {Object.entries(weeklyHours)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([subj, hrs]) => (
+                    <div key={subj} className="flex items-center gap-2">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: getSubjectColor(subj) }}
+                      />
+                      <span className="font-mono text-xs font-bold flex-1">{subj}</span>
+                      <div className="flex-1 h-2 bg-muted border border-foreground">
+                        <div
+                          className="h-full"
+                          style={{
+                            width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`,
+                            backgroundColor: getSubjectColor(subj),
+                          }}
+                        />
+                      </div>
+                      <span className="font-mono text-[10px] text-muted-foreground w-8 text-right">{hrs}h</span>
                     </div>
-                    <span className="font-mono text-[10px] text-muted-foreground w-8 text-right">{hrs}h</span>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
@@ -751,7 +834,10 @@ const Timetable = () => {
       {selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-end" onClick={() => setSelectedEvent(null)}>
           <div className="absolute inset-0 bg-foreground/50" />
-          <div className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 animate-in slide-in-from-bottom" onClick={e => e.stopPropagation()}>
+          <div
+            className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 animate-in slide-in-from-bottom"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto mb-4" />
             <button onClick={() => setSelectedEvent(null)} className="absolute top-3 right-3 p-1">
               <X className="w-5 h-5" />
@@ -759,29 +845,49 @@ const Timetable = () => {
             <div className="flex items-center gap-2 mb-3">
               <span
                 className="w-4 h-4 rounded-full border-2"
-                style={{ backgroundColor: getSubjectColor(selectedEvent.subject), borderColor: "hsl(var(--foreground))" }}
+                style={{
+                  backgroundColor: getSubjectColor(selectedEvent.subject),
+                  borderColor: "hsl(var(--foreground))",
+                }}
               />
               <h2 className="font-display font-black text-xl">{selectedEvent.subject}</h2>
-              <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold ml-auto">{selectedEvent.tag}</span>
+              <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold ml-auto">
+                {selectedEvent.tag}
+              </span>
             </div>
             <p className="text-sm text-muted-foreground mb-3">{selectedEvent.description}</p>
             <div className="font-mono text-xs space-y-1.5 mb-4">
-              <div className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-primary" />{selectedEvent.startTime} – {selectedEvent.endTime}</div>
-              <div className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-accent" />{selectedEvent.location}</div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-primary" />
+                {selectedEvent.startTime} – {selectedEvent.endTime}
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-accent" />
+                {selectedEvent.location}
+              </div>
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => { toggleComplete(selectedEvent.id); setSelectedEvent({ ...selectedEvent, completed: !selectedEvent.completed }); }}
+                onClick={() => {
+                  toggleComplete(selectedEvent.id);
+                  setSelectedEvent({ ...selectedEvent, completed: !selectedEvent.completed });
+                }}
                 className={`flex-1 border-2 border-foreground py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1
                   ${selectedEvent.completed ? "bg-muted" : "bg-primary"}`}
               >
-                <Check className="w-4 h-4" />{selectedEvent.completed ? "Undo" : "Done"}
+                <Check className="w-4 h-4" />
+                {selectedEvent.completed ? "Undo" : "Done"}
               </button>
               <button
-                onClick={() => { setEditEvent(selectedEvent); setSelectedEvent(null); setShowAddModal(true); }}
+                onClick={() => {
+                  setEditEvent(selectedEvent);
+                  setSelectedEvent(null);
+                  setShowAddModal(true);
+                }}
                 className="flex-1 border-2 border-foreground bg-card py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
               >
-                <Edit3 className="w-4 h-4" />Edit
+                <Edit3 className="w-4 h-4" />
+                Edit
               </button>
               <button
                 onClick={() => deleteEvent(selectedEvent.id)}
@@ -800,7 +906,11 @@ const Timetable = () => {
           initialEvent={editEvent}
           activeDay={addDay || activeDay}
           onSave={saveEvent}
-          onClose={() => { setShowAddModal(false); setEditEvent(null); setAddDay(null); }}
+          onClose={() => {
+            setShowAddModal(false);
+            setEditEvent(null);
+            setAddDay(null);
+          }}
         />
       )}
 
@@ -808,9 +918,18 @@ const Timetable = () => {
       {showManage && (
         <ManageMode
           schedule={schedule}
-          onEdit={(event) => { setEditEvent(event); setShowManage(false); setShowAddModal(true); }}
+          onEdit={(event) => {
+            setEditEvent(event);
+            setShowManage(false);
+            setShowAddModal(true);
+          }}
           onDelete={(id) => deleteEvent(id)}
-          onAdd={() => { setShowManage(false); setEditEvent(null); setAddDay(null); setShowAddModal(true); }}
+          onAdd={() => {
+            setShowManage(false);
+            setEditEvent(null);
+            setAddDay(null);
+            setShowAddModal(true);
+          }}
           onClose={() => setShowManage(false)}
         />
       )}
@@ -820,7 +939,10 @@ const Timetable = () => {
 
 // ─── Add/Edit Modal ───
 const EventModal = ({
-  initialEvent, activeDay, onSave, onClose,
+  initialEvent,
+  activeDay,
+  onSave,
+  onClose,
 }: {
   initialEvent: TimetableEvent | null;
   activeDay: DayName;
@@ -840,56 +962,90 @@ const EventModal = ({
     onSave(day, {
       id: initialEvent?.id || genId(),
       subject: subject.trim(),
-      startTime, endTime, location, description, tag,
+      startTime,
+      endTime,
+      location,
+      description,
+      tag,
       completed: initialEvent?.completed || false,
     });
   };
 
-  const inputClass = "w-full border-2 border-foreground bg-background px-3 py-2.5 font-mono text-sm focus:outline-none focus:border-primary";
+  const inputClass =
+    "w-full border-2 border-foreground bg-background px-3 py-2.5 font-mono text-sm focus:outline-none focus:border-primary";
   const labelClass = "font-mono text-[10px] uppercase font-bold text-muted-foreground mb-1 block";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end" onClick={onClose}>
       <div className="absolute inset-0 bg-foreground/50" />
-      <div className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom" onClick={e => e.stopPropagation()}>
+      <div
+        className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto mb-3" />
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display font-black text-lg uppercase">{initialEvent ? "Edit Event" : "New Event"}</h2>
-          <button onClick={onClose}><X className="w-5 h-5" /></button>
+          <button onClick={onClose}>
+            <X className="w-5 h-5" />
+          </button>
         </div>
         <div className="space-y-3">
           <div>
             <label className={labelClass}>Subject</label>
-            <input value={subject} onChange={e => setSubject(e.target.value)} className={inputClass} placeholder="e.g. EMM 211" />
+            <input
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className={inputClass}
+              placeholder="e.g. EMM 211"
+            />
           </div>
           <div>
             <label className={labelClass}>Day</label>
-            <select value={day} onChange={e => setDay(e.target.value as DayName)} className={inputClass}>
-              {DAYS.map(d => <option key={d} value={d}>{d}</option>)}
+            <select value={day} onChange={(e) => setDay(e.target.value as DayName)} className={inputClass}>
+              {DAYS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className={labelClass}>Start</label>
-              <input type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className={inputClass} />
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                className={inputClass}
+              />
             </div>
             <div>
               <label className={labelClass}>End</label>
-              <input type="time" value={endTime} onChange={e => setEndTime(e.target.value)} className={inputClass} />
+              <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className={inputClass} />
             </div>
           </div>
           <div>
             <label className={labelClass}>Location</label>
-            <input value={location} onChange={e => setLocation(e.target.value)} className={inputClass} placeholder="e.g. SC10" />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className={inputClass}
+              placeholder="e.g. SC10"
+            />
           </div>
           <div>
             <label className={labelClass}>Description</label>
-            <input value={description} onChange={e => setDescription(e.target.value)} className={inputClass} placeholder="Optional notes" />
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className={inputClass}
+              placeholder="Optional notes"
+            />
           </div>
           <div>
             <label className={labelClass}>Tag</label>
             <div className="flex gap-1.5 flex-wrap">
-              {(["lecture", "lab", "study", "exam"] as EventTag[]).map(t => (
+              {(["lecture", "lab", "study", "exam"] as EventTag[]).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTag(t)}
