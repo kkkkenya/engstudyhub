@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Clock, MapPin, BookOpen, ChevronDown, ChevronUp, X, Check, Plus, Trash2, Edit3, GraduationCap } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, BookOpen, ChevronDown, ChevronUp, X, Check, Plus, Trash2, Edit3, GraduationCap, Grid3X3, List, Settings2 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
 // ─── Types ───
@@ -65,9 +65,7 @@ const evt = (subject: string, start: string, end: string, location: string, desc
 // ─── Department schedules ───
 const DEPARTMENTS: Department[] = [
   {
-    id: "mechanical",
-    name: "Mechanical Engineering",
-    shortName: "Mech",
+    id: "mechanical", name: "Mechanical Engineering", shortName: "Mech",
     schedule: {
       Monday: [
         evt("EMM 211", "09:00", "11:00", "SC10", "Engineering Mathematics"),
@@ -96,9 +94,7 @@ const DEPARTMENTS: Department[] = [
     },
   },
   {
-    id: "electrical",
-    name: "Electrical Engineering",
-    shortName: "Elec",
+    id: "electrical", name: "Electrical Engineering", shortName: "Elec",
     schedule: {
       Monday: [
         evt("EEE 201", "07:00", "09:00", "SC3", "Circuit Analysis"),
@@ -126,9 +122,7 @@ const DEPARTMENTS: Department[] = [
     },
   },
   {
-    id: "civil",
-    name: "Civil Engineering",
-    shortName: "Civil",
+    id: "civil", name: "Civil Engineering", shortName: "Civil",
     schedule: {
       Monday: [
         evt("ECE 201", "07:00", "09:00", "SC4", "Structural Analysis"),
@@ -156,9 +150,7 @@ const DEPARTMENTS: Department[] = [
     },
   },
   {
-    id: "mechatronics",
-    name: "Mechatronics Engineering",
-    shortName: "Mech-tronics",
+    id: "mechatronics", name: "Mechatronics Engineering", shortName: "Mech-tronics",
     schedule: {
       Monday: [
         evt("EMT 201", "08:00", "10:00", "SC6", "Control Systems"),
@@ -204,7 +196,186 @@ const getTodayDayName = (): DayName => {
 
 const getCurrentMinutes = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
 
-// ─── Component ───
+// Time slots for the weekly grid (7am to 6pm)
+const GRID_HOURS = Array.from({ length: 12 }, (_, i) => i + 7); // 7–18
+
+// ─── Weekly Grid View (Desktop) ───
+const WeeklyGrid = ({
+  schedule,
+  todayName,
+  now,
+  onEventClick,
+  onAddClick,
+}: {
+  schedule: Record<DayName, TimetableEvent[]>;
+  todayName: DayName;
+  now: number;
+  onEventClick: (event: TimetableEvent) => void;
+  onAddClick: (day: DayName) => void;
+}) => {
+  const minHour = 7;
+  const maxHour = 18;
+  const totalSlots = maxHour - minHour; // 11 hours
+
+  return (
+    <div className="border-2 border-foreground bg-card overflow-auto">
+      {/* Header row */}
+      <div className="grid grid-cols-[60px_repeat(5,1fr)] border-b-2 border-foreground sticky top-0 z-10 bg-card">
+        <div className="border-r-2 border-foreground p-2" />
+        {DAYS.map(day => (
+          <div
+            key={day}
+            className={`border-r-2 last:border-r-0 border-foreground p-2 text-center font-mono text-xs font-bold uppercase
+              ${day === todayName ? "bg-primary/10 text-primary" : ""}`}
+          >
+            {DAY_SHORT[day]}
+            <button
+              onClick={() => onAddClick(day)}
+              className="ml-1.5 inline-flex items-center justify-center w-5 h-5 bg-primary/20 hover:bg-primary/40 transition-colors"
+              title={`Add to ${day}`}
+            >
+              <Plus className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Time rows */}
+      {GRID_HOURS.map(hour => (
+        <div key={hour} className="grid grid-cols-[60px_repeat(5,1fr)] min-h-[60px] border-b border-foreground/20 last:border-b-0">
+          <div className="border-r-2 border-foreground p-1 font-mono text-[10px] text-muted-foreground text-right pr-2 pt-0.5">
+            {hour.toString().padStart(2, "0")}:00
+          </div>
+          {DAYS.map(day => {
+            const dayEvents = schedule[day].filter(e => {
+              const startH = Math.floor(timeToMin(e.startTime) / 60);
+              return startH === hour;
+            });
+            return (
+              <div key={day} className={`border-r-2 last:border-r-0 border-foreground/10 relative p-0.5 ${day === todayName ? "bg-primary/5" : ""}`}>
+                {dayEvents.map(event => {
+                  const startMin = timeToMin(event.startTime);
+                  const endMin = timeToMin(event.endTime);
+                  const durationHours = (endMin - startMin) / 60;
+                  const heightPx = Math.max(durationHours * 60 - 4, 24);
+                  const isNow = day === todayName && now >= startMin && now < endMin;
+
+                  return (
+                    <button
+                      key={event.id}
+                      onClick={() => onEventClick(event)}
+                      className={`w-full text-left p-1.5 border-2 border-foreground mb-0.5 transition-all hover:shadow-brutal-sm
+                        ${event.completed ? "opacity-40" : ""} ${isNow ? "ring-2 ring-primary" : ""}`}
+                      style={{
+                        backgroundColor: getSubjectColor(event.subject),
+                        height: `${heightPx}px`,
+                        minHeight: "24px",
+                      }}
+                    >
+                      <div className="font-mono text-[10px] font-bold text-foreground leading-tight truncate">
+                        {event.subject}
+                      </div>
+                      <div className="font-mono text-[9px] text-foreground/70 truncate">
+                        {event.startTime}–{event.endTime}
+                      </div>
+                      <div className="font-mono text-[9px] text-foreground/60 truncate">
+                        {event.location}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// ─── Manage Mode (Quick Edit) ───
+const ManageMode = ({
+  schedule,
+  onEdit,
+  onDelete,
+  onAdd,
+  onClose,
+}: {
+  schedule: Record<DayName, TimetableEvent[]>;
+  onEdit: (event: TimetableEvent) => void;
+  onDelete: (id: string) => void;
+  onAdd: () => void;
+  onClose: () => void;
+}) => {
+  return (
+    <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
+      <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
+        <button onClick={onClose} className="flex items-center gap-2 font-mono text-sm font-bold">
+          <X className="w-5 h-5" /> Close
+        </button>
+        <h1 className="font-display font-bold text-sm uppercase tracking-wider">Manage Timetable</h1>
+        <button onClick={onAdd} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
+          <Plus className="w-5 h-5" />
+        </button>
+      </header>
+
+      <div className="p-3 space-y-4 pb-8">
+        {DAYS.map(day => {
+          const events = schedule[day];
+          return (
+            <div key={day}>
+              <h3 className="font-display font-black text-sm uppercase mb-2 flex items-center gap-2">
+                <span className="bg-foreground text-card px-2 py-0.5 font-mono text-xs">{day}</span>
+                <span className="font-mono text-xs text-muted-foreground">{events.length} class{events.length !== 1 ? "es" : ""}</span>
+              </h3>
+              {events.length === 0 ? (
+                <div className="text-muted-foreground font-mono text-xs py-2 pl-2 border-l-2 border-dashed border-muted-foreground/30">
+                  No classes
+                </div>
+              ) : (
+                <div className="space-y-1.5">
+                  {events.map(event => (
+                    <div
+                      key={event.id}
+                      className="flex items-center gap-2 bg-card border-2 border-foreground p-2"
+                    >
+                      <span
+                        className="w-3 h-3 rounded-full flex-shrink-0 border-2"
+                        style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="font-display font-bold text-xs truncate">{event.subject}</div>
+                        <div className="font-mono text-[10px] text-muted-foreground">
+                          {event.startTime}–{event.endTime} · {event.location}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => onEdit(event)}
+                        className="p-2 border-2 border-foreground bg-muted hover:bg-primary/20 transition-colors active:translate-y-0.5"
+                        title="Edit"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => onDelete(event.id)}
+                        className="p-2 border-2 border-foreground bg-destructive/10 hover:bg-destructive/30 text-destructive transition-colors active:translate-y-0.5"
+                        title="Delete"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// ─── Main Component ───
 const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(DEPARTMENTS[0].id);
   const [showDeptPicker, setShowDeptPicker] = useState(false);
@@ -217,6 +388,9 @@ const Timetable = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editEvent, setEditEvent] = useState<TimetableEvent | null>(null);
   const [now, setNow] = useState(getCurrentMinutes());
+  const [viewMode, setViewMode] = useState<"day" | "week">("day");
+  const [showManage, setShowManage] = useState(false);
+  const [addDay, setAddDay] = useState<DayName | null>(null);
 
   const dept = DEPARTMENTS.find(d => d.id === deptId)!;
   const schedule = schedules[deptId];
@@ -291,9 +465,16 @@ const Timetable = () => {
     });
     setShowAddModal(false);
     setEditEvent(null);
+    setAddDay(null);
   };
 
   const dayEvents = schedule[activeDay];
+
+  const openAddForDay = (day: DayName) => {
+    setAddDay(day);
+    setEditEvent(null);
+    setShowAddModal(true);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -304,9 +485,37 @@ const Timetable = () => {
           <img src={logoImg} alt="Hub" className="h-7 w-auto" />
         </Link>
         <h1 className="font-display font-bold text-sm uppercase tracking-wider">Timetable</h1>
-        <button onClick={() => { setEditEvent(null); setShowAddModal(true); }} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
-          <Plus className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-1.5">
+          {/* View toggle — visible on md+ */}
+          <div className="hidden md:flex border-2 border-foreground">
+            <button
+              onClick={() => setViewMode("day")}
+              className={`p-1.5 transition-colors ${viewMode === "day" ? "bg-primary" : "bg-card hover:bg-muted"}`}
+              title="Day view"
+            >
+              <List className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("week")}
+              className={`p-1.5 border-l-2 border-foreground transition-colors ${viewMode === "week" ? "bg-primary" : "bg-card hover:bg-muted"}`}
+              title="Week view"
+            >
+              <Grid3X3 className="w-4 h-4" />
+            </button>
+          </div>
+          {/* Manage button */}
+          <button
+            onClick={() => setShowManage(true)}
+            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+            title="Manage timetable"
+          >
+            <Settings2 className="w-5 h-5" />
+          </button>
+          {/* Add button */}
+          <button onClick={() => { setEditEvent(null); setAddDay(null); setShowAddModal(true); }} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
+            <Plus className="w-5 h-5" />
+          </button>
+        </div>
       </header>
 
       {/* Department selector */}
@@ -366,76 +575,94 @@ const Timetable = () => {
         </div>
       )}
 
-      {/* Day tabs */}
-      <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
-        {DAYS.map(day => (
-          <button
-            key={day}
-            onClick={() => setActiveDay(day)}
-            className={`flex-1 min-w-[56px] py-2.5 font-mono text-xs font-bold uppercase border-2 border-foreground transition-all active:translate-y-0.5
-              ${activeDay === day
-                ? "bg-primary text-foreground shadow-brutal-sm"
-                : day === todayName
-                  ? "bg-card text-foreground border-dashed"
-                  : "bg-muted text-muted-foreground"
-              }`}
-          >
-            {DAY_SHORT[day]}
-            {day === todayName && <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto mt-1" />}
-          </button>
-        ))}
-      </div>
+      {/* ══════ WEEKLY GRID VIEW (desktop) ══════ */}
+      {viewMode === "week" && (
+        <div className="hidden md:block px-3 mt-3 pb-16">
+          <WeeklyGrid
+            schedule={schedule}
+            todayName={todayName}
+            now={now}
+            onEventClick={setSelectedEvent}
+            onAddClick={openAddForDay}
+          />
+        </div>
+      )}
 
-      {/* Events list */}
-      <div className="flex-1 px-3 py-3 space-y-2 pb-24">
-        {dayEvents.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground font-mono text-sm">
-            No classes on {activeDay}. Tap + to add one.
-          </div>
-        ) : (
-          dayEvents.map(event => {
-            const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
-            const isNow = activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
-            const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
-            return (
+      {/* ══════ DAY VIEW (mobile default + desktop day mode) ══════ */}
+      {(viewMode === "day" || typeof window !== "undefined") && (
+        <div className={viewMode === "week" ? "md:hidden" : ""}>
+          {/* Day tabs */}
+          <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
+            {DAYS.map(day => (
               <button
-                key={event.id}
-                onClick={() => setSelectedEvent(event)}
-                className={`w-full text-left border-2 border-foreground p-3 transition-all active:translate-y-0.5
-                  ${isNow ? "bg-primary/10 border-primary shadow-brutal-sm" : "bg-card shadow-brutal-sm"}
-                  ${event.completed ? "opacity-50" : ""}
-                  ${isPast && !event.completed ? "opacity-70" : ""}
-                `}
+                key={day}
+                onClick={() => setActiveDay(day)}
+                className={`flex-1 min-w-[56px] py-2.5 font-mono text-xs font-bold uppercase border-2 border-foreground transition-all active:translate-y-0.5
+                  ${activeDay === day
+                    ? "bg-primary text-foreground shadow-brutal-sm"
+                    : day === todayName
+                      ? "bg-card text-foreground border-dashed"
+                      : "bg-muted text-muted-foreground"
+                  }`}
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                        style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
-                      />
-                      <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
-                        {event.subject}
-                      </span>
-                      {isNow && <span className="font-mono text-[10px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase">Live</span>}
-                    </div>
-                    <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-3">
-                      <span>{event.startTime}–{event.endTime}</span>
-                      <span className="flex items-center gap-0.5"><MapPin className="w-3 h-3" />{event.location}</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold">
-                      {event.tag}
-                    </span>
-                    <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
-                  </div>
-                </div>
+                {DAY_SHORT[day]}
+                {day === todayName && <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto mt-1" />}
               </button>
-            );
-          })
-        )}
-      </div>
+            ))}
+          </div>
+
+          {/* Events list */}
+          <div className="flex-1 px-3 py-3 space-y-2 pb-24">
+            {dayEvents.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground font-mono text-sm">
+                No classes on {activeDay}. Tap + to add one.
+              </div>
+            ) : (
+              dayEvents.map(event => {
+                const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
+                const isNow = activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
+                const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
+                return (
+                  <button
+                    key={event.id}
+                    onClick={() => setSelectedEvent(event)}
+                    className={`w-full text-left border-2 border-foreground p-3 transition-all active:translate-y-0.5
+                      ${isNow ? "bg-primary/10 border-primary shadow-brutal-sm" : "bg-card shadow-brutal-sm"}
+                      ${event.completed ? "opacity-50" : ""}
+                      ${isPast && !event.completed ? "opacity-70" : ""}
+                    `}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="w-3 h-3 rounded-full border-2 flex-shrink-0"
+                            style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
+                          />
+                          <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
+                            {event.subject}
+                          </span>
+                          {isNow && <span className="font-mono text-[10px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase">Live</span>}
+                        </div>
+                        <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-3">
+                          <span>{event.startTime}–{event.endTime}</span>
+                          <span className="flex items-center gap-0.5"><MapPin className="w-3 h-3" />{event.location}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold">
+                          {event.tag}
+                        </span>
+                        <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Stats toggle */}
       <div className="fixed bottom-0 left-0 right-0 z-30">
@@ -535,9 +762,20 @@ const Timetable = () => {
       {showAddModal && (
         <EventModal
           initialEvent={editEvent}
-          activeDay={activeDay}
+          activeDay={addDay || activeDay}
           onSave={saveEvent}
-          onClose={() => { setShowAddModal(false); setEditEvent(null); }}
+          onClose={() => { setShowAddModal(false); setEditEvent(null); setAddDay(null); }}
+        />
+      )}
+
+      {/* Manage mode overlay */}
+      {showManage && (
+        <ManageMode
+          schedule={schedule}
+          onEdit={(event) => { setEditEvent(event); setShowManage(false); setShowAddModal(true); }}
+          onDelete={(id) => deleteEvent(id)}
+          onAdd={() => { setShowManage(false); setEditEvent(null); setAddDay(null); setShowAddModal(true); }}
+          onClose={() => setShowManage(false)}
         />
       )}
     </div>
