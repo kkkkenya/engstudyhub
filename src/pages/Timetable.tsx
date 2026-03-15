@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Clock, MapPin, BookOpen, ChevronDown, ChevronUp, X, Check, Plus, Trash2, Edit3 } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, BookOpen, ChevronDown, ChevronUp, X, Check, Plus, Trash2, Edit3, GraduationCap } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
 // ─── Types ───
@@ -9,8 +9,8 @@ type EventTag = "lecture" | "lab" | "study" | "exam";
 interface TimetableEvent {
   id: string;
   subject: string;
-  startTime: string; // "HH:MM"
-  endTime: string;   // "HH:MM"
+  startTime: string;
+  endTime: string;
   location: string;
   description: string;
   tag: EventTag;
@@ -19,62 +19,173 @@ interface TimetableEvent {
 
 type DayName = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
 
+interface Department {
+  id: string;
+  name: string;
+  shortName: string;
+  schedule: Record<DayName, TimetableEvent[]>;
+}
+
 const DAYS: DayName[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 const DAY_SHORT: Record<DayName, string> = { Monday: "Mon", Tuesday: "Tue", Wednesday: "Wed", Thursday: "Thu", Friday: "Fri" };
 
-// ─── Color map per subject ───
-const SUBJECT_COLORS: Record<string, string> = {
-  "EMM 211": "bg-primary/20 border-primary text-primary",
-  "EMM 219": "bg-accent/20 border-accent text-accent",
-  "EMM 214": "bg-destructive/20 border-destructive text-destructive",
-  "ECU 203": "bg-ring/20 border-ring text-ring",
-  "EMM 205": "bg-muted-foreground/20 border-muted-foreground text-muted-foreground",
-  "EMM 216": "bg-primary/30 border-primary text-primary",
-  "EMM 200": "bg-accent/30 border-accent text-accent",
-  "ECU 202": "bg-destructive/30 border-destructive text-destructive",
-};
+// ─── Subject color helper ───
+const PALETTE = [
+  "hsl(var(--primary))",
+  "hsl(var(--accent))",
+  "hsl(var(--destructive))",
+  "hsl(var(--ring))",
+  "hsl(var(--muted-foreground))",
+  "hsl(160, 68%, 28%)",
+  "hsl(38, 91%, 40%)",
+  "hsl(0, 64%, 50%)",
+  "hsl(200, 70%, 45%)",
+  "hsl(280, 60%, 50%)",
+  "hsl(330, 70%, 50%)",
+  "hsl(90, 60%, 40%)",
+];
 
-const SUBJECT_BG: Record<string, string> = {
-  "EMM 211": "hsl(var(--primary))",
-  "EMM 219": "hsl(var(--accent))",
-  "EMM 214": "hsl(var(--destructive))",
-  "ECU 203": "hsl(var(--ring))",
-  "EMM 205": "hsl(var(--muted-foreground))",
-  "EMM 216": "hsl(160, 68%, 28%)",
-  "EMM 200": "hsl(38, 91%, 40%)",
-  "ECU 202": "hsl(0, 64%, 50%)",
+const subjectColorCache: Record<string, string> = {};
+let colorIdx = 0;
+const getSubjectColor = (subject: string) => {
+  if (!subjectColorCache[subject]) {
+    subjectColorCache[subject] = PALETTE[colorIdx % PALETTE.length];
+    colorIdx++;
+  }
+  return subjectColorCache[subject];
 };
 
 let idCounter = 0;
 const genId = () => `evt-${++idCounter}`;
 
-// ─── Initial schedule ───
-const INITIAL_SCHEDULE: Record<DayName, TimetableEvent[]> = {
-  Monday: [
-    { id: genId(), subject: "EMM 211", startTime: "09:00", endTime: "11:00", location: "SC10", description: "Engineering Mathematics", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 219", startTime: "11:00", endTime: "13:00", location: "SC10", description: "Thermodynamics", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 214", startTime: "14:00", endTime: "17:00", location: "TBA", description: "Fluid Mechanics", tag: "lecture", completed: false },
-  ],
-  Tuesday: [
-    { id: genId(), subject: "ECU 203", startTime: "07:00", endTime: "09:00", location: "SC2", description: "Communication Skills", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 205", startTime: "09:00", endTime: "12:00", location: "TBA", description: "Strength of Materials", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 216", startTime: "15:00", endTime: "17:00", location: "Workshop", description: "Workshop Technology", tag: "lab", completed: false },
-  ],
-  Wednesday: [
-    { id: genId(), subject: "EMM 200", startTime: "09:00", endTime: "12:00", location: "C.LAB", description: "Computer Applications", tag: "lab", completed: false },
-    { id: genId(), subject: "EMM 216", startTime: "14:00", endTime: "17:00", location: "TBA", description: "Workshop Technology", tag: "lecture", completed: false },
-  ],
-  Thursday: [
-    { id: genId(), subject: "ECU 202", startTime: "07:00", endTime: "09:00", location: "SC2", description: "Development Studies", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 211", startTime: "14:00", endTime: "17:00", location: "TBA", description: "Engineering Mathematics", tag: "lecture", completed: false },
-  ],
-  Friday: [
-    { id: genId(), subject: "EMM 214", startTime: "07:00", endTime: "09:00", location: "OML2", description: "Fluid Mechanics", tag: "lab", completed: false },
-    { id: genId(), subject: "ECU 203", startTime: "09:00", endTime: "11:00", location: "SC2", description: "Communication Skills", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 205", startTime: "15:00", endTime: "17:00", location: "SC13", description: "Strength of Materials", tag: "lecture", completed: false },
-    { id: genId(), subject: "EMM 219", startTime: "17:00", endTime: "18:00", location: "SC13", description: "Thermodynamics", tag: "lecture", completed: false },
-  ],
-};
+const evt = (subject: string, start: string, end: string, location: string, desc: string, tag: EventTag = "lecture"): TimetableEvent => ({
+  id: genId(), subject, startTime: start, endTime: end, location, description: desc, tag, completed: false,
+});
+
+// ─── Department schedules ───
+const DEPARTMENTS: Department[] = [
+  {
+    id: "mechanical",
+    name: "Mechanical Engineering",
+    shortName: "Mech",
+    schedule: {
+      Monday: [
+        evt("EMM 211", "09:00", "11:00", "SC10", "Engineering Mathematics"),
+        evt("EMM 219", "11:00", "13:00", "SC10", "Thermodynamics"),
+        evt("EMM 214", "14:00", "17:00", "TBA", "Fluid Mechanics"),
+      ],
+      Tuesday: [
+        evt("ECU 203", "07:00", "09:00", "SC2", "Communication Skills"),
+        evt("EMM 205", "09:00", "12:00", "TBA", "Strength of Materials"),
+        evt("EMM 216", "15:00", "17:00", "Workshop", "Workshop Technology", "lab"),
+      ],
+      Wednesday: [
+        evt("EMM 200", "09:00", "12:00", "C.LAB", "Computer Applications", "lab"),
+        evt("EMM 216", "14:00", "17:00", "TBA", "Workshop Technology"),
+      ],
+      Thursday: [
+        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
+        evt("EMM 211", "14:00", "17:00", "TBA", "Engineering Mathematics"),
+      ],
+      Friday: [
+        evt("EMM 214", "07:00", "09:00", "OML2", "Fluid Mechanics", "lab"),
+        evt("ECU 203", "09:00", "11:00", "SC2", "Communication Skills"),
+        evt("EMM 205", "15:00", "17:00", "SC13", "Strength of Materials"),
+        evt("EMM 219", "17:00", "18:00", "SC13", "Thermodynamics"),
+      ],
+    },
+  },
+  {
+    id: "electrical",
+    name: "Electrical Engineering",
+    shortName: "Elec",
+    schedule: {
+      Monday: [
+        evt("EEE 201", "07:00", "09:00", "SC3", "Circuit Analysis"),
+        evt("EEE 210", "10:00", "12:00", "E.LAB", "Electronics Lab", "lab"),
+        evt("ECU 203", "14:00", "16:00", "SC2", "Communication Skills"),
+      ],
+      Tuesday: [
+        evt("EEE 205", "08:00", "10:00", "SC5", "Electromagnetic Theory"),
+        evt("EEE 215", "11:00", "13:00", "SC5", "Power Systems"),
+        evt("EEE 220", "14:00", "17:00", "E.LAB", "Machines Lab", "lab"),
+      ],
+      Wednesday: [
+        evt("EEE 201", "09:00", "11:00", "SC3", "Circuit Analysis"),
+        evt("ECU 202", "13:00", "15:00", "SC2", "Development Studies"),
+      ],
+      Thursday: [
+        evt("EEE 205", "07:00", "09:00", "SC5", "Electromagnetic Theory"),
+        evt("EEE 215", "10:00", "12:00", "SC5", "Power Systems"),
+        evt("EEE 210", "14:00", "16:00", "E.LAB", "Electronics Lab", "lab"),
+      ],
+      Friday: [
+        evt("EEE 220", "08:00", "10:00", "SC3", "Electrical Machines"),
+        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Applications", "lab"),
+      ],
+    },
+  },
+  {
+    id: "civil",
+    name: "Civil Engineering",
+    shortName: "Civil",
+    schedule: {
+      Monday: [
+        evt("ECE 201", "07:00", "09:00", "SC4", "Structural Analysis"),
+        evt("ECE 210", "10:00", "13:00", "S.LAB", "Surveying Lab", "lab"),
+      ],
+      Tuesday: [
+        evt("ECE 205", "08:00", "10:00", "SC4", "Geotechnics"),
+        evt("ECU 203", "11:00", "13:00", "SC2", "Communication Skills"),
+        evt("ECE 215", "14:00", "17:00", "TBA", "Hydraulics"),
+      ],
+      Wednesday: [
+        evt("ECE 201", "09:00", "11:00", "SC4", "Structural Analysis"),
+        evt("ECE 220", "13:00", "16:00", "C.LAB", "CAD Lab", "lab"),
+      ],
+      Thursday: [
+        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
+        evt("ECE 205", "10:00", "12:00", "SC4", "Geotechnics"),
+        evt("ECE 215", "14:00", "16:00", "TBA", "Hydraulics"),
+      ],
+      Friday: [
+        evt("ECE 210", "08:00", "10:00", "SC4", "Surveying"),
+        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Applications", "lab"),
+        evt("ECE 220", "14:00", "16:00", "TBA", "Construction Technology"),
+      ],
+    },
+  },
+  {
+    id: "mechatronics",
+    name: "Mechatronics Engineering",
+    shortName: "Mech-tronics",
+    schedule: {
+      Monday: [
+        evt("EMT 201", "08:00", "10:00", "SC6", "Control Systems"),
+        evt("EMT 210", "11:00", "13:00", "R.LAB", "Robotics Lab", "lab"),
+        evt("EMM 211", "14:00", "16:00", "SC10", "Engineering Mathematics"),
+      ],
+      Tuesday: [
+        evt("EMT 205", "07:00", "09:00", "SC6", "Microprocessors"),
+        evt("ECU 203", "10:00", "12:00", "SC2", "Communication Skills"),
+        evt("EMT 215", "14:00", "17:00", "E.LAB", "Sensors & Actuators", "lab"),
+      ],
+      Wednesday: [
+        evt("EMT 201", "09:00", "11:00", "SC6", "Control Systems"),
+        evt("EMM 200", "13:00", "16:00", "C.LAB", "Computer Applications", "lab"),
+      ],
+      Thursday: [
+        evt("ECU 202", "07:00", "09:00", "SC2", "Development Studies"),
+        evt("EMT 205", "10:00", "12:00", "SC6", "Microprocessors"),
+        evt("EMT 210", "14:00", "16:00", "R.LAB", "Robotics Lab", "lab"),
+      ],
+      Friday: [
+        evt("EMT 215", "08:00", "10:00", "SC6", "Sensors & Actuators"),
+        evt("EMM 211", "11:00", "13:00", "SC10", "Engineering Mathematics"),
+      ],
+    },
+  },
+];
 
 // ─── Helpers ───
 const timeToMin = (t: string) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
@@ -86,7 +197,7 @@ const formatCountdown = (mins: number) => {
 };
 
 const getTodayDayName = (): DayName => {
-  const d = new Date().getDay(); // 0=Sun
+  const d = new Date().getDay();
   const map: Record<number, DayName> = { 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday" };
   return map[d] || "Monday";
 };
@@ -95,7 +206,11 @@ const getCurrentMinutes = () => { const n = new Date(); return n.getHours() * 60
 
 // ─── Component ───
 const Timetable = () => {
-  const [schedule, setSchedule] = useState<Record<DayName, TimetableEvent[]>>(INITIAL_SCHEDULE);
+  const [deptId, setDeptId] = useState<string>(DEPARTMENTS[0].id);
+  const [showDeptPicker, setShowDeptPicker] = useState(false);
+  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(
+    () => Object.fromEntries(DEPARTMENTS.map(d => [d.id, d.schedule]))
+  );
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
   const [showStats, setShowStats] = useState(false);
@@ -103,7 +218,9 @@ const Timetable = () => {
   const [editEvent, setEditEvent] = useState<TimetableEvent | null>(null);
   const [now, setNow] = useState(getCurrentMinutes());
 
-  // Live clock
+  const dept = DEPARTMENTS.find(d => d.id === deptId)!;
+  const schedule = schedules[deptId];
+
   useEffect(() => {
     const interval = setInterval(() => setNow(getCurrentMinutes()), 30000);
     return () => clearInterval(interval);
@@ -112,14 +229,12 @@ const Timetable = () => {
   const todayName = getTodayDayName();
   const todayEvents = schedule[todayName] || [];
 
-  // Next class calculation
   const getNextClass = useCallback(() => {
     const events = todayEvents.filter(e => !e.completed);
     for (const e of events) {
       const start = timeToMin(e.startTime);
       if (start > now) return { event: e, minsUntil: start - now };
     }
-    // Check if currently in a class
     for (const e of events) {
       const start = timeToMin(e.startTime);
       const end = timeToMin(e.endTime);
@@ -130,7 +245,6 @@ const Timetable = () => {
 
   const nextClass = getNextClass();
 
-  // Stats
   const totalHoursToday = todayEvents.reduce((sum, e) => sum + (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60, 0);
   const completedToday = todayEvents.filter(e => e.completed).length;
   const weeklyHours: Record<string, number> = {};
@@ -139,8 +253,12 @@ const Timetable = () => {
     weeklyHours[e.subject] = (weeklyHours[e.subject] || 0) + hrs;
   });
 
+  const updateSchedule = (updater: (prev: Record<DayName, TimetableEvent[]>) => Record<DayName, TimetableEvent[]>) => {
+    setSchedules(prev => ({ ...prev, [deptId]: updater(prev[deptId]) }));
+  };
+
   const toggleComplete = (id: string) => {
-    setSchedule(prev => {
+    updateSchedule(prev => {
       const updated = { ...prev };
       for (const day of DAYS) {
         updated[day] = updated[day].map(e => e.id === id ? { ...e, completed: !e.completed } : e);
@@ -150,7 +268,7 @@ const Timetable = () => {
   };
 
   const deleteEvent = (id: string) => {
-    setSchedule(prev => {
+    updateSchedule(prev => {
       const updated = { ...prev };
       for (const day of DAYS) {
         updated[day] = updated[day].filter(e => e.id !== id);
@@ -161,10 +279,9 @@ const Timetable = () => {
   };
 
   const saveEvent = (day: DayName, event: TimetableEvent) => {
-    setSchedule(prev => {
+    updateSchedule(prev => {
       const updated = { ...prev };
       if (editEvent) {
-        // Remove from all days first
         for (const d of DAYS) {
           updated[d] = updated[d].filter(e => e.id !== editEvent.id);
         }
@@ -191,6 +308,37 @@ const Timetable = () => {
           <Plus className="w-5 h-5" />
         </button>
       </header>
+
+      {/* Department selector */}
+      <div className="px-3 mt-3">
+        <button
+          onClick={() => setShowDeptPicker(!showDeptPicker)}
+          className="w-full flex items-center justify-between bg-card border-2 border-foreground px-3 py-2.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+        >
+          <div className="flex items-center gap-2">
+            <GraduationCap className="w-4 h-4 text-primary" />
+            <span className="font-display font-bold text-sm">{dept.name}</span>
+          </div>
+          <ChevronDown className={`w-4 h-4 transition-transform ${showDeptPicker ? "rotate-180" : ""}`} />
+        </button>
+        {showDeptPicker && (
+          <div className="border-2 border-t-0 border-foreground bg-card divide-y-2 divide-foreground">
+            {DEPARTMENTS.map(d => (
+              <button
+                key={d.id}
+                onClick={() => { setDeptId(d.id); setShowDeptPicker(false); setSelectedEvent(null); }}
+                className={`w-full text-left px-3 py-3 font-mono text-sm font-bold transition-colors active:bg-primary/20
+                  ${d.id === deptId ? "bg-primary/10 text-primary" : "hover:bg-muted"}`}
+              >
+                <div className="flex items-center justify-between">
+                  <span>{d.name}</span>
+                  {d.id === deptId && <Check className="w-4 h-4 text-primary" />}
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Next class banner */}
       {nextClass && (
@@ -264,7 +412,7 @@ const Timetable = () => {
                     <div className="flex items-center gap-2">
                       <span
                         className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                        style={{ backgroundColor: SUBJECT_BG[event.subject] || "hsl(var(--muted-foreground))", borderColor: "hsl(var(--foreground))" }}
+                        style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }}
                       />
                       <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
                         {event.subject}
@@ -321,11 +469,11 @@ const Timetable = () => {
                   <div key={subj} className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: SUBJECT_BG[subj] || "hsl(var(--muted-foreground))" }}
+                      style={{ backgroundColor: getSubjectColor(subj) }}
                     />
                     <span className="font-mono text-xs font-bold flex-1">{subj}</span>
                     <div className="flex-1 h-2 bg-muted border border-foreground">
-                      <div className="h-full" style={{ width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`, backgroundColor: SUBJECT_BG[subj] || "hsl(var(--muted-foreground))" }} />
+                      <div className="h-full" style={{ width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`, backgroundColor: getSubjectColor(subj) }} />
                     </div>
                     <span className="font-mono text-[10px] text-muted-foreground w-8 text-right">{hrs}h</span>
                   </div>
@@ -348,7 +496,7 @@ const Timetable = () => {
             <div className="flex items-center gap-2 mb-3">
               <span
                 className="w-4 h-4 rounded-full border-2"
-                style={{ backgroundColor: SUBJECT_BG[selectedEvent.subject] || "hsl(var(--muted-foreground))", borderColor: "hsl(var(--foreground))" }}
+                style={{ backgroundColor: getSubjectColor(selectedEvent.subject), borderColor: "hsl(var(--foreground))" }}
               />
               <h2 className="font-display font-black text-xl">{selectedEvent.subject}</h2>
               <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold ml-auto">{selectedEvent.tag}</span>
@@ -360,7 +508,7 @@ const Timetable = () => {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => toggleComplete(selectedEvent.id)}
+                onClick={() => { toggleComplete(selectedEvent.id); setSelectedEvent({ ...selectedEvent, completed: !selectedEvent.completed }); }}
                 className={`flex-1 border-2 border-foreground py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1
                   ${selectedEvent.completed ? "bg-muted" : "bg-primary"}`}
               >
