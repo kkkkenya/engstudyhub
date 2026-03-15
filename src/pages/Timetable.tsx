@@ -698,7 +698,6 @@ const Timetable = () => {
               })
             )}
           </div>
-        </div>
       </div>
 
       {/* Stats toggle */}
