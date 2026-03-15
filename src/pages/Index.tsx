@@ -136,9 +136,15 @@ const Index = () => {
         </div>
         <div className="hidden md:flex items-center gap-6 font-mono text-sm font-bold uppercase">
           {NAV_LINKS.map((link) =>
-          <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
-              {link.label}
-            </a>
+            link.isRoute ? (
+              <Link key={link.href} to={link.href} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+                {link.label}
+              </a>
+            )
           )}
         </div>
         <div className="hidden md:block">
