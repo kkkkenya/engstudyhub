@@ -197,7 +197,7 @@ const getTodayDayName = (): DayName => {
 const getCurrentMinutes = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
 
 // Time slots for the weekly grid (7am to 6pm)
-const GRID_HOURS = Array.from({ length: 12 }, (_, i) => i + 7); // 7–18
+
 
 // ─── Weekly Grid View (Desktop) ───
 const HOUR_HEIGHT = 64; // px per hour
