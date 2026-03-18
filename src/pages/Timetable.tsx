@@ -686,6 +686,8 @@ const Timetable = () => {
         </div>
       </header>
 
+      {/* Exportable content area */}
+      <div ref={timetableRef}>
       {/* Department selector */}
       <div className="px-3 mt-3">
         <button
