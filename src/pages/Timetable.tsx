@@ -491,10 +491,56 @@ const Timetable = () => {
   const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
   const schedule = schedules[deptId];
 
+  // Persist to localStorage
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY_SCHEDULES, JSON.stringify(schedules)); } catch {}
+  }, [schedules]);
+
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY_DEPT, deptId); } catch {}
+  }, [deptId]);
+
   useEffect(() => {
     const interval = setInterval(() => setNow(getCurrentMinutes()), 30000);
     return () => clearInterval(interval);
   }, []);
+
+  const exportAsImage = async () => {
+    if (!timetableRef.current || exporting) return;
+    setExporting(true);
+    try {
+      const dataUrl = await toPng(timetableRef.current, { cacheBust: true, backgroundColor: '#ffffff' });
+      const link = document.createElement("a");
+      link.download = `timetable-${dept.shortName}-${activeDay}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Export failed:", err);
+    }
+    setExporting(false);
+  };
+
+  const shareTimetable = async () => {
+    if (!timetableRef.current) return;
+    setExporting(true);
+    try {
+      const dataUrl = await toPng(timetableRef.current, { cacheBust: true, backgroundColor: '#ffffff' });
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], `timetable-${dept.shortName}.png`, { type: "image/png" });
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: `${dept.name} Timetable` });
+      } else {
+        // Fallback to download
+        const link = document.createElement("a");
+        link.download = file.name;
+        link.href = dataUrl;
+        link.click();
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+    }
+    setExporting(false);
+  };
 
   const todayName = getTodayDayName();
   const todayEvents = schedule[todayName] || [];
