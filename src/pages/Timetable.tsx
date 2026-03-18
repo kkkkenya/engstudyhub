@@ -17,6 +17,8 @@ import {
   Grid3X3,
   List,
   Settings2,
+  Download,
+  Share2,
 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
