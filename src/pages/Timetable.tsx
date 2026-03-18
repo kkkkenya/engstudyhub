@@ -647,6 +647,23 @@ const Timetable = () => {
               <Grid3X3 className="w-4 h-4" />
             </button>
           </div>
+          {/* Export/Share buttons */}
+          <button
+            onClick={exportAsImage}
+            disabled={exporting}
+            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
+            title="Download as image"
+          >
+            <Download className="w-5 h-5" />
+          </button>
+          <button
+            onClick={shareTimetable}
+            disabled={exporting}
+            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
+            title="Share timetable"
+          >
+            <Share2 className="w-5 h-5" />
+          </button>
           {/* Manage button */}
           <button
             onClick={() => setShowManage(true)}
