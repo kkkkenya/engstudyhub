@@ -461,13 +461,21 @@ const ManageMode = ({
   );
 };
 
-// ─── Main Component ───
+const STORAGE_KEY_SCHEDULES = "timetable-schedules";
+const STORAGE_KEY_DEPT = "timetable-dept";
+
 const Timetable = () => {
-  const [deptId, setDeptId] = useState<string>(DEPARTMENTS[0].id);
+  const [deptId, setDeptId] = useState<string>(() => {
+    try { return localStorage.getItem(STORAGE_KEY_DEPT) || DEPARTMENTS[0].id; } catch { return DEPARTMENTS[0].id; }
+  });
   const [showDeptPicker, setShowDeptPicker] = useState(false);
-  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() =>
-    Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule])),
-  );
+  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_SCHEDULES);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
+  });
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
   const [showStats, setShowStats] = useState(false);
@@ -477,6 +485,8 @@ const Timetable = () => {
   const [viewMode, setViewMode] = useState<"day" | "week">("day");
   const [showManage, setShowManage] = useState(false);
   const [addDay, setAddDay] = useState<DayName | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const timetableRef = useRef<HTMLDivElement>(null);
 
   const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
   const schedule = schedules[deptId];
