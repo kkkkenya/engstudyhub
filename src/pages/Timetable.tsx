@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
+import { toPng } from "html-to-image";
 import {
   ArrowLeft,
   Clock,
@@ -16,6 +17,8 @@ import {
   Grid3X3,
   List,
   Settings2,
+  Download,
+  Share2,
 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
@@ -458,13 +461,21 @@ const ManageMode = ({
   );
 };
 
-// ─── Main Component ───
+const STORAGE_KEY_SCHEDULES = "timetable-schedules";
+const STORAGE_KEY_DEPT = "timetable-dept";
+
 const Timetable = () => {
-  const [deptId, setDeptId] = useState<string>(DEPARTMENTS[0].id);
+  const [deptId, setDeptId] = useState<string>(() => {
+    try { return localStorage.getItem(STORAGE_KEY_DEPT) || DEPARTMENTS[0].id; } catch { return DEPARTMENTS[0].id; }
+  });
   const [showDeptPicker, setShowDeptPicker] = useState(false);
-  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() =>
-    Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule])),
-  );
+  const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_SCHEDULES);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
+  });
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
   const [showStats, setShowStats] = useState(false);
@@ -474,14 +485,62 @@ const Timetable = () => {
   const [viewMode, setViewMode] = useState<"day" | "week">("day");
   const [showManage, setShowManage] = useState(false);
   const [addDay, setAddDay] = useState<DayName | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const timetableRef = useRef<HTMLDivElement>(null);
 
   const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
   const schedule = schedules[deptId];
+
+  // Persist to localStorage
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY_SCHEDULES, JSON.stringify(schedules)); } catch {}
+  }, [schedules]);
+
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY_DEPT, deptId); } catch {}
+  }, [deptId]);
 
   useEffect(() => {
     const interval = setInterval(() => setNow(getCurrentMinutes()), 30000);
     return () => clearInterval(interval);
   }, []);
+
+  const exportAsImage = async () => {
+    if (!timetableRef.current || exporting) return;
+    setExporting(true);
+    try {
+      const dataUrl = await toPng(timetableRef.current, { cacheBust: true, backgroundColor: '#ffffff' });
+      const link = document.createElement("a");
+      link.download = `timetable-${dept.shortName}-${activeDay}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error("Export failed:", err);
+    }
+    setExporting(false);
+  };
+
+  const shareTimetable = async () => {
+    if (!timetableRef.current) return;
+    setExporting(true);
+    try {
+      const dataUrl = await toPng(timetableRef.current, { cacheBust: true, backgroundColor: '#ffffff' });
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], `timetable-${dept.shortName}.png`, { type: "image/png" });
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: `${dept.name} Timetable` });
+      } else {
+        // Fallback to download
+        const link = document.createElement("a");
+        link.download = file.name;
+        link.href = dataUrl;
+        link.click();
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+    }
+    setExporting(false);
+  };
 
   const todayName = getTodayDayName();
   const todayEvents = schedule[todayName] || [];
@@ -588,6 +647,23 @@ const Timetable = () => {
               <Grid3X3 className="w-4 h-4" />
             </button>
           </div>
+          {/* Export/Share buttons */}
+          <button
+            onClick={exportAsImage}
+            disabled={exporting}
+            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
+            title="Download as image"
+          >
+            <Download className="w-5 h-5" />
+          </button>
+          <button
+            onClick={shareTimetable}
+            disabled={exporting}
+            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
+            title="Share timetable"
+          >
+            <Share2 className="w-5 h-5" />
+          </button>
           {/* Manage button */}
           <button
             onClick={() => setShowManage(true)}
@@ -610,6 +686,8 @@ const Timetable = () => {
         </div>
       </header>
 
+      {/* Exportable content area */}
+      <div ref={timetableRef}>
       {/* Department selector */}
       <div className="px-3 mt-3">
         <button
@@ -772,6 +850,7 @@ const Timetable = () => {
           )}
         </div>
       </div>
+      </div>{/* end exportable ref */}
 
       {/* Stats toggle */}
       <div className="fixed bottom-0 left-0 right-0 z-30">
