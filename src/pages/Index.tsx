@@ -16,7 +16,7 @@ const EMAIL = "gregorykimemiah@gmail.com";
 const NAV_LINKS = [
 { href: "#home", label: "Home", icon: Home },
 { href: "#about", label: "About", icon: Info },
-{ href: "#projects", label: "Projects", icon: FolderOpen },
+{ href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
 { href: "#pricing", label: "Pricing", icon: CreditCard },
 { href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
 { href: "#join", label: "Join", icon: UserPlus }];
