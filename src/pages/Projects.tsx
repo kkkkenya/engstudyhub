@@ -1007,29 +1007,29 @@ export default function Projects() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white font-sans">
+    <div className="min-h-screen bg-background text-foreground font-body">
       {/* Header */}
-      <div className="border-b border-white/10 bg-gray-950/80 backdrop-blur sticky top-0 z-10">
+      <div className="border-b-4 border-foreground bg-card sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 rounded-lg object-contain" />
-              <span className="font-semibold tracking-tight hidden sm:inline">Engineering Hub</span>
+              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 object-contain" />
+              <span className="font-display font-black tracking-tight hidden sm:inline uppercase">Engineering Hub</span>
             </Link>
-            <span className="text-white/30 hidden sm:inline">/</span>
-            <span className="text-white/60 text-sm">Project Library</span>
+            <span className="text-muted-foreground hidden sm:inline font-mono">/</span>
+            <span className="text-muted-foreground text-sm font-mono">Project Library</span>
           </div>
           <div className="flex items-center gap-2">
-            <Link to="/" className="text-xs text-white/50 hover:text-white transition flex items-center gap-1">
+            <Link to="/" className="text-xs text-muted-foreground hover:text-foreground transition flex items-center gap-1 font-mono">
               <ArrowLeft className="w-3 h-3" /> Back
             </Link>
             <a
               href={DISCORD_URL}
               target="_blank"
               rel="noreferrer"
-              className="text-xs bg-white/10 hover:bg-white/20 transition px-3 py-1.5 rounded-lg"
+              className="text-xs bg-foreground text-card font-display font-bold uppercase px-3 py-1.5 border-2 border-foreground shadow-brutal-sm hover:bg-primary transition active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
             >
-              Join Discord →
+              Discord →
             </a>
           </div>
         </div>
@@ -1038,11 +1038,11 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Hero */}
         <div className="mb-8 sm:mb-10">
-          <div className="inline-block text-xs font-medium bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
+          <div className="inline-block text-xs font-display font-bold bg-primary text-foreground px-3 py-1 border-2 border-foreground mb-4 uppercase tracking-wider">
             We don't just study. We build.
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Engineering project library</h1>
-          <p className="text-white/50 text-base sm:text-lg max-w-2xl">
+          <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight mb-3 uppercase">Engineering project library</h1>
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl font-body">
             Step-by-step projects for Kenyan engineering students — with tools, KES budgets, Nairobi material sources,
             and squad links.
           </p>
@@ -1056,9 +1056,9 @@ export default function Projects() {
             { num: "12", label: "Disciplines" },
             { num: "4", label: "Year levels" },
           ].map((s) => (
-            <div key={s.label} className="bg-white/5 rounded-xl p-3 sm:p-4 border border-white/10">
-              <div className="text-xl sm:text-2xl font-bold text-white">{s.num}</div>
-              <div className="text-xs text-white/40 mt-1">{s.label}</div>
+            <div key={s.label} className="bg-card p-3 sm:p-4 border-2 border-foreground shadow-brutal-sm">
+              <div className="text-xl sm:text-2xl font-display font-black">{s.num}</div>
+              <div className="text-xs text-muted-foreground mt-1 font-mono uppercase">{s.label}</div>
             </div>
           ))}
         </div>
@@ -1068,7 +1068,7 @@ export default function Projects() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search projects, topics, tools..."
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-orange-500/50 mb-4 transition"
+          className="w-full bg-card border-2 border-foreground px-4 py-3 text-sm font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary mb-4 transition"
         />
 
         {/* Filters */}
@@ -1080,14 +1080,14 @@ export default function Projects() {
             { val: fDur, set: setFDur, opts: DURATIONS, label: "Duration" },
           ].map((f) => (
             <div key={f.label}>
-              <label className="block text-xs text-white/40 mb-1">{f.label}</label>
+              <label className="block text-xs text-muted-foreground mb-1 font-mono uppercase">{f.label}</label>
               <select
                 value={f.val}
                 onChange={(e) => f.set(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500/50 cursor-pointer"
+                className="w-full bg-card border-2 border-foreground px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
               >
                 {f.opts.map((o) => (
-                  <option key={o} value={o} className="bg-gray-900">
+                  <option key={o} value={o}>
                     {o}
                   </option>
                 ))}
@@ -1098,7 +1098,7 @@ export default function Projects() {
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-20 text-white/30">
+          <div className="text-center py-20 text-muted-foreground font-mono">
             No projects match your filters. Try adjusting your search.
           </div>
         ) : (
@@ -1107,46 +1107,46 @@ export default function Projects() {
               <div
                 key={p.id}
                 onClick={() => setSelected(p)}
-                className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 cursor-pointer hover:border-orange-500/40 hover:bg-white/[0.08] transition group flex flex-col"
+                className="bg-card border-2 border-foreground p-4 sm:p-5 cursor-pointer hover:shadow-brutal transition-shadow group flex flex-col"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <span className={`text-xs font-medium px-2 py-1 rounded-lg ${diffColors[p.difficulty]}`}>
+                  <span className={`text-xs font-mono font-bold px-2 py-1 border border-foreground ${diffColors[p.difficulty]}`}>
                     {p.difficulty}
                   </span>
                   <span
-                    className={`text-xs px-2 py-1 rounded-lg ${discColors[p.discipline] || "bg-white/10 text-white/60"}`}
+                    className={`text-xs font-mono px-2 py-1 border border-foreground ${discColors[p.discipline] || "bg-muted text-foreground"}`}
                   >
                     {p.discipline}
                   </span>
                 </div>
-                <h3 className="font-semibold text-base mb-2 group-hover:text-orange-400 transition leading-snug">
+                <h3 className="font-display font-bold text-base mb-2 group-hover:text-primary transition leading-snug uppercase">
                   {p.title}
                 </h3>
-                <p className="text-white/50 text-sm leading-relaxed mb-4 flex-1">{p.desc}</p>
-                <div className="flex flex-wrap gap-3 text-xs text-white/40 mb-4">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1 font-body">{p.desc}</p>
+                <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4 font-mono">
                   <span>⏱ {p.duration}</span>
                   <span>📅 {p.year}</span>
                   <span>💰 {p.budget}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {p.topics.slice(0, 3).map((t) => (
-                    <span key={t} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-md">
+                    <span key={t} className="text-xs bg-primary/20 text-foreground px-2 py-0.5 border border-foreground font-mono">
                       {t}
                     </span>
                   ))}
                   {p.topics.length > 3 && (
-                    <span className="text-xs bg-white/10 text-white/40 px-2 py-0.5 rounded-md">
+                    <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 border border-foreground font-mono">
                       +{p.topics.length - 3}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-auto">
+                <div className="flex items-center justify-between pt-3 border-t-2 border-foreground mt-auto">
                   {p.squadReady ? (
-                    <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg">Squad ready</span>
+                    <span className="text-xs text-foreground bg-primary/20 px-2 py-1 border border-foreground font-mono font-bold">Squad ready</span>
                   ) : (
-                    <span className="text-xs text-white/30">Solo project</span>
+                    <span className="text-xs text-muted-foreground font-mono">Solo project</span>
                   )}
-                  <span className="text-xs text-orange-400 group-hover:underline">View project →</span>
+                  <span className="text-xs text-primary font-display font-bold group-hover:underline uppercase">View project →</span>
                 </div>
               </div>
             ))}
@@ -1154,16 +1154,16 @@ export default function Projects() {
         )}
 
         {/* WhatsApp CTA */}
-        <div className="mt-10 bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
-          <h3 className="text-lg font-bold mb-2">Need help picking a project?</h3>
-          <p className="text-white/50 text-sm mb-4">
+        <div className="mt-10 bg-card border-4 border-foreground p-6 sm:p-8 text-center shadow-brutal">
+          <h3 className="text-lg sm:text-xl font-display font-black uppercase mb-2">Need help picking a project?</h3>
+          <p className="text-muted-foreground text-sm mb-4 font-body">
             Chat with us on WhatsApp — we'll match you with the right project for your year and skill level.
           </p>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition"
+            className="inline-flex items-center gap-2 bg-primary text-foreground font-display font-bold uppercase text-sm px-6 py-3 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal"
           >
             <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
           </a>
@@ -1173,48 +1173,48 @@ export default function Projects() {
       {/* Modal */}
       {selected && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 sm:p-8 overflow-y-auto"
+          className="fixed inset-0 bg-foreground/70 z-50 flex items-start justify-center p-4 sm:p-8 overflow-y-auto"
           onClick={(e) => e.target === e.currentTarget && setSelected(null)}
         >
-          <div className="bg-gray-900 border border-white/10 rounded-2xl w-full max-w-2xl my-8 sm:my-auto">
-            <div className="p-5 sm:p-6 border-b border-white/10 flex items-start justify-between">
+          <div className="bg-card border-4 border-foreground w-full max-w-2xl my-8 sm:my-auto shadow-brutal">
+            <div className="p-5 sm:p-6 border-b-4 border-foreground flex items-start justify-between">
               <div>
                 <div className="flex gap-2 mb-3">
-                  <span className={`text-xs font-medium px-2 py-1 rounded-lg ${diffColors[selected.difficulty]}`}>
+                  <span className={`text-xs font-mono font-bold px-2 py-1 border border-foreground ${diffColors[selected.difficulty]}`}>
                     {selected.difficulty}
                   </span>
                   <span
-                    className={`text-xs px-2 py-1 rounded-lg ${discColors[selected.discipline] || "bg-white/10 text-white/60"}`}
+                    className={`text-xs font-mono px-2 py-1 border border-foreground ${discColors[selected.discipline] || "bg-muted text-foreground"}`}
                   >
                     {selected.discipline}
                   </span>
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold leading-snug">{selected.title}</h2>
-                <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 text-sm text-white/40">
+                <h2 className="text-lg sm:text-xl font-display font-black leading-snug uppercase">{selected.title}</h2>
+                <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 text-sm text-muted-foreground font-mono">
                   <span>⏱ {selected.duration}</span>
                   <span>📅 {selected.year}</span>
                   <span>
-                    💰 Budget: <span className="text-orange-400 font-medium">{selected.budget}</span>
+                    💰 Budget: <span className="text-primary font-bold">{selected.budget}</span>
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setSelected(null)}
-                className="text-white/40 hover:text-white ml-4 text-xl leading-none"
+                className="text-muted-foreground hover:text-foreground ml-4 text-xl leading-none font-display font-black"
               >
                 ✕
               </button>
             </div>
 
             <div className="p-5 sm:p-6 space-y-6">
-              <p className="text-white/60 text-sm leading-relaxed">{selected.desc}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed font-body">{selected.desc}</p>
 
               {/* Topics */}
               <div>
-                <div className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Topics covered</div>
+                <div className="text-xs font-display font-bold text-muted-foreground uppercase tracking-widest mb-3">Topics covered</div>
                 <div className="flex flex-wrap gap-2">
                   {selected.topics.map((t) => (
-                    <span key={t} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded-md">
+                    <span key={t} className="text-xs bg-primary/20 text-foreground px-2 py-1 border border-foreground font-mono">
                       {t}
                     </span>
                   ))}
@@ -1223,16 +1223,16 @@ export default function Projects() {
 
               {/* Steps */}
               <div>
-                <div className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">
+                <div className="text-xs font-display font-bold text-muted-foreground uppercase tracking-widest mb-3">
                   Step-by-step guide
                 </div>
                 <div className="space-y-3">
                   {selected.steps.map((s, i) => (
                     <div key={i} className="flex gap-3">
-                      <div className="min-w-[24px] h-6 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold shrink-0">
+                      <div className="min-w-[24px] h-6 bg-primary text-foreground flex items-center justify-center text-xs font-mono font-bold shrink-0 border border-foreground">
                         {i + 1}
                       </div>
-                      <p className="text-sm text-white/60 leading-relaxed pt-0.5">{s}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed pt-0.5 font-body">{s}</p>
                     </div>
                   ))}
                 </div>
@@ -1240,14 +1240,14 @@ export default function Projects() {
 
               {/* Tools */}
               <div>
-                <div className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">
+                <div className="text-xs font-display font-bold text-muted-foreground uppercase tracking-widest mb-3">
                   Tools & software
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {selected.tools.map((t) => (
-                    <div key={t.name} className="bg-white/5 rounded-lg p-3 border border-white/10">
-                      <div className="text-sm font-medium text-white">{t.name}</div>
-                      <div className="text-xs text-white/40 mt-0.5">{t.type}</div>
+                    <div key={t.name} className="bg-muted p-3 border-2 border-foreground">
+                      <div className="text-sm font-display font-bold">{t.name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5 font-mono">{t.type}</div>
                     </div>
                   ))}
                 </div>
@@ -1255,22 +1255,22 @@ export default function Projects() {
 
               {/* Resources */}
               <div>
-                <div className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">
+                <div className="text-xs font-display font-bold text-muted-foreground uppercase tracking-widest mb-3">
                   Materials & cost (Nairobi)
                 </div>
-                <div className="rounded-xl border border-white/10 overflow-hidden">
+                <div className="border-2 border-foreground overflow-hidden">
                   {selected.resources.map((r, i) => (
                     <div
                       key={i}
                       className={`flex items-center justify-between px-4 py-3 ${
-                        i !== selected.resources.length - 1 ? "border-b border-white/10" : ""
+                        i !== selected.resources.length - 1 ? "border-b-2 border-foreground" : ""
                       }`}
                     >
                       <div>
-                        <div className="text-sm font-medium text-white">{r.item}</div>
-                        <div className="text-xs text-white/40">{r.source}</div>
+                        <div className="text-sm font-display font-bold">{r.item}</div>
+                        <div className="text-xs text-muted-foreground font-mono">{r.source}</div>
                       </div>
-                      <div className="text-sm font-bold text-orange-400">{r.cost}</div>
+                      <div className="text-sm font-mono font-bold text-primary">{r.cost}</div>
                     </div>
                   ))}
                 </div>
@@ -1283,7 +1283,7 @@ export default function Projects() {
                     href={DISCORD_URL}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 text-center text-sm bg-orange-500 hover:bg-orange-600 text-white font-medium py-2.5 rounded-xl transition"
+                    className="flex-1 text-center text-sm bg-foreground text-card font-display font-bold uppercase py-2.5 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal"
                   >
                     Find a squad on Discord →
                   </a>
@@ -1292,13 +1292,13 @@ export default function Projects() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 text-center text-sm bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl transition inline-flex items-center justify-center gap-2"
+                  className="flex-1 text-center text-sm bg-primary text-foreground font-display font-bold uppercase py-2.5 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition inline-flex items-center justify-center gap-2 btn-brutal"
                 >
                   <MessageCircle className="w-4 h-4" /> Ask on WhatsApp
                 </a>
                 <button
                   onClick={() => setSelected(null)}
-                  className="flex-1 text-sm border border-white/20 hover:bg-white/10 text-white/70 py-2.5 rounded-xl transition"
+                  className="flex-1 text-sm border-2 border-foreground bg-card hover:bg-muted text-foreground py-2.5 transition font-display font-bold uppercase btn-brutal"
                 >
                   Back to projects
                 </button>

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo.png";
-import { ArrowLeft, MessageCircle, Search, ExternalLink, Copy, Check, Briefcase, MapPin, Clock, RefreshCw } from "lucide-react";
+import { ArrowLeft, MessageCircle, Search, ExternalLink, Copy, Check, MapPin, Clock, RefreshCw } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
 const WHATSAPP_URL = "https://wa.me/254745947704";
-const RAPIDAPI_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
+const RAPIDAPI_KEY = "244a802cf2mshc55a541dd3546ffp191c45jsn71c1c8ef1c75";
 
 interface Job {
   job_id: string;
@@ -46,10 +46,10 @@ const DATE_POSTED = [
 ];
 
 const typeColors: Record<string, string> = {
-  FULLTIME: "bg-emerald-100 text-emerald-800",
-  PARTTIME: "bg-amber-100 text-amber-800",
-  INTERN: "bg-blue-100 text-blue-800",
-  CONTRACTOR: "bg-red-100 text-red-800",
+  FULLTIME: "bg-primary/20 text-foreground border-2 border-foreground",
+  PARTTIME: "bg-accent/20 text-foreground border-2 border-foreground",
+  INTERN: "bg-card text-foreground border-2 border-foreground",
+  CONTRACTOR: "bg-destructive/20 text-foreground border-2 border-foreground",
 };
 
 const typeLabels: Record<string, string> = {
@@ -92,11 +92,6 @@ export default function JobBoard() {
   }, [activeQuery, field, location]);
 
   const fetchJobs = useCallback(async () => {
-    if (!RAPIDAPI_KEY) {
-      setError("API key not configured. Please set VITE_RAPIDAPI_KEY.");
-      setLoading(false);
-      return;
-    }
     setLoading(true);
     setError("");
     try {
@@ -138,35 +133,40 @@ export default function JobBoard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white font-sans">
+    <div className="min-h-screen bg-background text-foreground font-body">
       {/* Header */}
-      <div className="border-b border-white/10 bg-gray-950/80 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div className="border-b-4 border-foreground bg-card sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-2">
-              <img src={logoImg} alt="Logo" className="w-8 h-8 rounded-lg object-cover" />
+            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
+              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 object-contain" />
+              <span className="font-display font-black tracking-tight hidden sm:inline uppercase">Engineering Hub</span>
             </Link>
-            <Link to="/" className="flex items-center gap-1 text-white/60 hover:text-white text-sm transition">
-              <ArrowLeft className="w-4 h-4" /> Back
-            </Link>
-            <span className="text-white/30">/</span>
-            <span className="text-white/60 text-sm">Job Board</span>
+            <span className="text-muted-foreground hidden sm:inline font-mono">/</span>
+            <span className="text-muted-foreground text-sm font-mono">Job Board</span>
           </div>
-          <a href={DISCORD_URL} target="_blank" rel="noreferrer"
-            className="text-xs bg-white/10 hover:bg-white/20 transition px-3 py-1.5 rounded-lg">
-            Join Discord →
-          </a>
+          <div className="flex items-center gap-2">
+            <Link to="/" className="text-xs text-muted-foreground hover:text-foreground transition flex items-center gap-1 font-mono">
+              <ArrowLeft className="w-3 h-3" /> Back
+            </Link>
+            <a href={DISCORD_URL} target="_blank" rel="noreferrer"
+              className="text-xs bg-foreground text-card font-display font-bold uppercase px-3 py-1.5 border-2 border-foreground shadow-brutal-sm hover:bg-primary transition active:shadow-none active:translate-x-0.5 active:translate-y-0.5">
+              Discord →
+            </a>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Hero */}
-        <div className="mb-10">
-          <div className="inline-block text-xs font-medium bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
+        <div className="mb-8 sm:mb-10">
+          <div className="inline-block text-xs font-display font-bold bg-primary text-foreground px-3 py-1 border-2 border-foreground mb-4 uppercase tracking-wider">
             Real opportunities. Updated live.
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Engineering job board</h1>
-          <p className="text-white/50 text-lg max-w-2xl">
+          <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight mb-3 uppercase">
+            Engineering job board
+          </h1>
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl font-body">
             Live engineering opportunities in Kenya and remote — updated in real time.
           </p>
         </div>
@@ -174,17 +174,17 @@ export default function JobBoard() {
         {/* Search */}
         <div className="flex gap-2 mb-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && handleSearch()}
               placeholder="Search job titles, keywords..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-orange-500/50 transition"
+              className="w-full bg-card border-2 border-foreground pl-10 pr-4 py-3 text-sm font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition"
             />
           </div>
           <button onClick={handleSearch}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-xl text-sm font-medium transition">
+            className="bg-primary text-foreground px-5 py-3 text-sm font-display font-bold uppercase border-2 border-foreground shadow-brutal hover:shadow-brutal-sm transition btn-brutal">
             Search
           </button>
         </div>
@@ -198,44 +198,44 @@ export default function JobBoard() {
             { label: "Date posted", val: datePosted, set: (v: string) => setDatePosted(v), opts: DATE_POSTED.map(d => ({ label: d.label, value: d.value })) },
           ].map(f => (
             <div key={f.label}>
-              <label className="block text-xs text-white/40 mb-1">{f.label}</label>
+              <label className="block text-xs text-muted-foreground mb-1 font-mono uppercase">{f.label}</label>
               <select value={f.val} onChange={e => f.set(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500/50 cursor-pointer">
-                {f.opts.map(o => <option key={o.value} value={o.value} className="bg-gray-900">{o.label}</option>)}
+                className="w-full bg-card border-2 border-foreground px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+                {f.opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
           ))}
         </div>
 
         {/* Stats */}
-        <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
-          <span className="text-white/60">{jobs.length} jobs found</span>
+        <div className="flex flex-wrap items-center gap-4 mb-8 text-sm font-mono">
+          <span className="bg-foreground text-card px-3 py-1 font-bold">{jobs.length} jobs found</span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-emerald-400 text-xs">Updated now</span>
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-primary text-xs font-bold">Updated now</span>
           </span>
-          <span className="text-white/30">Query: "{buildQuery()}"</span>
+          <span className="text-muted-foreground text-xs">Query: "{buildQuery()}"</span>
         </div>
 
         {/* Loading */}
         {loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-5 animate-pulse">
+              <div key={i} className="bg-card border-2 border-foreground p-5 animate-pulse">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white/10" />
+                  <div className="w-10 h-10 bg-muted border-2 border-foreground" />
                   <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-white/10 rounded w-3/4" />
-                    <div className="h-3 bg-white/10 rounded w-1/2" />
+                    <div className="h-4 bg-muted w-3/4" />
+                    <div className="h-3 bg-muted w-1/2" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="h-3 bg-white/10 rounded w-full" />
-                  <div className="h-3 bg-white/10 rounded w-5/6" />
+                  <div className="h-3 bg-muted w-full" />
+                  <div className="h-3 bg-muted w-5/6" />
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <div className="h-8 bg-white/10 rounded-lg flex-1" />
-                  <div className="h-8 bg-white/10 rounded-lg w-16" />
+                  <div className="h-8 bg-muted flex-1" />
+                  <div className="h-8 bg-muted w-16" />
                 </div>
               </div>
             ))}
@@ -245,78 +245,82 @@ export default function JobBoard() {
         {/* Error */}
         {!loading && error && (
           <div className="text-center py-20">
-            <p className="text-white/50 mb-4">{error}</p>
-            <button onClick={fetchJobs}
-              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition">
-              <RefreshCw className="w-4 h-4" /> Retry
-            </button>
+            <div className="bg-card border-2 border-foreground p-8 max-w-md mx-auto shadow-brutal">
+              <p className="text-muted-foreground mb-4 font-mono text-sm">{error}</p>
+              <button onClick={fetchJobs}
+                className="inline-flex items-center gap-2 bg-primary text-foreground px-5 py-2.5 text-sm font-display font-bold uppercase border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal">
+                <RefreshCw className="w-4 h-4" /> Retry
+              </button>
+            </div>
           </div>
         )}
 
         {/* Empty */}
         {!loading && !error && jobs.length === 0 && (
-          <div className="text-center py-20 text-white/30">
-            No jobs found for "{buildQuery()}". Try a different search.
+          <div className="text-center py-20">
+            <div className="bg-card border-2 border-foreground p-8 max-w-md mx-auto">
+              <p className="text-muted-foreground font-mono text-sm">No jobs found for "{buildQuery()}". Try a different search.</p>
+            </div>
           </div>
         )}
 
         {/* Job cards */}
         {!loading && !error && jobs.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {jobs.map(job => (
-              <div key={job.job_id} className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col hover:border-orange-500/40 transition group">
+              <div key={job.job_id} className="bg-card border-2 border-foreground p-5 flex flex-col hover:shadow-brutal transition-shadow group">
                 {/* Header */}
                 <div className="flex items-start gap-3 mb-3">
                   {job.employer_logo ? (
-                    <img src={job.employer_logo} alt={job.employer_name} className="w-10 h-10 rounded-lg object-contain bg-white" />
+                    <img src={job.employer_logo} alt={job.employer_name} className="w-10 h-10 object-contain bg-card border-2 border-foreground" />
                   ) : (
-                    <div className="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs font-bold">
+                    <div className="w-10 h-10 bg-primary text-foreground flex items-center justify-center text-xs font-display font-black border-2 border-foreground">
                       {getInitials(job.employer_name)}
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-sm leading-snug group-hover:text-orange-400 transition truncate">
+                    <h3 className="font-display font-bold text-sm leading-snug group-hover:text-primary transition truncate uppercase">
                       {job.job_title}
                     </h3>
-                    <p className="text-white/50 text-xs truncate">{job.employer_name}</p>
+                    <p className="text-muted-foreground text-xs font-mono truncate">{job.employer_name}</p>
                   </div>
                 </div>
 
                 {/* Meta */}
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="flex items-center gap-1 text-xs text-white/40">
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
                     <MapPin className="w-3 h-3" />
                     {job.job_city || job.job_country || "N/A"}
                   </span>
                   {job.job_is_remote && (
-                    <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-md">Remote</span>
+                    <span className="text-xs bg-primary/20 text-foreground px-2 py-0.5 border border-foreground font-mono font-bold">Remote</span>
                   )}
                   {job.job_employment_type && (
-                    <span className={`text-xs px-2 py-0.5 rounded-md ${typeColors[job.job_employment_type] || "bg-white/10 text-white/60"}`}>
+                    <span className={`text-xs px-2 py-0.5 font-mono font-bold ${typeColors[job.job_employment_type] || "bg-muted text-foreground border-2 border-foreground"}`}>
                       {typeLabels[job.job_employment_type] || job.job_employment_type}
                     </span>
                   )}
                 </div>
 
                 {/* Date */}
-                <div className="flex items-center gap-1 text-xs text-white/30 mb-3">
+                <div className="flex items-center gap-1 text-xs text-muted-foreground mb-3 font-mono">
                   <Clock className="w-3 h-3" />
                   {daysAgo(job.job_posted_at_datetime_utc)}
                 </div>
 
                 {/* Description */}
-                <p className="text-white/40 text-xs leading-relaxed mb-4 flex-1">
+                <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 font-body">
                   {job.job_description?.slice(0, 120)}...
                 </p>
 
                 {/* Actions */}
                 <div className="flex gap-2 mt-auto">
                   <a href={job.job_apply_link} target="_blank" rel="noreferrer"
-                    className="flex-1 text-center text-xs bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition inline-flex items-center justify-center gap-1">
+                    className="flex-1 text-center text-xs bg-primary text-foreground font-display font-bold uppercase py-2 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition inline-flex items-center justify-center gap-1 btn-brutal">
                     <ExternalLink className="w-3 h-3" /> Apply now
                   </a>
                   <button onClick={() => copyLink(job.job_id, job.job_apply_link)}
-                    className="text-xs border border-white/20 hover:bg-white/10 text-white/70 px-3 py-2 rounded-lg transition inline-flex items-center gap-1">
+                    className="text-xs border-2 border-foreground bg-card hover:bg-muted text-foreground px-3 py-2 transition inline-flex items-center gap-1 font-mono btn-brutal">
                     {copiedId === job.job_id ? <><Check className="w-3 h-3" /> Copied</> : <><Copy className="w-3 h-3" /> Share</>}
                   </button>
                 </div>
@@ -326,10 +330,14 @@ export default function JobBoard() {
         )}
 
         {/* WhatsApp CTA */}
-        <div className="mt-16 mb-8 text-center">
+        <div className="mt-12 mb-8 bg-card border-4 border-foreground p-6 sm:p-8 text-center shadow-brutal">
+          <h3 className="text-lg sm:text-xl font-display font-black uppercase mb-2">Need career advice?</h3>
+          <p className="text-muted-foreground text-sm mb-4 font-body">
+            Chat with us on WhatsApp — we'll help with CVs, applications, and interview prep.
+          </p>
           <a href={WHATSAPP_URL} target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-6 py-3 rounded-xl text-sm transition">
-            <MessageCircle className="w-5 h-5" /> Chat with us on WhatsApp
+            className="inline-flex items-center gap-2 bg-primary text-foreground font-display font-bold uppercase px-6 py-3 text-sm border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal">
+            <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
           </a>
         </div>
       </div>
