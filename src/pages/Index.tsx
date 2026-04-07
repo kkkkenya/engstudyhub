@@ -7,7 +7,7 @@ import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
 import logoImg from "@/assets/logo.png";
-import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench } from "lucide-react";
+import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench, Briefcase } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -19,6 +19,7 @@ const NAV_LINKS = [
 { href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
 { href: "#pricing", label: "Pricing", icon: CreditCard },
 { href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
+{ href: "/jobs", label: "Jobs", icon: Briefcase, isRoute: true },
 { href: "#join", label: "Join", icon: UserPlus }];
 
 
