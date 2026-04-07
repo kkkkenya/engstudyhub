@@ -19,6 +19,7 @@ const NAV_LINKS = [
 { href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
 { href: "#pricing", label: "Pricing", icon: CreditCard },
 { href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
+{ href: "/jobs", label: "Jobs", icon: Briefcase, isRoute: true },
 { href: "#join", label: "Join", icon: UserPlus }];
 
 
