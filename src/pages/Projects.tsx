@@ -1038,11 +1038,11 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Hero */}
         <div className="mb-8 sm:mb-10">
-          <div className="inline-block text-xs font-medium bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
+          <div className="inline-block text-xs font-display font-bold bg-primary text-foreground px-3 py-1 border-2 border-foreground mb-4 uppercase tracking-wider">
             We don't just study. We build.
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Engineering project library</h1>
-          <p className="text-white/50 text-base sm:text-lg max-w-2xl">
+          <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight mb-3 uppercase">Engineering project library</h1>
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl font-body">
             Step-by-step projects for Kenyan engineering students — with tools, KES budgets, Nairobi material sources,
             and squad links.
           </p>
@@ -1056,9 +1056,9 @@ export default function Projects() {
             { num: "12", label: "Disciplines" },
             { num: "4", label: "Year levels" },
           ].map((s) => (
-            <div key={s.label} className="bg-white/5 rounded-xl p-3 sm:p-4 border border-white/10">
-              <div className="text-xl sm:text-2xl font-bold text-white">{s.num}</div>
-              <div className="text-xs text-white/40 mt-1">{s.label}</div>
+            <div key={s.label} className="bg-card p-3 sm:p-4 border-2 border-foreground shadow-brutal-sm">
+              <div className="text-xl sm:text-2xl font-display font-black">{s.num}</div>
+              <div className="text-xs text-muted-foreground mt-1 font-mono uppercase">{s.label}</div>
             </div>
           ))}
         </div>
@@ -1068,7 +1068,7 @@ export default function Projects() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search projects, topics, tools..."
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-orange-500/50 mb-4 transition"
+          className="w-full bg-card border-2 border-foreground px-4 py-3 text-sm font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary mb-4 transition"
         />
 
         {/* Filters */}
