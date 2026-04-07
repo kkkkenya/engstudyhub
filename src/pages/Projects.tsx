@@ -1007,29 +1007,29 @@ export default function Projects() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white font-sans">
+    <div className="min-h-screen bg-background text-foreground font-body">
       {/* Header */}
-      <div className="border-b border-white/10 bg-gray-950/80 backdrop-blur sticky top-0 z-10">
+      <div className="border-b-4 border-foreground bg-card sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 rounded-lg object-contain" />
-              <span className="font-semibold tracking-tight hidden sm:inline">Engineering Hub</span>
+              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 object-contain" />
+              <span className="font-display font-black tracking-tight hidden sm:inline uppercase">Engineering Hub</span>
             </Link>
-            <span className="text-white/30 hidden sm:inline">/</span>
-            <span className="text-white/60 text-sm">Project Library</span>
+            <span className="text-muted-foreground hidden sm:inline font-mono">/</span>
+            <span className="text-muted-foreground text-sm font-mono">Project Library</span>
           </div>
           <div className="flex items-center gap-2">
-            <Link to="/" className="text-xs text-white/50 hover:text-white transition flex items-center gap-1">
+            <Link to="/" className="text-xs text-muted-foreground hover:text-foreground transition flex items-center gap-1 font-mono">
               <ArrowLeft className="w-3 h-3" /> Back
             </Link>
             <a
               href={DISCORD_URL}
               target="_blank"
               rel="noreferrer"
-              className="text-xs bg-white/10 hover:bg-white/20 transition px-3 py-1.5 rounded-lg"
+              className="text-xs bg-foreground text-card font-display font-bold uppercase px-3 py-1.5 border-2 border-foreground shadow-brutal-sm hover:bg-primary transition active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
             >
-              Join Discord →
+              Discord →
             </a>
           </div>
         </div>
