@@ -1098,7 +1098,7 @@ export default function Projects() {
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-20 text-white/30">
+          <div className="text-center py-20 text-muted-foreground font-mono">
             No projects match your filters. Try adjusting your search.
           </div>
         ) : (
@@ -1107,46 +1107,46 @@ export default function Projects() {
               <div
                 key={p.id}
                 onClick={() => setSelected(p)}
-                className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 cursor-pointer hover:border-orange-500/40 hover:bg-white/[0.08] transition group flex flex-col"
+                className="bg-card border-2 border-foreground p-4 sm:p-5 cursor-pointer hover:shadow-brutal transition-shadow group flex flex-col"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <span className={`text-xs font-medium px-2 py-1 rounded-lg ${diffColors[p.difficulty]}`}>
+                  <span className={`text-xs font-mono font-bold px-2 py-1 border border-foreground ${diffColors[p.difficulty]}`}>
                     {p.difficulty}
                   </span>
                   <span
-                    className={`text-xs px-2 py-1 rounded-lg ${discColors[p.discipline] || "bg-white/10 text-white/60"}`}
+                    className={`text-xs font-mono px-2 py-1 border border-foreground ${discColors[p.discipline] || "bg-muted text-foreground"}`}
                   >
                     {p.discipline}
                   </span>
                 </div>
-                <h3 className="font-semibold text-base mb-2 group-hover:text-orange-400 transition leading-snug">
+                <h3 className="font-display font-bold text-base mb-2 group-hover:text-primary transition leading-snug uppercase">
                   {p.title}
                 </h3>
-                <p className="text-white/50 text-sm leading-relaxed mb-4 flex-1">{p.desc}</p>
-                <div className="flex flex-wrap gap-3 text-xs text-white/40 mb-4">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1 font-body">{p.desc}</p>
+                <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4 font-mono">
                   <span>⏱ {p.duration}</span>
                   <span>📅 {p.year}</span>
                   <span>💰 {p.budget}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {p.topics.slice(0, 3).map((t) => (
-                    <span key={t} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-md">
+                    <span key={t} className="text-xs bg-primary/20 text-foreground px-2 py-0.5 border border-foreground font-mono">
                       {t}
                     </span>
                   ))}
                   {p.topics.length > 3 && (
-                    <span className="text-xs bg-white/10 text-white/40 px-2 py-0.5 rounded-md">
+                    <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 border border-foreground font-mono">
                       +{p.topics.length - 3}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-auto">
+                <div className="flex items-center justify-between pt-3 border-t-2 border-foreground mt-auto">
                   {p.squadReady ? (
-                    <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg">Squad ready</span>
+                    <span className="text-xs text-foreground bg-primary/20 px-2 py-1 border border-foreground font-mono font-bold">Squad ready</span>
                   ) : (
-                    <span className="text-xs text-white/30">Solo project</span>
+                    <span className="text-xs text-muted-foreground font-mono">Solo project</span>
                   )}
-                  <span className="text-xs text-orange-400 group-hover:underline">View project →</span>
+                  <span className="text-xs text-primary font-display font-bold group-hover:underline uppercase">View project →</span>
                 </div>
               </div>
             ))}
@@ -1154,16 +1154,16 @@ export default function Projects() {
         )}
 
         {/* WhatsApp CTA */}
-        <div className="mt-10 bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
-          <h3 className="text-lg font-bold mb-2">Need help picking a project?</h3>
-          <p className="text-white/50 text-sm mb-4">
+        <div className="mt-10 bg-card border-4 border-foreground p-6 sm:p-8 text-center shadow-brutal">
+          <h3 className="text-lg sm:text-xl font-display font-black uppercase mb-2">Need help picking a project?</h3>
+          <p className="text-muted-foreground text-sm mb-4 font-body">
             Chat with us on WhatsApp — we'll match you with the right project for your year and skill level.
           </p>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition"
+            className="inline-flex items-center gap-2 bg-primary text-foreground font-display font-bold uppercase text-sm px-6 py-3 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal"
           >
             <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
           </a>
