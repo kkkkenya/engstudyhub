@@ -1080,14 +1080,14 @@ export default function Projects() {
             { val: fDur, set: setFDur, opts: DURATIONS, label: "Duration" },
           ].map((f) => (
             <div key={f.label}>
-              <label className="block text-xs text-white/40 mb-1">{f.label}</label>
+              <label className="block text-xs text-muted-foreground mb-1 font-mono uppercase">{f.label}</label>
               <select
                 value={f.val}
                 onChange={(e) => f.set(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500/50 cursor-pointer"
+                className="w-full bg-card border-2 border-foreground px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
               >
                 {f.opts.map((o) => (
-                  <option key={o} value={o} className="bg-gray-900">
+                  <option key={o} value={o}>
                     {o}
                   </option>
                 ))}
