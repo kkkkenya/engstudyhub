@@ -20,7 +20,7 @@ import {
   Download,
   Share2,
 } from "lucide-react";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.jpeg";
 
 // ─── Types ───
 type EventTag = "lecture" | "lab" | "study" | "exam";

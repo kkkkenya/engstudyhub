@@ -345,6 +345,86 @@ const Index = () => {
           </div>
         </section>
 
+        {/* CHALLENGE PROJECTS */}
+        <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24">
+          <FadeIn className="mb-10 md:mb-14">
+            <span className="font-mono text-primary font-bold text-sm mb-4 block">/// CHALLENGE YOURSELF</span>
+            <h2 className="font-display text-4xl md:text-7xl font-bold uppercase leading-none mb-4">
+              Think You've Got <br /><span className="text-outline-dark">What It Takes?</span>
+            </h2>
+            <div className="w-16 h-1 bg-primary mt-2 mb-4" />
+            <p className="font-body text-base md:text-lg text-muted-foreground max-w-2xl">
+              Real engineering projects with real budgets. Pick one, form a squad, and prove your skills.
+            </p>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
+            {[
+              { title: "Pipe flow pressure drop experiment", discipline: "Fluid Mechanics", difficulty: "Beginner" as const, budget: "KES 800" },
+              { title: "Truss bridge load testing", discipline: "Structural Engineering", difficulty: "Intermediate" as const, budget: "KES 2,500" },
+              { title: "Arduino traffic light controller", discipline: "Control Systems", difficulty: "Beginner" as const, budget: "KES 1,200" },
+            ].map((p, i) => (
+              <FadeIn key={i}>
+                <div className="border-4 border-foreground bg-card p-6 shadow-brutal hover:shadow-brutal-primary transition-shadow h-full flex flex-col">
+                  <span className={`font-mono text-xs font-bold px-3 py-1 border-2 border-foreground self-start mb-4 ${
+                    p.difficulty === "Beginner" ? "bg-primary text-foreground" : p.difficulty === "Intermediate" ? "bg-accent text-foreground" : "bg-foreground text-card"
+                  }`}>{p.difficulty}</span>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">{p.title}</h3>
+                  <p className="font-mono text-xs text-muted-foreground mb-1">{p.discipline}</p>
+                  <p className="font-mono text-sm font-bold text-primary mt-auto pt-4">{p.budget}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn className="text-center">
+            <Link to="/projects" className="btn-brutal inline-block bg-primary text-foreground border-4 border-foreground font-mono font-bold text-base md:text-lg uppercase px-8 py-4 shadow-brutal hover:-translate-y-1 transition-transform">
+              Browse All Projects →
+            </Link>
+          </FadeIn>
+        </section>
+
+        {/* JOBS TEASER */}
+        <section className="py-12 md:py-24 bg-foreground text-card border-y-4 border-foreground">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <FadeIn className="mb-10 md:mb-14">
+              <span className="font-mono text-primary font-bold text-sm mb-4 block">/// OPPORTUNITIES</span>
+              <h2 className="font-display text-4xl md:text-7xl font-bold uppercase leading-none mb-4">
+                Engineering Roles. <br /><span className="text-primary">Real Companies.</span>
+              </h2>
+              <div className="w-16 h-1 bg-primary mt-2 mb-4" />
+              <p className="font-body text-base md:text-lg text-gray-400 max-w-2xl">
+                Live engineering jobs in Kenya and remote — updated in real time from top employers.
+              </p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
+              {[
+                { company: "Safaricom PLC", role: "Graduate Network Engineer", location: "Nairobi, KE" },
+                { company: "Toyota Kenya", role: "Mechanical Engineering Intern", location: "Nairobi, KE" },
+                { company: "Microsoft", role: "Software Engineer (Remote)", location: "Remote" },
+              ].map((j, i) => (
+                <FadeIn key={i}>
+                  <div className="border-4 border-gray-700 bg-gray-900 p-6 hover:border-primary transition-colors h-full flex flex-col">
+                    <div className="w-10 h-10 bg-primary/20 border-2 border-primary flex items-center justify-center font-mono font-bold text-primary text-lg mb-4">
+                      {j.company[0]}
+                    </div>
+                    <h3 className="font-display text-lg md:text-xl font-bold uppercase mb-1 text-card">{j.role}</h3>
+                    <p className="font-mono text-xs text-gray-400 mb-1">{j.company}</p>
+                    <p className="font-mono text-xs text-primary mt-auto pt-4">{j.location}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+
+            <FadeIn className="text-center">
+              <Link to="/jobs" className="btn-brutal inline-block bg-primary text-foreground border-4 border-primary font-mono font-bold text-base md:text-lg uppercase px-8 py-4 shadow-brutal-primary hover:-translate-y-1 transition-transform">
+                View All Jobs →
+              </Link>
+            </FadeIn>
+          </div>
+        </section>
+
         {/* VISION */}
         <section className="py-20 md:py-32 bg-primary border-b-4 border-foreground overflow-hidden relative">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 10px)" }} />
