@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.jpeg";
 import { ArrowLeft, MessageCircle, Search, ExternalLink, Copy, Check, MapPin, Clock, RefreshCw } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -139,7 +139,7 @@ export default function JobBoard() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-              <img src={logoImg} alt="Engineering Hub" className="h-8 w-8 object-contain" />
+              <img src={logoImg} alt="Engineering Hub" className="h-8 md:h-10 w-auto filter grayscale" />
               <span className="font-display font-black tracking-tight hidden sm:inline uppercase">Engineering Hub</span>
             </Link>
             <span className="text-muted-foreground hidden sm:inline font-mono">/</span>
