@@ -20,7 +20,7 @@ import {
   Download,
   Share2,
 } from "lucide-react";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.jpeg";
 
 // ─── Types ───
 type EventTag = "lecture" | "lab" | "study" | "exam";
@@ -626,7 +626,7 @@ const Timetable = () => {
       <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
         <Link to="/" className="flex items-center gap-2">
           <ArrowLeft className="w-5 h-5" />
-          <img src={logoImg} alt="Hub" className="h-7 w-auto" />
+          <img src={logoImg} alt="Hub" className="h-8 md:h-10 w-auto filter grayscale" />
         </Link>
         <h1 className="font-display font-bold text-sm uppercase tracking-wider">Timetable</h1>
         <div className="flex items-center gap-1.5">
