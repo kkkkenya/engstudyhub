@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.jpeg";
 import { ArrowLeft, MessageCircle, Search, ExternalLink, Copy, Check, MapPin, Clock, RefreshCw } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";

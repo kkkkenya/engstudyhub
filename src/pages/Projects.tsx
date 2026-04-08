@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.jpeg";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
