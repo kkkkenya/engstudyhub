@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import Timetable from "./pages/Timetable.tsx";
 import Projects from "./pages/Projects.tsx";
 import JobBoard from "./pages/JobBoard.tsx";
+import FormulaDirectory from "./pages/FormulaDirectory.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/timetable" element={<Timetable />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/jobs" element={<JobBoard />} />
+          <Route path="/formulas" element={<FormulaDirectory />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
