@@ -388,32 +388,7 @@ const FormulaDirectory = () => {
             Join Now
           </Link>
         </div>
-        <button className="md:hidden flex flex-col gap-1.5 p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
-          <span className={`block w-6 h-0.5 bg-foreground transition-transform ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`block w-6 h-0.5 bg-foreground transition-opacity ${mobileMenuOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-6 h-0.5 bg-foreground transition-transform ${mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-        </button>
       </nav>
-
-      {/* Mobile drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-30 md:hidden" onClick={() => setMobileMenuOpen(false)}>
-          <div className="absolute inset-0 bg-foreground/50" />
-          <div className="absolute top-0 right-0 w-72 bg-card border-l-4 border-foreground h-full p-6 pt-20 flex flex-col gap-2" onClick={e => e.stopPropagation()}>
-            {NAV_LINKS.map(link =>
-              link.isRoute ? (
-                <Link key={link.href} to={link.href} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
-                  {link.label}
-                </Link>
-              ) : (
-                <a key={link.href} href={link.href} onClick={e => handleNavClick(e, link.href)} className="font-mono text-lg font-bold uppercase py-3 px-4 border-2 border-foreground hover:bg-primary transition-colors">
-                  {link.label}
-                </a>
-              )
-            )}
-          </div>
-        </div>
-      )}
 
       <main>
         {/* HERO */}
