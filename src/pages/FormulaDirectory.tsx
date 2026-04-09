@@ -270,21 +270,16 @@ const FormulaDirectory = () => {
     }, 2000);
 
     try {
-      // NOTE: This calls the Anthropic API. In production, this should go through
-      // a backend edge function to avoid CORS issues and protect the API key.
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/claude-proxy`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
-          "x-api-key": "", // Will need API key via edge function
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 2000,
           system: SYSTEM_PROMPT,
-          messages: [{ role: "user", content: query }],
+          prompt: query,
+          max_tokens: 2000,
         }),
       });
       const data = await response.json();
