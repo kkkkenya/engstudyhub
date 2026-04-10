@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-new.jpeg";
 import { ArrowLeft, MessageCircle } from "lucide-react";
@@ -1102,7 +1102,14 @@ export default function Projects() {
             No projects match your filters. Try adjusting your search.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {/* Mobile horizontal scroll strip */}
+          <div className="md:hidden">
+            <p className="text-sm text-muted-foreground mb-2 font-mono">{filtered.length} projects · scroll to explore →</p>
+            <MobileScrollStrip projects={filtered} diffColors={diffColors} discColors={discColors} onSelect={setSelected} />
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {filtered.map((p) => (
               <div
                 key={p.id}
