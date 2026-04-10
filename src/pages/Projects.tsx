@@ -1263,7 +1263,8 @@ export default function Projects() {
           onClick={(e) => e.target === e.currentTarget && setSelected(null)}
         >
           <div className="bg-card border-4 border-foreground w-full max-w-2xl my-8 sm:my-auto shadow-brutal">
-            <div className="p-5 sm:p-6 border-b-4 border-foreground flex items-start justify-between">
+            {/* Sticky modal header */}
+            <div className="sticky top-0 z-10 bg-card p-5 sm:p-6 border-b-4 border-foreground flex items-start justify-between">
               <div>
                 <div className="flex gap-2 mb-3">
                   <span className={`text-xs font-mono font-bold px-2 py-1 border border-foreground ${diffColors[selected.difficulty]}`}>
@@ -1286,7 +1287,7 @@ export default function Projects() {
               </div>
               <button
                 onClick={() => setSelected(null)}
-                className="text-muted-foreground hover:text-foreground ml-4 text-xl leading-none font-display font-black"
+                className="text-muted-foreground hover:text-foreground ml-4 text-xl leading-none font-display font-black p-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 ✕
               </button>
