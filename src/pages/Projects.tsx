@@ -987,7 +987,7 @@ const discColors: Record<string, string> = {
   "Biosystems Engineering": "bg-teal-50 text-teal-700",
 };
 
-type Project = typeof projects[number];
+
 
 const MobileScrollStrip = ({ projects: items, diffColors: dc, discColors: dsc, onSelect }: {
   projects: Project[];
