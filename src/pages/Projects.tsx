@@ -1180,7 +1180,7 @@ export default function Projects() {
             No projects match your filters. Try adjusting your search.
           </div>
         ) : (
-          {/* Mobile horizontal scroll strip */}
+          <>
           <div className="md:hidden">
             <p className="text-sm text-muted-foreground mb-2 font-mono">{filtered.length} projects · scroll to explore →</p>
             <MobileScrollStrip projects={filtered} diffColors={diffColors} discColors={discColors} onSelect={setSelected} />
