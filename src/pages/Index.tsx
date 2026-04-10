@@ -117,8 +117,8 @@ const Index = () => {
 
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
-      {/* Marquee ticker */}
-      <div className="w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden flex whitespace-nowrap">
+      {/* Marquee ticker — hidden on mobile */}
+      <div className="hidden sm:flex w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden whitespace-nowrap">
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) =>
           <span key={i} className="flex">
@@ -159,7 +159,7 @@ const Index = () => {
 
       <main className="pb-0">
         {/* HERO */}
-        <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-24">
+        <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-20 lg:py-32">
           <FadeIn>
             <div className="border-4 border-foreground bg-foreground p-6 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
               <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
@@ -167,14 +167,19 @@ const Index = () => {
               <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start md:items-end">
                 <div className="w-full md:w-2/3">
                   <span className="inline-block font-mono text-xs font-bold text-foreground bg-primary px-3 py-1 mb-4 md:mb-6 border-2 border-primary">/// FOR ENGINEERS, BY ENGINEERS</span>
-                  <h1 className="font-display text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4 text-card">
+                  <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4 text-card">
                     Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
-                  <p className="font-body text-lg md:text-xl text-card/60 max-w-xl mt-4">
+                  {/* WhatsApp CTA — mobile first, before subtitle */}
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="sm:hidden btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] bg-whatsapp text-card border-4 border-foreground font-mono font-semibold text-base uppercase rounded-xl mb-4 shadow-brutal hover:-translate-y-1 transition-transform">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat on WhatsApp
+                  </a>
+                  <p className="font-body text-sm sm:text-base md:text-xl text-card/60 max-w-xl mt-2 md:mt-4 line-clamp-2 sm:line-clamp-none">
                     The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.
                   </p>
                 </div>
-                <div className="w-full md:w-1/3 md:border-l-4 md:border-primary/30 md:pl-8 py-4 flex flex-col gap-4">
+                <div className="hidden sm:flex w-full md:w-1/3 md:border-l-4 md:border-primary/30 md:pl-8 py-4 flex-col gap-4">
                   <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform w-full">
                     Join the Hub ↗
                   </a>
@@ -451,65 +456,63 @@ const Index = () => {
             <div className="w-16 h-1 bg-primary mx-auto mt-4" />
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
-            {/* Basic */}
-            <FadeIn>
-              <div className="border-4 border-foreground bg-card p-6 md:p-12 shadow-brutal flex flex-col h-full">
-                <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Basic Access</h3>
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
+            {/* Premium — appears FIRST on mobile */}
+            <FadeIn className="order-1 md:order-2">
+              <div className="border-4 border-foreground bg-foreground text-card p-6 md:p-12 shadow-brutal-primary relative flex flex-col h-full transform md:-translate-y-4">
+                <div className="absolute -top-5 left-6 md:left-8 bg-accent text-foreground font-mono font-bold text-xs sm:text-sm px-3 sm:px-4 py-1 border-4 border-foreground">🎓 Student Offer — Semester 1, 2025</div>
+                <div className="border-b-4 border-muted-foreground/30 pb-6 md:pb-8 mb-6 md:mb-8 mt-4">
+                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4 text-primary">Semester Pass</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black">KSH 50  </span>
+                    <span className="font-mono text-4xl md:text-5xl font-black text-card">KES 200</span>
                     <span className="font-mono text-base md:text-lg text-muted-foreground font-bold">/ semester</span>
                   </div>
-                  <div className="font-mono text-lg md:text-xl text-destructive line-through font-bold">KES 300</div>
+                  <div className="font-mono text-sm text-muted-foreground">Per semester · cancel anytime</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>All university channels</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Notes &amp; past papers archive</li>
-                  <li className="flex items-center gap-3 text-muted-foreground opacity-50"><span className="font-black text-lg">x</span>Live study rooms</li>
-                  <li className="flex items-center gap-3 text-muted-foreground opacity-50"><span className="font-black text-lg">x</span>Project build squads</li>
-                  <li className="flex items-center gap-3 text-muted-foreground opacity-50"><span className="font-black text-lg">x</span>Career pipeline</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Everything in Free</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>CAT Season Planner</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Premium formula sheets</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Priority Discord support</li>
                 </ul>
-                <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal block w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
-                  Select Basic
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] text-center border-4 border-accent bg-accent text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
+                  <MessageCircle size={20} />
+                  Join via WhatsApp →
                 </a>
+                <p className="text-sm text-muted-foreground text-center mt-4">
+                  Priced for Kenyan university students. No hidden fees. Cancel by not renewing next semester.
+                </p>
               </div>
             </FadeIn>
 
-            {/* Premium */}
-            <FadeIn>
-              <div className="border-4 border-foreground bg-foreground text-card p-6 md:p-12 shadow-brutal-primary relative flex flex-col h-full transform md:-translate-y-4">
-                <div className="absolute -top-5 left-6 md:left-8 bg-primary text-foreground font-mono font-bold text-sm px-4 py-1 border-4 border-foreground">RECOMMENDED</div>
-                <div className="border-b-4 border-gray-700 pb-6 md:pb-8 mb-6 md:mb-8 mt-2">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4 text-primary">Premium Access</h3>
+            {/* Free */}
+            <FadeIn className="order-2 md:order-1">
+              <div className="border-4 border-foreground bg-card p-6 md:p-12 shadow-brutal flex flex-col h-full">
+                <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
+                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Free</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black text-card">  KSH 800</span>
-                    <span className="font-mono text-base md:text-lg text-gray-400 font-bold">/ semester</span>
+                    <span className="font-mono text-4xl md:text-5xl font-black">KES 0</span>
                   </div>
-                  <div className="font-mono text-lg md:text-xl text-destructive line-through font-bold">KES 1000</div>
+                  <div className="font-mono text-sm text-muted-foreground">Always free</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  {["All university channels", "Notes & past papers archive", "Live Pomodoro study rooms"].map((item) =>
-                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                  )}
-                  <li className="flex items-center gap-3 bg-primary/10 p-2 -mx-2 border border-primary/30">
-                    <span className="text-primary font-black text-lg">&gt;</span>
-                    <strong className="text-primary">Join project build squads</strong>
-                  </li>
-                  {["Daily Q&A syntax/logic help", "Career & internship pipeline"].map((item) =>
-                  <li key={item} className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>{item}</li>
-                  )}
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Access to public resources</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Join study groups</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>View project library</li>
                 </ul>
-                <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal block w-full text-center border-4 border-primary bg-primary text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
-                  Select Premium
+                <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal block w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
+                  Get Started Free
                 </a>
               </div>
             </FadeIn>
           </div>
 
+          {/* Trust signals */}
           <FadeIn>
-            <div className="mt-8 md:mt-12 max-w-2xl mx-auto text-center font-mono text-sm bg-foreground text-card p-4 md:p-6 border-4 border-foreground shadow-brutal-sm">
-              <span className="text-accent font-bold">NOTE:</span> Basic is for self-study access. Premium is the full community experience — study rooms, build squads, career pipeline, and more.
+            <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-6 md:gap-10">
+              <span className="text-xs text-muted-foreground font-mono">🔒 Secure payment via M-Pesa</span>
+              <span className="text-xs text-muted-foreground font-mono">📱 WhatsApp onboarding</span>
+              <span className="text-xs text-muted-foreground font-mono">✅ 200+ active members</span>
             </div>
           </FadeIn>
         </section>
