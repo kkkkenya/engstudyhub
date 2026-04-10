@@ -987,6 +987,84 @@ const discColors: Record<string, string> = {
   "Biosystems Engineering": "bg-teal-50 text-teal-700",
 };
 
+type Project = typeof projects[number];
+
+const MobileScrollStrip = ({ projects: items, diffColors: dc, discColors: dsc, onSelect }: {
+  projects: Project[];
+  diffColors: Record<string, string>;
+  discColors: Record<string, string>;
+  onSelect: (p: Project) => void;
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 288 + 12; // w-72 + gap-3
+    const idx = Math.round(el.scrollLeft / cardWidth);
+    setActiveIdx(idx);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const dotCount = Math.min(items.length, 8);
+
+  return (
+    <>
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className="flex flex-row gap-3 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide"
+        >
+          {items.map((p) => (
+            <div
+              key={p.id}
+              onClick={() => onSelect(p)}
+              className="w-72 flex-shrink-0 max-h-64 bg-card border-2 border-foreground p-4 cursor-pointer active:shadow-brutal transition-shadow flex flex-col"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <span className={`text-xs font-mono font-bold px-2 py-0.5 border border-foreground ${dc[p.difficulty]}`}>
+                  {p.difficulty}
+                </span>
+              </div>
+              <h3 className="font-display font-bold text-sm mb-1 leading-snug uppercase truncate">
+                {p.title}
+              </h3>
+              <p className="text-muted-foreground text-xs leading-relaxed line-clamp-1 mb-2 font-body">{p.desc}</p>
+              <div className="flex items-center justify-between mt-auto pt-2 border-t border-foreground">
+                {p.squadReady ? (
+                  <span className="text-xs text-foreground bg-primary/20 px-2 py-0.5 border border-foreground font-mono font-bold">Squad</span>
+                ) : (
+                  <span className="text-xs text-muted-foreground font-mono">Solo</span>
+                )}
+                <span className="text-xs text-primary font-display font-bold uppercase">View →</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Right fade hint */}
+        <div className="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-background to-transparent pointer-events-none" />
+      </div>
+      {/* Scroll dots */}
+      <div className="flex justify-center gap-1.5 mt-1">
+        {Array.from({ length: dotCount }).map((_, i) => (
+          <span
+            key={i}
+            className={`w-1.5 h-1.5 rounded-full transition-colors ${i === activeIdx ? "bg-accent" : "bg-muted-foreground/30"}`}
+          />
+        ))}
+        {items.length > 8 && <span className="text-xs text-muted-foreground ml-1">…</span>}
+      </div>
+    </>
+  );
+};
+
 export default function Projects() {
   const [search, setSearch] = useState("");
   const [fDisc, setFDisc] = useState("All disciplines");
