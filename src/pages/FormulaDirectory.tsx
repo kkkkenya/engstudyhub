@@ -148,8 +148,8 @@ const searchPills = [
   "ECG Heart Rate from R-R Interval", "Crop Water Requirement (FAO-56)",
 ];
 
-const FORMULA_TOPICS = [
-  { num: "01", disc: "FLUID MECHANICS", name: "Reynolds Number", desc: "Predicts whether pipe flow is laminar or turbulent — essential for all pipe design problems." },
+
+
   { num: "02", disc: "FLUID MECHANICS", name: "Darcy-Weisbach Head Loss", desc: "Calculates friction head loss in pipes — the foundation of every water distribution system design." },
   { num: "03", disc: "FLUID MECHANICS", name: "Bernoulli's Equation", desc: "Relates pressure, velocity, and elevation in flowing fluids — used in nozzles, venturi meters, and aerofoils." },
   { num: "04", disc: "FLUID MECHANICS", name: "Continuity Equation", desc: "Conservation of mass in fluid flow — velocity increases as pipe cross-section decreases." },
