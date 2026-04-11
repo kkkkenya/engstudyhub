@@ -10,8 +10,6 @@ import {
   UserPlus,
   Wrench,
   Briefcase,
-  BookOpen,
-  Search,
   ArrowRight,
 } from "lucide-react";
 
@@ -23,10 +21,9 @@ const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
   { href: "#about", label: "About", icon: Info },
   { href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
-  { href: "/formulas", label: "Formulas", icon: BookOpen, isRoute: true },
-  { href: "#pricing", label: "Pricing", icon: CreditCard },
-  { href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
+  { href: "/tools", label: "Tools", icon: Wrench, isRoute: true },
   { href: "/jobs", label: "Jobs", icon: Briefcase, isRoute: true },
+  { href: "#pricing", label: "Pricing", icon: CreditCard },
   { href: "#join", label: "Join", icon: UserPlus },
 ];
 
@@ -151,83 +148,6 @@ const searchPills = [
   "ECG Heart Rate from R-R Interval", "Crop Water Requirement (FAO-56)",
 ];
 
-const FORMULA_TOPICS = [
-  { num: "01", disc: "FLUID MECHANICS", name: "Reynolds Number", desc: "Predicts whether pipe flow is laminar or turbulent — essential for all pipe design problems." },
-  { num: "02", disc: "FLUID MECHANICS", name: "Darcy-Weisbach Head Loss", desc: "Calculates friction head loss in pipes — the foundation of every water distribution system design." },
-  { num: "03", disc: "FLUID MECHANICS", name: "Bernoulli's Equation", desc: "Relates pressure, velocity, and elevation in flowing fluids — used in nozzles, venturi meters, and aerofoils." },
-  { num: "04", disc: "FLUID MECHANICS", name: "Continuity Equation", desc: "Conservation of mass in fluid flow — velocity increases as pipe cross-section decreases." },
-  { num: "05", disc: "FLUID MECHANICS", name: "Manning's Equation", desc: "Calculates flow velocity in open channels and rivers — standard in civil drainage design." },
-  { num: "06", disc: "FLUID MECHANICS", name: "Orifice Flow (Torricelli's Law)", desc: "Predicts discharge velocity from a tank orifice — used in reservoir and weir design." },
-  { num: "07", disc: "FLUID MECHANICS", name: "Drag Force Equation", desc: "Calculates aerodynamic or hydrodynamic resistance on objects moving through fluids." },
-  { num: "08", disc: "FLUID MECHANICS", name: "Hydraulic Radius & Wetted Perimeter", desc: "Key geometric parameter for open channel flow calculations and pipe sizing." },
-  { num: "09", disc: "FLUID MECHANICS", name: "Pump Power Equation", desc: "Calculates power required to pump fluid — essential for selecting motors and sizing pump systems." },
-  { num: "10", disc: "FLUID MECHANICS", name: "Hydrostatic Pressure", desc: "Pressure at depth in a static fluid — used in dam design, underwater structures, and tank walls." },
-  { num: "11", disc: "THERMODYNAMICS", name: "Carnot Efficiency", desc: "Maximum theoretical efficiency of any heat engine operating between two temperatures." },
-  { num: "12", disc: "THERMODYNAMICS", name: "First Law of Thermodynamics", desc: "Energy conservation for thermodynamic systems — relates heat, work, and internal energy." },
-  { num: "13", disc: "THERMODYNAMICS", name: "Ideal Gas Law", desc: "Relates pressure, volume, temperature, and moles of an ideal gas — PV = nRT." },
-  { num: "14", disc: "THERMODYNAMICS", name: "Fourier's Law of Heat Conduction", desc: "Calculates heat flow through solid materials — used in insulation and wall design." },
-  { num: "15", disc: "THERMODYNAMICS", name: "Newton's Law of Cooling", desc: "Describes convective heat transfer from a surface to a surrounding fluid." },
-  { num: "16", disc: "THERMODYNAMICS", name: "Stefan-Boltzmann Radiation Law", desc: "Calculates radiative heat transfer from a surface — critical in furnace and solar collector design." },
-  { num: "17", disc: "THERMODYNAMICS", name: "Coefficient of Performance (COP)", desc: "Efficiency metric for refrigerators and heat pumps — how much cooling per unit of work input." },
-  { num: "18", disc: "THERMODYNAMICS", name: "LMTD Method (Heat Exchangers)", desc: "Log Mean Temperature Difference — standard method for sizing shell-and-tube heat exchangers." },
-  { num: "19", disc: "THERMODYNAMICS", name: "NTU-Effectiveness Method", desc: "Alternative heat exchanger design method when outlet temperatures are unknown." },
-  { num: "20", disc: "THERMODYNAMICS", name: "Specific Heat & Enthalpy", desc: "Relates temperature change to heat added — fundamental for all heating and cooling calculations." },
-  { num: "21", disc: "STRUCTURAL ENGINEERING", name: "Euler-Bernoulli Beam Deflection", desc: "Calculates deflection of beams under various loading conditions — core to structural design." },
-  { num: "22", disc: "STRUCTURAL ENGINEERING", name: "Bending Stress Formula", desc: "Stress distribution across a beam cross-section under bending moment — σ = My/I." },
-  { num: "23", disc: "STRUCTURAL ENGINEERING", name: "Shear Stress in Beams", desc: "Horizontal and vertical shear stress distribution — τ = VQ/Ib." },
-  { num: "24", disc: "STRUCTURAL ENGINEERING", name: "Column Buckling (Euler's Formula)", desc: "Critical load at which a slender column buckles — key for tall structures and compression members." },
-  { num: "25", disc: "STRUCTURAL ENGINEERING", name: "Truss Analysis — Method of Joints", desc: "Systematic method to find member forces in trusses using equilibrium at each joint." },
-  { num: "26", disc: "STRUCTURAL ENGINEERING", name: "Mohr's Circle for Stress", desc: "Graphical method to find principal stresses and maximum shear stress at a point." },
-  { num: "27", disc: "CIVIL ENGINEERING", name: "Concrete Mix Design (IS/BS Method)", desc: "Determines proportions of cement, sand, aggregate, and water for target compressive strength." },
-  { num: "28", disc: "CIVIL ENGINEERING", name: "Manning's Open Channel Flow", desc: "Flow velocity and discharge in open channels — drainage, rivers, and irrigation canals." },
-  { num: "29", disc: "CIVIL ENGINEERING", name: "Soil Bearing Capacity (Terzaghi)", desc: "Ultimate bearing capacity of soil beneath a foundation — prevents settlement and collapse." },
-  { num: "30", disc: "CIVIL ENGINEERING", name: "Prismoidal Formula (Earthworks)", desc: "Calculates cut and fill volumes in road and railway construction surveys." },
-  { num: "31", disc: "MECHANICAL ENGINEERING", name: "Gear Ratio & Speed Reduction", desc: "Relates input/output speeds and torques in gear trains — fundamental to all power transmission design." },
-  { num: "32", disc: "MECHANICAL ENGINEERING", name: "Shaft Power & Torque", desc: "Relates rotational speed, torque, and power — P = Tω — used in motor and shaft design." },
-  { num: "33", disc: "MECHANICAL ENGINEERING", name: "Factor of Safety", desc: "Ratio of material strength to applied stress — defines safe design margins for all structures." },
-  { num: "34", disc: "MECHANICAL ENGINEERING", name: "Belt Drive Velocity Ratio", desc: "Speed and tension relationships in belt-and-pulley systems — core to mechanical power transmission." },
-  { num: "35", disc: "MECHANICAL ENGINEERING", name: "Thin-Walled Pressure Vessels", desc: "Hoop and longitudinal stress in cylindrical and spherical pressure vessels — tanks, pipes, boilers." },
-  { num: "36", disc: "MECHANICAL ENGINEERING", name: "Torsion of Circular Shafts", desc: "Shear stress and angle of twist in shafts under torque — τ = Tr/J." },
-  { num: "37", disc: "MECHANICAL ENGINEERING", name: "Thermal Expansion", desc: "Dimensional change in materials with temperature — critical for pipe joints and bridge bearings." },
-  { num: "38", disc: "MECHANICAL ENGINEERING", name: "Vibration — Natural Frequency", desc: "Resonant frequency of mechanical systems — prevents catastrophic resonance in structures and machines." },
-  { num: "39", disc: "MECHANICAL ENGINEERING", name: "Hardness & Wear (Archard's Law)", desc: "Predicts material wear rate in sliding contact — bearing and gear surface design." },
-  { num: "40", disc: "MECHANICAL ENGINEERING", name: "Efficiency of Machines", desc: "Ratio of useful output to total input — applies to all mechanical systems from gears to engines." },
-  { num: "41", disc: "ELECTRICAL ENGINEERING", name: "Ohm's Law", desc: "Fundamental relationship between voltage, current, and resistance — V = IR." },
-  { num: "42", disc: "ELECTRICAL ENGINEERING", name: "Transformer Turns Ratio", desc: "Relates primary and secondary voltages and currents via turns ratio — N1/N2 = V1/V2." },
-  { num: "43", disc: "ELECTRICAL ENGINEERING", name: "Power Factor & Reactive Power", desc: "Ratio of real power to apparent power — critical for industrial electrical system efficiency." },
-  { num: "44", disc: "ELECTRICAL ENGINEERING", name: "RC & RL Time Constants", desc: "Transient response of capacitor and inductor circuits — τ = RC and τ = L/R." },
-  { num: "45", disc: "ELECTRICAL ENGINEERING", name: "Three-Phase Power", desc: "Power calculations for three-phase systems — standard for industrial motors and generators." },
-  { num: "46", disc: "ELECTRICAL ENGINEERING", name: "Faraday's Law of Induction", desc: "EMF induced by changing magnetic flux — the basis of all transformers and generators." },
-  { num: "47", disc: "ELECTRICAL ENGINEERING", name: "Kirchhoff's Voltage & Current Laws", desc: "Conservation laws for circuit analysis — the foundation of all electrical circuit solving." },
-  { num: "48", disc: "ELECTRICAL ENGINEERING", name: "DC Motor Torque & Speed", desc: "Relates armature current, flux, and back-EMF to torque and speed in DC motors." },
-  { num: "49", disc: "MATERIALS SCIENCE", name: "Stress & Strain (Hooke's Law)", desc: "Linear elastic relationship between stress and strain — σ = Eε — defines material stiffness." },
-  { num: "50", disc: "MATERIALS SCIENCE", name: "Fatigue — S-N Curve (Wöhler)", desc: "Predicts material failure under cyclic loading — critical for rotating shafts and bridges." },
-  { num: "51", disc: "MATERIALS SCIENCE", name: "Fracture Toughness (Griffith Criterion)", desc: "Critical stress for crack propagation in brittle materials — used in failure analysis." },
-  { num: "52", disc: "MATERIALS SCIENCE", name: "Creep & Larson-Miller Parameter", desc: "Long-term deformation of materials at high temperature — gas turbines and boiler design." },
-  { num: "53", disc: "MATERIALS SCIENCE", name: "Phase Diagrams — Lever Rule", desc: "Calculates phase fractions in two-phase regions of binary alloy phase diagrams." },
-  { num: "54", disc: "AEROSPACE ENGINEERING", name: "Lift Equation (Thin Aerofoil)", desc: "Lift force generated by an aerofoil as a function of velocity, area, and lift coefficient." },
-  { num: "55", disc: "AEROSPACE ENGINEERING", name: "Drag Polar & Lift-to-Drag Ratio", desc: "Total drag as a function of lift — fundamental to aircraft performance and range calculations." },
-  { num: "56", disc: "AEROSPACE ENGINEERING", name: "Tsiolkovsky Rocket Equation", desc: "Relates delta-V, exhaust velocity, and mass ratio — the master equation of rocket propulsion." },
-  { num: "57", disc: "AEROSPACE ENGINEERING", name: "Mach Number & Compressibility", desc: "Ratio of flow speed to local speed of sound — governs aerodynamic behaviour at high speeds." },
-  { num: "58", disc: "BIOMEDICAL ENGINEERING", name: "Poiseuille's Law (Blood Flow)", desc: "Flow rate in cylindrical vessels as a function of pressure and radius — models blood in arteries." },
-  { num: "59", disc: "BIOMEDICAL ENGINEERING", name: "ECG Heart Rate from R-R Interval", desc: "Calculates beats per minute from the time between consecutive R peaks in an ECG signal." },
-  { num: "60", disc: "BIOSYSTEMS ENGINEERING", name: "FAO-56 Penman-Monteith ET₀", desc: "Reference evapotranspiration equation — the global standard for crop irrigation scheduling." },
-];
-
-const DISCIPLINES = ["ALL", ...Array.from(new Set(FORMULA_TOPICS.map(t => t.disc)))];
-
-const disciplineColors: Record<string, string> = {
-  "FLUID MECHANICS": "bg-primary/20 text-foreground",
-  "THERMODYNAMICS": "bg-accent/20 text-foreground",
-  "STRUCTURAL ENGINEERING": "bg-primary/30 text-foreground",
-  "CIVIL ENGINEERING": "bg-primary/10 text-foreground",
-  "MECHANICAL ENGINEERING": "bg-accent/30 text-foreground",
-  "ELECTRICAL ENGINEERING": "bg-primary/20 text-foreground",
-  "MATERIALS SCIENCE": "bg-accent/10 text-foreground",
-  "AEROSPACE ENGINEERING": "bg-primary/30 text-foreground",
-  "BIOMEDICAL ENGINEERING": "bg-accent/20 text-foreground",
-  "BIOSYSTEMS ENGINEERING": "bg-primary/10 text-foreground",
-};
 
 const difficultyColors: Record<string, string> = {
   "Beginner": "bg-primary text-foreground",
@@ -246,7 +166,7 @@ const FormulaDirectory = () => {
   const [followUpLoading, setFollowUpLoading] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
-  const [activeCategory, setActiveCategory] = useState("ALL");
+  
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -342,10 +262,6 @@ const FormulaDirectory = () => {
     document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const filteredTopics = activeCategory === "ALL"
-    ? FORMULA_TOPICS
-    : FORMULA_TOPICS.filter(t => t.disc === activeCategory);
-
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
       {/* Marquee */}
@@ -409,8 +325,8 @@ const FormulaDirectory = () => {
                   <a href="#search-section" onClick={e => { e.preventDefault(); document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" }); }} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base uppercase px-6 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform">
                     Search a Formula ↗
                   </a>
-                  <a href="#browse-section" onClick={e => { e.preventDefault(); document.getElementById("browse-section")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 py-3 text-center hover:bg-card hover:text-foreground transition-colors">
-                    Browse by Topic
+                  <a href="#search-section" onClick={e => { e.preventDefault(); document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 py-3 text-center hover:bg-card hover:text-foreground transition-colors">
+                    See Example Searches ↓
                   </a>
                 </div>
               </div>
@@ -536,7 +452,7 @@ const FormulaDirectory = () => {
               {/* Header */}
               <div className="bg-foreground text-card p-6 border-b-4 border-foreground">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold ${disciplineColors[result.discipline?.toUpperCase()] || "bg-primary/20 text-foreground"}`}>
+                  <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold bg-primary/20 text-foreground`}>
                     {result.discipline}
                   </span>
                   <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold ${difficultyColors[result.difficulty_level] || "bg-primary text-foreground"}`}>
@@ -721,52 +637,6 @@ const FormulaDirectory = () => {
           </section>
         )}
 
-        {/* BROWSE BY TOPIC */}
-        <section id="browse-section" className="bg-card border-t-4 border-foreground py-12 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <FadeIn className="mb-10">
-              <span className="font-mono text-primary font-bold text-sm mb-4 block">/// BROWSE BY TOPIC</span>
-              <h2 className="font-display text-4xl md:text-6xl font-bold uppercase leading-none mb-2">
-                Formula <span className="text-outline-dark">Library.</span>
-              </h2>
-              <div className="w-16 h-1 bg-primary mt-2 mb-4" />
-              <p className="font-body text-muted-foreground mb-6">Click any topic to instantly load the full formula breakdown.</p>
-
-              {/* Category filter */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {DISCIPLINES.map(d => (
-                  <button
-                    key={d}
-                    onClick={() => setActiveCategory(d)}
-                    className={`font-mono text-xs font-bold px-3 py-1.5 border-2 border-foreground transition-colors ${activeCategory === d ? "bg-foreground text-card" : "bg-card hover:bg-primary"}`}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </FadeIn>
-
-            <div className="border-t-4 border-foreground flex flex-col">
-              {filteredTopics.map(topic => (
-                <FadeIn key={topic.num}>
-                  <div
-                    onClick={() => handleTopicClick(topic.name)}
-                    className="group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center hover:bg-primary transition-colors p-4 md:p-8 cursor-pointer"
-                  >
-                    <div className="font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{topic.num}</div>
-                    <div className="md:w-1/3 pr-4 md:pr-8 mb-2 md:mb-0">
-                      <div className="font-mono text-xs font-bold border-2 border-foreground inline-block px-2 py-1 mb-2 md:mb-3 group-hover:bg-foreground group-hover:text-primary transition-colors">{topic.disc}</div>
-                      <h3 className="font-display text-2xl md:text-3xl font-bold uppercase">{topic.name}</h3>
-                    </div>
-                    <div className="md:w-auto flex-1 font-body text-base md:text-lg text-muted-foreground group-hover:text-foreground font-medium border-l-0 md:border-l-4 border-foreground md:pl-8 transition-colors">
-                      {topic.desc}
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* DISCORD CTA */}
         <section className="py-20 md:py-32 bg-primary border-y-4 border-foreground overflow-hidden relative">
