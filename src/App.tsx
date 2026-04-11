@@ -8,6 +8,7 @@ import Timetable from "./pages/Timetable.tsx";
 import Projects from "./pages/Projects.tsx";
 import JobBoard from "./pages/JobBoard.tsx";
 import FormulaDirectory from "./pages/FormulaDirectory.tsx";
+import ToolsHub from "./pages/ToolsHub.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import BottomNav from "./components/BottomNav";
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/projects" element={<Projects />} />
             <Route path="/jobs" element={<JobBoard />} />
             <Route path="/formulas" element={<FormulaDirectory />} />
+            <Route path="/tools" element={<ToolsHub />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
