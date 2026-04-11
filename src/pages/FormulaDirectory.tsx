@@ -243,7 +243,7 @@ const FormulaDirectory = () => {
   const [followUpLoading, setFollowUpLoading] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
-  const [activeCategory, setActiveCategory] = useState("ALL");
+  
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -339,10 +339,6 @@ const FormulaDirectory = () => {
     document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const filteredTopics = activeCategory === "ALL"
-    ? FORMULA_TOPICS
-    : FORMULA_TOPICS.filter(t => t.disc === activeCategory);
-
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
       {/* Marquee */}
@@ -406,8 +402,8 @@ const FormulaDirectory = () => {
                   <a href="#search-section" onClick={e => { e.preventDefault(); document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" }); }} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base uppercase px-6 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform">
                     Search a Formula ↗
                   </a>
-                  <a href="#browse-section" onClick={e => { e.preventDefault(); document.getElementById("browse-section")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 py-3 text-center hover:bg-card hover:text-foreground transition-colors">
-                    Browse by Topic
+                  <a href="#search-section" onClick={e => { e.preventDefault(); document.getElementById("search-section")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 py-3 text-center hover:bg-card hover:text-foreground transition-colors">
+                    See Example Searches ↓
                   </a>
                 </div>
               </div>
@@ -718,52 +714,6 @@ const FormulaDirectory = () => {
           </section>
         )}
 
-        {/* BROWSE BY TOPIC */}
-        <section id="browse-section" className="bg-card border-t-4 border-foreground py-12 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <FadeIn className="mb-10">
-              <span className="font-mono text-primary font-bold text-sm mb-4 block">/// BROWSE BY TOPIC</span>
-              <h2 className="font-display text-4xl md:text-6xl font-bold uppercase leading-none mb-2">
-                Formula <span className="text-outline-dark">Library.</span>
-              </h2>
-              <div className="w-16 h-1 bg-primary mt-2 mb-4" />
-              <p className="font-body text-muted-foreground mb-6">Click any topic to instantly load the full formula breakdown.</p>
-
-              {/* Category filter */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {DISCIPLINES.map(d => (
-                  <button
-                    key={d}
-                    onClick={() => setActiveCategory(d)}
-                    className={`font-mono text-xs font-bold px-3 py-1.5 border-2 border-foreground transition-colors ${activeCategory === d ? "bg-foreground text-card" : "bg-card hover:bg-primary"}`}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </FadeIn>
-
-            <div className="border-t-4 border-foreground flex flex-col">
-              {filteredTopics.map(topic => (
-                <FadeIn key={topic.num}>
-                  <div
-                    onClick={() => handleTopicClick(topic.name)}
-                    className="group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center hover:bg-primary transition-colors p-4 md:p-8 cursor-pointer"
-                  >
-                    <div className="font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{topic.num}</div>
-                    <div className="md:w-1/3 pr-4 md:pr-8 mb-2 md:mb-0">
-                      <div className="font-mono text-xs font-bold border-2 border-foreground inline-block px-2 py-1 mb-2 md:mb-3 group-hover:bg-foreground group-hover:text-primary transition-colors">{topic.disc}</div>
-                      <h3 className="font-display text-2xl md:text-3xl font-bold uppercase">{topic.name}</h3>
-                    </div>
-                    <div className="md:w-auto flex-1 font-body text-base md:text-lg text-muted-foreground group-hover:text-foreground font-medium border-l-0 md:border-l-4 border-foreground md:pl-8 transition-colors">
-                      {topic.desc}
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* DISCORD CTA */}
         <section className="py-20 md:py-32 bg-primary border-y-4 border-foreground overflow-hidden relative">
