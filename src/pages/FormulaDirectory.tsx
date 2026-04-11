@@ -10,8 +10,6 @@ import {
   UserPlus,
   Wrench,
   Briefcase,
-  BookOpen,
-  Search,
   ArrowRight,
 } from "lucide-react";
 
@@ -23,10 +21,9 @@ const NAV_LINKS = [
   { href: "#home", label: "Home", icon: Home },
   { href: "#about", label: "About", icon: Info },
   { href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
-  { href: "/formulas", label: "Formulas", icon: BookOpen, isRoute: true },
-  { href: "#pricing", label: "Pricing", icon: CreditCard },
-  { href: "/timetable", label: "Tools", icon: Wrench, isRoute: true },
+  { href: "/tools", label: "Tools", icon: Wrench, isRoute: true },
   { href: "/jobs", label: "Jobs", icon: Briefcase, isRoute: true },
+  { href: "#pricing", label: "Pricing", icon: CreditCard },
   { href: "#join", label: "Join", icon: UserPlus },
 ];
 
