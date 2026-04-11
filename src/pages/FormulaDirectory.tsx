@@ -529,7 +529,7 @@ const FormulaDirectory = () => {
               {/* Header */}
               <div className="bg-foreground text-card p-6 border-b-4 border-foreground">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold ${disciplineColors[result.discipline?.toUpperCase()] || "bg-primary/20 text-foreground"}`}>
+                  <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold bg-primary/20 text-foreground`}>
                     {result.discipline}
                   </span>
                   <span className={`font-mono text-xs border-2 border-foreground px-2 py-0.5 font-bold ${difficultyColors[result.difficulty_level] || "bg-primary text-foreground"}`}>
