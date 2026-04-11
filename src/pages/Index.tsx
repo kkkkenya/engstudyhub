@@ -460,52 +460,83 @@ const Index = () => {
             {/* Premium — appears FIRST on mobile */}
             <FadeIn className="order-1 md:order-2">
               <div className="border-4 border-foreground bg-foreground text-card p-6 md:p-12 shadow-brutal-primary relative flex flex-col h-full transform md:-translate-y-4">
-                <div className="absolute -top-5 left-6 md:left-8 bg-accent text-foreground font-mono font-bold text-xs sm:text-sm px-3 sm:px-4 py-1 border-4 border-foreground">🎓 Student Offer — Semester 1, 2025</div>
+                <div className="absolute -top-5 left-6 md:left-8 bg-primary text-foreground font-mono font-black text-sm px-4 py-1 border-4 border-foreground">LIFETIME ACCESS</div>
                 <div className="border-b-4 border-muted-foreground/30 pb-6 md:pb-8 mb-6 md:mb-8 mt-4">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4 text-primary">Semester Pass</h3>
+                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4 text-primary">Premium Access</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black text-card">KES 200</span>
-                    <span className="font-mono text-base md:text-lg text-muted-foreground font-bold">/ semester</span>
+                    <span className="font-mono text-5xl font-black text-card">KES 800</span>
+                    <span className="font-mono text-lg text-primary font-bold">/ LIFETIME</span>
                   </div>
-                  <div className="font-mono text-sm text-muted-foreground">Per semester · cancel anytime</div>
+                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">Pay once. Access everything. Forever.</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Everything in Free</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>CAT Season Planner</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Premium formula sheets</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Priority Discord support</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Everything in Basic</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Live Pomodoro study rooms</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Project build squads (per semester)</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Daily homework & CAT support</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Career & internship pipeline</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Priority Discord channels</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Direct access to project leads</li>
                 </ul>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] text-center border-4 border-accent bg-accent text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
                   <MessageCircle size={20} />
-                  Join via WhatsApp →
+                  Join Premium — KES 800 once
                 </a>
-                <p className="text-sm text-muted-foreground text-center mt-4">
-                  Priced for Kenyan university students. No hidden fees. Cancel by not renewing next semester.
-                </p>
+                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-muted-foreground/30 pt-3 mt-4">Pay via M-Pesa • One payment. Lifetime access.</p>
               </div>
             </FadeIn>
 
-            {/* Free */}
+            {/* Basic */}
             <FadeIn className="order-2 md:order-1">
               <div className="border-4 border-foreground bg-card p-6 md:p-12 shadow-brutal flex flex-col h-full">
                 <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Free</h3>
+                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Basic Access</h3>
                   <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-4xl md:text-5xl font-black">KES 0</span>
+                    <span className="font-mono text-5xl font-black">KES 50</span>
+                    <span className="font-mono text-lg text-muted-foreground">/ semester</span>
                   </div>
-                  <div className="font-mono text-sm text-muted-foreground">Always free</div>
+                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">Renew each semester. Cancel anytime.</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Access to public resources</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>Join study groups</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">&gt;</span>View project library</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>All university channels</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Notes & past papers archive</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Past exam papers (sorted by unit & year)</li>
+                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>PDF resource library</li>
+                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Live study rooms</li>
+                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Project build squads</li>
+                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Homework & CAT support</li>
+                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Career pipeline</li>
                 </ul>
-                <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal block w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
-                  Get Started Free
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
+                  Join Basic — KES 50
                 </a>
+                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-foreground pt-3 mt-4">Pay via M-Pesa • Renews every semester</p>
               </div>
             </FadeIn>
           </div>
+
+          {/* Value breakdown */}
+          <FadeIn>
+            <div className="border-4 border-foreground bg-foreground text-card p-6 mt-8 max-w-5xl mx-auto">
+              <p className="font-body text-base text-card/70 text-center mb-4">
+                A Kenyan engineering degree takes 4 years. Premium costs less than one textbook — and lasts the whole degree.
+              </p>
+              <div className="flex divide-x-4 divide-primary">
+                <div className="flex-1 text-center px-2">
+                  <div className="font-mono text-2xl font-black text-primary">8 semesters</div>
+                  <div className="font-mono text-xs text-card/60 uppercase mt-1">Basic would cost KES 400 total</div>
+                </div>
+                <div className="flex-1 text-center px-2">
+                  <div className="font-mono text-2xl font-black text-primary">KES 800</div>
+                  <div className="font-mono text-xs text-card/60 uppercase mt-1">Premium costs this. Once. Ever.</div>
+                </div>
+                <div className="flex-1 text-center px-2">
+                  <div className="font-mono text-2xl font-black text-primary">KES 400 saved</div>
+                  <div className="font-mono text-xs text-card/60 uppercase mt-1">By going Premium from day one</div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
 
           {/* Trust signals */}
           <FadeIn>
