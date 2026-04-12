@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-new.jpeg";
 import {
@@ -83,27 +83,32 @@ const stripDelimiters = (s: string): string =>
 // Render a LaTeX string to HTML using katex.renderToString
 const renderLatex = (latex: string, displayMode = false): string => {
   const katex = (window as any).katex;
-  if (!katex) return latex;
+  if (!katex) return `<code style="font-size:1rem;opacity:0.8">${latex}</code>`;
   try {
     const cleaned = stripDelimiters(latex);
     return katex.renderToString(cleaned, { displayMode, throwOnError: false });
-  } catch {
-    return latex;
+  } catch (err) {
+    console.warn("KaTeX render failed:", err);
+    return `<code style="font-size:1rem;opacity:0.8">${latex}</code>`;
   }
 };
 
 // Render all math in an element using auto-render (for prose sections)
 const renderMathInEl = (el: HTMLElement | null) => {
   if (!el || !(window as any).renderMathInElement) return;
-  (window as any).renderMathInElement(el, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "\\[", right: "\\]", display: true },
-      { left: "$", right: "$", display: false },
-      { left: "\\(", right: "\\)", display: false },
-    ],
-    throwOnError: false,
-  });
+  try {
+    (window as any).renderMathInElement(el, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+      ],
+      throwOnError: false,
+    });
+  } catch (err) {
+    console.warn("renderMathInElement failed:", err);
+  }
 };
 
 // ─── System prompt ───
@@ -233,6 +238,8 @@ const FormulaDirectory = () => {
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
   const [showTop, setShowTop] = useState(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const followUpRef = useRef<HTMLDivElement>(null);
   const formulaRef = useRef<HTMLDivElement>(null);
@@ -251,25 +258,49 @@ const FormulaDirectory = () => {
 
   // Render KaTeX explicitly when result changes
   const renderResultMath = useCallback(async () => {
-    await loadKaTeX();
+    try {
+      await loadKaTeX();
+    } catch (err) {
+      console.warn("Failed to load KaTeX:", err);
+      return;
+    }
     setTimeout(() => {
-      // Main formula — explicit renderToString
-      if (formulaRef.current && result?.formula_latex) {
-        formulaRef.current.innerHTML = renderLatex(result.formula_latex, true);
+      try {
+        // Main formula — explicit renderToString
+        if (formulaRef.current && result?.formula_latex) {
+          formulaRef.current.innerHTML = renderLatex(result.formula_latex, true);
+        }
+      } catch (err) {
+        console.warn("KaTeX formula banner render failed:", err);
+        if (formulaRef.current && result?.formula_latex) {
+          formulaRef.current.innerHTML = `<code style="font-size:1rem;opacity:0.8">${result.formula_latex}</code>`;
+        }
       }
-      // Variable symbols — explicit renderToString
-      if (variablesRef.current) {
-        variablesRef.current.querySelectorAll("[data-katex]").forEach((el) => {
-          const raw = el.getAttribute("data-katex") || "";
-          (el as HTMLElement).innerHTML = renderLatex(raw, false);
-        });
+      try {
+        // Variable symbols — explicit renderToString
+        if (variablesRef.current) {
+          variablesRef.current.querySelectorAll("[data-katex]").forEach((el) => {
+            const raw = el.getAttribute("data-katex") || "";
+            (el as HTMLElement).innerHTML = renderLatex(raw, false);
+          });
+        }
+      } catch (err) {
+        console.warn("KaTeX variables render failed:", err);
       }
-      // Worked example steps — auto-render for inline math
-      if (workedRef.current) {
-        renderMathInEl(workedRef.current);
+      try {
+        // Worked example steps — auto-render for inline math
+        if (workedRef.current) {
+          renderMathInEl(workedRef.current);
+        }
+      } catch (err) {
+        console.warn("KaTeX worked example render failed:", err);
       }
-      // Derivation, exam tips, etc — auto-render on whole result
-      renderMathInEl(resultRef.current);
+      try {
+        // Derivation, exam tips, related formulas — auto-render on whole result
+        renderMathInEl(resultRef.current);
+      } catch (err) {
+        console.warn("KaTeX result render failed:", err);
+      }
     }, 100);
   }, [result]);
 
@@ -491,18 +522,43 @@ const FormulaDirectory = () => {
                 <input
                   type="text"
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && searchFormula(searchQuery)}
+                  onChange={e => {
+                    const val = e.target.value;
+                    setSearchQuery(val);
+                    if (debounceRef.current) clearTimeout(debounceRef.current);
+                    if (val.trim().length >= 2) {
+                      setIsDebouncing(true);
+                      debounceRef.current = setTimeout(() => {
+                        setIsDebouncing(false);
+                        searchFormula(val);
+                      }, 300);
+                    } else {
+                      setIsDebouncing(false);
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === "Enter") {
+                      if (debounceRef.current) clearTimeout(debounceRef.current);
+                      setIsDebouncing(false);
+                      searchFormula(searchQuery);
+                    }
+                  }}
                   placeholder="e.g. Reynolds number, beam deflection, Ohm's law..."
                   className="flex-1 border-r-4 border-foreground px-4 py-4 font-mono text-base bg-card text-foreground focus:outline-none placeholder:text-muted-foreground"
                 />
                 <button
-                  onClick={() => searchFormula(searchQuery)}
+                  onClick={() => {
+                    if (debounceRef.current) clearTimeout(debounceRef.current);
+                    setIsDebouncing(false);
+                    searchFormula(searchQuery);
+                  }}
                   disabled={isLoading}
                   className="bg-foreground text-card hover:bg-primary hover:text-foreground font-mono font-bold uppercase px-6 md:px-8 py-4 transition-colors min-w-[120px] md:min-w-[140px] flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
                     <span className="flex items-center gap-1">Thinking<span className="animate-pulse">...</span></span>
+                  ) : isDebouncing ? (
+                    <span className="flex items-center gap-1 text-primary">Searching<span className="animate-pulse">...</span></span>
                   ) : (
                     <>Search <ArrowRight size={16} /></>
                   )}
@@ -552,17 +608,25 @@ const FormulaDirectory = () => {
         {error && !isLoading && (
           <section className="max-w-5xl mx-auto px-4 md:px-6 py-12">
             <div className="border-4 border-foreground bg-card p-8 shadow-brutal text-center">
-              <span className="font-mono text-destructive font-bold text-sm mb-2 block">/// ERROR</span>
-              <h3 className="font-display text-2xl uppercase mb-4">Formula Not Found</h3>
+              <span className="font-mono text-destructive font-bold text-sm mb-2 block">/// FORMULA UNAVAILABLE</span>
+              <h3 className="font-display text-2xl uppercase mb-4">Something went wrong</h3>
               <p className="font-body text-muted-foreground mb-6">
-                The AI couldn't process that query. Please try again — if the issue persists, check your connection.
+                The formula couldn't be loaded right now. Try refreshing the page or searching again.
               </p>
-              <button
-                onClick={() => searchFormula(searchQuery)}
-                className="border-4 border-foreground bg-primary font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-primary transition-colors"
-              >
-                Retry Search
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={() => searchFormula(searchQuery)}
+                  className="border-4 border-foreground bg-primary font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-primary transition-colors"
+                >
+                  Retry Search
+                </button>
+                <button
+                  onClick={() => { setError(false); setSearchQuery(""); }}
+                  className="border-4 border-foreground bg-card font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-card transition-colors"
+                >
+                  Clear &amp; Start Over
+                </button>
+              </div>
             </div>
           </section>
         )}
