@@ -238,6 +238,8 @@ const FormulaDirectory = () => {
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
   const [showTop, setShowTop] = useState(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const followUpRef = useRef<HTMLDivElement>(null);
   const formulaRef = useRef<HTMLDivElement>(null);
