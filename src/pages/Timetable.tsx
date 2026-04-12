@@ -433,6 +433,10 @@ const Timetable = () => {
   const [pomodoroCount, setPomodoroCount] = useState(0);
   const timetableRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    document.title = "Timetable | Engineering Hub";
+  }, []);
+
   const POMODORO_TIMES = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
 
   const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
