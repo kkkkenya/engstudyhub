@@ -96,15 +96,19 @@ const renderLatex = (latex: string, displayMode = false): string => {
 // Render all math in an element using auto-render (for prose sections)
 const renderMathInEl = (el: HTMLElement | null) => {
   if (!el || !(window as any).renderMathInElement) return;
-  (window as any).renderMathInElement(el, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "\\[", right: "\\]", display: true },
-      { left: "$", right: "$", display: false },
-      { left: "\\(", right: "\\)", display: false },
-    ],
-    throwOnError: false,
-  });
+  try {
+    (window as any).renderMathInElement(el, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\[", right: "\\]", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+      ],
+      throwOnError: false,
+    });
+  } catch (err) {
+    console.warn("renderMathInElement failed:", err);
+  }
 };
 
 // ─── System prompt ───
