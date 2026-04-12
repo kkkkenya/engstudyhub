@@ -145,7 +145,7 @@ const Index = () => {
       {/* Nav */}
       <nav className="w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img src={logoImg} alt="Engineering Study Hub" className="h-8 md:h-10 w-auto filter grayscale" />
+          <img src={logoImg} alt="Engineering Study Hub" className="h-10 md:h-12 w-auto" />
         </div>
         <div className="hidden md:flex items-center gap-6 font-mono text-sm font-bold uppercase">
           {NAV_LINKS.map((link) =>
