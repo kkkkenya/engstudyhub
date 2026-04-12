@@ -608,17 +608,25 @@ const FormulaDirectory = () => {
         {error && !isLoading && (
           <section className="max-w-5xl mx-auto px-4 md:px-6 py-12">
             <div className="border-4 border-foreground bg-card p-8 shadow-brutal text-center">
-              <span className="font-mono text-destructive font-bold text-sm mb-2 block">/// ERROR</span>
-              <h3 className="font-display text-2xl uppercase mb-4">Formula Not Found</h3>
+              <span className="font-mono text-destructive font-bold text-sm mb-2 block">/// FORMULA UNAVAILABLE</span>
+              <h3 className="font-display text-2xl uppercase mb-4">Something went wrong</h3>
               <p className="font-body text-muted-foreground mb-6">
-                The AI couldn't process that query. Please try again — if the issue persists, check your connection.
+                The formula couldn't be loaded right now. Try refreshing the page or searching again.
               </p>
-              <button
-                onClick={() => searchFormula(searchQuery)}
-                className="border-4 border-foreground bg-primary font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-primary transition-colors"
-              >
-                Retry Search
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={() => searchFormula(searchQuery)}
+                  className="border-4 border-foreground bg-primary font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-primary transition-colors"
+                >
+                  Retry Search
+                </button>
+                <button
+                  onClick={() => { setError(false); setSearchQuery(""); }}
+                  className="border-4 border-foreground bg-card font-mono font-bold uppercase px-6 py-3 hover:bg-foreground hover:text-card transition-colors"
+                >
+                  Clear &amp; Start Over
+                </button>
+              </div>
             </div>
           </section>
         )}
