@@ -54,14 +54,12 @@ const loadKaTeX = (() => {
   return () => {
     if (promise) return promise;
     promise = new Promise<void>((resolve) => {
-      // CSS
       if (!document.querySelector('link[href*="katex"]')) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
         document.head.appendChild(link);
       }
-      // JS
       const loadScript = (src: string): Promise<void> =>
         new Promise((res) => {
           if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
@@ -78,7 +76,24 @@ const loadKaTeX = (() => {
   };
 })();
 
-const renderMath = (el: HTMLElement | null) => {
+// Strip \[ \] or \( \) delimiters from a LaTeX string
+const stripDelimiters = (s: string): string =>
+  s.replace(/^\\\[|\\\]$|^\\\(|\\\)$/g, "").trim();
+
+// Render a LaTeX string to HTML using katex.renderToString
+const renderLatex = (latex: string, displayMode = false): string => {
+  const katex = (window as any).katex;
+  if (!katex) return latex;
+  try {
+    const cleaned = stripDelimiters(latex);
+    return katex.renderToString(cleaned, { displayMode, throwOnError: false });
+  } catch {
+    return latex;
+  }
+};
+
+// Render all math in an element using auto-render (for prose sections)
+const renderMathInEl = (el: HTMLElement | null) => {
   if (!el || !(window as any).renderMathInElement) return;
   (window as any).renderMathInElement(el, {
     delimiters: [
@@ -217,16 +232,46 @@ const FormulaDirectory = () => {
   const [followUpLoading, setFollowUpLoading] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
+  const [showTop, setShowTop] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const followUpRef = useRef<HTMLDivElement>(null);
+  const formulaRef = useRef<HTMLDivElement>(null);
+  const variablesRef = useRef<HTMLDivElement>(null);
+  const workedRef = useRef<HTMLDivElement>(null);
 
-  // Render KaTeX when result changes
+  useEffect(() => {
+    document.title = "Formula Directory | Engineering Hub";
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setShowTop(window.scrollY > 500);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  // Render KaTeX explicitly when result changes
   const renderResultMath = useCallback(async () => {
     await loadKaTeX();
     setTimeout(() => {
-      renderMath(resultRef.current);
+      // Main formula — explicit renderToString
+      if (formulaRef.current && result?.formula_latex) {
+        formulaRef.current.innerHTML = renderLatex(result.formula_latex, true);
+      }
+      // Variable symbols — explicit renderToString
+      if (variablesRef.current) {
+        variablesRef.current.querySelectorAll("[data-katex]").forEach((el) => {
+          const raw = el.getAttribute("data-katex") || "";
+          (el as HTMLElement).innerHTML = renderLatex(raw, false);
+        });
+      }
+      // Worked example steps — auto-render for inline math
+      if (workedRef.current) {
+        renderMathInEl(workedRef.current);
+      }
+      // Derivation, exam tips, etc — auto-render on whole result
+      renderMathInEl(resultRef.current);
     }, 100);
-  }, []);
+  }, [result]);
 
   useEffect(() => {
     if (result) renderResultMath();
@@ -234,7 +279,7 @@ const FormulaDirectory = () => {
 
   useEffect(() => {
     if (followUpResult) {
-      loadKaTeX().then(() => setTimeout(() => renderMath(followUpRef.current), 100));
+      loadKaTeX().then(() => setTimeout(() => renderMathInEl(followUpRef.current), 100));
     }
   }, [followUpResult]);
 
@@ -537,12 +582,12 @@ const FormulaDirectory = () => {
               {/* Formula display */}
               <div className="bg-primary border-b-4 border-foreground p-8 text-center">
                 <div className="font-mono text-xs text-foreground/60 uppercase tracking-widest mb-3">/// THE FORMULA</div>
-                <div className="font-mono text-3xl md:text-5xl font-black text-foreground break-all">{result.formula_latex}</div>
+                <div ref={formulaRef} className="text-3xl md:text-5xl font-black text-card break-all [&_.katex]:text-card" />
                 <p className="font-body text-sm text-foreground/70 mt-3">{result.formula_description}</p>
               </div>
 
               {/* Variables table */}
-              <div className="p-6 border-b-4 border-foreground">
+              <div ref={variablesRef} className="p-6 border-b-4 border-foreground">
                 <div className="font-mono text-xs font-bold text-primary uppercase tracking-widest mb-4">/// VARIABLES DEFINED</div>
                 <div className="border-4 border-foreground overflow-x-auto">
                   <table className="w-full">
@@ -557,7 +602,7 @@ const FormulaDirectory = () => {
                     <tbody>
                       {result.variables?.map((v, i) => (
                         <tr key={i} className={`border-b-2 border-foreground ${i % 2 === 0 ? "bg-card" : "bg-background"}`}>
-                          <td className="bg-primary/10 font-mono font-black text-lg px-4 py-3 border-r-2 border-foreground text-center">{v.symbol}</td>
+                          <td className="bg-primary/10 font-mono font-black text-lg px-4 py-3 border-r-2 border-foreground text-center" data-katex={v.symbol}>{v.symbol}</td>
                           <td className="font-body text-sm px-4 py-3 border-r-2 border-foreground/20">{v.name}</td>
                           <td className="font-mono text-xs px-4 py-3 border-r-2 border-foreground/20">{v.unit}</td>
                           <td className="font-body text-sm px-4 py-3">{v.description}</td>
@@ -577,7 +622,7 @@ const FormulaDirectory = () => {
               </div>
 
               {/* Worked example */}
-              <div className="p-6 border-b-4 border-foreground">
+              <div ref={workedRef} className="p-6 border-b-4 border-foreground">
                 <div className="font-mono text-xs font-bold text-primary uppercase tracking-widest mb-4">/// WORKED EXAMPLE</div>
                 <div className="bg-foreground text-card p-4 border-2 border-foreground mb-4">
                   <div className="font-mono text-xs text-primary mb-2">PROBLEM</div>
@@ -747,6 +792,15 @@ const FormulaDirectory = () => {
           </div>
         </div>
       </footer>
+
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-4 z-40 w-11 h-11 bg-primary border-4 border-foreground shadow-brutal font-mono font-black text-foreground text-lg flex items-center justify-center hover:-translate-y-1 transition-transform active:shadow-none active:translate-y-0"
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 };
