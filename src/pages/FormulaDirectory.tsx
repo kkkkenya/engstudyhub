@@ -305,7 +305,9 @@ const FormulaDirectory = () => {
     }, 2000);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/claude-proxy`, {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      if (!supabaseUrl) throw new Error("Missing VITE_SUPABASE_URL");
+      const response = await fetch(`${supabaseUrl}/functions/v1/claude-proxy`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -317,18 +319,23 @@ const FormulaDirectory = () => {
           max_tokens: 2000,
         }),
       });
+      if (!response.ok) {
+        console.error("claude-proxy HTTP error:", response.status, await response.text().catch(() => ""));
+        throw new Error(`HTTP ${response.status}`);
+      }
       const data = await response.json();
       const text = data.content
         ?.filter((b: { type: string }) => b.type === "text")
         .map((b: { text: string }) => b.text)
         .join("");
-      if (!text) throw new Error("No response");
+      if (!text) throw new Error("No response text from AI");
       const parsed = JSON.parse(text);
       setResult(parsed);
       setTimeout(() => {
         document.getElementById("formula-result")?.scrollIntoView({ behavior: "smooth" });
       }, 100);
-    } catch {
+    } catch (err) {
+      console.error("Formula search error:", err);
       setError(true);
     } finally {
       setIsLoading(false);
