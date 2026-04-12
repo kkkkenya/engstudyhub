@@ -606,7 +606,7 @@ const Timetable = () => {
       <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
         <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <ArrowLeft className="w-4 h-4" />
-          <img src={logoImg} alt="Hub" className="h-7 w-auto filter grayscale" />
+          <img src={logoImg} alt="Hub" className="h-9 w-auto" />
         </Link>
         <div className="text-center">
           <h1 className="font-display font-bold text-xs uppercase tracking-wider">Timetable</h1>
