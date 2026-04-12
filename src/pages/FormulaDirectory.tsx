@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-new.jpeg";
 import {
@@ -48,33 +48,84 @@ const FadeIn = ({ children, className = "" }: { children: React.ReactNode; class
   return <div ref={fade.ref} className={`${fade.className} ${className}`}>{children}</div>;
 };
 
+// ─── KaTeX loader ───
+const loadKaTeX = (() => {
+  let promise: Promise<void> | null = null;
+  return () => {
+    if (promise) return promise;
+    promise = new Promise<void>((resolve) => {
+      // CSS
+      if (!document.querySelector('link[href*="katex"]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
+        document.head.appendChild(link);
+      }
+      // JS
+      const loadScript = (src: string): Promise<void> =>
+        new Promise((res) => {
+          if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+          const s = document.createElement("script");
+          s.src = src;
+          s.onload = () => res();
+          document.head.appendChild(s);
+        });
+      loadScript("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js")
+        .then(() => loadScript("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"))
+        .then(() => resolve());
+    });
+    return promise;
+  };
+})();
+
+const renderMath = (el: HTMLElement | null) => {
+  if (!el || !(window as any).renderMathInElement) return;
+  (window as any).renderMathInElement(el, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "$", right: "$", display: false },
+      { left: "\\(", right: "\\)", display: false },
+    ],
+    throwOnError: false,
+  });
+};
+
 // ─── System prompt ───
 const SYSTEM_PROMPT = `You are an expert engineering reference assistant for university-level engineering students in Kenya. Your role is to provide thorough, textbook-quality formula explanations.
+
+IMPORTANT FORMATTING RULES:
+- Wrap ALL inline math in \\( ... \\) delimiters — e.g. \\( L = I\\omega \\)
+- Wrap ALL display/block equations in \\[ ... \\] delimiters — e.g. \\[ L = I\\omega \\]
+- ALL Greek letters and symbols MUST use LaTeX notation: \\omega, \\tau, \\alpha, \\sigma, \\rho, \\mu, \\nu, \\pi, \\theta, \\Delta, \\Sigma, etc.
+- In the formula_latex field, write the formula using LaTeX notation wrapped in \\[ ... \\]
+- In variable symbols, use LaTeX notation wrapped in \\( ... \\) — e.g. \\( \\omega \\)
+- In worked example steps, wrap any math expressions in \\( ... \\) for inline or \\[ ... \\] for display
 
 When given a formula topic or question, always respond in this EXACT JSON format with no markdown, no backticks, no preamble:
 
 {
   "formula_name": "Full name of the formula or principle",
   "discipline": "Engineering discipline (e.g. Fluid Mechanics)",
-  "formula_latex": "The formula written clearly e.g. P = F/A",
+  "formula_latex": "The formula in LaTeX wrapped in \\\\[ ... \\\\] delimiters",
   "formula_description": "One sentence describing what this formula calculates",
   "variables": [
     {
-      "symbol": "P",
+      "symbol": "LaTeX symbol wrapped in \\\\( ... \\\\) e.g. \\\\( P \\\\)",
       "name": "Pressure",
       "unit": "Pascal (Pa) or N/m²",
       "description": "Force per unit area acting on a surface"
     }
   ],
-  "derivation_summary": "2-3 sentence plain English explanation of where this formula comes from and the physics/engineering behind it",
+  "derivation_summary": "2-3 sentence plain English explanation of where this formula comes from and the physics/engineering behind it. Use \\\\( ... \\\\) for any inline math.",
   "worked_example": {
     "problem": "A full example problem statement with real numbers",
     "solution_steps": [
-      "Step 1: Identify given values",
+      "Step 1: Identify given values — use \\\\( ... \\\\) for math",
       "Step 2: Apply formula",
       "Step 3: Calculate"
     ],
-    "answer": "Final answer with units"
+    "answer": "Final answer with units, use \\\\( ... \\\\) for math"
   },
   "assumptions_limitations": [
     "Assumption 1",
@@ -97,7 +148,7 @@ When given a formula topic or question, always respond in this EXACT JSON format
       "publisher": "Publisher"
     }
   ],
-  "exam_tips": "2-3 sentence tip for Kenyan university engineering exams",
+  "exam_tips": "2-3 sentence tip for Kenyan university engineering exams. Use \\\\( ... \\\\) for any math.",
   "difficulty_level": "Beginner | Intermediate | Advanced",
   "year_level": "Year 1 | Year 2 | Year 3 | Year 4"
 }
@@ -166,7 +217,26 @@ const FormulaDirectory = () => {
   const [followUpLoading, setFollowUpLoading] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [loadingQuote, setLoadingQuote] = useState(0);
-  
+  const resultRef = useRef<HTMLDivElement>(null);
+  const followUpRef = useRef<HTMLDivElement>(null);
+
+  // Render KaTeX when result changes
+  const renderResultMath = useCallback(async () => {
+    await loadKaTeX();
+    setTimeout(() => {
+      renderMath(resultRef.current);
+    }, 100);
+  }, []);
+
+  useEffect(() => {
+    if (result) renderResultMath();
+  }, [result, renderResultMath]);
+
+  useEffect(() => {
+    if (followUpResult) {
+      loadKaTeX().then(() => setTimeout(() => renderMath(followUpRef.current), 100));
+    }
+  }, [followUpResult]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -232,7 +302,7 @@ const FormulaDirectory = () => {
           "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
-          system: `You are an expert engineering professor. The student just looked up "${result.formula_name}". Answer their follow-up question in plain text, 2-4 paragraphs. Be thorough but clear. Reference the formula context. Tailor for Kenyan university students.`,
+          system: `You are an expert engineering professor. The student just looked up "${result.formula_name}". Answer their follow-up question clearly. Use \\( ... \\) for inline math and \\[ ... \\] for display equations. Use LaTeX for all Greek letters and symbols. Be thorough but clear. Reference the formula context. Tailor for Kenyan university students.`,
           prompt: followUpQuery,
           max_tokens: 1000,
         }),
@@ -372,7 +442,7 @@ const FormulaDirectory = () => {
                   onChange={e => setSearchQuery(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && searchFormula(searchQuery)}
                   placeholder="e.g. Reynolds number, beam deflection, Ohm's law..."
-                  className="flex-1 border-r-4 border-foreground px-4 py-4 font-mono text-base bg-card focus:outline-none placeholder:text-muted-foreground/50"
+                  className="flex-1 border-r-4 border-foreground px-4 py-4 font-mono text-base bg-card text-foreground focus:outline-none placeholder:text-muted-foreground"
                 />
                 <button
                   onClick={() => searchFormula(searchQuery)}
@@ -448,7 +518,7 @@ const FormulaDirectory = () => {
         {/* RESULT DISPLAY */}
         {result && !isLoading && (
           <section id="formula-result" className="max-w-5xl mx-auto px-4 md:px-6 py-12">
-            <div className="transition-all duration-500 border-4 border-foreground bg-card shadow-brutal">
+            <div ref={resultRef} className="transition-all duration-500 border-4 border-foreground bg-card shadow-brutal">
               {/* Header */}
               <div className="bg-foreground text-card p-6 border-b-4 border-foreground">
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -629,7 +699,7 @@ const FormulaDirectory = () => {
               </div>
             </div>
             {followUpResult && (
-              <div className="border-4 border-foreground bg-card p-6 mt-4">
+              <div ref={followUpRef} className="border-4 border-foreground bg-card p-6 mt-4">
                 <div className="font-mono text-xs text-primary mb-3">/// AI RESPONSE</div>
                 <p className="font-body text-base text-foreground leading-relaxed whitespace-pre-wrap">{followUpResult}</p>
               </div>

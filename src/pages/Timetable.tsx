@@ -6,8 +6,6 @@ import {
   Clock,
   MapPin,
   BookOpen,
-  ChevronDown,
-  ChevronUp,
   X,
   Check,
   Plus,
@@ -19,6 +17,7 @@ import {
   Settings2,
   Download,
   Share2,
+  Timer,
 } from "lucide-react";
 import logoImg from "@/assets/logo-new.jpeg";
 
@@ -249,12 +248,10 @@ const getCurrentMinutes = () => {
   return n.getHours() * 60 + n.getMinutes();
 };
 
-// Time slots for the weekly grid (7am to 6pm)
-
 // ─── Weekly Grid View (Desktop) ───
-const HOUR_HEIGHT = 64; // px per hour
-const GRID_START = 7; // 7am
-const GRID_END = 19; // 7pm
+const HOUR_HEIGHT = 64;
+const GRID_START = 7;
+const GRID_END = 19;
 const GRID_TOTAL_HOURS = GRID_END - GRID_START;
 
 const WeeklyGrid = ({
@@ -274,7 +271,6 @@ const WeeklyGrid = ({
 
   return (
     <div className="border-2 border-foreground bg-card overflow-auto">
-      {/* Header row */}
       <div className="grid grid-cols-[56px_repeat(5,1fr)] border-b-2 border-foreground sticky top-0 z-10 bg-card">
         <div className="border-r-2 border-foreground p-2" />
         {DAYS.map((day) => (
@@ -295,9 +291,7 @@ const WeeklyGrid = ({
         ))}
       </div>
 
-      {/* Grid body — absolute positioned events */}
       <div className="grid grid-cols-[56px_repeat(5,1fr)]" style={{ height: GRID_TOTAL_HOURS * HOUR_HEIGHT }}>
-        {/* Time labels column */}
         <div className="border-r-2 border-foreground relative">
           {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => i + GRID_START).map((hour) => (
             <div
@@ -310,60 +304,37 @@ const WeeklyGrid = ({
           ))}
         </div>
 
-        {/* Day columns */}
         {DAYS.map((day) => (
           <div
             key={day}
             className={`border-r-2 last:border-r-0 border-foreground/10 relative ${day === todayName ? "bg-primary/5" : ""}`}
           >
-            {/* Hour gridlines */}
             {Array.from({ length: GRID_TOTAL_HOURS }, (_, i) => (
-              <div
-                key={i}
-                className="absolute left-0 right-0 border-t border-foreground/10"
-                style={{ top: i * HOUR_HEIGHT }}
-              />
+              <div key={i} className="absolute left-0 right-0 border-t border-foreground/10" style={{ top: i * HOUR_HEIGHT }} />
             ))}
-
-            {/* Now indicator */}
             {day === todayName && nowOffset >= 0 && (
               <div className="absolute left-0 right-0 h-0.5 bg-destructive z-10" style={{ top: nowOffset }}>
                 <div className="absolute -left-1 -top-1 w-2.5 h-2.5 rounded-full bg-destructive" />
               </div>
             )}
-
-            {/* Events */}
             {schedule[day].map((event) => {
               const startMin = timeToMin(event.startTime);
               const endMin = timeToMin(event.endTime);
               const topPx = ((startMin - GRID_START * 60) / 60) * HOUR_HEIGHT;
               const heightPx = ((endMin - startMin) / 60) * HOUR_HEIGHT;
               const isNow = day === todayName && now >= startMin && now < endMin;
-
               return (
                 <button
                   key={event.id}
                   onClick={() => onEventClick(event)}
                   className={`absolute left-0.5 right-0.5 text-left p-1.5 border-2 border-foreground overflow-hidden transition-all hover:shadow-brutal-sm hover:z-20
                     ${event.completed ? "opacity-40" : ""} ${isNow ? "ring-2 ring-primary z-10" : ""}`}
-                  style={{
-                    top: `${topPx}px`,
-                    height: `${heightPx - 2}px`,
-                    backgroundColor: getSubjectColor(event.subject),
-                  }}
+                  style={{ top: `${topPx}px`, height: `${heightPx - 2}px`, backgroundColor: getSubjectColor(event.subject) }}
                 >
-                  <div className="font-mono text-[10px] font-bold text-foreground leading-tight truncate">
-                    {event.subject}
-                  </div>
-                  <div className="font-mono text-[9px] text-foreground/70 truncate">
-                    {event.startTime}–{event.endTime}
-                  </div>
-                  {heightPx > 50 && (
-                    <div className="font-mono text-[9px] text-foreground/60 truncate">{event.location}</div>
-                  )}
-                  {heightPx > 80 && (
-                    <div className="font-mono text-[8px] text-foreground/50 truncate mt-0.5">{event.description}</div>
-                  )}
+                  <div className="font-mono text-[10px] font-bold text-foreground leading-tight truncate">{event.subject}</div>
+                  <div className="font-mono text-[9px] text-foreground/70 truncate">{event.startTime}–{event.endTime}</div>
+                  {heightPx > 50 && <div className="font-mono text-[9px] text-foreground/60 truncate">{event.location}</div>}
+                  {heightPx > 80 && <div className="font-mono text-[8px] text-foreground/50 truncate mt-0.5">{event.description}</div>}
                 </button>
               );
             })}
@@ -374,92 +345,62 @@ const WeeklyGrid = ({
   );
 };
 
-// ─── Manage Mode (Quick Edit) ───
+// ─── Manage Mode ───
 const ManageMode = ({
-  schedule,
-  onEdit,
-  onDelete,
-  onAdd,
-  onClose,
+  schedule, onEdit, onDelete, onAdd, onClose,
 }: {
   schedule: Record<DayName, TimetableEvent[]>;
   onEdit: (event: TimetableEvent) => void;
   onDelete: (id: string) => void;
   onAdd: () => void;
   onClose: () => void;
-}) => {
-  return (
-    <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
-      <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
-        <button onClick={onClose} className="flex items-center gap-2 font-mono text-sm font-bold">
-          <X className="w-5 h-5" /> Close
-        </button>
-        <h1 className="font-display font-bold text-sm uppercase tracking-wider">Manage Timetable</h1>
-        <button
-          onClick={onAdd}
-          className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
-        >
-          <Plus className="w-5 h-5" />
-        </button>
-      </header>
-
-      <div className="p-3 space-y-4 pb-8">
-        {DAYS.map((day) => {
-          const events = schedule[day];
-          return (
-            <div key={day}>
-              <h3 className="font-display font-black text-sm uppercase mb-2 flex items-center gap-2">
-                <span className="bg-foreground text-card px-2 py-0.5 font-mono text-xs">{day}</span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {events.length} class{events.length !== 1 ? "es" : ""}
-                </span>
-              </h3>
-              {events.length === 0 ? (
-                <div className="text-muted-foreground font-mono text-xs py-2 pl-2 border-l-2 border-dashed border-muted-foreground/30">
-                  No classes
-                </div>
-              ) : (
-                <div className="space-y-1.5">
-                  {events.map((event) => (
-                    <div key={event.id} className="flex items-center gap-2 bg-card border-2 border-foreground p-2">
-                      <span
-                        className="w-3 h-3 rounded-full flex-shrink-0 border-2"
-                        style={{
-                          backgroundColor: getSubjectColor(event.subject),
-                          borderColor: "hsl(var(--foreground))",
-                        }}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="font-display font-bold text-xs truncate">{event.subject}</div>
-                        <div className="font-mono text-[10px] text-muted-foreground">
-                          {event.startTime}–{event.endTime} · {event.location}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => onEdit(event)}
-                        className="p-2 border-2 border-foreground bg-muted hover:bg-primary/20 transition-colors active:translate-y-0.5"
-                        title="Edit"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => onDelete(event.id)}
-                        className="p-2 border-2 border-foreground bg-destructive/10 hover:bg-destructive/30 text-destructive transition-colors active:translate-y-0.5"
-                        title="Delete"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+}) => (
+  <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
+    <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
+      <button onClick={onClose} className="flex items-center gap-2 font-mono text-sm font-bold">
+        <X className="w-5 h-5" /> Close
+      </button>
+      <h1 className="font-display font-bold text-sm uppercase tracking-wider">Manage Timetable</h1>
+      <button onClick={onAdd} className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1">
+        <Plus className="w-5 h-5" />
+      </button>
+    </header>
+    <div className="p-3 space-y-4 pb-8">
+      {DAYS.map((day) => {
+        const events = schedule[day];
+        return (
+          <div key={day}>
+            <h3 className="font-display font-black text-sm uppercase mb-2 flex items-center gap-2">
+              <span className="bg-foreground text-card px-2 py-0.5 font-mono text-xs">{day}</span>
+              <span className="font-mono text-xs text-muted-foreground">{events.length} class{events.length !== 1 ? "es" : ""}</span>
+            </h3>
+            {events.length === 0 ? (
+              <div className="text-muted-foreground font-mono text-xs py-2 pl-2 border-l-2 border-dashed border-muted-foreground/30">No classes</div>
+            ) : (
+              <div className="space-y-1.5">
+                {events.map((event) => (
+                  <div key={event.id} className="flex items-center gap-2 bg-card border-2 border-foreground p-2">
+                    <span className="w-3 h-3 rounded-full flex-shrink-0 border-2" style={{ backgroundColor: getSubjectColor(event.subject), borderColor: "hsl(var(--foreground))" }} />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-display font-bold text-xs truncate">{event.subject}</div>
+                      <div className="font-mono text-[10px] text-muted-foreground">{event.startTime}–{event.endTime} · {event.location}</div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+                    <button onClick={() => onEdit(event)} className="p-2 border-2 border-foreground bg-muted hover:bg-primary/20 transition-colors active:translate-y-0.5" title="Edit">
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                    <button onClick={() => onDelete(event.id)} className="p-2 border-2 border-foreground bg-destructive/10 hover:bg-destructive/30 text-destructive transition-colors active:translate-y-0.5" title="Delete">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
-  );
-};
+  </div>
+);
 
 const STORAGE_KEY_SCHEDULES = "timetable-schedules";
 const STORAGE_KEY_DEPT = "timetable-dept";
@@ -468,7 +409,6 @@ const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(() => {
     try { return localStorage.getItem(STORAGE_KEY_DEPT) || DEPARTMENTS[0].id; } catch { return DEPARTMENTS[0].id; }
   });
-  const [showDeptPicker, setShowDeptPicker] = useState(false);
   const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SCHEDULES);
@@ -486,24 +426,51 @@ const Timetable = () => {
   const [showManage, setShowManage] = useState(false);
   const [addDay, setAddDay] = useState<DayName | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [showPomodoro, setShowPomodoro] = useState(false);
+  const [pomodoroActive, setPomodoroActive] = useState(false);
+  const [pomodoroSeconds, setPomodoroSeconds] = useState(25 * 60);
+  const [pomodoroMode, setPomodoroMode] = useState<"focus" | "short" | "long">("focus");
+  const [pomodoroCount, setPomodoroCount] = useState(0);
   const timetableRef = useRef<HTMLDivElement>(null);
+
+  const POMODORO_TIMES = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
 
   const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
   const schedule = schedules[deptId];
 
-  // Persist to localStorage
-  useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY_SCHEDULES, JSON.stringify(schedules)); } catch {}
-  }, [schedules]);
+  // Semester week calculation
+  const getSemesterWeek = () => {
+    const now = new Date();
+    const month = now.getMonth();
+    const semStart = month >= 6 ? new Date(now.getFullYear(), 6, 28) : new Date(now.getFullYear(), 1, 3);
+    const diffMs = now.getTime() - semStart.getTime();
+    const week = Math.max(1, Math.ceil(diffMs / (7 * 24 * 60 * 60 * 1000)));
+    return Math.min(week, 17);
+  };
+  const semesterWeek = getSemesterWeek();
 
-  useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY_DEPT, deptId); } catch {}
-  }, [deptId]);
+  // Persist
+  useEffect(() => { try { localStorage.setItem(STORAGE_KEY_SCHEDULES, JSON.stringify(schedules)); } catch {} }, [schedules]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_KEY_DEPT, deptId); } catch {} }, [deptId]);
+  useEffect(() => { const interval = setInterval(() => setNow(getCurrentMinutes()), 30000); return () => clearInterval(interval); }, []);
 
+  // Pomodoro timer
   useEffect(() => {
-    const interval = setInterval(() => setNow(getCurrentMinutes()), 30000);
+    if (!pomodoroActive) return;
+    const interval = setInterval(() => {
+      setPomodoroSeconds(prev => {
+        if (prev <= 1) {
+          setPomodoroActive(false);
+          setPomodoroCount(c => c + 1);
+          const nextMode = pomodoroMode === "focus" ? (pomodoroCount > 0 && pomodoroCount % 3 === 0 ? "long" : "short") : "focus";
+          setPomodoroMode(nextMode);
+          return POMODORO_TIMES[nextMode];
+        }
+        return prev - 1;
+      });
+    }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [pomodoroActive, pomodoroMode, pomodoroCount]);
 
   const exportAsImage = async () => {
     if (!timetableRef.current || exporting) return;
@@ -514,9 +481,7 @@ const Timetable = () => {
       link.download = `timetable-${dept.shortName}-${activeDay}.png`;
       link.href = dataUrl;
       link.click();
-    } catch (err) {
-      console.error("Export failed:", err);
-    }
+    } catch (err) { console.error("Export failed:", err); }
     setExporting(false);
   };
 
@@ -530,15 +495,12 @@ const Timetable = () => {
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], title: `${dept.name} Timetable` });
       } else {
-        // Fallback to download
         const link = document.createElement("a");
         link.download = file.name;
         link.href = dataUrl;
         link.click();
       }
-    } catch (err) {
-      console.error("Share failed:", err);
-    }
+    } catch (err) { console.error("Share failed:", err); }
     setExporting(false);
   };
 
@@ -561,15 +523,30 @@ const Timetable = () => {
 
   const nextClass = getNextClass();
 
+  const getUpcomingExams = () => {
+    const results: { day: DayName; event: TimetableEvent; daysUntil: number }[] = [];
+    const todayIdx = DAYS.indexOf(todayName);
+    DAYS.forEach((day, idx) => {
+      schedule[day].forEach(event => {
+        if (event.tag === "exam") {
+          const daysUntil = idx >= todayIdx ? idx - todayIdx : 7 - todayIdx + idx;
+          if (daysUntil <= 14) {
+            results.push({ day, event, daysUntil });
+          }
+        }
+      });
+    });
+    return results.sort((a, b) => a.daysUntil - b.daysUntil);
+  };
+  const upcomingExams = getUpcomingExams();
+
   const totalHoursToday = todayEvents.reduce((sum, e) => sum + (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60, 0);
   const completedToday = todayEvents.filter((e) => e.completed).length;
   const weeklyHours: Record<string, number> = {};
-  Object.values(schedule)
-    .flat()
-    .forEach((e) => {
-      const hrs = (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60;
-      weeklyHours[e.subject] = (weeklyHours[e.subject] || 0) + hrs;
-    });
+  Object.values(schedule).flat().forEach((e) => {
+    const hrs = (timeToMin(e.endTime) - timeToMin(e.startTime)) / 60;
+    weeklyHours[e.subject] = (weeklyHours[e.subject] || 0) + hrs;
+  });
 
   const updateSchedule = (updater: (prev: Record<DayName, TimetableEvent[]>) => Record<DayName, TimetableEvent[]>) => {
     setSchedules((prev) => ({ ...prev, [deptId]: updater(prev[deptId]) }));
@@ -578,9 +555,7 @@ const Timetable = () => {
   const toggleComplete = (id: string) => {
     updateSchedule((prev) => {
       const updated = { ...prev };
-      for (const day of DAYS) {
-        updated[day] = updated[day].map((e) => (e.id === id ? { ...e, completed: !e.completed } : e));
-      }
+      for (const day of DAYS) { updated[day] = updated[day].map((e) => (e.id === id ? { ...e, completed: !e.completed } : e)); }
       return updated;
     });
   };
@@ -588,9 +563,7 @@ const Timetable = () => {
   const deleteEvent = (id: string) => {
     updateSchedule((prev) => {
       const updated = { ...prev };
-      for (const day of DAYS) {
-        updated[day] = updated[day].filter((e) => e.id !== id);
-      }
+      for (const day of DAYS) { updated[day] = updated[day].filter((e) => e.id !== id); }
       return updated;
     });
     setSelectedEvent(null);
@@ -599,11 +572,7 @@ const Timetable = () => {
   const saveEvent = (day: DayName, event: TimetableEvent) => {
     updateSchedule((prev) => {
       const updated = { ...prev };
-      if (editEvent) {
-        for (const d of DAYS) {
-          updated[d] = updated[d].filter((e) => e.id !== editEvent.id);
-        }
-      }
+      if (editEvent) { for (const d of DAYS) { updated[d] = updated[d].filter((e) => e.id !== editEvent.id); } }
       updated[day] = [...updated[day], event].sort((a, b) => timeToMin(a.startTime) - timeToMin(b.startTime));
       return updated;
     });
@@ -620,361 +589,373 @@ const Timetable = () => {
     setShowAddModal(true);
   };
 
+  const TAG_COLORS: Record<string, string> = {
+    lecture: "bg-primary/10 text-primary border-primary/30",
+    lab: "bg-accent/10 text-accent border-accent/30",
+    study: "bg-green-500/10 text-green-600 border-green-500/30",
+    exam: "bg-destructive/10 text-destructive border-destructive/30",
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-4">
       {/* Header */}
       <header className="bg-card border-b-4 border-foreground px-3 py-2.5 flex items-center justify-between sticky top-0 z-40">
-        <Link to="/" className="flex items-center gap-2">
-          <ArrowLeft className="w-5 h-5" />
-          <img src={logoImg} alt="Hub" className="h-8 md:h-10 w-auto filter grayscale" />
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <ArrowLeft className="w-4 h-4" />
+          <img src={logoImg} alt="Hub" className="h-7 w-auto filter grayscale" />
         </Link>
-        <h1 className="font-display font-bold text-sm uppercase tracking-wider">Timetable</h1>
-        <div className="flex items-center gap-1.5">
+        <div className="text-center">
+          <h1 className="font-display font-bold text-xs uppercase tracking-wider">Timetable</h1>
+          <div className="font-mono text-[10px] text-primary font-bold">Week {semesterWeek} of Semester</div>
+        </div>
+        <div className="flex items-center gap-1">
           {/* View toggle — visible on md+ */}
           <div className="hidden md:flex border-2 border-foreground">
-            <button
-              onClick={() => setViewMode("day")}
-              className={`p-1.5 transition-colors ${viewMode === "day" ? "bg-primary" : "bg-card hover:bg-muted"}`}
-              title="Day view"
-            >
+            <button onClick={() => setViewMode("day")} className={`p-1.5 transition-colors ${viewMode === "day" ? "bg-primary" : "bg-card hover:bg-muted"}`} title="Day view">
               <List className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => setViewMode("week")}
-              className={`p-1.5 border-l-2 border-foreground transition-colors ${viewMode === "week" ? "bg-primary" : "bg-card hover:bg-muted"}`}
-              title="Week view"
-            >
+            <button onClick={() => setViewMode("week")} className={`p-1.5 border-l-2 border-foreground transition-colors ${viewMode === "week" ? "bg-primary" : "bg-card hover:bg-muted"}`} title="Week view">
               <Grid3X3 className="w-4 h-4" />
             </button>
           </div>
-          {/* Export/Share buttons */}
-          <button
-            onClick={exportAsImage}
-            disabled={exporting}
-            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
-            title="Download as image"
-          >
-            <Download className="w-5 h-5" />
+          <button onClick={() => setShowPomodoro(true)} className="p-2 border-2 border-foreground bg-primary text-foreground shadow-brutal-sm active:shadow-none active:translate-x-0.5 active:translate-y-0.5" title="Focus Timer">
+            <Timer className="w-4 h-4" />
           </button>
-          <button
-            onClick={shareTimetable}
-            disabled={exporting}
-            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 disabled:opacity-50"
-            title="Share timetable"
-          >
-            <Share2 className="w-5 h-5" />
+          <button onClick={shareTimetable} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Share">
+            <Share2 className="w-4 h-4" />
           </button>
-          {/* Manage button */}
-          <button
-            onClick={() => setShowManage(true)}
-            className="bg-card text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
-            title="Manage timetable"
-          >
-            <Settings2 className="w-5 h-5" />
+          <button onClick={() => setShowManage(true)} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Manage">
+            <Settings2 className="w-4 h-4" />
           </button>
-          {/* Add button */}
-          <button
-            onClick={() => {
-              setEditEvent(null);
-              setAddDay(null);
-              setShowAddModal(true);
-            }}
-            className="bg-primary text-foreground border-2 border-foreground p-1.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
-          >
-            <Plus className="w-5 h-5" />
+          <button onClick={() => { setEditEvent(null); setAddDay(null); setShowAddModal(true); }} className="p-2 border-2 border-foreground bg-foreground text-card shadow-brutal-sm active:shadow-none" title="Add class">
+            <Plus className="w-4 h-4" />
           </button>
         </div>
       </header>
 
-      {/* Exportable content area */}
       <div ref={timetableRef}>
-      {/* Department selector */}
-      <div className="px-3 mt-3">
-        <button
-          onClick={() => setShowDeptPicker(!showDeptPicker)}
-          className="w-full flex items-center justify-between bg-card border-2 border-foreground px-3 py-2.5 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
-        >
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-4 h-4 text-primary" />
-            <span className="font-display font-bold text-sm">{dept.name}</span>
-          </div>
-          <ChevronDown className={`w-4 h-4 transition-transform ${showDeptPicker ? "rotate-180" : ""}`} />
-        </button>
-        {showDeptPicker && (
-          <div className="border-2 border-t-0 border-foreground bg-card divide-y-2 divide-foreground">
+        {/* Department selector — horizontal chips */}
+        <div className="px-3 mt-3">
+          <div className="font-mono text-[10px] uppercase text-muted-foreground mb-2 font-bold">Your Department</div>
+          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
             {DEPARTMENTS.map((d) => (
               <button
                 key={d.id}
-                onClick={() => {
-                  setDeptId(d.id);
-                  setShowDeptPicker(false);
-                  setSelectedEvent(null);
-                }}
-                className={`w-full text-left px-3 py-3 font-mono text-sm font-bold transition-colors active:bg-primary/20
-                  ${d.id === deptId ? "bg-primary/10 text-primary" : "hover:bg-muted"}`}
+                onClick={() => { setDeptId(d.id); setSelectedEvent(null); }}
+                className={`flex-shrink-0 font-mono text-xs font-bold uppercase px-3 py-2 border-2 border-foreground transition-all whitespace-nowrap active:translate-y-0.5 ${d.id === deptId ? "bg-primary text-foreground shadow-brutal-sm" : "bg-card text-foreground hover:bg-primary/20"}`}
               >
-                <div className="flex items-center justify-between">
-                  <span>{d.name}</span>
-                  {d.id === deptId && <Check className="w-4 h-4 text-primary" />}
-                </div>
+                {d.shortName}
               </button>
             ))}
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Next class banner */}
-      {nextClass && (
-        <div className="mx-3 mt-3 border-2 border-foreground bg-card p-3 shadow-brutal-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-primary" />
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground">
-                {nextClass.minsUntil < 0 ? "Happening Now" : "Next Class"}
+        {/* Next class banner */}
+        {nextClass && (
+          <div className={`mx-3 mt-3 border-2 border-foreground p-3 shadow-brutal-sm relative overflow-hidden ${nextClass.minsUntil < 0 ? "bg-primary text-foreground" : "bg-card"}`}>
+            {nextClass.minsUntil < 0 && (
+              <span className="absolute top-3 right-3 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-foreground" />
               </span>
+            )}
+            <div className="flex items-center gap-2 mb-1.5">
+              <Clock className={`w-3.5 h-3.5 ${nextClass.minsUntil < 0 ? "text-foreground" : "text-primary"}`} />
+              <span className={`font-mono text-[10px] uppercase font-bold ${nextClass.minsUntil < 0 ? "text-foreground/70" : "text-muted-foreground"}`}>
+                {nextClass.minsUntil < 0 ? "● Happening Right Now" : "Next Class In"}
+              </span>
+              {nextClass.minsUntil >= 0 && (
+                <span className="font-mono text-xl font-black text-primary ml-auto">{formatCountdown(nextClass.minsUntil)}</span>
+              )}
             </div>
-            <span className="font-mono text-lg font-black text-primary">
-              {nextClass.minsUntil < 0 ? "IN SESSION" : formatCountdown(nextClass.minsUntil)}
-            </span>
-          </div>
-          <div className="mt-1.5 flex items-center justify-between">
-            <span className="font-display font-bold text-base">{nextClass.event.subject}</span>
-            <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
-              <MapPin className="w-3 h-3" />
-              {nextClass.event.location}
-            </span>
-          </div>
-          <div className="font-mono text-xs text-muted-foreground mt-0.5">
-            {nextClass.event.startTime} – {nextClass.event.endTime}
-          </div>
-        </div>
-      )}
-
-      {/* ══════ WEEKLY GRID VIEW (desktop) ══════ */}
-      {viewMode === "week" && (
-        <div className="hidden md:block px-3 mt-3 pb-16">
-          <WeeklyGrid
-            schedule={schedule}
-            todayName={todayName}
-            now={now}
-            onEventClick={setSelectedEvent}
-            onAddClick={openAddForDay}
-          />
-        </div>
-      )}
-
-      {/* ══════ DAY VIEW (always on mobile, on desktop when day mode) ══════ */}
-      <div className={viewMode === "week" ? "md:hidden" : ""}>
-        {/* Day tabs */}
-        <div className="flex gap-1 px-3 mt-3 overflow-x-auto no-scrollbar">
-          {DAYS.map((day) => (
-            <button
-              key={day}
-              onClick={() => setActiveDay(day)}
-              className={`flex-1 min-w-[56px] py-2.5 font-mono text-xs font-bold uppercase border-2 border-foreground transition-all active:translate-y-0.5
-                  ${
-                    activeDay === day
-                      ? "bg-primary text-foreground shadow-brutal-sm"
-                      : day === todayName
-                        ? "bg-card text-foreground border-dashed"
-                        : "bg-muted text-muted-foreground"
-                  }`}
-            >
-              {DAY_SHORT[day]}
-              {day === todayName && <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto mt-1" />}
-            </button>
-          ))}
-        </div>
-
-        {/* Events list */}
-        <div className="flex-1 px-3 py-3 space-y-2 pb-24">
-          {dayEvents.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground font-mono text-sm">
-              No classes on {activeDay}. Tap + to add one.
-            </div>
-          ) : (
-            dayEvents.map((event) => {
-              const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
-              const isNow =
-                activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
-              const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
-              return (
-                <button
-                  key={event.id}
-                  onClick={() => setSelectedEvent(event)}
-                  className={`w-full text-left border-2 border-foreground p-3 transition-all active:translate-y-0.5
-                      ${isNow ? "bg-primary/10 border-primary shadow-brutal-sm" : "bg-card shadow-brutal-sm"}
-                      ${event.completed ? "opacity-50" : ""}
-                      ${isPast && !event.completed ? "opacity-70" : ""}
-                    `}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                          style={{
-                            backgroundColor: getSubjectColor(event.subject),
-                            borderColor: "hsl(var(--foreground))",
-                          }}
-                        />
-                        <span className={`font-display font-bold text-sm ${event.completed ? "line-through" : ""}`}>
-                          {event.subject}
-                        </span>
-                        {isNow && (
-                          <span className="font-mono text-[10px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase">
-                            Live
-                          </span>
-                        )}
-                      </div>
-                      <div className="font-mono text-xs text-muted-foreground mt-1 flex items-center gap-3">
-                        <span>
-                          {event.startTime}–{event.endTime}
-                        </span>
-                        <span className="flex items-center gap-0.5">
-                          <MapPin className="w-3 h-3" />
-                          {event.location}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold">
-                        {event.tag}
-                      </span>
-                      <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
-                    </div>
-                  </div>
-                </button>
-              );
-            })
-          )}
-        </div>
-      </div>
-      </div>{/* end exportable ref */}
-
-      {/* Stats toggle */}
-      <div className="fixed bottom-0 left-0 right-0 z-30">
-        <button
-          onClick={() => setShowStats(!showStats)}
-          className="w-full bg-foreground text-card font-mono text-xs font-bold uppercase py-2.5 flex items-center justify-center gap-2 border-t-2 border-foreground"
-        >
-          <BookOpen className="w-3.5 h-3.5" />
-          Stats {showStats ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
-        </button>
-        {showStats && (
-          <div className="bg-card border-t-2 border-foreground p-3 space-y-3 max-h-[45vh] overflow-y-auto">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="border-2 border-foreground p-2.5 bg-primary/10">
-                <div className="font-mono text-[10px] uppercase text-muted-foreground">Today's Classes</div>
-                <div className="font-display font-black text-2xl">{todayEvents.length}</div>
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <div className="font-display font-black text-lg leading-tight">{nextClass.event.subject}</div>
+                <div className={`font-body text-xs mt-0.5 ${nextClass.minsUntil < 0 ? "text-foreground/70" : "text-muted-foreground"}`}>{nextClass.event.description}</div>
               </div>
-              <div className="border-2 border-foreground p-2.5 bg-accent/10">
-                <div className="font-mono text-[10px] uppercase text-muted-foreground">Hours Today</div>
-                <div className="font-display font-black text-2xl">{totalHoursToday}</div>
-              </div>
-              <div className="border-2 border-foreground p-2.5 bg-card col-span-2">
-                <div className="font-mono text-[10px] uppercase text-muted-foreground">Completed</div>
-                <div className="font-display font-black text-2xl">
-                  {completedToday}/{todayEvents.length}
+              <div className="text-right shrink-0">
+                <div className={`font-mono text-xs font-bold flex items-center gap-1 justify-end ${nextClass.minsUntil < 0 ? "text-foreground/70" : "text-muted-foreground"}`}>
+                  <MapPin className="w-3 h-3" />{nextClass.event.location}
+                </div>
+                <div className={`font-mono text-xs mt-0.5 ${nextClass.minsUntil < 0 ? "text-foreground/60" : "text-muted-foreground"}`}>
+                  {nextClass.event.startTime}–{nextClass.event.endTime}
                 </div>
               </div>
             </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase text-muted-foreground mb-2">Weekly Hours by Subject</div>
-              <div className="space-y-1.5">
-                {Object.entries(weeklyHours)
-                  .sort((a, b) => b[1] - a[1])
-                  .map(([subj, hrs]) => (
-                    <div key={subj} className="flex items-center gap-2">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                        style={{ backgroundColor: getSubjectColor(subj) }}
-                      />
-                      <span className="font-mono text-xs font-bold flex-1">{subj}</span>
-                      <div className="flex-1 h-2 bg-muted border border-foreground">
-                        <div
-                          className="h-full"
-                          style={{
-                            width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`,
-                            backgroundColor: getSubjectColor(subj),
-                          }}
-                        />
-                      </div>
-                      <span className="font-mono text-[10px] text-muted-foreground w-8 text-right">{hrs}h</span>
-                    </div>
-                  ))}
+            {nextClass.minsUntil < 0 && (
+              <div className="mt-3">
+                <div className="h-1.5 bg-foreground/20 rounded-full overflow-hidden">
+                  <div className="h-full bg-foreground rounded-full transition-all duration-1000" style={{
+                    width: `${Math.min(100, ((now - timeToMin(nextClass.event.startTime)) / (timeToMin(nextClass.event.endTime) - timeToMin(nextClass.event.startTime))) * 100)}%`
+                  }} />
+                </div>
+                <div className="font-mono text-[9px] text-foreground/50 mt-1 text-right">
+                  {Math.round(timeToMin(nextClass.event.endTime) - now)}min remaining
+                </div>
               </div>
+            )}
+          </div>
+        )}
+
+        {/* CAT/Exam countdown */}
+        {upcomingExams.length > 0 && (
+          <div className="mx-3 mt-2 border-2 border-destructive bg-destructive/5 p-3">
+            <div className="font-mono text-[10px] uppercase text-destructive font-bold mb-2 flex items-center gap-1.5">⚡ UPCOMING EXAMS / CATS</div>
+            <div className="space-y-1.5">
+              {upcomingExams.slice(0, 2).map((exam, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <div>
+                    <span className="font-display font-bold text-sm">{exam.event.subject}</span>
+                    <span className="font-mono text-xs text-muted-foreground ml-2">{exam.event.description}</span>
+                  </div>
+                  <span className={`font-mono text-xs font-black px-2 py-1 border-2 border-foreground ${exam.daysUntil === 0 ? "bg-destructive text-destructive-foreground" : exam.daysUntil <= 3 ? "bg-accent text-foreground" : "bg-card text-foreground"}`}>
+                    {exam.daysUntil === 0 ? "TODAY" : exam.daysUntil === 1 ? "TOMORROW" : `${exam.daysUntil}d`}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         )}
-      </div>
+
+        {/* Weekly grid (desktop) */}
+        {viewMode === "week" && (
+          <div className="hidden md:block px-3 mt-3 pb-16">
+            <WeeklyGrid schedule={schedule} todayName={todayName} now={now} onEventClick={setSelectedEvent} onAddClick={openAddForDay} />
+          </div>
+        )}
+
+        {/* Day view */}
+        <div className={viewMode === "week" ? "md:hidden" : ""}>
+          {/* Day tabs */}
+          <div className="flex gap-1.5 px-3 mt-3 overflow-x-auto no-scrollbar">
+            {DAYS.map((day) => {
+              const dayEventCount = schedule[day].length;
+              const hasExam = schedule[day].some(e => e.tag === "exam");
+              return (
+                <button
+                  key={day}
+                  onClick={() => setActiveDay(day)}
+                  className={`flex-1 min-w-[52px] py-2.5 flex flex-col items-center border-2 border-foreground transition-all active:translate-y-0.5 relative ${activeDay === day ? "bg-primary text-foreground shadow-brutal-sm" : day === todayName ? "bg-card border-dashed" : "bg-muted text-muted-foreground"}`}
+                >
+                  <span className="font-mono text-[10px] font-bold uppercase">{DAY_SHORT[day]}</span>
+                  <span className={`font-mono text-[9px] mt-0.5 ${activeDay === day ? "text-foreground/70" : "text-muted-foreground"}`}>
+                    {dayEventCount} class{dayEventCount !== 1 ? "es" : ""}
+                  </span>
+                  {day === todayName && (
+                    <div className={`w-1.5 h-1.5 rounded-full mt-0.5 ${activeDay === day ? "bg-foreground" : "bg-primary"}`} />
+                  )}
+                  {hasExam && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-destructive border-2 border-foreground rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Events list */}
+          <div className="flex-1 px-3 py-3 space-y-2">
+            {dayEvents.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground font-mono text-sm">
+                No classes on {activeDay}. Tap + to add one.
+              </div>
+            ) : (
+              dayEvents.map((event) => {
+                const duration = (timeToMin(event.endTime) - timeToMin(event.startTime)) / 60;
+                const isNow = activeDay === todayName && now >= timeToMin(event.startTime) && now < timeToMin(event.endTime);
+                const isPast = activeDay === todayName && now >= timeToMin(event.endTime);
+
+                return (
+                  <button
+                    key={event.id}
+                    onClick={() => setSelectedEvent(event)}
+                    className={`w-full text-left border-2 transition-all active:translate-y-0.5 relative overflow-hidden ${isNow ? "border-primary bg-primary/5 shadow-brutal-sm" : "border-foreground bg-card shadow-brutal-sm"} ${event.completed ? "opacity-40" : ""} ${isPast && !event.completed ? "opacity-60" : ""}`}
+                  >
+                    <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: getSubjectColor(event.subject) }} />
+                    <div className="pl-4 pr-3 py-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className={`font-display font-bold text-sm leading-tight ${event.completed ? "line-through" : ""}`}>{event.subject}</span>
+                            {isNow && <span className="font-mono text-[9px] bg-primary text-foreground px-1.5 py-0.5 font-bold uppercase animate-pulse shrink-0">LIVE</span>}
+                            {event.tag === "exam" && <span className="font-mono text-[9px] bg-destructive text-destructive-foreground px-1.5 py-0.5 font-bold uppercase shrink-0">EXAM</span>}
+                          </div>
+                          {event.description && (
+                            <div className="font-body text-xs text-muted-foreground mb-1.5 line-clamp-1">{event.description}</div>
+                          )}
+                          <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{event.startTime}–{event.endTime}</span>
+                            <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{event.location}</span>
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end gap-1.5 shrink-0">
+                          <span className={`font-mono text-[9px] font-bold uppercase px-1.5 py-0.5 border ${TAG_COLORS[event.tag] || TAG_COLORS.lecture}`}>{event.tag}</span>
+                          <span className="font-mono text-[10px] text-muted-foreground">{duration}h</span>
+                        </div>
+                      </div>
+                      {isNow && (
+                        <div className="mt-2.5 h-1 bg-foreground/10 rounded-full overflow-hidden">
+                          <div className="h-full bg-primary rounded-full" style={{
+                            width: `${Math.min(100, ((now - timeToMin(event.startTime)) / (timeToMin(event.endTime) - timeToMin(event.startTime))) * 100)}%`
+                          }} />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })
+            )}
+          </div>
+
+          {/* Inline stats */}
+          <div className="px-3 pb-28">
+            <button
+              onClick={() => setShowStats(!showStats)}
+              className="w-full bg-card border-4 border-foreground font-mono text-xs font-bold uppercase py-3 flex items-center justify-center gap-2 mt-4 shadow-brutal-sm active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              {showStats ? "Hide Stats ↑" : "Show Weekly Stats ↓"}
+            </button>
+            {showStats && (
+              <div className="border-4 border-t-0 border-foreground bg-card p-4 space-y-4">
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="border-2 border-foreground p-3 bg-primary/10 text-center">
+                    <div className="font-mono text-[10px] uppercase text-muted-foreground">Classes</div>
+                    <div className="font-display font-black text-2xl text-primary">{todayEvents.length}</div>
+                  </div>
+                  <div className="border-2 border-foreground p-3 bg-accent/10 text-center">
+                    <div className="font-mono text-[10px] uppercase text-muted-foreground">Hours</div>
+                    <div className="font-display font-black text-2xl">{totalHoursToday}</div>
+                  </div>
+                  <div className="border-2 border-foreground p-3 text-center">
+                    <div className="font-mono text-[10px] uppercase text-muted-foreground">Done</div>
+                    <div className="font-display font-black text-2xl">{completedToday}/{todayEvents.length}</div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between font-mono text-[10px] uppercase text-muted-foreground mb-1.5">
+                    <span>Semester Progress</span>
+                    <span>Week {semesterWeek}/17</span>
+                  </div>
+                  <div className="h-3 bg-muted border-2 border-foreground overflow-hidden">
+                    <div className="h-full bg-primary transition-all" style={{ width: `${(semesterWeek / 17) * 100}%` }} />
+                  </div>
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] uppercase text-muted-foreground mb-2 font-bold">Weekly Hours by Subject</div>
+                  <div className="space-y-2">
+                    {Object.entries(weeklyHours).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([subj, hrs]) => (
+                      <div key={subj} className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 border border-foreground" style={{ backgroundColor: getSubjectColor(subj) }} />
+                        <span className="font-mono text-[10px] font-bold flex-1 truncate">{subj}</span>
+                        <div className="w-24 h-2 bg-muted border border-foreground overflow-hidden">
+                          <div className="h-full transition-all" style={{ width: `${(hrs / Math.max(...Object.values(weeklyHours))) * 100}%`, backgroundColor: getSubjectColor(subj) }} />
+                        </div>
+                        <span className="font-mono text-[9px] text-muted-foreground w-6 text-right">{hrs}h</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>{/* end exportable ref */}
 
       {/* Event detail bottom sheet */}
       {selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-end" onClick={() => setSelectedEvent(null)}>
           <div className="absolute inset-0 bg-foreground/50" />
-          <div
-            className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 animate-in slide-in-from-bottom"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 animate-in slide-in-from-bottom" onClick={(e) => e.stopPropagation()}>
             <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto mb-4" />
             <button onClick={() => setSelectedEvent(null)} className="absolute top-3 right-3 p-1">
               <X className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2 mb-3">
-              <span
-                className="w-4 h-4 rounded-full border-2"
-                style={{
-                  backgroundColor: getSubjectColor(selectedEvent.subject),
-                  borderColor: "hsl(var(--foreground))",
-                }}
-              />
+              <span className="w-4 h-4 rounded-full border-2" style={{ backgroundColor: getSubjectColor(selectedEvent.subject), borderColor: "hsl(var(--foreground))" }} />
               <h2 className="font-display font-black text-xl">{selectedEvent.subject}</h2>
-              <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold ml-auto">
-                {selectedEvent.tag}
-              </span>
+              <span className="font-mono text-[10px] uppercase border border-foreground px-1.5 py-0.5 font-bold ml-auto">{selectedEvent.tag}</span>
             </div>
             <p className="text-sm text-muted-foreground mb-3">{selectedEvent.description}</p>
             <div className="font-mono text-xs space-y-1.5 mb-4">
-              <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5 text-primary" />
-                {selectedEvent.startTime} – {selectedEvent.endTime}
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-accent" />
-                {selectedEvent.location}
-              </div>
+              <div className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-primary" />{selectedEvent.startTime} – {selectedEvent.endTime}</div>
+              <div className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-accent" />{selectedEvent.location}</div>
             </div>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2 mt-4">
               <button
-                onClick={() => {
-                  toggleComplete(selectedEvent.id);
-                  setSelectedEvent({ ...selectedEvent, completed: !selectedEvent.completed });
-                }}
-                className={`flex-1 border-2 border-foreground py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1
-                  ${selectedEvent.completed ? "bg-muted" : "bg-primary"}`}
+                onClick={() => { toggleComplete(selectedEvent.id); setSelectedEvent({...selectedEvent, completed: !selectedEvent.completed}); }}
+                className={`border-2 border-foreground py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-y-0.5 ${selectedEvent.completed ? "bg-muted" : "bg-primary text-foreground"}`}
               >
-                <Check className="w-4 h-4" />
-                {selectedEvent.completed ? "Undo" : "Done"}
+                <Check className="w-4 h-4" />{selectedEvent.completed ? "Undo Done" : "Mark Done"}
               </button>
               <button
-                onClick={() => {
-                  setEditEvent(selectedEvent);
-                  setSelectedEvent(null);
-                  setShowAddModal(true);
-                }}
-                className="flex-1 border-2 border-foreground bg-card py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+                onClick={() => { setEditEvent(selectedEvent); setSelectedEvent(null); setShowAddModal(true); }}
+                className="border-2 border-foreground bg-card py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 shadow-brutal-sm active:shadow-none active:translate-y-0.5"
               >
-                <Edit3 className="w-4 h-4" />
-                Edit
+                <Edit3 className="w-4 h-4" />Edit
+              </button>
+              <button
+                onClick={() => setShowPomodoro(true)}
+                className="border-2 border-foreground bg-foreground text-card py-3 font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 col-span-2 shadow-brutal-sm active:shadow-none active:translate-y-0.5"
+              >
+                <Timer className="w-4 h-4" />Start Focus Session
               </button>
               <button
                 onClick={() => deleteEvent(selectedEvent.id)}
-                className="border-2 border-foreground bg-destructive text-destructive-foreground py-3 px-4 font-mono text-xs font-bold uppercase flex items-center justify-center shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1"
+                className="border-2 border-foreground bg-destructive/10 text-destructive py-3 px-4 font-mono text-xs font-bold uppercase flex items-center justify-center gap-1 col-span-2 active:translate-y-0.5"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-3.5 h-3.5" />Remove Class
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pomodoro Focus Timer */}
+      {showPomodoro && (
+        <div className="fixed inset-0 z-50 flex items-end" onClick={() => setShowPomodoro(false)}>
+          <div className="absolute inset-0 bg-foreground/50" />
+          <div className="relative w-full bg-card border-t-4 border-foreground p-6 pb-10" onClick={e => e.stopPropagation()}>
+            <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto mb-4" />
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-display font-black text-xl uppercase">Focus Timer</h2>
+              <button onClick={() => setShowPomodoro(false)}><X className="w-5 h-5" /></button>
+            </div>
+            <div className="flex gap-2 mb-6">
+              {(["focus", "short", "long"] as const).map(mode => (
+                <button key={mode}
+                  onClick={() => { setPomodoroMode(mode); setPomodoroActive(false); setPomodoroSeconds(POMODORO_TIMES[mode]); }}
+                  className={`flex-1 font-mono text-xs font-bold uppercase py-2 border-2 border-foreground transition-colors ${pomodoroMode === mode ? "bg-primary text-foreground" : "bg-muted text-muted-foreground"}`}
+                >
+                  {mode === "focus" ? "Focus 25m" : mode === "short" ? "Break 5m" : "Long 15m"}
+                </button>
+              ))}
+            </div>
+            <div className="text-center mb-6">
+              <div className={`font-mono text-7xl font-black tracking-tighter mb-2 ${pomodoroActive ? "text-primary" : "text-foreground"}`}>
+                {String(Math.floor(pomodoroSeconds / 60)).padStart(2, "0")}:{String(pomodoroSeconds % 60).padStart(2, "0")}
+              </div>
+              <div className="font-mono text-xs text-muted-foreground uppercase">
+                {pomodoroMode === "focus" ? "🔥 Lock in. No distractions." : "☕ Rest. You earned it."}
+              </div>
+              {pomodoroCount > 0 && (
+                <div className="font-mono text-xs text-primary mt-1 font-bold">{pomodoroCount} session{pomodoroCount !== 1 ? "s" : ""} completed today</div>
+              )}
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setPomodoroActive(!pomodoroActive)}
+                className={`flex-1 border-4 border-foreground font-mono font-bold uppercase py-4 text-lg shadow-brutal active:shadow-none active:translate-x-1 active:translate-y-1 ${pomodoroActive ? "bg-card text-foreground" : "bg-primary text-foreground"}`}
+              >
+                {pomodoroActive ? "⏸ Pause" : "▶ Start"}
+              </button>
+              <button
+                onClick={() => { setPomodoroActive(false); setPomodoroSeconds(POMODORO_TIMES[pomodoroMode]); }}
+                className="border-4 border-foreground bg-muted font-mono font-bold uppercase py-4 px-5 shadow-brutal active:shadow-none active:translate-x-1 active:translate-y-1"
+              >
+                ↺
+              </button>
+            </div>
+            <div className="mt-4 text-center font-mono text-xs text-muted-foreground">Join a live study room on Discord while you focus</div>
           </div>
         </div>
       )}
@@ -985,30 +966,17 @@ const Timetable = () => {
           initialEvent={editEvent}
           activeDay={addDay || activeDay}
           onSave={saveEvent}
-          onClose={() => {
-            setShowAddModal(false);
-            setEditEvent(null);
-            setAddDay(null);
-          }}
+          onClose={() => { setShowAddModal(false); setEditEvent(null); setAddDay(null); }}
         />
       )}
 
-      {/* Manage mode overlay */}
+      {/* Manage mode */}
       {showManage && (
         <ManageMode
           schedule={schedule}
-          onEdit={(event) => {
-            setEditEvent(event);
-            setShowManage(false);
-            setShowAddModal(true);
-          }}
+          onEdit={(event) => { setEditEvent(event); setShowManage(false); setShowAddModal(true); }}
           onDelete={(id) => deleteEvent(id)}
-          onAdd={() => {
-            setShowManage(false);
-            setEditEvent(null);
-            setAddDay(null);
-            setShowAddModal(true);
-          }}
+          onAdd={() => { setShowManage(false); setEditEvent(null); setAddDay(null); setShowAddModal(true); }}
           onClose={() => setShowManage(false)}
         />
       )}
@@ -1018,10 +986,7 @@ const Timetable = () => {
 
 // ─── Add/Edit Modal ───
 const EventModal = ({
-  initialEvent,
-  activeDay,
-  onSave,
-  onClose,
+  initialEvent, activeDay, onSave, onClose,
 }: {
   initialEvent: TimetableEvent | null;
   activeDay: DayName;
@@ -1041,62 +1006,38 @@ const EventModal = ({
     onSave(day, {
       id: initialEvent?.id || genId(),
       subject: subject.trim(),
-      startTime,
-      endTime,
-      location,
-      description,
-      tag,
+      startTime, endTime, location, description, tag,
       completed: initialEvent?.completed || false,
     });
   };
 
-  const inputClass =
-    "w-full border-2 border-foreground bg-background px-3 py-2.5 font-mono text-sm focus:outline-none focus:border-primary";
+  const inputClass = "w-full border-2 border-foreground bg-background px-3 py-2.5 font-mono text-sm focus:outline-none focus:border-primary";
   const labelClass = "font-mono text-[10px] uppercase font-bold text-muted-foreground mb-1 block";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end" onClick={onClose}>
       <div className="absolute inset-0 bg-foreground/50" />
-      <div
-        className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative w-full bg-card border-t-4 border-foreground p-4 pb-8 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom" onClick={(e) => e.stopPropagation()}>
         <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full mx-auto mb-3" />
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display font-black text-lg uppercase">{initialEvent ? "Edit Event" : "New Event"}</h2>
-          <button onClick={onClose}>
-            <X className="w-5 h-5" />
-          </button>
+          <button onClick={onClose}><X className="w-5 h-5" /></button>
         </div>
         <div className="space-y-3">
           <div>
             <label className={labelClass}>Subject</label>
-            <input
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className={inputClass}
-              placeholder="e.g. EMM 211"
-            />
+            <input value={subject} onChange={(e) => setSubject(e.target.value)} className={inputClass} placeholder="e.g. EMM 211" />
           </div>
           <div>
             <label className={labelClass}>Day</label>
             <select value={day} onChange={(e) => setDay(e.target.value as DayName)} className={inputClass}>
-              {DAYS.map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
+              {DAYS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className={labelClass}>Start</label>
-              <input
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                className={inputClass}
-              />
+              <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>End</label>
@@ -1105,41 +1046,23 @@ const EventModal = ({
           </div>
           <div>
             <label className={labelClass}>Location</label>
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={inputClass}
-              placeholder="e.g. SC10"
-            />
+            <input value={location} onChange={(e) => setLocation(e.target.value)} className={inputClass} placeholder="e.g. SC10" />
           </div>
           <div>
             <label className={labelClass}>Description</label>
-            <input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={inputClass}
-              placeholder="Optional notes"
-            />
+            <input value={description} onChange={(e) => setDescription(e.target.value)} className={inputClass} placeholder="Optional notes" />
           </div>
           <div>
             <label className={labelClass}>Tag</label>
             <div className="flex gap-1.5 flex-wrap">
               {(["lecture", "lab", "study", "exam"] as EventTag[]).map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTag(t)}
-                  className={`font-mono text-xs font-bold uppercase px-3 py-2 border-2 border-foreground transition-all
-                    ${tag === t ? "bg-primary text-foreground shadow-brutal-sm" : "bg-muted text-muted-foreground"}`}
-                >
+                <button key={t} onClick={() => setTag(t)} className={`font-mono text-xs font-bold uppercase px-3 py-2 border-2 border-foreground transition-all ${tag === t ? "bg-primary text-foreground shadow-brutal-sm" : "bg-muted text-muted-foreground"}`}>
                   {t}
                 </button>
               ))}
             </div>
           </div>
-          <button
-            onClick={handleSave}
-            className="w-full bg-primary text-foreground border-2 border-foreground py-3 font-mono font-bold uppercase text-sm shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 mt-2"
-          >
+          <button onClick={handleSave} className="w-full bg-primary text-foreground border-2 border-foreground py-3 font-mono font-bold uppercase text-sm shadow-brutal-sm active:shadow-none active:translate-x-1 active:translate-y-1 mt-2">
             {initialEvent ? "Save Changes" : "Add Event"}
           </button>
         </div>
