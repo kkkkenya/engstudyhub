@@ -106,6 +106,17 @@ const PROJECTS = [
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showFloat, setShowFloat] = useState(false);
+
+  useEffect(() => {
+    document.title = "Engineering Hub — Study, Build & Launch";
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setShowFloat(window.scrollY > 500);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   // Smooth scroll handler
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -159,15 +170,15 @@ const Index = () => {
 
       <main className="pb-0">
         {/* HERO */}
-        <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-20 lg:py-32">
+        <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-20 lg:py-32">
           <FadeIn>
-            <div className="border-4 border-foreground bg-foreground p-6 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
+            <div className="border-4 border-foreground bg-foreground p-4 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
               <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
               <div className="absolute top-4 right-4 md:top-6 md:right-6 font-mono text-xs text-primary/60 uppercase tracking-widest hidden md:block">[ 001 / HOME ]</div>
               <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start md:items-end">
                 <div className="w-full md:w-2/3">
                   <span className="inline-block font-mono text-xs font-bold text-foreground bg-primary px-3 py-1 mb-4 md:mb-6 border-2 border-primary">/// FOR ENGINEERS, BY ENGINEERS</span>
-                  <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.85] tracking-tighter uppercase mb-4 text-card">
+                  <h1 className="font-display text-2xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.88] tracking-tighter uppercase mb-4 text-card">
                     Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
                   {/* WhatsApp CTA — mobile first, before subtitle */}
@@ -193,7 +204,7 @@ const Index = () => {
 
           {/* Stats strip */}
           <FadeIn>
-            <div className="border-4 border-foreground bg-foreground text-card shadow-brutal-sm mb-8 md:mb-12 flex flex-col sm:flex-row divide-y-4 sm:divide-y-0 sm:divide-x-4 divide-primary">
+            <div className="border-4 border-foreground bg-foreground text-card shadow-brutal-sm mb-8 md:mb-12 grid grid-cols-3 divide-x-4 divide-primary">
               {[
               { value: "450+", label: "Members" },
               { value: "4", label: "Universities" },
@@ -261,7 +272,7 @@ const Index = () => {
             map((item) =>
             <FadeIn key={item.num}>
                 <div className={`group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center ${item.hoverBg} transition-colors p-4 md:p-8 cursor-default`}>
-                  <div className="font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{item.num}</div>
+                  <div className="hidden md:block font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{item.num}</div>
                   <div className="md:w-1/3 pr-4 md:pr-8 mb-2 md:mb-0">
                     <div className="font-mono text-xs font-bold border-2 border-foreground inline-block px-2 py-1 mb-2 md:mb-3 group-hover:bg-foreground group-hover:text-primary transition-colors">{item.tag}</div>
                     <h3 className="font-display text-2xl md:text-3xl font-bold uppercase">{item.title}</h3>
@@ -304,7 +315,7 @@ const Index = () => {
                         {project.timeline}
                       </span>
                     </div>
-                    <div className="h-48 md:h-64 border-b-4 border-gray-700 group-hover:border-primary overflow-hidden relative transition-colors">
+                    <div className="h-36 md:h-64 border-b-4 border-gray-700 group-hover:border-primary overflow-hidden relative transition-colors">
                       <img src={project.img} alt={project.title} loading="lazy" className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
                     </div>
                     <div className="p-5 md:p-8 flex-1 flex flex-col">
@@ -601,6 +612,12 @@ const Index = () => {
           </div>
         </section>
       </main>
+
+      {showFloat && (
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="fixed bottom-4 right-4 z-50 md:hidden flex items-center gap-2 bg-[#25D366] text-white border-4 border-foreground font-mono font-bold text-xs uppercase px-4 py-3.5 shadow-brutal animate-in slide-in-from-bottom-2">
+          <MessageCircle size={16} /> Join — KES 50
+        </a>
+      )}
 
       {/* FOOTER / FAQ */}
       <footer id="faq" className="bg-background border-t-4 border-foreground pt-16 md:pt-24 pb-20 md:pb-12">
