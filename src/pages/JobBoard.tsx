@@ -82,6 +82,33 @@ export default function JobBoard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    document.title = "Engineering Jobs | Engineering Hub";
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setShowTop(window.scrollY > 500);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  const applyQuickFilter = (filter: string) => {
+    if (filter === "Kenya & Remote") { setLocation("Kenya & Remote"); setJobType(""); }
+    else if (filter === "Kenya Only") { setLocation("Kenya only"); setJobType(""); }
+    else if (filter === "Remote Only") { setLocation("Remote only"); setJobType(""); }
+    else if (filter === "Internships Only") { setJobType("INTERN"); }
+  };
+
+  const clearFilters = () => {
+    setJobType("");
+    setLocation("Kenya & Remote");
+    setField("All fields");
+    setDatePosted("all");
+    setSearchInput("");
+    setActiveQuery("engineering");
+  };
 
   const buildQuery = useCallback(() => {
     let q = field !== "All fields" ? `${field} engineering` : activeQuery || "engineering";
@@ -189,6 +216,19 @@ export default function JobBoard() {
           </button>
         </div>
 
+        {/* Quick filter chips */}
+        <div className="flex gap-2 mb-4 flex-wrap">
+          {["Kenya & Remote", "Kenya Only", "Remote Only", "Internships Only"].map(filter => (
+            <button
+              key={filter}
+              onClick={() => applyQuickFilter(filter)}
+              className="font-mono text-xs border-2 border-foreground px-3 py-1.5 hover:bg-primary/20 transition-colors text-muted-foreground hover:text-foreground"
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
         {/* Filters */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
           {[
@@ -215,6 +255,11 @@ export default function JobBoard() {
             <span className="text-primary text-xs font-bold">Updated now</span>
           </span>
           <span className="text-muted-foreground text-xs">Query: "{buildQuery()}"</span>
+        </div>
+
+        {/* Last updated */}
+        <div className="font-mono text-xs text-muted-foreground text-right mb-4">
+          Updated {new Date().toLocaleTimeString("en-KE", { hour: "2-digit", minute: "2-digit" })}
         </div>
 
         {/* Loading */}
@@ -257,10 +302,18 @@ export default function JobBoard() {
 
         {/* Empty */}
         {!loading && !error && jobs.length === 0 && (
-          <div className="text-center py-20">
-            <div className="bg-card border-2 border-foreground p-8 max-w-md mx-auto">
-              <p className="text-muted-foreground font-mono text-sm">No jobs found for "{buildQuery()}". Try a different search.</p>
+          <div className="text-center py-16 border-2 border-foreground bg-card">
+            <div className="text-4xl mb-3">🔍</div>
+            <div className="font-display font-bold text-xl mb-2">No Jobs Found</div>
+            <div className="font-body text-muted-foreground text-sm mb-4 max-w-md mx-auto px-4">
+              No {field !== "All fields" ? field + " " : ""}roles right now. New jobs drop daily — check back tomorrow or widen your search.
             </div>
+            <button
+              onClick={clearFilters}
+              className="font-mono text-xs border-2 border-foreground px-4 py-2 hover:bg-primary/20 transition-colors text-muted-foreground"
+            >
+              Clear all filters
+            </button>
           </div>
         )}
 
@@ -309,7 +362,7 @@ export default function JobBoard() {
                 </div>
 
                 {/* Description */}
-                <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 font-body">
+                <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1 font-body line-clamp-2">
                   {job.job_description?.slice(0, 120)}...
                 </p>
 
@@ -341,6 +394,15 @@ export default function JobBoard() {
           </a>
         </div>
       </div>
+
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-4 z-40 w-11 h-11 bg-primary border-4 border-foreground shadow-brutal font-mono font-black text-foreground text-lg flex items-center justify-center hover:-translate-y-1 transition-transform active:shadow-none active:translate-y-0"
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }

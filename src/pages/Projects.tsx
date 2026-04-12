@@ -1072,6 +1072,17 @@ export default function Projects() {
   const [fYear, setFYear] = useState("All years");
   const [fDur, setFDur] = useState("Any duration");
   const [selected, setSelected] = useState<Project | null>(null);
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    document.title = "Project Library | Engineering Hub";
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setShowTop(window.scrollY > 500);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   const filtered = projects.filter((p) => {
     const q = search.toLowerCase();
@@ -1142,12 +1153,22 @@ export default function Projects() {
         </div>
 
         {/* Search */}
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search projects, topics, tools..."
-          className="w-full bg-card border-2 border-foreground px-4 py-3 text-sm font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary mb-4 transition"
-        />
+        <div className="relative mb-4">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search projects, topics, tools..."
+            className="w-full bg-card border-2 border-foreground px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground font-mono text-xl leading-none"
+            >
+              ×
+            </button>
+          )}
+        </div>
 
         {/* Filters */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 sm:mb-8">
@@ -1172,6 +1193,12 @@ export default function Projects() {
               </select>
             </div>
           ))}
+        </div>
+
+        {/* Results count */}
+        <div className="font-mono text-xs text-muted-foreground mb-3">
+          {filtered.length} project{filtered.length !== 1 ? "s" : ""}{" "}
+          {fDisc !== "All disciplines" || fDiff !== "All levels" ? "matching filters" : "in the library"}
         </div>
 
         {/* Grid */}
@@ -1207,7 +1234,7 @@ export default function Projects() {
                 <h3 className="font-display font-bold text-base mb-2 group-hover:text-primary transition leading-snug uppercase">
                   {p.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1 font-body">{p.desc}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1 font-body line-clamp-3">{p.desc}</p>
                 <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4 font-mono">
                   <span>⏱ {p.duration}</span>
                   <span>📅 {p.year}</span>
@@ -1249,7 +1276,7 @@ export default function Projects() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-foreground font-display font-bold uppercase text-sm px-6 py-3 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal"
+            className="inline-flex w-full sm:w-auto justify-center items-center gap-2 bg-primary text-foreground font-display font-bold uppercase text-sm px-6 py-3 border-2 border-foreground shadow-brutal-sm hover:shadow-none transition btn-brutal"
           >
             <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
           </a>
@@ -1393,6 +1420,15 @@ export default function Projects() {
             </div>
           </div>
         </div>
+      )}
+
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-4 z-40 w-11 h-11 bg-primary border-4 border-foreground shadow-brutal font-mono font-black text-foreground text-lg flex items-center justify-center hover:-translate-y-1 transition-transform active:shadow-none active:translate-y-0"
+        >
+          ↑
+        </button>
       )}
     </div>
   );
