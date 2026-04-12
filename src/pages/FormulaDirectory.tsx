@@ -522,18 +522,43 @@ const FormulaDirectory = () => {
                 <input
                   type="text"
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && searchFormula(searchQuery)}
+                  onChange={e => {
+                    const val = e.target.value;
+                    setSearchQuery(val);
+                    if (debounceRef.current) clearTimeout(debounceRef.current);
+                    if (val.trim().length >= 2) {
+                      setIsDebouncing(true);
+                      debounceRef.current = setTimeout(() => {
+                        setIsDebouncing(false);
+                        searchFormula(val);
+                      }, 300);
+                    } else {
+                      setIsDebouncing(false);
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === "Enter") {
+                      if (debounceRef.current) clearTimeout(debounceRef.current);
+                      setIsDebouncing(false);
+                      searchFormula(searchQuery);
+                    }
+                  }}
                   placeholder="e.g. Reynolds number, beam deflection, Ohm's law..."
                   className="flex-1 border-r-4 border-foreground px-4 py-4 font-mono text-base bg-card text-foreground focus:outline-none placeholder:text-muted-foreground"
                 />
                 <button
-                  onClick={() => searchFormula(searchQuery)}
+                  onClick={() => {
+                    if (debounceRef.current) clearTimeout(debounceRef.current);
+                    setIsDebouncing(false);
+                    searchFormula(searchQuery);
+                  }}
                   disabled={isLoading}
                   className="bg-foreground text-card hover:bg-primary hover:text-foreground font-mono font-bold uppercase px-6 md:px-8 py-4 transition-colors min-w-[120px] md:min-w-[140px] flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
                     <span className="flex items-center gap-1">Thinking<span className="animate-pulse">...</span></span>
+                  ) : isDebouncing ? (
+                    <span className="flex items-center gap-1 text-primary">Searching<span className="animate-pulse">...</span></span>
                   ) : (
                     <>Search <ArrowRight size={16} /></>
                   )}
