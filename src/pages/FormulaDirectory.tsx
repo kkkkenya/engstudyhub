@@ -555,7 +555,7 @@ const FormulaDirectory = () => {
               <span className="font-mono text-destructive font-bold text-sm mb-2 block">/// ERROR</span>
               <h3 className="font-display text-2xl uppercase mb-4">Formula Not Found</h3>
               <p className="font-body text-muted-foreground mb-6">
-                The AI couldn't process that query. This feature requires a backend connection to work. Please enable Lovable Cloud to power AI search.
+                The AI couldn't process that query. Please try again — if the issue persists, check your connection.
               </p>
               <button
                 onClick={() => searchFormula(searchQuery)}
