@@ -83,12 +83,13 @@ const stripDelimiters = (s: string): string =>
 // Render a LaTeX string to HTML using katex.renderToString
 const renderLatex = (latex: string, displayMode = false): string => {
   const katex = (window as any).katex;
-  if (!katex) return latex;
+  if (!katex) return `<code style="font-size:1rem;opacity:0.8">${latex}</code>`;
   try {
     const cleaned = stripDelimiters(latex);
     return katex.renderToString(cleaned, { displayMode, throwOnError: false });
-  } catch {
-    return latex;
+  } catch (err) {
+    console.warn("KaTeX render failed:", err);
+    return `<code style="font-size:1rem;opacity:0.8">${latex}</code>`;
   }
 };
 
