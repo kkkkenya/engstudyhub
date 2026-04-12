@@ -256,25 +256,49 @@ const FormulaDirectory = () => {
 
   // Render KaTeX explicitly when result changes
   const renderResultMath = useCallback(async () => {
-    await loadKaTeX();
+    try {
+      await loadKaTeX();
+    } catch (err) {
+      console.warn("Failed to load KaTeX:", err);
+      return;
+    }
     setTimeout(() => {
-      // Main formula — explicit renderToString
-      if (formulaRef.current && result?.formula_latex) {
-        formulaRef.current.innerHTML = renderLatex(result.formula_latex, true);
+      try {
+        // Main formula — explicit renderToString
+        if (formulaRef.current && result?.formula_latex) {
+          formulaRef.current.innerHTML = renderLatex(result.formula_latex, true);
+        }
+      } catch (err) {
+        console.warn("KaTeX formula banner render failed:", err);
+        if (formulaRef.current && result?.formula_latex) {
+          formulaRef.current.innerHTML = `<code style="font-size:1rem;opacity:0.8">${result.formula_latex}</code>`;
+        }
       }
-      // Variable symbols — explicit renderToString
-      if (variablesRef.current) {
-        variablesRef.current.querySelectorAll("[data-katex]").forEach((el) => {
-          const raw = el.getAttribute("data-katex") || "";
-          (el as HTMLElement).innerHTML = renderLatex(raw, false);
-        });
+      try {
+        // Variable symbols — explicit renderToString
+        if (variablesRef.current) {
+          variablesRef.current.querySelectorAll("[data-katex]").forEach((el) => {
+            const raw = el.getAttribute("data-katex") || "";
+            (el as HTMLElement).innerHTML = renderLatex(raw, false);
+          });
+        }
+      } catch (err) {
+        console.warn("KaTeX variables render failed:", err);
       }
-      // Worked example steps — auto-render for inline math
-      if (workedRef.current) {
-        renderMathInEl(workedRef.current);
+      try {
+        // Worked example steps — auto-render for inline math
+        if (workedRef.current) {
+          renderMathInEl(workedRef.current);
+        }
+      } catch (err) {
+        console.warn("KaTeX worked example render failed:", err);
       }
-      // Derivation, exam tips, etc — auto-render on whole result
-      renderMathInEl(resultRef.current);
+      try {
+        // Derivation, exam tips, related formulas — auto-render on whole result
+        renderMathInEl(resultRef.current);
+      } catch (err) {
+        console.warn("KaTeX result render failed:", err);
+      }
     }, 100);
   }, [result]);
 
