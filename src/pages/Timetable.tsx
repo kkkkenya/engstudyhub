@@ -334,14 +334,24 @@ const STORAGE_KEY_DEPT = "timetable-dept";
 
 const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(() => {
-    try { return localStorage.getItem(STORAGE_KEY_DEPT) || DEPARTMENTS[0].id; } catch { return DEPARTMENTS[0].id; }
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_DEPT);
+      if (saved && DEPARTMENTS.some((d) => d.id === saved)) return saved;
+      return DEPARTMENTS[0].id;
+    } catch {
+      return DEPARTMENTS[0].id;
+    }
   });
   const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() => {
+    const defaults = Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SCHEDULES);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return { ...defaults, ...parsed };
+      }
     } catch {}
-    return Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
+    return defaults;
   });
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
@@ -366,8 +376,8 @@ const Timetable = () => {
 
   const POMODORO_TIMES = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
 
-  const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
-  const schedule = schedules[deptId];
+  const dept = DEPARTMENTS.find((d) => d.id === deptId) ?? DEPARTMENTS[0];
+  const schedule = schedules[dept.id] ?? dept.schedule;
 
   // Semester week calculation
   const getSemesterWeek = () => {
