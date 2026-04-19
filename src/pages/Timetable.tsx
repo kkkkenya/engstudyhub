@@ -329,8 +329,10 @@ const ManageMode = ({
   </div>
 );
 
-const STORAGE_KEY_SCHEDULES = "timetable-schedules";
-const STORAGE_KEY_DEPT = "timetable-dept";
+// v2: bumped after switching to Aerospace + Mechanical only schedule.
+// Bumping the suffix invalidates any old cached classes in users' browsers.
+const STORAGE_KEY_SCHEDULES = "timetable-schedules-v2";
+const STORAGE_KEY_DEPT = "timetable-dept-v2";
 
 const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(() => {
