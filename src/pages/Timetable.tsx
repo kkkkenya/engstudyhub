@@ -103,124 +103,51 @@ const evt = (
 // ─── Department schedules ───
 const DEPARTMENTS: Department[] = [
   {
+    id: "aerospace",
+    name: "Aerospace Engineering",
+    shortName: "Aero",
+    schedule: {
+      Monday: [
+        evt("Structural & Solid Mechanics", "09:00", "11:00", "TBA", "Structural & Solid Mechanics"),
+        evt("Aerospace Engineering Design", "15:00", "17:00", "TBA", "Aerospace Engineering Design"),
+      ],
+      Tuesday: [
+        evt("Transform Methods", "07:00", "09:00", "SC2", "Transform Methods (shared)"),
+        evt("Workshop", "10:00", "13:00", "Workshop", "Workshop", "lab"),
+      ],
+      Wednesday: [
+        evt("CAD", "09:00", "11:00", "C.LAB", "Computer Aided Design", "lab"),
+      ],
+      Thursday: [
+        evt("ODEs", "07:00", "09:00", "SC2", "Ordinary Differential Equations (shared)"),
+        evt("Fluid Mechanics", "11:00", "13:00", "TBA", "Fluid Mechanics"),
+        evt("Electrical Engineering", "16:30", "18:30", "TBA", "Electrical Engineering (shared)"),
+      ],
+      Friday: [],
+    },
+  },
+  {
     id: "mechanical",
     name: "Mechanical Engineering",
     shortName: "Mech",
     schedule: {
       Monday: [
-        evt("EMM 211", "09:00", "11:00", "SC10", "mechanic 2"),
-        evt("EMM 219", "11:00", "13:00", "SC10", "engineering materials 2"),
-        evt("EMM 214", "14:00", "17:00", "TBA", "electrical engineering 2"),
+        evt("Fluids 2 (EMM 205)", "10:00", "12:00", "TBA", "Fluid Mechanics II"),
       ],
       Tuesday: [
-        evt("ECU 203", "07:00", "09:00", "SC2", "Transform Methods"),
-        evt("EMM 205", "09:00", "12:00", "TBA", "Fluid Mechanics II"),
-        evt("EMM 216", "15:00", "17:00", "Workshop", "Workshop Processes and Practice III", "lab"),
+        evt("Transform Methods", "07:00", "09:00", "SC2", "Transform Methods (shared)"),
+        evt("Dynamics", "08:00", "10:00", "TBA", "Dynamics"),
       ],
       Wednesday: [
-        evt("EMM 200", "09:00", "12:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
-        evt("EMM 216", "14:00", "17:00", "TBA", "Workshop Processes and Practice III"),
+        evt("CAD", "11:00", "13:00", "C.LAB", "Computer Aided Design", "lab"),
+        evt("Thermodynamics", "14:00", "16:00", "TBA", "Thermodynamics"),
       ],
       Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
-        evt("EMM 211", "14:00", "17:00", "TBA", "mechanic 2"),
+        evt("ODEs", "07:00", "09:00", "SC2", "Ordinary Differential Equations (shared)"),
+        evt("Workshop", "09:00", "12:00", "Workshop", "Workshop", "lab"),
+        evt("Electrical Engineering", "16:30", "18:30", "TBA", "Electrical Engineering (shared)"),
       ],
-      Friday: [
-        evt("EMM 214", "07:00", "09:00", "OML2", "electrical engineering 2", "lab"),
-        evt("ECU 203", "09:00", "11:00", "SC2", "Transform Methods"),
-        evt("EMM 205", "15:00", "17:00", "SC13", "Fluid Mechanics II"),
-        evt("EMM 219", "17:00", "18:00", "SC13", "engineering materials 2"),
-      ],
-    },
-  },
-  {
-    id: "electrical",
-    name: "Electrical Engineering",
-    shortName: "Elec",
-    schedule: {
-      Monday: [
-        evt("EEE 201", "07:00", "09:00", "SC3", "Circuit Analysis"),
-        evt("EEE 210", "10:00", "12:00", "E.LAB", "Electronics Lab", "lab"),
-        evt("ECU 203", "14:00", "16:00", "SC2", "Transform Methods"),
-      ],
-      Tuesday: [
-        evt("EEE 205", "08:00", "10:00", "SC5", "Electromagnetic Theory"),
-        evt("EEE 215", "11:00", "13:00", "SC5", "Power Systems"),
-        evt("EEE 220", "14:00", "17:00", "E.LAB", "Machines Lab", "lab"),
-      ],
-      Wednesday: [
-        evt("EEE 201", "09:00", "11:00", "SC3", "Circuit Analysis"),
-        evt("ECU 202", "13:00", "15:00", "SC2", "Ordinary Differential Equations for Engineers"),
-      ],
-      Thursday: [
-        evt("EEE 205", "07:00", "09:00", "SC5", "Electromagnetic Theory"),
-        evt("EEE 215", "10:00", "12:00", "SC5", "Power Systems"),
-        evt("EEE 210", "14:00", "16:00", "E.LAB", "Electronics Lab", "lab"),
-      ],
-      Friday: [
-        evt("EEE 220", "08:00", "10:00", "SC3", "Electrical Machines"),
-        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
-      ],
-    },
-  },
-  {
-    id: "civil",
-    name: "Civil Engineering",
-    shortName: "Civil",
-    schedule: {
-      Monday: [
-        evt("ECE 201", "07:00", "09:00", "SC4", "Structural Analysis"),
-        evt("ECE 210", "10:00", "13:00", "S.LAB", "Surveying Lab", "lab"),
-      ],
-      Tuesday: [
-        evt("ECE 205", "08:00", "10:00", "SC4", "Geotechnics"),
-        evt("ECU 203", "11:00", "13:00", "SC2", "Transform Methods"),
-        evt("ECE 215", "14:00", "17:00", "TBA", "Hydraulics"),
-      ],
-      Wednesday: [
-        evt("ECE 201", "09:00", "11:00", "SC4", "Structural Analysis"),
-        evt("ECE 220", "13:00", "16:00", "C.LAB", "CAD Lab", "lab"),
-      ],
-      Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
-        evt("ECE 205", "10:00", "12:00", "SC4", "Geotechnics"),
-        evt("ECE 215", "14:00", "16:00", "TBA", "Hydraulics"),
-      ],
-      Friday: [
-        evt("ECE 210", "08:00", "10:00", "SC4", "Surveying"),
-        evt("EMM 200", "11:00", "13:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
-        evt("ECE 220", "14:00", "16:00", "TBA", "Construction Technology"),
-      ],
-    },
-  },
-  {
-    id: "mechatronics",
-    name: "Mechatronics Engineering",
-    shortName: "Mech-tronics",
-    schedule: {
-      Monday: [
-        evt("EMT 201", "08:00", "10:00", "SC6", "Control Systems"),
-        evt("EMT 210", "11:00", "13:00", "R.LAB", "Robotics Lab", "lab"),
-        evt("EMM 211", "14:00", "16:00", "SC10", "Engineering Mathematics"),
-      ],
-      Tuesday: [
-        evt("EMT 205", "07:00", "09:00", "SC6", "Microprocessors"),
-        evt("ECU 203", "10:00", "12:00", "SC2", "Transform Methods"),
-        evt("EMT 215", "14:00", "17:00", "E.LAB", "Sensors & Actuators", "lab"),
-      ],
-      Wednesday: [
-        evt("EMT 201", "09:00", "11:00", "SC6", "Control Systems"),
-        evt("EMM 200", "13:00", "16:00", "C.LAB", "Computer Aided Engineering Drawing", "lab"),
-      ],
-      Thursday: [
-        evt("ECU 202", "07:00", "09:00", "SC2", "Ordinary Differential Equations for Engineers"),
-        evt("EMT 205", "10:00", "12:00", "SC6", "Microprocessors"),
-        evt("EMT 210", "14:00", "16:00", "R.LAB", "Robotics Lab", "lab"),
-      ],
-      Friday: [
-        evt("EMT 215", "08:00", "10:00", "SC6", "Sensors & Actuators"),
-        evt("EMM 211", "11:00", "13:00", "SC10", "Engineering Mathematics"),
-      ],
+      Friday: [],
     },
   },
 ];
@@ -407,14 +334,24 @@ const STORAGE_KEY_DEPT = "timetable-dept";
 
 const Timetable = () => {
   const [deptId, setDeptId] = useState<string>(() => {
-    try { return localStorage.getItem(STORAGE_KEY_DEPT) || DEPARTMENTS[0].id; } catch { return DEPARTMENTS[0].id; }
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_DEPT);
+      if (saved && DEPARTMENTS.some((d) => d.id === saved)) return saved;
+      return DEPARTMENTS[0].id;
+    } catch {
+      return DEPARTMENTS[0].id;
+    }
   });
   const [schedules, setSchedules] = useState<Record<string, Record<DayName, TimetableEvent[]>>>(() => {
+    const defaults = Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SCHEDULES);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return { ...defaults, ...parsed };
+      }
     } catch {}
-    return Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d.schedule]));
+    return defaults;
   });
   const [activeDay, setActiveDay] = useState<DayName>(getTodayDayName());
   const [selectedEvent, setSelectedEvent] = useState<TimetableEvent | null>(null);
@@ -439,8 +376,8 @@ const Timetable = () => {
 
   const POMODORO_TIMES = { focus: 25 * 60, short: 5 * 60, long: 15 * 60 };
 
-  const dept = DEPARTMENTS.find((d) => d.id === deptId)!;
-  const schedule = schedules[deptId];
+  const dept = DEPARTMENTS.find((d) => d.id === deptId) ?? DEPARTMENTS[0];
+  const schedule = schedules[dept.id] ?? dept.schedule;
 
   // Semester week calculation
   const getSemesterWeek = () => {
