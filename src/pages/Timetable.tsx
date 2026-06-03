@@ -739,6 +739,12 @@ const Timetable = () => {
           <button onClick={shareTimetable} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Share">
             <Share2 className="w-4 h-4" />
           </button>
+          <button onClick={exportAsCSV} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Download CSV">
+            <FileSpreadsheet className="w-4 h-4" />
+          </button>
+          <button onClick={exportAsPDF} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Download PDF">
+            <FileText className="w-4 h-4" />
+          </button>
           <button onClick={() => setShowManage(true)} className="p-2 border-2 border-foreground bg-card shadow-brutal-sm active:shadow-none" title="Manage">
             <Settings2 className="w-4 h-4" />
           </button>
