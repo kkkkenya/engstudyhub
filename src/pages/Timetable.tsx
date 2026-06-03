@@ -152,6 +152,123 @@ const DEPARTMENTS: Department[] = [
   },
 ];
 
+// ─── Exam timetable (June 2026) ───
+// Course code prefix → department mapping:
+//   EMM = Mechanical, EAR = Aerospace,
+//   ECU = all engineers (shared), UCU = university common unit (shared),
+//   EEE = Electrical
+type DeptId = "aerospace" | "mechanical";
+interface ExamEntry {
+  date: string;        // YYYY-MM-DD
+  day: string;         // Mon / Tue / etc.
+  startTime: string;   // HH:MM (24h)
+  endTime: string;
+  code: string;
+  title: string;
+  venue: string;
+  depts: DeptId[];
+}
+
+const examFor = (code: string): DeptId[] => {
+  const p = code.slice(0, 3).toUpperCase();
+  if (p === "EAR") return ["aerospace"];
+  if (p === "EMM") return ["mechanical"];
+  if (p === "ECU" || p === "UCU" || p === "EEE") return ["aerospace", "mechanical"];
+  return [];
+};
+
+const mkExam = (date: string, day: string, startTime: string, endTime: string, code: string, title: string, venue: string): ExamEntry => ({
+  date, day, startTime, endTime, code, title, venue,
+  depts: examFor(code),
+});
+
+const EXAMS: ExamEntry[] = [
+  // Mon 8 June
+  mkExam("2026-06-08", "Mon", "08:00", "10:00", "EMM 508", "Flexible Manufacturing Systems", "BSSC 280"),
+  mkExam("2026-06-08", "Mon", "08:00", "10:00", "EAR 514", "Aircraft & Spacecraft Maintenance", "BSSC 281"),
+  // Tue 9 June
+  mkExam("2026-06-09", "Tue", "08:00", "10:00", "EMM 214", "Electrical Engineering II", "TR2/3"),
+  mkExam("2026-06-09", "Tue", "08:00", "10:00", "EAR 211", "Electrical Engineering Principles II", "TR2/3"),
+  mkExam("2026-06-09", "Tue", "08:00", "10:00", "EMM 320", "Mechanical Vibrations", "BSSC 281"),
+  mkExam("2026-06-09", "Tue", "11:00", "13:00", "EMM 420", "Simulation & Modelling", "BSSC 275"),
+  mkExam("2026-06-09", "Tue", "11:00", "13:00", "EAR 412", "Guidance & Navigation System", "TR3"),
+  mkExam("2026-06-09", "Tue", "14:00", "16:00", "EAR 317", "Control Systems II", "BSSC 281"),
+  mkExam("2026-06-09", "Tue", "14:00", "16:00", "ECU 103", "Physics for Engineers II", "SOE 1,2"),
+  // Wed 10 June
+  mkExam("2026-06-10", "Wed", "14:00", "16:00", "EMM 509", "Robotics & Automation", "TR1"),
+  mkExam("2026-06-10", "Wed", "14:00", "16:00", "EAR 513", "Aerospace Law, Safety & Management", "BSSC 280"),
+  // Thu 11 June
+  mkExam("2026-06-11", "Thu", "08:00", "10:00", "ECU 202", "Engineering Mathematics VII", "OML11"),
+  mkExam("2026-06-11", "Thu", "08:00", "10:00", "EAR 400", "Propulsion", "BSSC 273"),
+  mkExam("2026-06-11", "Thu", "14:00", "16:00", "UCU 111", "Critical Thinking & Problem Solving", "SZ39 / EF / AZ / SOE"),
+  // Fri 12 June
+  mkExam("2026-06-12", "Fri", "08:00", "10:00", "ECU 302", "Innovation & Entrepreneurship", "AZ39, HH, CH"),
+  mkExam("2026-06-12", "Fri", "08:00", "10:00", "EAR 312", "Aerospace Structures II", "BSSC 152"),
+  mkExam("2026-06-12", "Fri", "08:00", "10:00", "EMM 102", "Intro to Material Science", "BSSC 281"),
+  mkExam("2026-06-12", "Fri", "11:00", "13:00", "EAR 101", "Material Science", "BSSC 280"),
+  mkExam("2026-06-12", "Fri", "11:00", "13:00", "EAR 403", "Avionics", "BSSC 280"),
+  mkExam("2026-06-12", "Fri", "11:00", "13:00", "EMM 200", "Computer Aided Engineering Drawing", "C.LAB"),
+  mkExam("2026-06-12", "Fri", "11:00", "13:00", "EAR 512", "Aircraft Manufacturing Technology", "BSSC 273"),
+  mkExam("2026-06-12", "Fri", "14:00", "16:00", "ECU 107", "Engineering Mathematics IV", "AZ39"),
+  mkExam("2026-06-12", "Fri", "14:00", "16:00", "EMM 425", "Solid & Structural Mechanics IV", "TR4"),
+  mkExam("2026-06-12", "Fri", "14:00", "16:00", "EMM 511", "Computer Aided Design & Manufacturing", "BSSC 280"),
+  mkExam("2026-06-12", "Fri", "16:30", "18:30", "EMM 300", "Engineering Electronics", "HH"),
+  // Mon 15 June
+  mkExam("2026-06-15", "Mon", "08:00", "10:00", "EMM 313", "Measurements & Instrumentation", "BSSC 273"),
+  mkExam("2026-06-15", "Mon", "11:00", "13:00", "EAR 415", "Aerodynamics IV: Applied Aerodynamics", "BSSC 281"),
+  mkExam("2026-06-15", "Mon", "11:00", "13:00", "EMM 422", "Refrigeration & Air Conditioning", "TR1"),
+  mkExam("2026-06-15", "Mon", "14:00", "16:00", "EAR 307", "Mechanics of Machines", "BSSC 280"),
+  mkExam("2026-06-15", "Mon", "14:00", "16:00", "EMM 512", "Manufacturing Resources Management", "TR1"),
+  mkExam("2026-06-15", "Mon", "14:00", "16:00", "EAR 511", "Manufacturing Processes", "BSSC 152"),
+  mkExam("2026-06-15", "Mon", "16:30", "18:30", "ECU 203", "Engineering Mathematics VIII", "OML 9"),
+  // Tue 16 June
+  mkExam("2026-06-16", "Tue", "08:00", "10:00", "EMM 219", "Engineering Thermodynamics II", "BSSC 280"),
+  mkExam("2026-06-16", "Tue", "11:00", "13:00", "EAR 206", "Solid & Structural Mechanics", "BSSC 273"),
+  mkExam("2026-06-16", "Tue", "11:00", "13:00", "EMM 410", "Manufacturing Processes II", "BSSC 281"),
+  mkExam("2026-06-16", "Tue", "11:00", "13:00", "EAR 417", "Metal Forming Processes in Aerospace", "TR1"),
+  mkExam("2026-06-16", "Tue", "14:00", "16:00", "EAR 104", "Aerospace Engineering Drawing II", "DR"),
+  mkExam("2026-06-16", "Tue", "14:00", "16:00", "EMM 101", "Engineering Drawing & Design II", "DR"),
+  mkExam("2026-06-16", "Tue", "14:00", "16:00", "ECU 301", "Engineering Mathematics X", "SZ39"),
+  // Wed 17 June
+  mkExam("2026-06-17", "Wed", "08:00", "10:00", "EMM 513", "Jig, Tool & Fixture Design", "TR3"),
+  mkExam("2026-06-17", "Wed", "08:00", "10:00", "EAR 207", "Fundamentals of Aerospace Engineering Design", "BSSC 152"),
+  mkExam("2026-06-17", "Wed", "11:00", "13:00", "EMM 211", "Engineering Mechanics II", "TR2"),
+  mkExam("2026-06-17", "Wed", "11:00", "13:00", "EMM 427", "Quality Management", "BSSC 275"),
+  mkExam("2026-06-17", "Wed", "11:00", "13:00", "EAR 510", "Aircraft System Design", "BSSC 152"),
+  mkExam("2026-06-17", "Wed", "11:00", "13:00", "EAR 409", "Aircraft Structure Design II", "BSSC 281"),
+  mkExam("2026-06-17", "Wed", "14:00", "16:00", "EAR 309", "Aerodynamics II: Inviscid & Compressible Flow", "BSSC 275"),
+  mkExam("2026-06-17", "Wed", "14:00", "16:00", "EAR 102", "Workshop Practice & Processes I", "BSSC 281"),
+  mkExam("2026-06-17", "Wed", "14:00", "16:00", "EMM 108", "Workshop Processes & Practice I", "BSSC 280"),
+  mkExam("2026-06-17", "Wed", "16:30", "18:30", "EMM 303", "Solid & Structural Mechanics II", "TR3"),
+  // Thu 18 June
+  mkExam("2026-06-18", "Thu", "08:00", "10:00", "EAR 208", "Workshop Practice & Processes III", "HH"),
+  mkExam("2026-06-18", "Thu", "08:00", "10:00", "EMM 216", "Workshop Practice & Processes III", "HH"),
+  mkExam("2026-06-18", "Thu", "11:00", "13:00", "EMM 426", "Design of Machines & Machine Elements", "TR3"),
+  mkExam("2026-06-18", "Thu", "11:00", "13:00", "EAR 316", "Polymer & Composite Materials for Aerospace", "BSSC 281"),
+  mkExam("2026-06-18", "Thu", "11:00", "13:00", "EAR 410", "Aerospace Vibration & Control", "BSSC 152"),
+  mkExam("2026-06-18", "Thu", "14:00", "16:00", "EMM 315", "Material Forming Processes", "TR3"),
+  mkExam("2026-06-18", "Thu", "16:30", "18:30", "EAR 214", "Fluids III: Compressible Flow", "HHA2"),
+  mkExam("2026-06-18", "Thu", "16:30", "18:30", "EMM 421", "Fluid Mechanics V", "HHA2"),
+  mkExam("2026-06-18", "Thu", "16:30", "18:30", "ECU 102", "Chemistry for Engineers II", "AZ39"),
+  // Fri 19 June
+  mkExam("2026-06-19", "Fri", "08:00", "10:00", "EMM 514", "Control Engineering II", "TR1"),
+  mkExam("2026-06-19", "Fri", "08:00", "10:00", "EMM 319", "Engineering Thermodynamics III", "BSSC 273"),
+  mkExam("2026-06-19", "Fri", "08:00", "10:00", "ECU 106", "Engineering Mathematics III", "OML 4,5"),
+  mkExam("2026-06-19", "Fri", "11:00", "13:00", "EAR 201", "Computer Aided Design", "C.LAB"),
+  mkExam("2026-06-19", "Fri", "11:00", "13:00", "EMM 416", "Control Engineering I", "TR3"),
+  mkExam("2026-06-19", "Fri", "11:00", "13:00", "EAR 416", "Flight Dynamics", "TR4"),
+  mkExam("2026-06-19", "Fri", "14:00", "16:00", "EMM 205", "Fluid Mechanics II", "TR1"),
+  mkExam("2026-06-19", "Fri", "14:00", "16:00", "EAR 313", "Digital Electronics", "BSSC 281"),
+  mkExam("2026-06-19", "Fri", "14:00", "16:00", "EAR 509", "Aerospace Materials & Manufacturing", "TR4"),
+  mkExam("2026-06-19", "Fri", "16:30", "18:30", "EAR 106", "Fluid Mechanics I", "TR2"),
+];
+
+const daysBetween = (from: Date, toISO: string) => {
+  const to = new Date(toISO + "T00:00:00");
+  const a = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  return Math.round((to.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
+};
+
 // ─── Helpers ───
 const timeToMin = (t: string) => {
   const [h, m] = t.split(":").map(Number);
