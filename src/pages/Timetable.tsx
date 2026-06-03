@@ -753,19 +753,27 @@ const Timetable = () => {
         {/* CAT/Exam countdown */}
         {upcomingExams.length > 0 && (
           <div className="mx-3 mt-2 border-2 border-destructive bg-destructive/5 p-3">
-            <div className="font-mono text-[10px] uppercase text-destructive font-bold mb-2 flex items-center gap-1.5">⚡ UPCOMING EXAMS / CATS</div>
+            <div className="font-mono text-[10px] uppercase text-destructive font-bold mb-2 flex items-center gap-1.5">⚡ UPCOMING EXAMS — JUNE 2026</div>
             <div className="space-y-1.5">
-              {upcomingExams.slice(0, 2).map((exam, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div>
-                    <span className="font-display font-bold text-sm">{exam.event.subject}</span>
-                    <span className="font-mono text-xs text-muted-foreground ml-2">{exam.event.description}</span>
+              {upcomingExams.slice(0, 4).map(({ ex, daysUntil }, i) => (
+                <div key={i} className="flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="font-mono text-[10px] font-bold bg-foreground text-card px-1.5 py-0.5">{ex.code}</span>
+                      <span className="font-display font-bold text-sm truncate">{ex.title}</span>
+                    </div>
+                    <div className="font-mono text-[10px] text-muted-foreground mt-0.5">
+                      {ex.day} {ex.date.slice(8)}/{ex.date.slice(5,7)} · {ex.startTime}–{ex.endTime} · {ex.venue}
+                    </div>
                   </div>
-                  <span className={`font-mono text-xs font-black px-2 py-1 border-2 border-foreground ${exam.daysUntil === 0 ? "bg-destructive text-destructive-foreground" : exam.daysUntil <= 3 ? "bg-accent text-foreground" : "bg-card text-foreground"}`}>
-                    {exam.daysUntil === 0 ? "TODAY" : exam.daysUntil === 1 ? "TOMORROW" : `${exam.daysUntil}d`}
+                  <span className={`font-mono text-[10px] font-black px-2 py-1 border-2 border-foreground shrink-0 ${daysUntil === 0 ? "bg-destructive text-destructive-foreground" : daysUntil <= 3 ? "bg-accent text-foreground" : "bg-card text-foreground"}`}>
+                    {daysUntil === 0 ? "TODAY" : daysUntil === 1 ? "TOMORROW" : `${daysUntil}d`}
                   </span>
                 </div>
               ))}
+              {upcomingExams.length > 4 && (
+                <div className="font-mono text-[10px] text-muted-foreground pt-1">+{upcomingExams.length - 4} more exam{upcomingExams.length - 4 === 1 ? "" : "s"}</div>
+              )}
             </div>
           </div>
         )}
