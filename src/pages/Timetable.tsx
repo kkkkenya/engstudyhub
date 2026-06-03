@@ -18,6 +18,8 @@ import {
   Download,
   Share2,
   Timer,
+  FileText,
+  FileSpreadsheet,
 } from "lucide-react";
 import logoImg from "@/assets/logo-new.jpeg";
 
