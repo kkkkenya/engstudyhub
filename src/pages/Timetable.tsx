@@ -566,6 +566,66 @@ const Timetable = () => {
     setExporting(false);
   };
 
+  const exportAsCSV = () => {
+    const rows: string[][] = [["Type", "Day/Date", "Start", "End", "Code", "Subject/Title", "Venue"]];
+    DAYS.forEach((day) => {
+      (schedule[day] || []).forEach((e) => {
+        rows.push(["Class", day, e.startTime, e.endTime, "", e.subject, e.location]);
+      });
+    });
+    EXAMS.filter((ex) => ex.depts.includes(deptId as DeptId)).forEach((ex) => {
+      rows.push(["Exam", `${ex.day} ${ex.date}`, ex.startTime, ex.endTime, ex.code, ex.title, ex.venue]);
+    });
+    const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const csv = rows.map((r) => r.map(esc).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `timetable-${dept.shortName}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportAsPDF = () => {
+    const classRows = DAYS.map((day) => {
+      const items = (schedule[day] || [])
+        .map((e) => `<tr><td>${e.startTime}–${e.endTime}</td><td>${e.subject}</td><td>${e.location}</td></tr>`)
+        .join("");
+      return items
+        ? `<tr class="day"><td colspan="3">${day}</td></tr>${items}`
+        : `<tr class="day"><td colspan="3">${day}</td></tr><tr><td colspan="3" class="empty">Free / TBD</td></tr>`;
+    }).join("");
+    const examRows = EXAMS.filter((ex) => ex.depts.includes(deptId as DeptId))
+      .map((ex) => `<tr><td>${ex.day} ${ex.date}</td><td>${ex.startTime}–${ex.endTime}</td><td>${ex.code}</td><td>${ex.title}</td><td>${ex.venue}</td></tr>`)
+      .join("");
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${dept.name} Timetable</title>
+      <style>
+        body{font-family:'Helvetica Neue',Arial,sans-serif;color:#111;padding:24px;}
+        h1{font-size:20px;margin:0 0 4px;text-transform:uppercase;letter-spacing:1px}
+        h2{font-size:14px;margin:24px 0 8px;text-transform:uppercase;border-bottom:2px solid #111;padding-bottom:4px}
+        table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:12px}
+        th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;vertical-align:top}
+        th{background:#111;color:#fff;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+        tr.day td{background:#eee;font-weight:700;text-transform:uppercase}
+        td.empty{color:#888;font-style:italic}
+        @media print{body{padding:12px}}
+      </style></head><body>
+      <h1>${dept.name} — Timetable</h1>
+      <div style="font-size:11px;color:#555">Generated ${new Date().toLocaleDateString()}</div>
+      <h2>Weekly Classes</h2>
+      <table><thead><tr><th>Time</th><th>Subject</th><th>Venue</th></tr></thead><tbody>${classRows}</tbody></table>
+      <h2>Exam Timetable (June 2026)</h2>
+      <table><thead><tr><th>Date</th><th>Time</th><th>Code</th><th>Title</th><th>Venue</th></tr></thead>
+      <tbody>${examRows || '<tr><td colspan="5" class="empty">No exams scheduled.</td></tr>'}</tbody></table>
+      <script>window.onload=()=>{setTimeout(()=>window.print(),300)}</script>
+      </body></html>`;
+    const w = window.open("", "_blank");
+    if (!w) return;
+    w.document.write(html);
+    w.document.close();
+  };
+
   const todayName = getTodayDayName();
   const todayEvents = schedule[todayName] || [];
 
