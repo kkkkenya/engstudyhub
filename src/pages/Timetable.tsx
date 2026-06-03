@@ -584,19 +584,12 @@ const Timetable = () => {
   const nextClass = getNextClass();
 
   const getUpcomingExams = () => {
-    const results: { day: DayName; event: TimetableEvent; daysUntil: number }[] = [];
-    const todayIdx = DAYS.indexOf(todayName);
-    DAYS.forEach((day, idx) => {
-      schedule[day].forEach(event => {
-        if (event.tag === "exam") {
-          const daysUntil = idx >= todayIdx ? idx - todayIdx : 7 - todayIdx + idx;
-          if (daysUntil <= 14) {
-            results.push({ day, event, daysUntil });
-          }
-        }
-      });
-    });
-    return results.sort((a, b) => a.daysUntil - b.daysUntil);
+    const today = new Date();
+    return EXAMS
+      .filter(ex => ex.depts.includes(deptId as DeptId))
+      .map(ex => ({ ex, daysUntil: daysBetween(today, ex.date) }))
+      .filter(({ daysUntil }) => daysUntil >= 0)
+      .sort((a, b) => a.daysUntil - b.daysUntil || a.ex.startTime.localeCompare(b.ex.startTime));
   };
   const upcomingExams = getUpcomingExams();
 
