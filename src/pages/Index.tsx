@@ -171,7 +171,31 @@ const Index = () => {
       <main className="pb-0">
         {/* HERO */}
         <section id="home" className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-20 lg:py-32">
+          {/* BIG DISCORD CTA */}
           <FadeIn>
+            <a
+              href={DISCORD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-brutal group flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full border-4 border-foreground px-6 py-6 md:py-8 mb-6 md:mb-10 shadow-brutal hover:-translate-y-1 transition-transform text-white"
+              style={{ backgroundColor: "#5865F2" }}
+            >
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
+                <path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/>
+              </svg>
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <span className="font-mono text-xs uppercase tracking-widest opacity-80">/// Official Community</span>
+                <span className="font-display text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-tight leading-none mt-1">
+                  Join the Discord
+                </span>
+                <span className="font-mono text-xs md:text-sm opacity-90 mt-1">450+ Kenyan engineering students · free · instant access</span>
+              </div>
+              <span className="hidden md:inline-block font-mono text-2xl ml-2">↗</span>
+            </a>
+          </FadeIn>
+
+          <FadeIn>
+
             <div className="border-4 border-foreground bg-foreground p-4 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
               <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
               <div className="absolute top-4 right-4 md:top-6 md:right-6 font-mono text-xs text-primary/60 uppercase tracking-widest hidden md:block">[ 001 / HOME ]</div>
