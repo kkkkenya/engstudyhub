@@ -718,7 +718,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 .sidedrawer[data-open="true"]{display:block}
 .sidedrawer-scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
-.sidedrawer-panel{position:absolute;top:0;bottom:0;left:0;width:min(330px,86vw);background:var(--bg-3);
+.sidedrawer-panel{position:absolute;top:0;bottom:0;left:0;width:min(330px,86vw);background:var(--bg-3);overflow-y:auto;-webkit-overflow-scrolling:touch;
   display:flex;flex-direction:column;padding:16px 16px calc(18px + env(safe-area-inset-bottom));
   border-right:1px solid var(--sep);box-shadow:var(--sh-3);animation:sdIn .3s var(--ease)}
 @keyframes sdIn{from{transform:translateX(-100%)}to{transform:none}}
@@ -736,6 +736,23 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   body{padding-bottom:env(safe-area-inset-bottom)}}
 @media(min-width:901px){.sidedrawer{display:none!important}}
 @media (prefers-reduced-motion:reduce){.sidedrawer-panel{animation:none}}
+<style>
+/* ===== V18 · mobile menu, made obvious and scroll-safe ===== */
+.menu-btn{display:none}
+@media(max-width:900px){
+  #themeBtn{display:none}
+  .menu-btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 15px;
+    border:1px solid var(--sep-2);border-radius:999px;background:var(--bg-3);color:var(--label);
+    font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;flex:none}
+  .menu-btn svg{width:18px;height:18px;flex:none}
+  .hdr .wrap{gap:10px}
+  .brand-txt small{display:none}
+}
+.sd-theme{display:flex;justify-content:space-between;align-items:center;width:100%;
+  min-height:52px;margin-top:6px;padding:0 2px;border:0;border-bottom:1px solid var(--sep);
+  background:transparent;color:var(--label);font-family:var(--f-body);font-size:17px;
+  font-weight:500;cursor:pointer;text-align:left}
+.sd-theme #sdThemeVal{color:var(--label-2);font-size:15px}
 </style>
 </head>
 <body>
@@ -761,7 +778,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     <div class="hdr-cta">
       <a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium</a>
       <a class="btn btn--discord btn--sm disc-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo.png" alt="" width="18" height="18"><span>Join Discord</span></a>
-      <button class="icon-btn sd-open" id="sdOpen" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidedrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="menu-btn" id="sdOpen" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidedrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch appearance" aria-pressed="false"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v3M12 18.4v3M2.6 12h3M18.4 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7 7 0 0 0 11.1 11.1z"/></svg></button>
     </div>
   </div>
@@ -787,6 +804,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       <a class="btn btn--primary btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium</a>
       <a class="btn btn--discord btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo.png" alt="" width="18" height="18"><span>Join Discord</span></a>
     </div>
+    <button class="sd-theme" id="sdTheme" type="button"><span>Appearance</span><span id="sdThemeVal">Light</span></button>
     <p class="sd-fine">The Discord is free to join. Premium is KES 800, once.</p>
   </aside>
 </div>
@@ -2225,7 +2243,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     document.title = TITLES[path] || TITLES["/"];
   }
 
-  function route() {
+  function route() { document.body.style.overflow = "";
     var h = location.hash.replace(/^#/, "");
     if (h.charAt(0) === "/") {
       var path = ROUTES.indexOf(h) > -1 ? h : "/404";
@@ -2526,6 +2544,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     document.documentElement.setAttribute("data-theme", t);
     try { localStorage.setItem("esh-theme", t); } catch (e) {}
     if (themeBtn) themeBtn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+    var sv = $("#sdThemeVal"); if (sv) sv.textContent = t === "dark" ? "Dark" : "Light";
   }
   if (themeBtn) {
     themeBtn.setAttribute("aria-pressed", document.documentElement.getAttribute("data-theme") === "dark" ? "true" : "false");
@@ -2603,6 +2622,10 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     var b = $("#sdOpen"); if (b) b.setAttribute("aria-expanded", "false");
   }
   var sdBtn = $("#sdOpen"); if (sdBtn) sdBtn.addEventListener("click", openSd);
+  var sdThemeBtn = $("#sdTheme");
+  if (sdThemeBtn) sdThemeBtn.addEventListener("click", function () {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
   Array.prototype.slice.call(document.querySelectorAll("[data-sdclose]")).forEach(function (x) { x.addEventListener("click", closeSd); });
   if (sdEl) sdEl.addEventListener("click", function (e) { if (e.target.tagName === "A") closeSd(); });
   /* =========================================================
