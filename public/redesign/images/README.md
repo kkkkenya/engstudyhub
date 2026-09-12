@@ -35,6 +35,7 @@ edit — it appears automatically and the placeholder steps aside.
 | B4 | `build-04.jpg` | Showcase, slot 04 | 4:3 · 1400 × 1050 | Irrigation controller installed |
 | B5 | `build-05.jpg` | Showcase, slot 05 | 4:3 · 1400 × 1050 | Motion rig in position |
 | B6 | `build-06.jpg` | Showcase, slot 06 | 4:3 · 1400 × 1050 | Any bench instrument build |
+| D1 | `discord-server.jpg` | Home, community block | 4:3 · 1920 × 1440 | **A screenshot of your actual Discord server** — channel list plus an active conversation. A real screenshot converts far better than any illustration, and it's the only image on that block |
 
 Plates 03–06 are pulled in by the featured-project cards on the home page; the rest are placed
 directly in the markup. The four kit photos are the highest-leverage images on the site — a real
