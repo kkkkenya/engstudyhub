@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/redesign/index.html" }
-  ]
+  "framework": null,
+  "installCommand": "echo no-install-needed",
+  "buildCommand": "echo static-site-no-build-step",
+  "outputDirectory": "public/redesign"
 }
