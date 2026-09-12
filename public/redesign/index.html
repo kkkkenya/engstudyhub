@@ -712,47 +712,46 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   .community{padding:20px 16px}
   .part-row{padding:11px 13px}
 }
-<style>
 /* ===== V17 · mobile side menu ===== */
 .sidedrawer{position:fixed;inset:0;z-index:70;display:none}
 .sidedrawer[data-open="true"]{display:block}
 .sidedrawer-scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
-.sidedrawer-panel{position:absolute;top:0;bottom:0;left:0;width:min(330px,86vw);background:var(--bg-3);overflow-y:auto;-webkit-overflow-scrolling:touch;
-  display:flex;flex-direction:column;padding:16px 16px calc(18px + env(safe-area-inset-bottom));
-  border-right:1px solid var(--sep);box-shadow:var(--sh-3);animation:sdIn .3s var(--ease)}
+.sidedrawer-panel{position:absolute;top:0;bottom:0;left:0;width:min(330px,86vw);background:var(--paper-2);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;display:flex;flex-direction:column;padding:16px 16px calc(18px + env(safe-area-inset-bottom));
+  border-right:1px solid var(--line);box-shadow:22px 0 44px -16px rgba(12,20,33,.3);animation:sdIn .3s cubic-bezier(.2,.7,.2,1)}
 @keyframes sdIn{from{transform:translateX(-100%)}to{transform:none}}
-.sd-head{display:flex;align-items:center;gap:11px;padding-bottom:15px;border-bottom:1px solid var(--sep)}
+.sd-head{display:flex;align-items:center;gap:11px;padding-bottom:15px;border-bottom:1px solid var(--line)}
 .sd-head .brand-mark{flex:none}
 .sd-nav{display:flex;flex-direction:column;margin-top:6px}
 .sd-nav a{display:flex;align-items:center;justify-content:space-between;min-height:52px;
-  font-size:17px;font-weight:500;text-decoration:none;color:var(--label);
-  padding:0 2px;border-bottom:1px solid var(--sep)}
-.sd-nav a[aria-current="page"]{color:var(--accent);font-weight:600}
+  font-size:17px;font-weight:500;text-decoration:none;color:var(--ink);
+  padding:0 2px;border-bottom:1px solid var(--line)}
+.sd-nav a[aria-current="page"]{color:var(--blue);font-weight:600}
 .sd-cta{margin-top:auto;display:grid;gap:9px;padding-top:20px}
-.sd-fine{font-size:11.5px;color:var(--label-2);margin:12px 0 0;text-align:center}
+.sd-fine{font-size:11.5px;color:var(--muted);margin:12px 0 0;text-align:center}
+.sidedrawer .close-x{width:44px;height:44px}
 .sd-open{display:none}
 @media(max-width:900px){.sd-open{display:inline-grid}
   body{padding-bottom:env(safe-area-inset-bottom)}}
 @media(min-width:901px){.sidedrawer{display:none!important}}
 @media (prefers-reduced-motion:reduce){.sidedrawer-panel{animation:none}}
-<style>
 /* ===== V18 · mobile menu, made obvious and scroll-safe ===== */
 .menu-btn{display:none}
 @media(max-width:900px){
   #themeBtn{display:none}
-  .menu-btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 15px;
-    border:1px solid var(--sep-2);border-radius:999px;background:var(--bg-3);color:var(--label);
+  .menu-btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 15px;
+    border:1px solid var(--line-2);border-radius:999px;background:var(--paper-2);color:var(--ink);
     font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;flex:none}
   .menu-btn svg{width:18px;height:18px;flex:none}
   .hdr .wrap{gap:10px}
   .brand-txt small{display:none}
 }
 .sd-theme{display:flex;justify-content:space-between;align-items:center;width:100%;
-  min-height:52px;margin-top:6px;padding:0 2px;border:0;border-bottom:1px solid var(--sep);
-  background:transparent;color:var(--label);font-family:var(--f-body);font-size:17px;
+  min-height:52px;margin-top:6px;padding:0 2px;border:0;border-bottom:1px solid var(--line);
+  background:transparent;color:var(--ink);font-family:var(--f-body);font-size:17px;
   font-weight:500;cursor:pointer;text-align:left}
-.sd-theme #sdThemeVal{color:var(--label-2);font-size:15px}
+.sd-theme #sdThemeVal{color:var(--muted);font-size:15px}
 </style>
 </head>
 <body>
@@ -791,7 +790,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     <div class="sd-head">
       <span class="brand-mark" aria-hidden="true">EH</span>
       <span class="brand-txt"><strong>Engineering Hub</strong><small>Study, Build, Launch</small></span>
-      <button class="close-x" data-sdclose aria-label="Close menu" style="margin-left:auto"></button>
+      <button class="close-x" id="sdClose" data-sdclose aria-label="Close menu" style="margin-left:auto"></button>
     </div>
     <nav class="sd-nav" aria-label="Sections">
       <a href="#/" data-nav="/">Home</a>
@@ -2243,7 +2242,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     document.title = TITLES[path] || TITLES["/"];
   }
 
-  function route() { document.body.style.overflow = "";
+  function route() { closeSd(); document.body.style.overflow = "";
     var h = location.hash.replace(/^#/, "");
     if (h.charAt(0) === "/") {
       var path = ROUTES.indexOf(h) > -1 ? h : "/404";
@@ -2611,15 +2610,36 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     if (dEl) dEl.hidden = false;
   });
   var sdEl = $("#sidedrawer");
+  var sdScrollY = 0;
+  /* iOS Safari only partially honors body overflow:hidden, so freeze the page
+     in place with position:fixed while the menu is open and restore exactly. */
+  function lockScroll() {
+    sdScrollY = window.pageYOffset;
+    document.body.style.position = "fixed";
+    document.body.style.top = (-sdScrollY) + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+  }
+  function unlockScroll() {
+    document.body.style.position = ""; document.body.style.top = "";
+    document.body.style.left = ""; document.body.style.right = "";
+    document.body.style.width = ""; document.body.style.overflow = "";
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, sdScrollY);
+    document.documentElement.style.scrollBehavior = "";
+  }
   function openSd() {
     if (!sdEl) return;
-    sdEl.setAttribute("data-open", "true"); document.body.style.overflow = "hidden";
+    sdEl.setAttribute("data-open", "true"); lockScroll();
     var b = $("#sdOpen"); if (b) b.setAttribute("aria-expanded", "true");
+    var x = $("#sdClose"); if (x) x.focus({ preventScroll: true });
   }
   function closeSd() {
-    if (!sdEl) return;
-    sdEl.setAttribute("data-open", "false"); document.body.style.overflow = "";
-    var b = $("#sdOpen"); if (b) b.setAttribute("aria-expanded", "false");
+    if (!sdEl || sdEl.getAttribute("data-open") !== "true") return;
+    sdEl.setAttribute("data-open", "false"); unlockScroll();
+    var b = $("#sdOpen"); if (b) { b.setAttribute("aria-expanded", "false"); b.focus({ preventScroll: true }); }
   }
   var sdBtn = $("#sdOpen"); if (sdBtn) sdBtn.addEventListener("click", openSd);
   var sdThemeBtn = $("#sdTheme");
@@ -2628,6 +2648,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   });
   Array.prototype.slice.call(document.querySelectorAll("[data-sdclose]")).forEach(function (x) { x.addEventListener("click", closeSd); });
   if (sdEl) sdEl.addEventListener("click", function (e) { if (e.target.tagName === "A") closeSd(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" || e.key === "Esc") closeSd(); });
   /* =========================================================
      BOOT
   ========================================================= */
