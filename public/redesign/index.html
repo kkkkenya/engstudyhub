@@ -551,6 +551,27 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 <style>
 .tabbar{grid-template-columns:repeat(5,1fr)}
 .tabbar a{font-size:10.5px}
+<style>
+/* ===== V7 · community block + icon discipline ===== */
+.community{background:#5865F2;color:#fff;border-radius:var(--r-xl);padding:clamp(22px,3.6vw,46px);
+  display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(20px,3.4vw,44px);
+  align-items:center;box-shadow:var(--sh-2)}
+.community .eyebrow--light{color:rgba(255,255,255,.82)}
+@media(max-width:880px){.community{grid-template-columns:1fr}}
+.discord-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;
+  background:rgba(255,255,255,.18);margin-bottom:16px}
+.discord-mark svg{width:25px;height:25px;fill:#fff}
+.btn--discord{background:#fff;color:#3B41B8;border-color:#fff}
+.btn--discord:hover{background:#fff;color:#3B41B8;opacity:.9}
+.community-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.community-facts span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;
+  color:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 11px}
+.icon-btn--discord{background:#5865F2;color:#fff}
+.icon-btn--discord:hover{background:#4752C4;color:#fff}
+.icon-btn--discord svg{width:18px;height:18px;fill:currentColor}
+/* nothing at the top of the page is allowed to blow up */
+.hdr svg,.tabbar svg,.icon-btn svg,.brand-mark svg,.hdr img{max-width:28px;max-height:28px}
+.tabbar svg{width:25px;height:25px}
 </style>
 </head>
 <body>
@@ -590,7 +611,8 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <a href="#/showcase" data-nav="/showcase">Showcase</a>
     </nav>
     <div class="hdr-cta">
-      <a class="btn btn--primary btn--sm" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium</a>
+      <a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium</a>
+      <a class="icon-btn icon-btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer" aria-label="Join the Discord community"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/></svg></a>
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch appearance" aria-pressed="false"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v3M12 18.4v3M2.6 12h3M18.4 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7 7 0 0 0 11.1 11.1z"/></svg></button>
     </div>
   </div>
@@ -617,7 +639,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <h1 class="h1">Study smarter.<br><em>Build reality.</em></h1>
           <p class="lede">The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.</p>
           <div class="hero-cta">
-            <a class="btn btn--primary" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
+            <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
             <a class="btn" href="#/projects">Browse the library free</a>
             <a class="btn btn--ghost" href="#/membership">Compare plans</a>
           </div>
@@ -645,6 +667,30 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     </div>
   </section>
 
+  <section class="band band--tight" id="community">
+    <div class="wrap">
+      <div class="community">
+        <div>
+          <span class="discord-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/></svg></span>
+          <p class="eyebrow eyebrow--light">/// The community</p>
+          <h2 class="h2" style="color:#fff">450+ engineers,<br><em>already in the room.</em></h2>
+          <p class="lede mt" style="color:rgba(255,255,255,.82)">The Discord is where the actual work happens. Ask a question at 1am and someone answers. Find the squad for the project you have been putting off. Watch other people finish things, and finish yours.</p>
+          <div class="row mt-l">
+            <a class="btn btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+            <a class="btn btn--light" href="https://wa.me/254745947704?text=Hi%2C%20I%20have%20a%20question%20about%20joining%20the%20hub" target="_blank" rel="noopener noreferrer">Ask a question first</a>
+          </div>
+          <div class="community-facts">
+            <span>Free to join</span><span>Instant access</span><span>4 universities</span><span>No spam</span>
+          </div>
+        </div>
+        <figure class="plate plate--4x3" style="border-color:rgba(255,255,255,.28)">
+          <div class="plate-ph" aria-hidden="true"><b>YOUR SERVER</b><code>images/discord-server.jpg</code><span>1920 × 1440 · a screenshot of your Discord</span></div>
+          <img src="images/discord-server.jpg" alt="A screenshot of the Engineering Hub Discord server showing the channel list and an active conversation" loading="lazy" onerror="this.style.display='none'">
+          <figcaption class="plate-cap"><span><b>FIG. 3</b> — The server, as it really looks</span><span>Replace this</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
   <section class="band" id="about">
     <div class="wrap">
       <div class="rule"><span>Section 02 — What this is</span></div>
@@ -656,7 +702,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="spec-row"><span class="spec-k">Format</span><span class="spec-v">Discord community, organised by university, year and unit</span></div>
             <div class="spec-row"><span class="spec-k">Who</span><span class="spec-v">Undergraduate engineering students in Kenya</span></div>
             <div class="spec-row"><span class="spec-k">Entry</span><span class="spec-v">KES 50 / semester · KES 800 lifetime</span></div>
-            <div class="spec-row"><span class="spec-k">Contact</span><span class="spec-v"><a href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">WhatsApp</a> · <a href="mailto:gregorykimemiah@gmail.com">Email</a></span></div>
+            <div class="spec-row"><span class="spec-k">Contact</span><span class="spec-v"><a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">WhatsApp</a> · <a href="mailto:gregorykimemiah@gmail.com">Email</a></span></div>
           </div>
         </div>
         <figure class="plate plate--4x3">
@@ -769,7 +815,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <span class="tag tag--hivis">Premium — KES 800 once</span>
             <h3>The full build sheet</h3>
             <p class="dim" style="font-size:14px;margin:0">Every remaining step, the full materials list with real Nairobi suppliers and KES prices, and the squad channel where the build actually happens.</p>
-            <a class="btn btn--primary btn--block" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Unlock everything</a>
+            <a class="btn btn--primary btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Premium%20so%20I%20can%20unlock%20the%20full%20build%20sheets" target="_blank" rel="noopener noreferrer">Unlock everything</a>
           </div>
         </div>
       </div>
@@ -877,7 +923,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Homework &amp; CAT support</li>
               <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Career pipeline</li>
             </ul>
-            <a class="btn btn--block" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Basic — KES 50</a>
+            <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Basic%20-%20KES%2050%20per%20semester" target="_blank" rel="noopener noreferrer">Join Basic — KES 50</a>
             <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA · RENEWS EACH SEMESTER</p>
           </div>
         </div>
@@ -903,7 +949,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <li><i class="tick" aria-hidden="true"></i>Priority Discord channels</li>
               <li><i class="tick" aria-hidden="true"></i>Direct access to project leads</li>
             </ul>
-            <a class="btn btn--primary btn--block" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
+            <a class="btn btn--primary btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
             <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA · ONE PAYMENT. LIFETIME ACCESS.</p>
           </div>
         </div>
@@ -943,7 +989,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             </div>
           </div>
           <div class="row mt-l">
-            <a class="btn btn--primary" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+            <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
             <a class="btn btn--ghost" href="mailto:gregorykimemiah@gmail.com">Email us</a>
           </div>
         </div>
@@ -967,7 +1013,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               </div>
               <img src="images/plate-10-team.jpg" alt="Core team members of the Engineering Study Hub" onerror="this.style.display='none'">
             </figure>
-            <a class="btn btn--block" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Apply to join <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
+            <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20apply%20for%20the%20core%20team" target="_blank" rel="noopener noreferrer">Apply to join <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
           </div>
         </div>
       </div>
@@ -1058,7 +1104,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <div class="block mt-l" style="text-align:center">
         <h3 class="h3" style="margin-bottom:8px">Need help picking a project?</h3>
         <p class="dim" style="font-size:14.5px">Message us on WhatsApp — we'll match you with the right project for your year and skill level.</p>
-        <a class="btn btn--primary" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+        <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
       </div>
     </div>
   </section>
@@ -1079,7 +1125,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     <div class="drawer-body" id="pdBody"></div>
     <div class="drawer-ft">
       <a class="btn btn--primary" id="pdSquad" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Find a squad <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
-      <a class="btn" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
+      <a class="btn" href="https://wa.me/254745947704?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20project%20or%20kit" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
       <button class="btn btn--ghost" data-close>Close</button>
     </div>
   </div>
@@ -1096,7 +1142,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <h1 class="h2">Everything in the library.<br><em>And the people to build it with.</em></h1>
           <p class="lede mt">The project library is free to read. Premium is for the part that actually finishes projects: the full build sequences, the Nairobi costings, the squad channel and the support that keeps you moving when a build stalls.</p>
           <div class="hero-cta">
-            <a class="btn btn--primary" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
+            <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
             <a class="btn" href="#/projects">See what's free first</a>
           </div>
           <p class="mono dim" style="margin-top:16px">M-PESA · ONE PAYMENT · LIFETIME ACCESS · 7-DAY REFUND</p>
@@ -1171,7 +1217,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <div class="spec-row"><span class="spec-k">The break-even</span><span class="spec-v">If it stops you abandoning one project you would otherwise have dropped half-built, it has paid for itself</span></div>
       </div>
       <div class="row mt-l">
-        <a class="btn btn--primary" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
+        <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
         <a class="btn btn--ghost" href="#/projects">Open the library</a>
       </div>
     </div>
@@ -1249,7 +1295,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <div class="spec-row"><span class="spec-k">Then</span><span class="spec-v">Send the M-Pesa confirmation to WhatsApp</span></div>
             </div>
             <p class="mono dim mt" style="font-size:10.5px">PREFER A PUBLIC PAYBILL? SEND US THE NUMBER AND IT GOES HERE — THE WHATSAPP FLOW WORKS FINE WITHOUT ONE.</p>
-            <a class="btn btn--primary btn--block mt" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Start on WhatsApp</a>
+            <a class="btn btn--primary btn--block mt" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Start on WhatsApp</a>
           </div>
 
           <div class="block mt">
@@ -1362,7 +1408,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <h2 class="h2" style="margin-bottom:18px">KES 800. Once.<br>The whole degree.</h2>
       <p class="lede" style="max-width:none;font-size:clamp(16px,1.9vw,20px);color:rgba(255,255,255,.86)">Twelve project sheets, the squads to build them with, and a hub that stays open until you graduate.</p>
       <div class="row mt-l" style="justify-content:center">
-        <a class="btn btn--hivis" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Join Premium — KES 800</a>
+        <a class="btn btn--hivis" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800</a>
         <a class="btn btn--light" href="mailto:gregorykimemiah@gmail.com">Ask a question first</a>
       </div>
       <p class="mono" style="margin-top:18px;font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7)">M-PESA · 7-DAY REFUND · NO SUBSCRIPTION</p>
@@ -1649,7 +1695,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <h1 class="h1">Built by<br><em>members.</em></h1>
           <p class="lede mt">Every build on this wall started as a project sheet in the library. Real photos, real parts, real costings — including the parts that failed and what it took to fix them.</p>
           <div class="hero-cta">
-            <a class="btn btn--primary" href="#" id="bwOpen">Submit your build</a>
+            <button class="btn btn--primary" type="button" id="bwOpen">Submit your build</button>
             <a class="btn btn--ghost" href="#/projects">Browse the library</a>
           </div>
           <p class="mono dim" style="margin-top:16px">REAL PHOTOS ONLY · NO RENDERS · NO STOCK</p>
@@ -1720,7 +1766,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 03</span></div>
             <h3>Four-wheel drive rover</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. This is the slot the Rover Kit is waiting to fill.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1733,7 +1779,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
             <h3>Water quality dashboard</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. Sensor array, SD logging, live readout.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1746,7 +1792,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
             <h3>Truss bridge load test</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. Balsa or mild steel, tested to failure.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1759,7 +1805,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
             <h3>Smart irrigation controller</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. Soil moisture, relay, pump, real plants.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1772,7 +1818,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 04</span></div>
             <h3>Precision motion rig</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. Lead screw, stepper stack, closed-loop feedback.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1785,7 +1831,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 02</span></div>
             <h3>Bench instrument</h3>
             <p class="dim" style="font-size:14px;margin:0">No build published yet. Anything that measures and displays — your pick.</p>
-            <a class="btn btn--ghost btn--block" href="#" data-bwopen>Claim this slot</a>
+            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
           </div>
         </article>
 
@@ -1805,7 +1851,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <h2 class="h2" style="margin-bottom:18px">You built it.<br>Put it on the wall.</h2>
       <p class="lede" style="max-width:none;font-size:clamp(16px,1.9vw,20px);color:rgba(255,255,255,.86)">One photo and four answers. It takes ten minutes, it's free, and it's the thing the next student will read before they start.</p>
       <div class="row mt-l" style="justify-content:center">
-        <a class="btn btn--hivis" href="#" data-bwopen>Submit your build</a>
+        <button class="btn btn--hivis" type="button" data-bwopen>Submit your build</button>
         <a class="btn btn--light" href="#/starter-kit">Get a kit first</a>
       </div>
     </div>
@@ -1942,7 +1988,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       </div>
       <div class="tb">
         <div class="tb-k">WhatsApp</div>
-        <div class="tb-v"><a href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">wa.me/254745947704</a></div>
+        <div class="tb-v"><a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">wa.me/254745947704</a></div>
       </div>
       <div class="tb">
         <div class="tb-k">Email</div>
@@ -2265,7 +2311,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       '<div><div class="block-h">/// Build sequence \u2014 preview</div>' + freeSteps.map(function (s, i) { return '<div class="sol-step"><span class="sol-n">' + (i + 1) + '</span><span>' + esc(s) + '</span></div>'; }).join("") +
         '<div class="lock"><div class="lock-h">/// ' + locked + ' more steps \u00b7 KES costings \u00b7 squad channel</div>' +
         '<p>Premium unlocks the complete build sheet: every remaining step, the full Nairobi materials list with real prices, and the squad channel where the build actually happens.</p>' +
-        '<div class="row"><a class="btn btn--primary btn--sm" href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">Unlock with Premium \u2014 KES 800</a><a class="btn btn--sm" href="#/membership" data-close>Compare plans</a></div></div>' +
+        '<div class="row"><a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Premium%20so%20I%20can%20unlock%20the%20full%20build%20sheets" target="_blank" rel="noopener noreferrer">Unlock with Premium \u2014 KES 800</a><a class="btn btn--sm" href="#/membership" data-close>Compare plans</a></div></div>' +
       '</div>';    $("#pdSquad").style.display = p.squad ? "" : "none";
     $("#pd").setAttribute("data-open", "true");
     document.body.style.overflow = "hidden";

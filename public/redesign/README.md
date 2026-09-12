@@ -11,9 +11,15 @@ deployment story for local preview.
 
 ## Put it online
 
-Upload the HTML file **and** the `images/` folder together to any static host — Netlify
-(drag-and-drop), Cloudflare Pages, GitHub Pages, or plain cPanel via your existing host. Keep them
-in the same directory; the images are referenced relatively.
+Two ways, depending on what you want.
+
+**Alongside the existing app (recommended, zero risk).** The build lives in `public/redesign/`, and Vite copies `public/`
+verbatim into the build output — so after a deploy it is live at `https://<your-domain>/redesign/`. Your React app, its
+routes, the formula directory and the job board all keep working untouched.
+
+**As the whole site.** Only do this if you're happy to drop the app's current features — the AI formula directory and the
+live job board both need the backend that the static build doesn't have. Say the word and I'll plan that migration
+properly instead of swapping files.
 
 Nothing needs to be compiled. There is no server, no database, no npm install.
 
@@ -75,6 +81,7 @@ one from another page the site switches home first.
 | V4 | Native-polish pass: full light/dark with a toggle, translucent navigation bar and mobile tab bar, SF-style icon set, sheet modality, safe-area insets, Apple easing curve, ratings & reviews component |
 | V5 | Typography replaced with Instrument Serif + Figtree + JetBrains Mono. Starter-kit sheet rebuilt around four real, priced kits with pre-filled WhatsApp order links |
 | V6 | Showcase sheet added — member builds, an honest empty wall with six open slots, a build-submission sheet, and a fifth tab |
+| V7 | Discord community block with a persistent header entry point, every WhatsApp link pre-filled, showcase buttons made real buttons, size cap on header and tab-bar icons |
 
 Earlier versions sit in `archive/` untouched — never edit them, they're the rollback path.
 
