@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="images/plate-00-og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    ENGINEERING STUDY HUB — REVAMP V1
@@ -437,7 +437,7 @@ section{position:relative;z-index:1}
 :root{
   --f-display:"Bricolage Grotesque","Plus Jakarta Sans",system-ui,sans-serif;
   --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --f-mono:var(--f-body);
   --line:rgba(11,15,20,.11);
   --line-2:rgba(11,15,20,.17);
   --line-3:rgba(11,15,20,.30);
@@ -671,6 +671,47 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .part-end .ok{color:var(--ok)}
 .part-end .out{color:var(--danger)}
 @media(max-width:520px){.part-row{gap:10px}.part-row b,.part-end b{font-size:14px}}
+<style>
+/* ===== V16 · mobile-first, lean, app-like ===== */
+.mono{font-variant-numeric:tabular-nums}
+h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywhere;word-break:break-word}
+.btn,.tag,.chip,.tabbar a span,.nav a{overflow-wrap:normal;word-break:normal}
+@media(max-width:900px){
+  /* sheets become full-screen, not a cramped panel */
+  .drawer-panel{left:0;right:0;top:0;bottom:0;width:100%;max-height:none;transform:none;
+    border:0;border-radius:0;animation:sheetFull .3s var(--ease)}
+  @keyframes sheetFull{from{opacity:0;transform:translateY(2.5%)}to{opacity:1;transform:none}}
+  .drawer-panel::before{display:none}
+  .drawer-hd{padding:14px 16px;position:sticky;top:0;z-index:2}
+  .drawer-body{padding:16px}
+  .drawer-ft{padding:12px 16px calc(12px + env(safe-area-inset-bottom));position:sticky;bottom:0;z-index:2}
+  /* the bar stops eating the page */
+  .tabbar{padding:2px max(8px,env(safe-area-inset-left)) calc(2px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right))}
+  .tabbar a{min-height:44px;padding:4px 2px;gap:2px;font-size:9.5px;line-height:1.05}
+  .tabbar a svg{width:23px;height:23px}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
+  .band{padding:36px 0}
+  .band--tight{padding:26px 0}
+  .wrap,.wrap--narrow{width:calc(100% - 28px)}
+  .hero-grid{grid-template-columns:1fr;gap:22px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;gap:14px}
+  .h1{font-size:clamp(30px,8.4vw,40px);line-height:1.04}
+  .h2{font-size:clamp(25px,7vw,32px);line-height:1.08}
+  .h3{font-size:19px}
+  .lede{font-size:16.5px}
+  body{font-size:16px}
+  .spec-row{grid-template-columns:1fr;gap:2px}
+  .spec-k{border-right:0;padding-bottom:0}
+  .cmp tbody tr{padding:12px}
+  .metrics,.metric{padding:11px 12px}
+}
+@media(max-width:700px){
+  body::before{display:none}
+  .plate-ph{background-image:none}
+  .card,.spec,.block,.hero-side{box-shadow:none}
+  .community{padding:20px 16px}
+  .part-row{padding:11px 13px}
+}
 </style>
 </head>
 <body>
@@ -770,7 +811,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         </div>
         <figure class="plate plate--4x3 community-shot">
           <div class="plate-ph" aria-hidden="true"><b>THE SERVER</b><code>images/discord-server.jpg</code><span>replace to update</span></div>
-          <img src="images/discord-server.jpg" alt="The Engineering Study Hub Discord server, showing the channel list and an active announcement" loading="lazy" onerror="this.style.display='none'">
+          <img src="images/discord-server-900.jpg" srcset="images/discord-server-900.jpg 900w, images/discord-server.jpg 1600w" sizes="(max-width:900px) 92vw, 46vw" alt="The Engineering Study Hub Discord server, showing the channel list and an active announcement" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <figcaption class="plate-cap"><span><b>LIVE</b> — the server right now</span><span>450+ members</span></figcaption>
         </figure>
       </div>
@@ -891,20 +932,6 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     </div>
   </section>
 
-  <section class="band band--ink">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow eyebrow--light">/// Section 05 — Start building</p>
-          <h2 class="h2">Think you've got<br>what it takes?</h2>
-        </div>
-        <p class="lede" style="max-width:36ch">Real engineering projects with real budgets. Pick one, form a squad, prove your skills.</p>
-      </div>
-      <div class="grid-3" id="challenges"></div>
-      <div class="row mt-l"><a class="btn btn--hivis" href="#/projects">See all challenge projects</a></div>
-    </div>
-  </section>
-
     <section class="band band--panel" id="membership-preview">
     <div class="wrap">
       <div class="sec-head">
@@ -937,17 +964,6 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <a class="btn btn--primary btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Premium%20so%20I%20can%20unlock%20the%20full%20build%20sheets" target="_blank" rel="noopener noreferrer">Unlock everything</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band band--blue">
-    <div class="wrap--narrow center">
-      <p class="eyebrow eyebrow--light" style="justify-content:center">/// The vision</p>
-      <h2 class="h2" style="margin-bottom:20px">The bigger dream</h2>
-      <p class="lede" style="max-width:none;font-size:clamp(16px,1.9vw,21px);color:rgba(255,255,255,.86)">Beyond exams. We're building the next generation of Kenyan technical founders — semester mega-competitions, physical hack nights, alumni mentorship, and direct pipelines into local internships.</p>
-      <div class="row mt-l" style="justify-content:center">
-        <a class="btn btn--light" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Be part of it</a>
       </div>
     </div>
   </section>
@@ -1327,16 +1343,16 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <tbody>
             <tr><th scope="row">Browse all 12 project sheets</th><td data-label="Free" class="yes">Yes</td><td data-label="Free" class="yes">Yes</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
             <tr><th scope="row">Project overview, topics and tooling</th><td data-label="Free" class="yes">Yes</td><td data-label="Free" class="yes">Yes</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
-            <tr><th scope="row">First two build steps on every sheet</th><td data-label="Free" class="yes">Yes</td><td data-label="Free" class="yes">Yes</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
+            
             <tr><th scope="row">Full step-by-step build sequence</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Unlocked</td></tr>
             <tr><th scope="row">Nairobi materials list with real KES prices</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Unlocked</td></tr>
             <tr><th scope="row">Squad channel — build with people, not alone</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Unlocked</td></tr>
             <tr><th scope="row">Notes and past papers archive</th><td data-label="Free" class="no">Locked</td><td data-label="Basic" class="yes">Yes</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
-            <tr><th scope="row">Live Pomodoro study rooms</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
-            <tr><th scope="row">Daily homework and CAT support</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
+            
+            
             <tr><th scope="row">Career and internship pipeline</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
-            <tr><th scope="row">Access to project leads</th><td data-label="Free" class="no">Locked</td><td data-label="Free" class="no">Locked</td><td data-label="Premium" class="yes col-hi">Yes</td></tr>
-            <tr><th scope="row">Renews</th><td data-label="Free" class="no">—</td><td data-label="Free" class="no">Every semester</td><td data-label="Premium" class="yes col-hi">Never</td></tr>
+            
+            
           </tbody>
         </table>
       </div>
@@ -1857,40 +1873,6 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <div class="metric"><b>03</b><span>Get pinned<br>to the front page</span></div>
           <div class="metric"><b>KES 0</b><span>Cost to<br>submit</span></div>
         </aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="band band--panel">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">/// What a build post contains</p>
-          <h2 class="h2">Four things. That's it.</h2>
-        </div>
-        <p class="lede" style="max-width:36ch">No writing skills needed. If you can photograph what you made and answer four questions, your build goes on the wall.</p>
-      </div>
-      <div class="grid-4">
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">01</span>
-          <h3>One real photo</h3>
-          <p class="dim" style="font-size:14px;margin:0">The finished thing, on a desk or in your hand. Not a render, not a stock image.</p>
-        </div></div>
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">02</span>
-          <h3>Parts and total cost</h3>
-          <p class="dim" style="font-size:14px;margin:0">What you actually bought and what it actually came to in KSh.</p>
-        </div></div>
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">03</span>
-          <h3>What broke</h3>
-          <p class="dim" style="font-size:14px;margin:0">The honest part. This is the section beginners read first, and it's the one most people skip.</p>
-        </div></div>
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">04</span>
-          <h3>What worked</h3>
-          <p class="dim" style="font-size:14px;margin:0">The thing you'd tell a friend who's about to build the same project.</p>
-        </div></div>
       </div>
     </div>
   </section>
