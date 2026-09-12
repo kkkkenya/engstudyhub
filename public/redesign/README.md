@@ -82,6 +82,7 @@ one from another page the site switches home first.
 | V5 | Typography replaced with Instrument Serif + Figtree + JetBrains Mono. Starter-kit sheet rebuilt around four real, priced kits with pre-filled WhatsApp order links |
 | V6 | Showcase sheet added — member builds, an honest empty wall with six open slots, a build-submission sheet, and a fifth tab |
 | V7 | Discord community block with a persistent header entry point, every WhatsApp link pre-filled, showcase buttons made real buttons, size cap on header and tab-bar icons |
+| V8 | Discord entry point promoted to a labelled pill in the header, plus a 'join free, pay only when you've decided' section on the home page |
 
 Earlier versions sit in `archive/` untouched — never edit them, they're the rollback path.
 

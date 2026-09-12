@@ -572,6 +572,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 /* nothing at the top of the page is allowed to blow up */
 .hdr svg,.tabbar svg,.icon-btn svg,.brand-mark svg,.hdr img{max-width:28px;max-height:28px}
 .tabbar svg{width:25px;height:25px}
+<style>
+/* ===== V8 · Discord entry point ===== */
+.disc-cta{display:inline-flex;align-items:center;gap:8px}
+.disc-cta svg{width:17px;height:17px;fill:currentColor}
+@media(max-width:700px){.disc-cta{padding:9px 12px}.disc-cta span{display:none}}
 </style>
 </head>
 <body>
@@ -612,7 +617,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     </nav>
     <div class="hdr-cta">
       <a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium</a>
-      <a class="icon-btn icon-btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer" aria-label="Join the Discord community"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/></svg></a>
+      <a class="btn btn--discord btn--sm disc-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/></svg><span>Join Discord</span></a>
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch appearance" aria-pressed="false"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v3M12 18.4v3M2.6 12h3M18.4 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7 7 0 0 0 11.1 11.1z"/></svg></button>
     </div>
   </div>
@@ -688,6 +693,40 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <img src="images/discord-server.jpg" alt="A screenshot of the Engineering Hub Discord server showing the channel list and an active conversation" loading="lazy" onerror="this.style.display='none'">
           <figcaption class="plate-cap"><span><b>FIG. 3</b> — The server, as it really looks</span><span>Replace this</span></figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+  <section class="band band--tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">/// Try before you pay</p>
+          <h2 class="h2">Join free.<br><em>Pay only when you've decided.</em></h2>
+        </div>
+        <p class="lede" style="max-width:34ch">Nothing to decide before you get in. The server is open — walk around, see whether it's for you, and pick a plan when you actually want one.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-b">
+          <span class="tag tag--blue">Step 01</span>
+          <h3>Join the Discord</h3>
+          <p class="dim" style="font-size:14px;margin:0">Free and instant. No card, no commitment, nothing to cancel later. You're inside in under a minute.</p>
+        </div></div>
+        <div class="card"><div class="card-b">
+          <span class="tag tag--blue">Step 02</span>
+          <h3>Look around as long as you like</h3>
+          <p class="dim" style="font-size:14px;margin:0">Read the open channels, watch what people are building, and see whether the room is genuinely alive before you spend a shilling.</p>
+        </div></div>
+        <div class="card" style="border-color:var(--accent)">
+          <div class="card-b">
+            <span class="tag tag--hivis">Step 03</span>
+            <h3>Pay when you've seen enough</h3>
+            <p class="dim" style="font-size:14px;margin:0">KES 50 a semester for the notes and past papers archive, or KES 800 once for everything — full build sheets, squads and the career pipeline.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-l">
+        <a class="btn btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.075.075 0 0 0-.079.037c-.34.6-.717 1.382-.98 1.998a18.27 18.27 0 0 0-5.487 0 12.51 12.51 0 0 0-.995-1.998.078.078 0 0 0-.079-.037A19.736 19.736 0 0 0 5.18 4.369a.07.07 0 0 0-.032.027C2.62 8.157 1.95 11.853 2.28 15.505a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.992 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.106c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-4.224-.838-7.89-3.548-11.11a.06.06 0 0 0-.031-.028zM8.02 13.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.955-2.418 2.156-2.418 1.21 0 2.176 1.094 2.156 2.418 0 1.334-.955 2.42-2.156 2.42zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.175 1.094 2.156 2.418 0 1.334-.946 2.42-2.156 2.42z"/></svg> Join free on Discord</a>
+        <a class="btn btn--ghost" href="#/membership">Compare the two plans</a>
       </div>
     </div>
   </section>
