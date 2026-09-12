@@ -587,6 +587,45 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .hdr .nav a[aria-current="page"]:hover,.nav a[aria-current="page"]:hover{background:var(--accent-2);color:#fff}
 .tabbar a,.tabbar a:hover{text-decoration:none}
 .tabbar a[aria-current="page"]{color:var(--accent);background:transparent}
+<style>
+/* ===== V10 · Discord section, contrast, Apple tab bar ===== */
+.band--discord{background:#5865F2;color:#fff}
+.band--discord .community{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(22px,3.6vw,52px);align-items:center}
+.band--discord .community h2,.band--discord .community h2 em{color:#fff}
+.discord-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.22);
+  border-radius:999px;padding:5px 14px 5px 5px;font-size:13px;font-weight:600;color:#fff}
+.discord-badge img{border-radius:9px;display:block}
+.community-lede{font-size:17px;line-height:1.55;color:rgba(255,255,255,.92);margin:14px 0 0;max-width:46ch}
+.community-list{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.community-list li{position:relative;padding-left:26px;color:rgba(255,255,255,.92);font-size:15px}
+.community-list li::before{content:"";position:absolute;left:0;top:5px;width:10px;height:6px;
+  border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.btn--discord-cta{background:#fff;color:#3B41B8;border-color:#fff;font-weight:700;
+  box-shadow:0 6px 20px -6px rgba(0,0,0,.45)}
+.btn--discord-cta:hover{background:#fff;color:#3B41B8;transform:translateY(-1px);box-shadow:0 10px 26px -8px rgba(0,0,0,.5)}
+.btn--on-discord{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.5)}
+.btn--on-discord:hover{background:rgba(255,255,255,.24);color:#fff}
+.community-fine{margin-top:16px;font-size:12.5px;color:rgba(255,255,255,.82)}
+.community-shot{border-color:rgba(255,255,255,.35);border-radius:var(--r-lg);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.55)}
+@media(max-width:900px){.band--discord .community{grid-template-columns:1fr}
+  .community-shot{order:-1}}
+/* contrast safety net: light text only ever sits on dark or coloured ground */
+.band--ink p,.band--ink li,.band--ink .lede,.band--blue p,.band--blue li,.band--blue .lede,
+.band--discord p,.band--discord li{color:rgba(255,255,255,.9)}
+.band--ink .mono.dim,.band--blue .mono.dim,.band--discord .mono.dim,.band--discord .dim{color:rgba(255,255,255,.72)}
+/* Apple tab bar: 49pt row, tinted label, safe-area aware */
+.tabbar{background:var(--bg-3);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--sep);box-shadow:0 -1px 0 rgba(0,0,0,.05);
+  padding:4px max(10px,env(safe-area-inset-left)) calc(4px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-right))}
+.tabbar a{min-height:49px;padding:6px 2px;gap:3px;border-radius:10px;font-size:10px;font-weight:500;
+  letter-spacing:0;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  -webkit-tap-highlight-color:transparent;transition:opacity .15s}
+.tabbar a svg{width:26px;height:26px;flex:none}
+.tabbar a[aria-current="page"]{color:var(--accent);font-weight:600}
+.tabbar a:active{opacity:.55}
+.tabbar a span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -682,61 +721,29 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     </div>
   </section>
 
-  <section class="band band--tight" id="community">
+  <section class="band band--discord" id="community">
     <div class="wrap">
       <div class="community">
         <div>
-          <span class="discord-mark" aria-hidden="true"><img src="images/discord-logo.png" alt="" width="46" height="46"></span>
-          <p class="eyebrow eyebrow--light">/// The community</p>
-          <h2 class="h2" style="color:#fff">450+ engineers,<br><em>already in the room.</em></h2>
-          <p class="lede mt" style="color:rgba(255,255,255,.82)">The Discord is where the actual work happens. Ask a question at 1am and someone answers. Find the squad for the project you have been putting off. Watch other people finish things, and finish yours.</p>
+          <span class="discord-badge"><img src="images/discord-logo.png" alt="" width="34" height="34"><span>The community</span></span>
+          <h2 class="h2" style="color:#fff;margin-top:16px">450+ engineers.<br><em>Already in the room.</em></h2>
+          <p class="community-lede">This is where the work happens — ask a question at 1am and someone answers, find a squad for the project you've been putting off, and watch other people finish things until you finish yours.</p>
+          <ul class="community-list">
+            <li>Walk in free, look around, and decide later</li>
+            <li>Channels sorted by university, year and unit</li>
+            <li>Study rooms, past papers, and people mid-build</li>
+          </ul>
           <div class="row mt-l">
-            <a class="btn btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord</a>
-            <a class="btn btn--light" href="https://wa.me/254745947704?text=Hi%2C%20I%20have%20a%20question%20about%20joining%20the%20hub" target="_blank" rel="noopener noreferrer">Ask a question first</a>
+            <a class="btn btn--discord-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord — free</a>
+            <a class="btn btn--on-discord" href="#/membership">See what Premium adds</a>
           </div>
-          <div class="community-facts">
-            <span>Free to join</span><span>Instant access</span><span>4 universities</span><span>No spam</span>
-          </div>
+          <p class="community-fine">Free to join · Instant access · No card · Leave any time</p>
         </div>
-        <figure class="plate plate--16x9" style="border-color:rgba(255,255,255,.28)">
-          <div class="plate-ph" aria-hidden="true"><b>THE SERVER</b><code>images/discord-server.jpg</code><span>1814 × 988 · replace to update</span></div>
+        <figure class="plate plate--4x3 community-shot">
+          <div class="plate-ph" aria-hidden="true"><b>THE SERVER</b><code>images/discord-server.jpg</code><span>replace to update</span></div>
           <img src="images/discord-server.jpg" alt="The Engineering Study Hub Discord server, showing the channel list and an active announcement" loading="lazy" onerror="this.style.display='none'">
-          <figcaption class="plate-cap"><span><b>FIG. 3</b> — The server, as it really looks</span><span>Replace this</span></figcaption>
+          <figcaption class="plate-cap"><span><b>LIVE</b> — the server right now</span><span>450+ members</span></figcaption>
         </figure>
-      </div>
-    </div>
-  </section>
-  <section class="band band--tight">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">/// Try before you pay</p>
-          <h2 class="h2">Join free.<br><em>Pay only when you've decided.</em></h2>
-        </div>
-        <p class="lede" style="max-width:34ch">Nothing to decide before you get in. The server is open — walk around, see whether it's for you, and pick a plan when you actually want one.</p>
-      </div>
-      <div class="grid-3">
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">Step 01</span>
-          <h3>Join the Discord</h3>
-          <p class="dim" style="font-size:14px;margin:0">Free and instant. No card, no commitment, nothing to cancel later. You're inside in under a minute.</p>
-        </div></div>
-        <div class="card"><div class="card-b">
-          <span class="tag tag--blue">Step 02</span>
-          <h3>Look around as long as you like</h3>
-          <p class="dim" style="font-size:14px;margin:0">Read the open channels, watch what people are building, and see whether the room is genuinely alive before you spend a shilling.</p>
-        </div></div>
-        <div class="card" style="border-color:var(--accent)">
-          <div class="card-b">
-            <span class="tag tag--hivis">Step 03</span>
-            <h3>Pay when you've seen enough</h3>
-            <p class="dim" style="font-size:14px;margin:0">KES 50 a semester for the notes and past papers archive, or KES 800 once for everything — full build sheets, squads and the career pipeline.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-l">
-        <a class="btn btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo.png" alt="" width="18" height="18"> Join free on Discord</a>
-        <a class="btn btn--ghost" href="#/membership">Compare the two plans</a>
       </div>
     </div>
   </section>
