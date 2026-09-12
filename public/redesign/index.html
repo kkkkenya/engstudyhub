@@ -433,7 +433,7 @@ section{position:relative;z-index:1}
 .lock p{font-size:13.5px;color:var(--muted);margin:0 0 13px}
 </style>
 <style>
-/* ===== V3 · softer type & surface system ===== */
+/* ===== V3, softer type & surface system ===== */
 :root{
   --f-display:"Bricolage Grotesque","Plus Jakarta Sans",system-ui,sans-serif;
   --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -527,7 +527,7 @@ body::before{background-image:linear-gradient(rgba(11,15,20,.032) 1px,transparen
 .band--ink .dim,.band--ink .mono.dim,.band--blue .dim{color:rgba(255,255,255,.66)}
 .band--ink .tag,.band--blue .tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.86)}
 <style>
-/* ===== V5 · type voice + kit components ===== */
+/* ===== V5, type voice + kit components ===== */
 :root{
   --f-display:"Instrument Serif",Georgia,"Times New Roman",serif;
   --f-body:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -552,7 +552,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .tabbar{grid-template-columns:repeat(5,1fr)}
 .tabbar a{font-size:10.5px}
 <style>
-/* ===== V7 · community block + icon discipline ===== */
+/* ===== V7, community block + icon discipline ===== */
 .community{background:#5865F2;color:#fff;border-radius:var(--r-xl);padding:clamp(22px,3.6vw,46px);
   display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(20px,3.4vw,44px);
   align-items:center;box-shadow:var(--sh-2)}
@@ -573,12 +573,12 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .hdr svg,.tabbar svg,.icon-btn svg,.brand-mark svg,.hdr img{max-width:28px;max-height:28px}
 .tabbar svg{width:25px;height:25px}
 <style>
-/* ===== V8 · Discord entry point ===== */
+/* ===== V8, Discord entry point ===== */
 .disc-cta{display:inline-flex;align-items:center;gap:8px}
 .disc-cta svg{width:17px;height:17px;fill:currentColor}
 @media(max-width:700px){.disc-cta{padding:9px 12px}.disc-cta span{display:none}}
 <style>
-/* ===== V9 · logo assets, active-state fix ===== */
+/* ===== V9, logo assets, active-state fix ===== */
 .disc-logo{display:block;border-radius:5px;flex:none;width:18px;height:18px}
 .discord-mark{width:46px;height:46px;border-radius:12px;overflow:hidden;background:transparent;margin-bottom:16px;display:block}
 .discord-mark img{width:46px;height:46px;border-radius:12px;display:block;object-fit:cover}
@@ -588,7 +588,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .tabbar a,.tabbar a:hover{text-decoration:none}
 .tabbar a[aria-current="page"]{color:var(--accent);background:transparent}
 <style>
-/* ===== V10 · Discord section, contrast, Apple tab bar ===== */
+/* ===== V10, Discord section, contrast, Apple tab bar ===== */
 .band--discord{background:#5865F2;color:#fff}
 .band--discord .community{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:clamp(22px,3.6vw,52px);align-items:center}
@@ -626,6 +626,22 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .tabbar a[aria-current="page"]{color:var(--accent);font-weight:600}
 .tabbar a:active{opacity:.55}
 .tabbar a span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+<style>
+/* ===== V12 · remove the generated-looking tells ===== */
+.tag,.spec-k,.plate-cap,.plate-ph,.metric span,.tb-k,.block-h,.hero-side-h,.lock-h{
+  font-family:var(--f-body);font-weight:500;text-transform:none;letter-spacing:0}
+.spec-k{font-size:12.5px}
+.tb-k{font-size:12px}
+.block-h{font-size:12px;color:var(--accent);letter-spacing:0}
+.plate-cap{font-size:12px}
+.metric span{font-size:12.5px}
+.eyebrow{letter-spacing:0;font-weight:600}
+.eyebrow::before{content:"///";opacity:.6}
+/* vary the card treatment instead of one shadow on everything */
+.card{box-shadow:none;border-color:var(--sep)}
+.card:hover{box-shadow:var(--sh-2)}
+.kit--hero,.card[style*="var(--accent)"]{box-shadow:var(--sh-1)}
+.state{box-shadow:none}
 </style>
 </head>
 <body>
@@ -637,7 +653,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     <div class="sb-l">
       <span><b>ENGINEERING STUDY HUB</b></span>
       <span class="sb-sep">/</span>
-      <span class="hide-s">NAIROBI · KENYA</span>
+      <span class="hide-s">NAIROBI, KENYA</span>
       <span class="sb-sep hide-s">/</span>
       <span class="hide-s">EST. 2024</span>
       <span class="sb-sep">/</span>
@@ -654,7 +670,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <span class="brand-mark" aria-hidden="true">EH</span>
       <span class="brand-txt">
         <strong>Engineering Hub</strong>
-        <small>Study · Build · Launch</small>
+        <small>Study, Build, Launch</small>
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
@@ -689,7 +705,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="eyebrow">For engineers, by engineers · Nairobi</p>
+          <p class="eyebrow">For engineers, by engineers, Nairobi</p>
           <h1 class="h1">Study smarter.<br><em>Build reality.</em></h1>
           <p class="lede">The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.</p>
           <div class="hero-cta">
@@ -697,7 +713,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <a class="btn" href="#/projects">Browse the library free</a>
             <a class="btn btn--ghost" href="#/membership">Compare plans</a>
           </div>
-          <p class="mono dim" style="margin-top:16px">M-PESA · NO SUBSCRIPTION · 7-DAY REFUND</p>
+          <p class="mono dim" style="margin-top:16px">M-PESA, NO SUBSCRIPTION, 7-DAY REFUND</p>
         </div>
 
         <aside class="hero-side" aria-label="Hub figures">
@@ -713,7 +729,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <div class="plate-ph" aria-hidden="true">
           <b>PLATE 01 — MAKERSPACE</b>
           <code>images/plate-01-hub-workshop.jpg</code>
-          <span>2000 × 860 · workshop or study-room photo</span>
+          <span>2000 × 860, workshop or study-room photo</span>
         </div>
         <img src="images/plate-01-hub-workshop.jpg" alt="Engineering students working together on a hardware project in a campus makerspace" onerror="this.style.display='none'">
         <figcaption class="plate-cap"><span><b>FIG. 1</b> — The hub in session</span><span>Nairobi, Kenya</span></figcaption>
@@ -737,7 +753,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <a class="btn btn--discord-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord — free</a>
             <a class="btn btn--on-discord" href="#/membership">See what Premium adds</a>
           </div>
-          <p class="community-fine">Free to join · Instant access · No card · Leave any time</p>
+          <p class="community-fine">Free to join, Instant access, No card, Leave any time</p>
         </div>
         <figure class="plate plate--4x3 community-shot">
           <div class="plate-ph" aria-hidden="true"><b>THE SERVER</b><code>images/discord-server.jpg</code><span>replace to update</span></div>
@@ -791,15 +807,15 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <div class="spec mt-l">
             <div class="spec-row"><span class="spec-k">Format</span><span class="spec-v">Discord community, organised by university, year and unit</span></div>
             <div class="spec-row"><span class="spec-k">Who</span><span class="spec-v">Undergraduate engineering students in Kenya</span></div>
-            <div class="spec-row"><span class="spec-k">Entry</span><span class="spec-v">KES 50 / semester · KES 800 lifetime</span></div>
-            <div class="spec-row"><span class="spec-k">Contact</span><span class="spec-v"><a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">WhatsApp</a> · <a href="mailto:gregorykimemiah@gmail.com">Email</a></span></div>
+            <div class="spec-row"><span class="spec-k">Entry</span><span class="spec-v">KES 50 / semester, KES 800 lifetime</span></div>
+            <div class="spec-row"><span class="spec-k">Contact</span><span class="spec-v"><a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">WhatsApp</a>, <a href="mailto:gregorykimemiah@gmail.com">Email</a></span></div>
           </div>
         </div>
         <figure class="plate plate--4x3">
           <div class="plate-ph" aria-hidden="true">
             <b>PLATE 02 — THE HUB</b>
             <code>images/plate-02-about-hub.jpg</code>
-            <span>1400 × 1050 · replaces the old intro video</span>
+            <span>1400 × 1050, replaces the old intro video</span>
           </div>
           <img src="images/plate-02-about-hub.jpg" alt="A study session inside the Engineering Hub community" onerror="this.style.display='none'">
           <figcaption class="plate-cap"><span><b>FIG. 2</b> — Previously an auto-playing video</span><span>Drop a still here</span></figcaption>
@@ -856,7 +872,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <h2 class="h2">We don't just study.<br><em>We build.</em></h2>
           <p class="lede mt">Theory is useless without execution. Squads build feasible projects on student budgets — with real KES costings and Nairobi material sources.</p>
         </div>
-        <a class="btn btn--ghost" href="#/projects">Browse the library <svg class="arw" width="13" height="11" viewBox="0 0 14 12" aria-hidden="true"><path d="M1 6h11M8 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
+        <a class="btn btn--ghost" href="#/projects">Browse the library</a>
       </div>
       <div class="grid-4" id="homeProjects"></div>
     </div>
@@ -872,7 +888,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <p class="lede" style="max-width:36ch">Real engineering projects with real budgets. Pick one, form a squad, prove your skills.</p>
       </div>
       <div class="grid-3" id="challenges"></div>
-      <div class="row mt-l"><a class="btn btn--hivis" href="#/projects">See all challenge projects <svg class="arw" width="13" height="11" viewBox="0 0 14 12" aria-hidden="true"><path d="M1 6h11M8 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a></div>
+      <div class="row mt-l"><a class="btn btn--hivis" href="#/projects">See all challenge projects</a></div>
     </div>
   </section>
 
@@ -918,7 +934,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
       <h2 class="h2" style="margin-bottom:20px">The bigger dream</h2>
       <p class="lede" style="max-width:none;font-size:clamp(16px,1.9vw,21px);color:rgba(255,255,255,.86)">Beyond exams. We're building the next generation of Kenyan technical founders — semester mega-competitions, physical hack nights, alumni mentorship, and direct pipelines into local internships.</p>
       <div class="row mt-l" style="justify-content:center">
-        <a class="btn btn--light" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Be part of it <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
+        <a class="btn btn--light" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Be part of it</a>
       </div>
     </div>
   </section>
@@ -1014,7 +1030,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Career pipeline</li>
             </ul>
             <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Basic%20-%20KES%2050%20per%20semester" target="_blank" rel="noopener noreferrer">Join Basic — KES 50</a>
-            <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA · RENEWS EACH SEMESTER</p>
+            <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA, RENEWS EACH SEMESTER</p>
           </div>
         </div>
 
@@ -1040,7 +1056,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <li><i class="tick" aria-hidden="true"></i>Direct access to project leads</li>
             </ul>
             <a class="btn btn--primary btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
-            <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA · ONE PAYMENT. LIFETIME ACCESS.</p>
+            <p class="mono dim center" style="margin:0;font-size:10px">PAY VIA M-PESA, ONE PAYMENT. LIFETIME ACCESS.</p>
           </div>
         </div>
       </div>
@@ -1099,11 +1115,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <div class="plate-ph" aria-hidden="true">
                 <b>PLATE 10 — THE TEAM</b>
                 <code>images/plate-10-team.jpg</code>
-                <span>1600 × 900 · core team or event photo</span>
+                <span>1600 × 900, core team or event photo</span>
               </div>
               <img src="images/plate-10-team.jpg" alt="Core team members of the Engineering Study Hub" onerror="this.style.display='none'">
             </figure>
-            <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20apply%20for%20the%20core%20team" target="_blank" rel="noopener noreferrer">Apply to join <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
+            <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20apply%20for%20the%20core%20team" target="_blank" rel="noopener noreferrer">Apply to join</a>
           </div>
         </div>
       </div>
@@ -1214,7 +1230,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     </div>
     <div class="drawer-body" id="pdBody"></div>
     <div class="drawer-ft">
-      <a class="btn btn--primary" id="pdSquad" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Find a squad <svg class="arw" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4.2M9.5 2.5v5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg></a>
+      <a class="btn btn--primary" id="pdSquad" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Find a squad</a>
       <a class="btn" href="https://wa.me/254745947704?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20project%20or%20kit" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
       <button class="btn btn--ghost" data-close>Close</button>
     </div>
@@ -1235,7 +1251,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800 once</a>
             <a class="btn" href="#/projects">See what's free first</a>
           </div>
-          <p class="mono dim" style="margin-top:16px">M-PESA · ONE PAYMENT · LIFETIME ACCESS · 7-DAY REFUND</p>
+          <p class="mono dim" style="margin-top:16px">M-PESA, ONE PAYMENT, LIFETIME ACCESS, 7-DAY REFUND</p>
         </div>
         <aside class="hero-side" aria-label="Premium at a glance">
           <div class="hero-side-h"><span>Premium</span><span>One payment</span></div>
@@ -1415,7 +1431,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <div class="spec">
               <div class="spec-row"><span class="spec-k">M-Pesa</span><span class="spec-v">Details sent in the WhatsApp thread</span></div>
               <div class="spec-row"><span class="spec-k">Reference</span><span class="spec-v">Your name + the plan you chose</span></div>
-              <div class="spec-row"><span class="spec-k">Amount</span><span class="spec-v">KES 50 · or · KES 800</span></div>
+              <div class="spec-row"><span class="spec-k">Amount</span><span class="spec-v">KES 50, or, KES 800</span></div>
               <div class="spec-row"><span class="spec-k">Then</span><span class="spec-v">Send the M-Pesa confirmation to WhatsApp</span></div>
             </div>
             <p class="mono dim mt" style="font-size:10.5px">PREFER A PUBLIC PAYBILL? SEND US THE NUMBER AND IT GOES HERE — THE WHATSAPP FLOW WORKS FINE WITHOUT ONE.</p>
@@ -1504,21 +1520,21 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <div class="review">
             <div class="review-hd">
               <span class="avatar" aria-hidden="true">BM</span>
-              <div><div style="font-weight:600;font-size:15px">Brian M.</div><div class="mono dim" style="font-size:11px">JKUAT · Materials</div></div>
+              <div><div style="font-weight:600;font-size:15px">Brian M.</div><div class="mono dim" style="font-size:11px">JKUAT, Materials</div></div>
             </div>
             <p>“Passed my Materials exam after joining a study squad here.”</p>
           </div>
           <div class="review">
             <div class="review-hd">
               <span class="avatar" aria-hidden="true">AK</span>
-              <div><div style="font-weight:600;font-size:15px">Aisha K.</div><div class="mono dim" style="font-size:11px">KU · Mechanical</div></div>
+              <div><div style="font-weight:600;font-size:15px">Aisha K.</div><div class="mono dim" style="font-size:11px">KU, Mechanical</div></div>
             </div>
             <p>“Got my first internship through the career pipeline. Worth every shilling.”</p>
           </div>
           <div class="review">
             <div class="review-hd">
               <span class="avatar" aria-hidden="true">DO</span>
-              <div><div style="font-weight:600;font-size:15px">Denis O.</div><div class="mono dim" style="font-size:11px">TUK · Electrical</div></div>
+              <div><div style="font-weight:600;font-size:15px">Denis O.</div><div class="mono dim" style="font-size:11px">TUK, Electrical</div></div>
             </div>
             <p>“The notes and past papers alone are worth it. Saved my semester.”</p>
           </div>
@@ -1535,7 +1551,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <a class="btn btn--hivis" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20Premium%20-%20KES%20800%20lifetime%20access" target="_blank" rel="noopener noreferrer">Join Premium — KES 800</a>
         <a class="btn btn--light" href="mailto:gregorykimemiah@gmail.com">Ask a question first</a>
       </div>
-      <p class="mono" style="margin-top:18px;font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7)">M-PESA · 7-DAY REFUND · NO SUBSCRIPTION</p>
+      <p class="mono" style="margin-top:18px;font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7)">M-PESA, 7-DAY REFUND, NO SUBSCRIPTION</p>
     </div>
   </section>
 
@@ -1555,13 +1571,13 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <a class="btn btn--primary" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2003%20-%20Rover%20Kit%20(KSh%204%2C750)">Order the Rover Kit — KSh 4,750</a>
             <a class="btn btn--ghost" href="#kit-ladder">Compare all four</a>
           </div>
-          <p class="mono dim" style="margin-top:16px">M-PESA · NAIROBI SAME-DAY · 1–3 DAYS UPCOUNTRY</p>
+          <p class="mono dim" style="margin-top:16px">M-PESA, NAIROBI SAME-DAY, 1–3 DAYS UPCOUNTRY</p>
         </div>
         <aside class="hero-side" aria-label="Kit ladder at a glance">
           <div class="hero-side-h"><span>The ladder</span><span>KSh, parts only</span></div>
           <div class="metric"><b>KSh 1,900</b><span>Kit 01<br>Starter</span></div>
           <div class="metric"><b>KSh 3,250</b><span>Kit 02<br>Sensor &amp; Display</span></div>
-          <div class="metric"><b>KSh 4,750</b><span>Kit 03<br>Rover · most popular</span></div>
+          <div class="metric"><b>KSh 4,750</b><span>Kit 03<br>Rover, most popular</span></div>
           <div class="metric"><b>KSh 8,300</b><span>Kit 04<br>Motion &amp; Control</span></div>
         </aside>
       </div>
@@ -1583,14 +1599,14 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <tr><th scope="col">Where you are</th><th scope="col">The kit</th><th scope="col">Total</th><th scope="col">Order</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Year 1. Never built anything. Want to know if this is for you.</th><td>01 · Starter</td><td class="mono">1,900</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2001%20-%20Starter%20Kit%20(KSh%201%2C900)">Order</a></td></tr>
-            <tr><th scope="row">You want to build something that measures the world and shows you the numbers.</th><td>02 · Sensor &amp; Display</td><td class="mono">3,250</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2002%20-%20Sensor%20and%20Display%20Kit%20(KSh%203%2C250)">Order</a></td></tr>
-            <tr><th scope="row">You want something that moves, that you can film and show people.</th><td><b>03 · Rover</b></td><td class="mono"><b>4,750</b></td><td><a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2003%20-%20Rover%20Kit%20(KSh%204%2C750)">Order</a></td></tr>
-            <tr><th scope="row">You're past the basics and want machines, precision motion and feedback.</th><td>04 · Motion &amp; Control</td><td class="mono">8,300</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2004%20-%20Motion%20and%20Control%20Kit%20(KSh%208%2C300)">Order</a></td></tr>
+            <tr><th scope="row">Year 1. Never built anything. Want to know if this is for you.</th><td>01, Starter</td><td class="mono">1,900</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2001%20-%20Starter%20Kit%20(KSh%201%2C900)">Order</a></td></tr>
+            <tr><th scope="row">You want to build something that measures the world and shows you the numbers.</th><td>02, Sensor &amp; Display</td><td class="mono">3,250</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2002%20-%20Sensor%20and%20Display%20Kit%20(KSh%203%2C250)">Order</a></td></tr>
+            <tr><th scope="row">You want something that moves, that you can film and show people.</th><td><b>03, Rover</b></td><td class="mono"><b>4,750</b></td><td><a class="btn btn--primary btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2003%20-%20Rover%20Kit%20(KSh%204%2C750)">Order</a></td></tr>
+            <tr><th scope="row">You're past the basics and want machines, precision motion and feedback.</th><td>04, Motion &amp; Control</td><td class="mono">8,300</td><td><a class="btn btn--sm" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2004%20-%20Motion%20and%20Control%20Kit%20(KSh%208%2C300)">Order</a></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="mono dim mt" style="font-size:10px">SCROLL SIDEWAYS ON A PHONE · PRICES ARE PARTS ONLY, FROM ARDUINOTECH KENYA</p>
+      <p class="mono dim mt" style="font-size:10px">SCROLL SIDEWAYS ON A PHONE, PRICES ARE PARTS ONLY, FROM ARDUINOTECH KENYA</p>
     </div>
   </section>
 
@@ -1608,11 +1624,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 
         <article class="card kit">
           <figure class="plate plate--16x9">
-            <div class="plate-ph" aria-hidden="true"><b>KIT 01</b><code>images/kit-01-starter.jpg</code><span>1600 × 900 · parts laid out</span></div>
+            <div class="plate-ph" aria-hidden="true"><b>KIT 01</b><code>images/kit-01-starter.jpg</code><span>1600 × 900, parts laid out</span></div>
             <img src="images/kit-01-starter.jpg" alt="The Starter Kit parts laid out" loading="lazy" onerror="this.style.display='none'">
           </figure>
           <div class="card-b">
-            <div class="card-t"><span class="tag">Kit 01 · Entry</span><span class="mono dim">KSh 1,900</span></div>
+            <div class="card-t"><span class="tag">Kit 01, Entry</span><span class="mono dim">KSh 1,900</span></div>
             <h3>Starter Kit</h3>
             <p class="dim" style="font-size:14.5px;margin:0">The cheapest way to write your first program and watch something happen in the real world. No soldering, nothing to break, nothing wasted if you decide it isn't for you.</p>
             <ul class="parts">
@@ -1627,11 +1643,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 
         <article class="card kit">
           <figure class="plate plate--16x9">
-            <div class="plate-ph" aria-hidden="true"><b>KIT 02</b><code>images/kit-02-sensor-display.jpg</code><span>1600 × 900 · parts laid out</span></div>
+            <div class="plate-ph" aria-hidden="true"><b>KIT 02</b><code>images/kit-02-sensor-display.jpg</code><span>1600 × 900, parts laid out</span></div>
             <img src="images/kit-02-sensor-display.jpg" alt="The Sensor and Display Kit parts laid out" loading="lazy" onerror="this.style.display='none'">
           </figure>
           <div class="card-b">
-            <div class="card-t"><span class="tag tag--blue">Kit 02 · Second rung</span><span class="mono dim">KSh 3,250</span></div>
+            <div class="card-t"><span class="tag tag--blue">Kit 02, Second rung</span><span class="mono dim">KSh 3,250</span></div>
             <h3>Sensor &amp; Display Kit</h3>
             <p class="dim" style="font-size:14.5px;margin:0">A device that measures the world and shows you the numbers on its own screen. This is the kit that turns a lab exercise into something you'd actually put on a wall.</p>
             <ul class="parts">
@@ -1650,11 +1666,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <article class="card kit kit--hero">
           <div class="kit-ribbon">Most popular</div>
           <figure class="plate plate--16x9">
-            <div class="plate-ph" aria-hidden="true"><b>KIT 03</b><code>images/kit-03-rover.jpg</code><span>1600 × 900 · assembled rover</span></div>
+            <div class="plate-ph" aria-hidden="true"><b>KIT 03</b><code>images/kit-03-rover.jpg</code><span>1600 × 900, assembled rover</span></div>
             <img src="images/kit-03-rover.jpg" alt="The assembled four-wheel drive rover" loading="lazy" onerror="this.style.display='none'">
           </figure>
           <div class="card-b">
-            <div class="card-t"><span class="tag tag--hivis">Kit 03 · Bestseller</span><span class="mono dim">KSh 4,750</span></div>
+            <div class="card-t"><span class="tag tag--hivis">Kit 03, Bestseller</span><span class="mono dim">KSh 4,750</span></div>
             <h3>Rover Kit</h3>
             <p class="dim" style="font-size:14.5px;margin:0">A four-wheel drive robot that avoids walls and follows lines. This is the one people film. It's a complete project from chassis to code, and it's still under five thousand shillings.</p>
             <ul class="parts">
@@ -1674,11 +1690,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 
         <article class="card kit">
           <figure class="plate plate--16x9">
-            <div class="plate-ph" aria-hidden="true"><b>KIT 04</b><code>images/kit-04-motion-control.jpg</code><span>1600 × 900 · motion rig</span></div>
+            <div class="plate-ph" aria-hidden="true"><b>KIT 04</b><code>images/kit-04-motion-control.jpg</code><span>1600 × 900, motion rig</span></div>
             <img src="images/kit-04-motion-control.jpg" alt="The Motion and Control Kit parts laid out" loading="lazy" onerror="this.style.display='none'">
           </figure>
           <div class="card-b">
-            <div class="card-t"><span class="tag tag--ink">Kit 04 · Advanced</span><span class="mono dim">KSh 8,300</span></div>
+            <div class="card-t"><span class="tag tag--ink">Kit 04, Advanced</span><span class="mono dim">KSh 8,300</span></div>
             <h3>Motion &amp; Control Kit</h3>
             <p class="dim" style="font-size:14.5px;margin:0">Precision travel on a lead screw, a four-axis driver stack, and closed-loop feedback that tells the machine where it actually is. This is the rung where you stop prototyping and start engineering.</p>
             <ul class="parts">
@@ -1720,7 +1736,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
               <li><i class="tick tick--light" aria-hidden="true"></i>Career &amp; internship pipeline</li>
             </ul>
             <a class="btn btn--hivis btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20the%20bundle%3A%20Rover%20Kit%20%2B%20Premium%20(KSh%205%2C550)">Take the bundle — KSh 5,550</a>
-            <p class="mono center" style="font-size:10px;color:rgba(255,255,255,.6);margin:0">ONE PAYMENT · NO SUBSCRIPTION · 7-DAY REFUND</p>
+            <p class="mono center" style="font-size:10px;color:rgba(255,255,255,.6);margin:0">ONE PAYMENT, NO SUBSCRIPTION, 7-DAY REFUND</p>
           </div>
         </div>
       </div>
@@ -1734,11 +1750,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
           <p class="eyebrow">/// Sourcing &amp; delivery</p>
           <h2 class="h2" style="margin-bottom:22px">Where the parts come from</h2>
           <div class="spec">
-            <div class="spec-row"><span class="spec-k">Supplier</span><span class="spec-v"><a href="https://arduinotech.co.ke" target="_blank" rel="noopener noreferrer">ArduinoTech Kenya</a> · 280+ products in stock</span></div>
+            <div class="spec-row"><span class="spec-k">Supplier</span><span class="spec-v"><a href="https://arduinotech.co.ke" target="_blank" rel="noopener noreferrer">ArduinoTech Kenya</a>, 280+ products in stock</span></div>
             <div class="spec-row"><span class="spec-k">Collection</span><span class="spec-v">Travis Business Center, 3rd Floor, Room A3, Mfangano Street, Nairobi CBD</span></div>
             <div class="spec-row"><span class="spec-k">Landmark</span><span class="spec-v">Same building as Quickmart Mfangano, behind Afya Centre</span></div>
             <div class="spec-row"><span class="spec-k">Payment</span><span class="spec-v">M-Pesa — details confirmed in the WhatsApp thread, or pay on collection</span></div>
-            <div class="spec-row"><span class="spec-k">Delivery</span><span class="spec-v">Nairobi same-day · 1–3 days upcountry</span></div>
+            <div class="spec-row"><span class="spec-k">Delivery</span><span class="spec-v">Nairobi same-day, 1–3 days upcountry</span></div>
             <div class="spec-row"><span class="spec-k">Support</span><span class="spec-v">Part selection and wiring help through the hub</span></div>
           </div>
         </div>
@@ -1802,7 +1818,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <a class="btn btn--hivis" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20Kit%2003%20-%20Rover%20Kit%20(KSh%204%2C750)">Order the Rover Kit</a>
         <a class="btn btn--light" href="#kit-ladder">See the whole ladder</a>
       </div>
-      <p class="mono" style="margin-top:18px;font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7)">PARTS SOURCED FROM ARDUINOTECH KENYA · M-PESA · NAIROBI CBD</p>
+      <p class="mono" style="margin-top:18px;font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.7)">PARTS SOURCED FROM ARDUINOTECH KENYA, M-PESA, NAIROBI CBD</p>
     </div>
   </section>
 
@@ -1822,7 +1838,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
             <button class="btn btn--primary" type="button" id="bwOpen">Submit your build</button>
             <a class="btn btn--ghost" href="#/projects">Browse the library</a>
           </div>
-          <p class="mono dim" style="margin-top:16px">REAL PHOTOS ONLY · NO RENDERS · NO STOCK</p>
+          <p class="mono dim" style="margin-top:16px">REAL PHOTOS ONLY, NO RENDERS, NO STOCK</p>
         </div>
         <aside class="hero-side" aria-label="The wall">
           <div class="hero-side-h"><span>The wall</span><span>Status</span></div>
@@ -2086,7 +2102,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <div class="tb-k">Project</div>
         <div class="tb-v big">Engineering Study Hub</div>
         <div class="tb-k" style="margin-top:10px">Location</div>
-        <div class="tb-v">Nairobi, Kenya · 01°17′S 36°49′E</div>
+        <div class="tb-v">Nairobi, Kenya, 01°17′S 36°49′E</div>
       </div>
       <div class="tb">
         <div class="tb-k">Status</div>
@@ -2125,7 +2141,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
         <div class="tb-v">Kenya's technical future</div>
       </div>
     </div>
-    <p class="mono dim" style="margin-top:14px;font-size:10px;letter-spacing:.1em">© 2024–2026 ENGINEERING STUDY HUB · NOT AFFILIATED WITH ANY UNIVERSITY · ALL TRADEMARKS BELONG TO THEIR OWNERS</p>
+    <p class="mono dim" style="margin-top:14px;font-size:10px;letter-spacing:.1em">© 2024–2026 ENGINEERING STUDY HUB, NOT AFFILIATED WITH ANY UNIVERSITY, ALL TRADEMARKS BELONG TO THEIR OWNERS</p>
   </div>
 </footer>
 <script>
@@ -2425,7 +2441,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
     var p = PROJECTS.filter(function (x) { return x.id === id; })[0]; if (!p) return;
     $("#pdTags").innerHTML = '<span class="tag tag--blue">' + esc(p.disc) + '</span><span class="tag">' + esc(p.diff) + '</span><span class="tag">' + esc(p.year) + '</span><span class="tag">' + esc(p.dur) + '</span>';
     $("#pdTitle").textContent = p.title;
-    $("#pdSub").textContent = p.budget + " · " + (p.squad ? "squad ready" : "solo project");
+    $("#pdSub").textContent = p.budget + ", " + (p.squad ? "squad ready" : "solo project");
     var freeSteps = p.steps.slice(0, 2);
     var locked = p.steps.length - freeSteps.length;
     $("#pdBody").innerHTML =
