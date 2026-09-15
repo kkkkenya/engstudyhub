@@ -174,6 +174,48 @@ section{position:relative;z-index:1}
 .plate-ph--wip small{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#0B4F3A}
 .avatar-ico{width:38px;height:38px;flex:none;border:1px solid var(--line-3);background:var(--paper-2);display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
 .avatar-ico svg{width:20px;height:20px;display:block}
+/* Card stack: home featured projects ---------- */
+#homeProjects{max-width:560px;margin-inline:auto}
+.deck{position:relative;height:clamp(340px,88vw,430px)}
+.deck-card{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line-3);background:var(--paper-2);border-radius:var(--r-lg);box-shadow:var(--sh-1);
+  transform-origin:50% 0;transition:transform 520ms cubic-bezier(.22,1,.2,1),opacity 240ms linear;will-change:transform}
+.deck-card:hover{border-color:var(--line-2)}
+.deck-card:focus-visible{outline:2px solid var(--blue-ink);outline-offset:3px}
+.deck-plate{border:0;border-bottom:1px solid var(--line-3);flex:none}
+.deck-card .card-b{flex:1;min-height:0;overflow:hidden}
+.deck-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deck-tools{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px}
+.deck-count{font-size:11px;letter-spacing:.14em}
+
+/* Card spread: showcase wall ---------- */
+.spread{border:1px solid var(--line-3);background:var(--paper-2);border-radius:var(--r-lg);padding:18px;overflow:hidden}
+.spread-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.spread-hint{margin:0;font-size:10.5px;letter-spacing:.1em}
+.spread-toggle{position:relative;display:inline-flex;align-items:center;border:1px solid var(--line-3);border-radius:999px;
+  padding:9px 16px;background:var(--paper);cursor:pointer;user-select:none;
+  font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.spread-toggle:hover{border-color:var(--line)}
+.spread-toggle-input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.spread-toggle:has(.spread-toggle-input:focus-visible){outline:2px solid var(--blue-ink);outline-offset:3px}
+.spread-toggle-label-off{display:none}
+.spread.is-spread .spread-toggle-label-on{display:none}
+.spread.is-spread .spread-toggle-label-off{display:inline}
+.spread-stage{padding:40px 0 8px}
+.spread-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}
+.spread-item{margin:0;transform-origin:50% 100%;transition:transform 520ms cubic-bezier(.22,1.1,.36,1);will-change:transform}
+.spread-item .plate{border:1px solid var(--line-3)}
+.spread-label{display:flex;gap:8px;align-items:baseline;padding:10px 2px 0;font-size:12.5px;line-height:1.35}
+.spread-label .mono{flex:none;color:var(--muted);font-size:10.5px;letter-spacing:.16em}
+.spread-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.spread-note{text-align:center;margin-top:16px;font-size:10.5px;letter-spacing:.1em}
+@media (max-width:900px){
+  .spread-stage{overflow-x:auto;overscroll-behavior-x:contain}
+  .spread-row{grid-template-columns:repeat(6,132px);width:max-content;margin-inline:auto}
+}
+@media (prefers-reduced-motion: reduce){
+  .deck-card,.spread-item{transition-duration:.01ms}
+}
 .plate-cap{
   display:flex;justify-content:space-between;gap:10px;
   border-top:1px solid var(--line-2);background:var(--paper-2);
@@ -991,7 +1033,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </div>
         <a class="btn btn--ghost" href="#/projects">Browse the library</a>
       </div>
-      <div class="grid-4" id="homeProjects"></div>
+      <div id="homeProjects"></div>
     </div>
   </section>
 
@@ -1936,87 +1978,52 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         <p class="lede" style="max-width:34ch">These are the builds we're waiting on. The first three to land get pinned to the front page.</p>
       </div>
 
-      <div class="grid-3 kit-grid">
+      <div class="spread" id="buildSpread">
+        <div class="spread-bar">
+          <p class="mono dim spread-hint">Six open slots &middot; we would rather show you nothing than show you a render</p>
+          <label class="spread-toggle">
+            <input type="checkbox" class="spread-toggle-input">
+            <span class="spread-toggle-label-on">Spread the slots</span>
+            <span class="spread-toggle-label-off">Stack the slots</span>
+          </label>
+        </div>
 
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 03</span></div>
-            <h3>Four-wheel drive rover</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. This is the slot the Rover Kit is waiting to fill.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
+        <div class="spread-stage">
+          <div class="spread-row">
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">01</span>Four-wheel drive rover</figcaption>
+            </figure>
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">02</span>Water quality dashboard</figcaption>
+            </figure>
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">03</span>Truss bridge load test</figcaption>
+            </figure>
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">04</span>Smart irrigation controller</figcaption>
+            </figure>
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">05</span>Precision motion rig</figcaption>
+            </figure>
+            <figure class="spread-item">
+              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
+              <figcaption class="spread-label"><span class="mono">06</span>Bench instrument</figcaption>
+            </figure>
           </div>
-        </article>
-
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
-            <h3>Water quality dashboard</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. Sensor array, SD logging, live readout.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
-          </div>
-        </article>
-
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
-            <h3>Truss bridge load test</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. Balsa or mild steel, tested to failure.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
-          </div>
-        </article>
-
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
-            <h3>Smart irrigation controller</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. Soil moisture, relay, pump, real plants.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
-          </div>
-        </article>
-
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 04</span></div>
-            <h3>Precision motion rig</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. Lead screw, stepper stack, closed-loop feedback.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
-          </div>
-        </article>
-
-        <article class="card kit">
-          <figure class="plate plate--4x3">
-            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
-          </figure>
-          <div class="card-b">
-            <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 02</span></div>
-            <h3>Bench instrument</h3>
-            <p class="dim" style="font-size:14px;margin:0">No build published yet. Anything that measures and displays — your pick.</p>
-            <button class="btn btn--ghost btn--block" type="button" data-bwopen>Claim this slot</button>
-          </div>
-        </article>
-
+        </div>
       </div>
 
-      <div class="state mt-l">
-        <h3>The wall is empty — that's the point</h3>
-        <p>We would rather show you nothing than show you a render. The first three builds published here get pinned to the front page and linked from the library.</p>
-        <button class="btn btn--primary mt" type="button" data-bwopen>Submit the first build</button>
+      <div class="spread-cta">
+        <button class="btn btn--primary" type="button" data-bwopen>Claim a slot</button>
+        <a class="btn btn--ghost" href="#/starter-kit">Start with a kit</a>
       </div>
+
+      <p class="mono dim spread-note">The first three builds published here get pinned to the front page.</p>
     </div>
   </section>
 
@@ -2226,6 +2233,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     });
     var fs = $("#footSheet"); if (fs) fs.textContent = SHEET[path] || SHEET["/404"];
     document.title = TITLES[path] || TITLES["/"];
+    if (window.__eshLayout) requestAnimationFrame(window.__eshLayout);
   }
 
   function route() { closeSd(); document.body.style.overflow = "";
@@ -2384,29 +2392,158 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       '</figure>';
   }
 
-  var HOME_IMG = { 1: "plate-03-truss-bridge.jpg", 3: "plate-04-iot-irrigation.jpg", 6: "plate-05-water-dashboard.jpg", 9: "plate-06-wind-tunnel.jpg" };
+  var HOME_IMG = { 2: "plate-03-truss-bridge.jpg", 3: "plate-04-iot-irrigation.jpg", 6: "plate-05-water-dashboard.jpg", 9: "plate-06-wind-tunnel.jpg" };
+  var FEATURED = [2, 3, 6, 9];
 
   function homePlate(id, alt) {
     var f = HOME_IMG[id];
     if (!f) return "";
-    return '<figure class="plate plate--16x9" style="border:0;border-bottom:1px solid var(--line-3)">' +
+    return '<figure class="plate plate--21x9 deck-plate">' +
       '<div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>' +
+      '<img src="images/' + f + '" alt="' + esc(alt) + '" loading="lazy" onerror="this.style.display=\'none\'">' +
       '</figure>';
+  }
+
+  function deckCard(p) {
+    return '<article class="deck-card" data-pid="' + p.id + '" tabindex="0" role="button" aria-label="Open ' + esc(p.title) + '">' +
+      homePlate(p.id, p.title + " project") +
+      '<div class="card-b">' +
+      '<div class="card-t"><span class="tag tag--blue">' + esc(p.disc) + '</span><span class="tag">' + esc(p.diff) + '</span></div>' +
+      '<h3>' + esc(p.title) + '</h3>' +
+      '<p class="dim deck-desc" style="font-size:13.5px;margin:0">' + esc(p.desc) + '</p>' +
+      '<div class="divline"></div>' +
+      '<div class="row row--between"><span class="mono dim" style="font-size:10.5px">' + esc(p.budget) + '</span><span class="mono" style="color:var(--blue-ink);font-size:10.5px">OPEN SHEET &#8594;</span></div>' +
+      '</div></article>';
+  }
+
+  /* Card stack: one card on top, two peeking, tap Next or let it cycle. */
+  function setupDeck(deck) {
+    if (!deck) return;
+    var cards = Array.prototype.slice.call(deck.children);
+    if (cards.length < 2) return;
+    var order = cards.slice();
+    var pos = 0, busy = false, timer = null, INTERVAL = 4500;
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var tools = deck.parentNode ? deck.parentNode.querySelector(".deck-tools") : null;
+    var nextBtn = tools ? tools.querySelector(".deck-next") : null;
+    var countEl = tools ? tools.querySelector(".deck-count") : null;
+
+    function layerTransform(i) {
+      if (i === 1) return "translate3d(0,-5%,0) scale(.84) rotate(-1deg)";
+      if (i === 2) return "translate3d(0,-7.5%,0) scale(.72) rotate(1deg)";
+      return "translate3d(0,0,0)";
+    }
+    function paint() {
+      order.forEach(function (c, i) {
+        c.setAttribute("aria-hidden", i > 2 ? "true" : "false");
+        c.setAttribute("tabindex", i === 0 ? "0" : "-1");
+        c.style.zIndex = i === 0 ? 20 : (i === 1 ? 5 : (i === 2 ? 0 : -1));
+        c.style.opacity = i > 2 ? "0" : "1";
+        c.style.transform = layerTransform(i > 2 ? 2 : i);
+      });
+      if (countEl) countEl.textContent = (pos + 1) + " / " + order.length;
+    }
+    function schedule() {
+      window.clearTimeout(timer);
+      if (reduced || document.hidden) return;
+      timer = window.setTimeout(advance, INTERVAL);
+    }
+    function advance() {
+      if (busy || order.length < 2) return;
+      busy = true;
+      var top = order[0];
+      if (reduced) {
+        order.push(order.shift()); pos = (pos + 1) % order.length;
+        paint(); busy = false; schedule(); return;
+      }
+      top.style.transition = "transform 240ms cubic-bezier(.34,.9,.36,1), opacity 170ms linear";
+      top.style.zIndex = 30;
+      top.style.transform = "translate3d(" + ((Math.random() * 8) - 4).toFixed(1) + "%,200%,0) rotate(" + ((Math.random() * 5) - 2.5).toFixed(1) + "deg) scale(.9)";
+      top.style.opacity = "0";
+      window.setTimeout(function () {
+        order.push(order.shift()); pos = (pos + 1) % order.length;
+        top.style.transition = "none";
+        paint();
+        void top.offsetWidth;
+        top.style.transition = "";
+        busy = false;
+        schedule();
+      }, 250);
+    }
+
+    if (nextBtn) nextBtn.addEventListener("click", function () { advance(); });
+    deck.addEventListener("keydown", function (e) {
+      var c = e.target.closest ? e.target.closest(".deck-card") : null;
+      if (!c) return;
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        openProject(parseInt(c.getAttribute("data-pid"), 10));
+      }
+    });
+    deck.addEventListener("pointerenter", function () { window.clearTimeout(timer); });
+    deck.addEventListener("pointerleave", schedule);
+    deck.addEventListener("focusin", function () { window.clearTimeout(timer); });
+    deck.addEventListener("focusout", schedule);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) window.clearTimeout(timer); else schedule();
+    });
+    paint();
+    schedule();
+  }
+
+  /* Card spread: showcase slots explode from a deck into a row. */
+  function setupSpread(root) {
+    if (!root) return;
+    var row = root.querySelector(".spread-row");
+    if (!row) return;
+    var items = Array.prototype.slice.call(row.children);
+    var input = root.querySelector(".spread-toggle-input");
+    var dxs = items.map(function () { return 0; });
+
+    function measure() {
+      var r = row.getBoundingClientRect();
+      if (!r.width) return;
+      items.forEach(function (el) { el.style.transition = "none"; el.style.transform = "none"; });
+      var cx = r.left + r.width / 2;
+      dxs = items.map(function (el) {
+        var b = el.getBoundingClientRect();
+        return Math.round(cx - (b.left + b.width / 2));
+      });
+      items.forEach(function (el) { el.style.transition = ""; });
+    }
+    function paint() {
+      var spread = root.classList.contains("is-spread");
+      var tilt = [-2, 3, -1.5, 2, -2.5, 1.5];
+      items.forEach(function (el, i) {
+        el.style.zIndex = spread ? (10 + i) : (items.length - i);
+        el.style.transform = spread
+          ? "translate3d(0,0,0) rotate(" + tilt[i % 6] + "deg)"
+          : "translate3d(" + dxs[i] + "px," + (i * -4) + "px,0) rotate(" + ((i % 2) ? 1.4 : -1.4) + "deg)";
+      });
+    }
+    function relayout() { measure(); paint(); }
+
+    if (input) input.addEventListener("change", function () {
+      root.classList.toggle("is-spread", input.checked);
+      relayout();
+    });
+    window.addEventListener("resize", function () { if (root.offsetParent) relayout(); });
+    window.__eshLayout = function () { if (root.offsetParent) relayout(); };
+    if (root.offsetParent) relayout();
   }
 
   function renderHome() {
     var hp = $("#homeProjects");
     if (hp) {
-      hp.innerHTML = [1, 3, 6, 9].map(function (id) {
-        var p = PROJECTS.filter(function (x) { return x.id === id; })[0]; if (!p) return "";
-        return '<article class="card">' + homePlate(p.id, p.title + " project") + '<div class="card-b">' +
-          '<div class="card-t"><span class="tag tag--blue">' + esc(p.disc) + '</span><span class="tag">' + esc(p.diff) + '</span></div>' +
-          '<h3>' + esc(p.title) + '</h3>' +
-          '<p class="dim" style="font-size:13.5px;margin:0">' + esc(p.desc) + '</p>' +
-          '<div class="divline"></div>' +
-          '<div class="meta"><span>' + esc(p.dur) + '</span><span>' + esc(p.year) + '</span><span>' + esc(p.budget) + '</span></div>' +
-          '</div></article>';
-      }).join("");
+      var cards = FEATURED.map(function (id) {
+        return PROJECTS.filter(function (x) { return x.id === id; })[0];
+      }).filter(Boolean);
+      hp.innerHTML = '<div class="deck" id="homeDeck">' + cards.map(deckCard).join("") + '</div>' +
+        '<div class="deck-tools">' +
+        '<button class="btn btn--ghost deck-next" type="button">Next project</button>' +
+        '<span class="mono dim deck-count" aria-live="polite"></span>' +
+        '</div>';
+      setupDeck($("#homeDeck"));
     }
     var ch = $("#challenges");
     if (ch) {
@@ -2638,6 +2775,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
      BOOT
   ========================================================= */
   renderHome();
+  setupSpread(document.getElementById("buildSpread"));
   setupProjectsPage();
   if (!location.hash) location.replace("#/");
   route();
