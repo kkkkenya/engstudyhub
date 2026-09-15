@@ -58,10 +58,14 @@ photograph of the assembled rover will do more for kit sales than any copy.
 
 ## Status (2026-09)
 
-- **Filled:** `kit-01-starter.jpg`, `kit-02-sensor-display.jpg`, `kit-03-rover.jpg`, `kit-04-motion-control.jpg`.
-- **Pending (green IN-PROGRESS banner on the page):** `plate-00-og-cover.jpg`, `plate-01-hub-workshop.jpg`,
-  `plate-02-about-hub.jpg`, `plate-03-truss-bridge.jpg`, `plate-04-iot-irrigation.jpg`,
-  `plate-05-water-dashboard.jpg`, `plate-06-wind-tunnel.jpg`, `plate-10-team.jpg`, `build-01.jpg`-`build-06.jpg`.
+- **Filled:** the four kit photos (`kit-01-starter.jpg` - `kit-04-motion-control.jpg`), plus
+  `plate-01-hub-workshop.jpg` (lab / workstation), `plate-02-about-hub.jpg` (CAD modelling session),
+  `plate-03-truss-bridge.jpg` (truss build), `plate-05-water-dashboard.jpg` (water dashboard) and
+  `plate-10-team.jpg` (event photo).
+- **Pending (shows a green IN-PROGRESS banner):** `plate-00-og-cover.jpg`, `plate-04-iot-irrigation.jpg`,
+  `plate-06-wind-tunnel.jpg`, and the six showcase slots `build-01.jpg` - `build-06.jpg`.
 - **Avatars:** the three testimonial portraits were replaced with a person icon, so
-  `plate-07/08/09-avatar-*.jpg` are no longer required.
-- Drop any file with the exact name above into this folder and it appears automatically.
+  `plate-07-avatar-brian.jpg`, `plate-08-avatar-aisha.jpg` and `plate-09-avatar-denis.jpg` are no longer used.
+- Drop a file with an exact name from the table above into this folder and it appears automatically.
+- **Featured projects on the home page** are project ids 2, 3, 6 and 9 (see `HOME_IMG` / `FEATURED`
+  in the page script) - they render as a stacked deck.
