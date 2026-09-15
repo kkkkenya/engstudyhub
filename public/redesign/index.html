@@ -2521,15 +2521,32 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           : "translate3d(" + dxs[i] + "px," + (i * -4) + "px,0) rotate(" + ((i % 2) ? 1.4 : -1.4) + "deg)";
       });
     }
-    function relayout() { measure(); paint(); }
+    function centerScroll() {
+      var stage = root.querySelector(".spread-stage");
+      if (!stage || stage.scrollWidth <= stage.clientWidth + 2) return;
+      stage.scrollLeft = Math.round((stage.scrollWidth - stage.clientWidth) / 2);
+    }
+    /* animate=true only for the user's own toggle; route changes and resizes snap. */
+    function relayout(animate) {
+      measure();
+      if (animate === true) {
+        paint();
+      } else {
+        items.forEach(function (el) { el.style.transition = "none"; });
+        paint();
+        void row.offsetWidth;
+        items.forEach(function (el) { el.style.transition = ""; });
+      }
+      centerScroll();
+    }
 
     if (input) input.addEventListener("change", function () {
       root.classList.toggle("is-spread", input.checked);
-      relayout();
+      relayout(true);
     });
-    window.addEventListener("resize", function () { if (root.offsetParent) relayout(); });
-    window.__eshLayout = function () { if (root.offsetParent) relayout(); };
-    if (root.offsetParent) relayout();
+    window.addEventListener("resize", function () { if (root.offsetParent) relayout(false); });
+    window.__eshLayout = function () { if (root.offsetParent) relayout(false); };
+    if (root.offsetParent) relayout(false);
   }
 
   function renderHome() {
