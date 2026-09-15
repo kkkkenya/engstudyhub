@@ -158,6 +158,22 @@ section{position:relative;z-index:1}
   padding:3px 7px;border:1px solid var(--line)
 }
 .plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.plate-ph--wip{
+  background-color:#E8F3EE;
+  background-image:
+    linear-gradient(rgba(7,107,79,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(7,107,79,.055) 1px,transparent 1px);
+}
+.wip-badge{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;
+  border:1px solid var(--ok);background:var(--ok);color:#fff;border-radius:999px;
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.2em;font-weight:600;
+  text-transform:uppercase;line-height:1;
+}
+.wip-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;opacity:.92;animation:ping 1.8s ease-out infinite}
+.plate-ph--wip small{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#0B4F3A}
+.avatar-ico{width:38px;height:38px;flex:none;border:1px solid var(--line-3);background:var(--paper-2);display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.avatar-ico svg{width:20px;height:20px;display:block}
 .plate-cap{
   display:flex;justify-content:space-between;gap:10px;
   border-top:1px solid var(--line-2);background:var(--paper-2);
@@ -837,12 +853,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       </div>
 
       <figure class="plate plate--21x9 mt-l">
-        <div class="plate-ph" aria-hidden="true">
-          <b>PLATE 01 — MAKERSPACE</b>
-          <code>images/plate-01-hub-workshop.jpg</code>
-          <span>2000 × 860, workshop or study-room photo</span>
-        </div>
-        <img src="images/plate-01-hub-workshop.jpg" alt="Engineering students working together on a hardware project in a campus makerspace" onerror="this.style.display='none'">
+        <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
         <figcaption class="plate-cap"><span><b>FIG. 1</b> — The hub in session</span><span>Nairobi, Kenya</span></figcaption>
       </figure>
     </div>
@@ -923,12 +934,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           </div>
         </div>
         <figure class="plate plate--4x3">
-          <div class="plate-ph" aria-hidden="true">
-            <b>PLATE 02 — THE HUB</b>
-            <code>images/plate-02-about-hub.jpg</code>
-            <span>1400 × 1050, replaces the old intro video</span>
-          </div>
-          <img src="images/plate-02-about-hub.jpg" alt="A study session inside the Engineering Hub community" onerror="this.style.display='none'">
+          <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           <figcaption class="plate-cap"><span><b>FIG. 2</b> — Previously an auto-playing video</span><span>Drop a still here</span></figcaption>
         </figure>
       </div>
@@ -1040,10 +1046,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="plate plate--1x1" style="width:38px;flex:none;border-radius:0">
-                  <span class="plate-ph" style="font-size:7px;padding:2px" aria-hidden="true">IMG</span>
-                  <img src="images/plate-07-avatar-brian.jpg" alt="Portrait of Brian M." onerror="this.style.display='none'">
-                </span>
+                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
                 <span class="mono">BRIAN M.</span>
               </span>
               <span class="tag">KU</span>
@@ -1056,10 +1059,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="plate plate--1x1" style="width:38px;flex:none">
-                  <span class="plate-ph" style="font-size:7px;padding:2px" aria-hidden="true">IMG</span>
-                  <img src="images/plate-08-avatar-aisha.jpg" alt="Portrait of Aisha K." onerror="this.style.display='none'">
-                </span>
+                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
                 <span class="mono">AISHA K.</span>
               </span>
               <span class="tag">KU</span>
@@ -1072,10 +1072,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="plate plate--1x1" style="width:38px;flex:none">
-                  <span class="plate-ph" style="font-size:7px;padding:2px" aria-hidden="true">IMG</span>
-                  <img src="images/plate-09-avatar-denis.jpg" alt="Portrait of Denis O." onerror="this.style.display='none'">
-                </span>
+                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
                 <span class="mono">DENIS O.</span>
               </span>
               <span class="tag">KU</span>
@@ -1198,12 +1195,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
               <span class="tag">Comms coordinators</span>
             </div>
             <figure class="plate plate--16x9">
-              <div class="plate-ph" aria-hidden="true">
-                <b>PLATE 10 — THE TEAM</b>
-                <code>images/plate-10-team.jpg</code>
-                <span>1600 × 900, core team or event photo</span>
-              </div>
-              <img src="images/plate-10-team.jpg" alt="Core team members of the Engineering Study Hub" onerror="this.style.display='none'">
+              <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
             </figure>
             <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20apply%20for%20the%20core%20team" target="_blank" rel="noopener noreferrer">Apply to join</a>
           </div>
@@ -1573,7 +1565,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <div class="review">
             <div class="review-hd">
               <span class="avatar" aria-hidden="true">BM</span>
-              <div><div style="font-weight:600;font-size:15px">Brian M.</div><div class="mono dim" style="font-size:11px">JKUAT, Materials</div></div>
+              <div><div style="font-weight:600;font-size:15px">Brian M.</div><div class="mono dim" style="font-size:11px">KU, Materials</div></div>
             </div>
             <p>“Passed my Materials exam after joining a study squad here.”</p>
           </div>
@@ -1587,7 +1579,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <div class="review">
             <div class="review-hd">
               <span class="avatar" aria-hidden="true">DO</span>
-              <div><div style="font-weight:600;font-size:15px">Denis O.</div><div class="mono dim" style="font-size:11px">TUK, Electrical</div></div>
+              <div><div style="font-weight:600;font-size:15px">Denis O.</div><div class="mono dim" style="font-size:11px">KU, Electrical</div></div>
             </div>
             <p>“The notes and past papers alone are worth it. Saved my semester.”</p>
           </div>
@@ -1948,8 +1940,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 01 — OPEN</b><code>images/build-01.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-01.jpg" alt="A member's finished 4WD rover build" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 03</span></div>
@@ -1961,8 +1952,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 02 — OPEN</b><code>images/build-02.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-02.jpg" alt="A member's finished water quality dashboard" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
@@ -1974,8 +1964,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 03 — OPEN</b><code>images/build-03.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-03.jpg" alt="A member's finished truss bridge" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
@@ -1987,8 +1976,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 04 — OPEN</b><code>images/build-04.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-04.jpg" alt="A member's finished irrigation controller" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Library</span></div>
@@ -2000,8 +1988,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 05 — OPEN</b><code>images/build-05.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-05.jpg" alt="A member's finished motion rig" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 04</span></div>
@@ -2013,8 +2000,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 
         <article class="card kit">
           <figure class="plate plate--4x3">
-            <div class="plate-ph" aria-hidden="true"><b>SLOT 06 — OPEN</b><code>images/build-06.jpg</code><span>Your photo goes here</span></div>
-            <img src="images/build-06.jpg" alt="A member's finished sensor project" loading="lazy" onerror="this.style.display='none'">
+            <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
           </figure>
           <div class="card-b">
             <div class="card-t"><span class="tag">Open</span><span class="mono dim">Kit 02</span></div>
@@ -2404,8 +2390,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     var f = HOME_IMG[id];
     if (!f) return "";
     return '<figure class="plate plate--16x9" style="border:0;border-bottom:1px solid var(--line-3)">' +
-      '<div class="plate-ph" aria-hidden="true"><b>PLATE</b><code>images/' + f + '</code></div>' +
-      '<img src="images/' + f + '" alt="' + esc(alt) + '" loading="lazy" onerror="this.style.display=\'none\'">' +
+      '<div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>' +
       '</figure>';
   }
 

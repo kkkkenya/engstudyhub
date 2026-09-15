@@ -1,7 +1,7 @@
 # Image drop folder
 
-Every picture slot in the site is wired to a file in **this folder**. Right now each slot shows a
-drafting-style placeholder that names the file it wants — nothing is broken, nothing is a stock
+Every picture slot in the site is wired to a file in **this folder**. Kit 01-04 now carry real photographs; every other slot that has no photo
+shows a green IN-PROGRESS banner — nothing is broken, nothing is a stock
 photo, and no AI-generated media ships with this build.
 
 **To add a real image:** drop a file with the exact name below into this folder. Nothing else to
@@ -54,3 +54,14 @@ photograph of the assembled rover will do more for kit sales than any copy.
   you want the real logo up there, drop `plate-logo.svg` here and we'll swap it in.
 - **Project sheet thumbnails:** the project library cards are deliberately text-only for scanning
   speed. If you want a photo on each of the 12 sheets, that's a follow-up — say the word.
+
+
+## Status (2026-09)
+
+- **Filled:** `kit-01-starter.jpg`, `kit-02-sensor-display.jpg`, `kit-03-rover.jpg`, `kit-04-motion-control.jpg`.
+- **Pending (green IN-PROGRESS banner on the page):** `plate-00-og-cover.jpg`, `plate-01-hub-workshop.jpg`,
+  `plate-02-about-hub.jpg`, `plate-03-truss-bridge.jpg`, `plate-04-iot-irrigation.jpg`,
+  `plate-05-water-dashboard.jpg`, `plate-06-wind-tunnel.jpg`, `plate-10-team.jpg`, `build-01.jpg`-`build-06.jpg`.
+- **Avatars:** the three testimonial portraits were replaced with a person icon, so
+  `plate-07/08/09-avatar-*.jpg` are no longer required.
+- Drop any file with the exact name above into this folder and it appears automatically.
