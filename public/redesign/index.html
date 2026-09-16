@@ -43,6 +43,12 @@
   --danger:#B3271A;
   --ok:#076B4F;
   --muted:#59636D;
+  --accent:var(--blue);
+  --accent-2:var(--blue-ink);
+  --sep:var(--line);
+  --bg-3:var(--paper-2);
+  --label-2:var(--muted);
+  --ease:cubic-bezier(.2,.7,.2,1);
   --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
@@ -158,64 +164,59 @@ section{position:relative;z-index:1}
   padding:3px 7px;border:1px solid var(--line)
 }
 .plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.plate-ph--wip{
-  background-color:#E8F3EE;
-  background-image:
-    linear-gradient(rgba(7,107,79,.055) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(7,107,79,.055) 1px,transparent 1px);
-}
-.wip-badge{
-  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;
-  border:1px solid var(--ok);background:var(--ok);color:#fff;border-radius:999px;
-  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.2em;font-weight:600;
-  text-transform:uppercase;line-height:1;
-}
-.wip-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;opacity:.92;animation:ping 1.8s ease-out infinite}
-.plate-ph--wip small{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#0B4F3A}
-.avatar-ico{width:38px;height:38px;flex:none;border:1px solid var(--line-3);background:var(--paper-2);display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
-.avatar-ico svg{width:20px;height:20px;display:block}
-/* Card stack: home featured projects ---------- */
-#homeProjects{max-width:560px;margin-inline:auto}
-.deck{position:relative;height:clamp(340px,88vw,430px)}
-.deck-card{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;
-  border:1px solid var(--line-3);background:var(--paper-2);border-radius:var(--r-lg);box-shadow:var(--sh-1);
-  transform-origin:50% 0;transition:transform 520ms cubic-bezier(.22,1,.2,1),opacity 240ms linear;will-change:transform}
-.deck-card:hover{border-color:var(--line-2)}
-.deck-card:focus-visible{outline:2px solid var(--blue-ink);outline-offset:3px}
-.deck-plate{border:0;border-bottom:1px solid var(--line-3);flex:none}
-.deck-card .card-b{flex:1;min-height:0;overflow:hidden}
-.deck-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.deck-tools{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px}
-.deck-count{font-size:11px;letter-spacing:.14em}
 
-/* Card spread: showcase wall ---------- */
-.spread{border:1px solid var(--line-3);background:var(--paper-2);border-radius:var(--r-lg);padding:18px;overflow:hidden}
-.spread-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.spread-hint{margin:0;font-size:10.5px;letter-spacing:.1em}
-.spread-toggle{position:relative;display:inline-flex;align-items:center;border:1px solid var(--line-3);border-radius:999px;
-  padding:9px 16px;background:var(--paper);cursor:pointer;user-select:none;
-  font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
-.spread-toggle:hover{border-color:var(--line)}
-.spread-toggle-input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
-.spread-toggle:has(.spread-toggle-input:focus-visible){outline:2px solid var(--blue-ink);outline-offset:3px}
-.spread-toggle-label-off{display:none}
-.spread.is-spread .spread-toggle-label-on{display:none}
-.spread.is-spread .spread-toggle-label-off{display:inline}
-.spread-stage{padding:40px 0 8px}
-.spread-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end}
-.spread-item{margin:0;transform-origin:50% 100%;transition:transform 520ms cubic-bezier(.22,1.1,.36,1);will-change:transform}
-.spread-item .plate{border:1px solid var(--line-3)}
-.spread-label{display:flex;gap:8px;align-items:baseline;padding:10px 2px 0;font-size:12.5px;line-height:1.35}
-.spread-label .mono{flex:none;color:var(--muted);font-size:10.5px;letter-spacing:.16em}
-.spread-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}
-.spread-note{text-align:center;margin-top:16px;font-size:10.5px;letter-spacing:.1em}
-@media (max-width:900px){
-  .spread-stage{overflow-x:auto;overscroll-behavior-x:contain}
-  .spread-row{grid-template-columns:repeat(6,132px);width:max-content;margin-inline:auto}
+/* Empty deck: blank card-spread as a call to action, no pre-filled content --- */
+.empty-deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:44px 20px}
+.empty-deck-stage{position:relative;display:flex;justify-content:center;height:150px;width:100%;max-width:520px}
+.empty-deck-card{
+  position:absolute;top:0;width:120px;height:150px;border-radius:var(--r);
+  border:1.5px dashed var(--line-2);
+  background-color:#E9EDEF;
+  background-image:linear-gradient(rgba(11,15,20,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(11,15,20,.07) 1px,transparent 1px);
+  background-size:14px 14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
 }
-@media (prefers-reduced-motion: reduce){
-  .deck-card,.spread-item{transition-duration:.01ms}
+.empty-deck-plus{font-family:var(--f-body);font-size:22px;font-weight:300;color:var(--muted);opacity:.5}
+.empty-deck-card:nth-child(1){transform:translateX(0) rotate(-4deg);z-index:4}
+.empty-deck-card:nth-child(2){transform:translateX(0) rotate(-1deg);z-index:3}
+.empty-deck-card:nth-child(3){transform:translateX(0) rotate(2deg);z-index:2}
+.empty-deck-card:nth-child(4){transform:translateX(0) rotate(5deg);z-index:1}
+.empty-deck.is-open .empty-deck-card:nth-child(1){transform:translateX(-198px) rotate(-6deg)}
+.empty-deck.is-open .empty-deck-card:nth-child(2){transform:translateX(-66px) rotate(-2deg)}
+.empty-deck.is-open .empty-deck-card:nth-child(3){transform:translateX(66px) rotate(3deg)}
+.empty-deck.is-open .empty-deck-card:nth-child(4){transform:translateX(198px) rotate(7deg)}
+.empty-deck-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+@media(max-width:560px){
+  .empty-deck-card{width:92px;height:118px}
+  .empty-deck-stage{height:118px}
+  .empty-deck.is-open .empty-deck-card:nth-child(1){transform:translateX(-141px) rotate(-6deg)}
+  .empty-deck.is-open .empty-deck-card:nth-child(2){transform:translateX(-47px) rotate(-2deg)}
+  .empty-deck.is-open .empty-deck-card:nth-child(3){transform:translateX(47px) rotate(3deg)}
+  .empty-deck.is-open .empty-deck-card:nth-child(4){transform:translateX(141px) rotate(7deg)}
 }
+@media(prefers-reduced-motion:reduce){.empty-deck-card{transition:none}}
+
+/* Project stack: swipeable card stack for the home page, ported from the deck pattern --- */
+.proj-stack{display:flex;flex-direction:column;align-items:center;gap:18px}
+.proj-stack-viewport{position:relative;width:100%;max-width:400px;height:500px}
+.proj-card{position:absolute;inset:0;transition:transform .34s cubic-bezier(.22,1,.36,1),opacity .3s ease;cursor:pointer}
+.proj-card[data-pos="0"]{transform:translateY(0) scale(1) rotate(0deg);z-index:30;cursor:default}
+.proj-card[data-pos="1"]{transform:translateY(14px) scale(.96) rotate(-1.4deg);z-index:20;opacity:.92;pointer-events:none}
+.proj-card[data-pos="2"]{transform:translateY(26px) scale(.92) rotate(1.4deg);z-index:10;opacity:.8;pointer-events:none}
+.proj-card[data-pos="3"]{transform:translateY(36px) scale(.88) rotate(0deg);z-index:0;opacity:0;pointer-events:none}
+.proj-card.is-leaving{transform:translateY(70px) rotate(-7deg) scale(.9)!important;opacity:0!important}
+@media(max-width:520px){.proj-stack-viewport{height:460px}}
+@media(prefers-reduced-motion:reduce){.proj-card{transition:none}}
+
+/* Avatar: icon placeholder for members, no photo required --- */
+.avatar{
+  width:38px;height:38px;flex:none;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--paper-2);border:1px solid var(--line-2);color:var(--muted);
+  font-family:var(--f-mono);font-size:0
+}
+.avatar svg{width:19px;height:19px}
 .plate-cap{
   display:flex;justify-content:space-between;gap:10px;
   border-top:1px solid var(--line-2);background:var(--paper-2);
@@ -584,6 +585,7 @@ body::before{background-image:linear-gradient(rgba(11,15,20,.032) 1px,transparen
 .band--ink .card,.band--blue .card{border-color:rgba(255,255,255,.22)}
 .band--ink .dim,.band--ink .mono.dim,.band--blue .dim{color:rgba(255,255,255,.66)}
 .band--ink .tag,.band--blue .tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.86)}
+</style>
 <style>
 /* ===== V5, type voice + kit components ===== */
 :root{
@@ -606,9 +608,11 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .kit-ribbon{position:absolute;top:14px;left:14px;z-index:3;background:var(--hivis);color:#0A0A0C;
   font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
   padding:5px 12px;border-radius:999px;box-shadow:var(--sh-1)}
+</style>
 <style>
 .tabbar{grid-template-columns:repeat(5,1fr)}
 .tabbar a{font-size:10.5px}
+</style>
 <style>
 /* ===== V7, community block + icon discipline ===== */
 .community{background:#5865F2;color:#fff;border-radius:var(--r-xl);padding:clamp(22px,3.6vw,46px);
@@ -630,11 +634,13 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 /* nothing at the top of the page is allowed to blow up */
 .hdr svg,.tabbar svg,.icon-btn svg,.brand-mark svg,.hdr img{max-width:28px;max-height:28px}
 .tabbar svg{width:25px;height:25px}
+</style>
 <style>
 /* ===== V8, Discord entry point ===== */
 .disc-cta{display:inline-flex;align-items:center;gap:8px}
 .disc-cta svg{width:17px;height:17px;fill:currentColor}
 @media(max-width:700px){.disc-cta{padding:9px 12px}.disc-cta span{display:none}}
+</style>
 <style>
 /* ===== V9, logo assets, active-state fix ===== */
 .disc-logo{display:block;border-radius:5px;flex:none;width:18px;height:18px}
@@ -645,6 +651,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .hdr .nav a[aria-current="page"]:hover,.nav a[aria-current="page"]:hover{background:var(--accent-2);color:#fff}
 .tabbar a,.tabbar a:hover{text-decoration:none}
 .tabbar a[aria-current="page"]{color:var(--accent);background:transparent}
+</style>
 <style>
 /* ===== V10, Discord section, contrast, Apple tab bar ===== */
 .band--discord{background:#5865F2;color:#fff}
@@ -684,6 +691,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .tabbar a[aria-current="page"]{color:var(--accent);font-weight:600}
 .tabbar a:active{opacity:.55}
 .tabbar a span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+</style>
 <style>
 /* ===== V12 · remove the generated-looking tells ===== */
 .tag,.spec-k,.plate-cap,.plate-ph,.metric span,.tb-k,.block-h,.hero-side-h,.lock-h{
@@ -700,6 +708,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .card:hover{box-shadow:var(--sh-2)}
 .kit--hero,.card[style*="var(--accent)"]{box-shadow:var(--sh-1)}
 .state{box-shadow:none}
+</style>
 <style>
 /* ===== V14 · no sideways-scrolling tables on a phone ===== */
 @media(max-width:760px){
@@ -717,6 +726,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
   .cmp td.yes,.cmp td.no{font-weight:600}
   .cmp .col-hi{background:transparent}
 }
+</style>
 <style>
 .part-list{border:1px solid var(--sep);border-radius:var(--r);overflow:hidden;background:var(--bg-3)}
 .part-row{display:flex;justify-content:space-between;align-items:center;gap:16px;
@@ -729,6 +739,7 @@ h3,.h3,h4,.h4{font-family:var(--f-body);font-weight:600;letter-spacing:-.021em;l
 .part-end .ok{color:var(--ok)}
 .part-end .out{color:var(--danger)}
 @media(max-width:520px){.part-row{gap:10px}.part-row b,.part-end b{font-size:14px}}
+</style>
 <style>
 /* ===== V16 · mobile-first, lean, app-like ===== */
 .mono{font-variant-numeric:tabular-nums}
@@ -810,6 +821,15 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   background:transparent;color:var(--ink);font-family:var(--f-body);font-size:17px;
   font-weight:500;cursor:pointer;text-align:left}
 .sd-theme #sdThemeVal{color:var(--muted);font-size:15px}
+</style>
+<style>
+/* ===== V20 · photos + green in-progress banner ===== */
+.plate-wip{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:7px;background:var(--ok);color:#fff;
+  font-family:var(--f-body);font-size:11.5px;font-weight:600;letter-spacing:.02em;
+  padding:6px 14px;border-radius:999px;white-space:nowrap;box-shadow:var(--sh-1);z-index:1}
+.plate-wip::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;opacity:.9}
+@media(max-width:520px){.plate-wip{font-size:10.5px;padding:5px 11px}}
 </style>
 </head>
 <body>
@@ -895,7 +915,12 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       </div>
 
       <figure class="plate plate--21x9 mt-l">
-        <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
+        <div class="plate-ph" aria-hidden="true">
+          <b>PLATE 01 — MAKERSPACE</b>
+          <code>images/plate-01-hub-workshop.jpg</code>
+          <span>2000 × 860, workshop or study-room photo</span>
+        </div>
+        <img src="images/plate-01-hub-workshop.jpg" alt="Engineering students working together on a hardware project in a campus makerspace" onerror="this.style.display='none'">
         <figcaption class="plate-cap"><span><b>FIG. 1</b> — The hub in session</span><span>Nairobi, Kenya</span></figcaption>
       </figure>
     </div>
@@ -976,7 +1001,12 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           </div>
         </div>
         <figure class="plate plate--4x3">
-          <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
+          <div class="plate-ph" aria-hidden="true">
+            <b>PLATE 02 — THE HUB</b>
+            <code>images/plate-02-about-hub.jpg</code>
+            <span>1400 × 1050, replaces the old intro video</span>
+          </div>
+          <img src="images/plate-02-about-hub.jpg" alt="A study session inside the Engineering Hub community" onerror="this.style.display='none'">
           <figcaption class="plate-cap"><span><b>FIG. 2</b> — Previously an auto-playing video</span><span>Drop a still here</span></figcaption>
         </figure>
       </div>
@@ -1033,7 +1063,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </div>
         <a class="btn btn--ghost" href="#/projects">Browse the library</a>
       </div>
-      <div id="homeProjects"></div>
+      <div class="proj-stack" id="homeProjects"></div>
     </div>
   </section>
 
@@ -1088,7 +1118,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
+                <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
                 <span class="mono">BRIAN M.</span>
               </span>
               <span class="tag">KU</span>
@@ -1101,7 +1131,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
+                <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
                 <span class="mono">AISHA K.</span>
               </span>
               <span class="tag">KU</span>
@@ -1114,7 +1144,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <div class="divline"></div>
             <div class="row row--between">
               <span class="row" style="gap:9px">
-                <span class="avatar-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.7"/><path d="M4.9 20.1a7.3 7.3 0 0 1 14.2 0"/></svg></span>
+                <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
                 <span class="mono">DENIS O.</span>
               </span>
               <span class="tag">KU</span>
@@ -1237,7 +1267,12 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
               <span class="tag">Comms coordinators</span>
             </div>
             <figure class="plate plate--16x9">
-              <div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>
+              <div class="plate-ph" aria-hidden="true">
+                <b>PLATE 10 — THE TEAM</b>
+                <code>images/plate-10-team.jpg</code>
+                <span>1600 × 900, core team or event photo</span>
+              </div>
+              <img src="images/plate-10-team.jpg" alt="Core team members of the Engineering Study Hub" onerror="this.style.display='none'">
             </figure>
             <a class="btn btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20apply%20for%20the%20core%20team" target="_blank" rel="noopener noreferrer">Apply to join</a>
           </div>
@@ -1606,21 +1641,21 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         <div>
           <div class="review">
             <div class="review-hd">
-              <span class="avatar" aria-hidden="true">BM</span>
+              <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
               <div><div style="font-weight:600;font-size:15px">Brian M.</div><div class="mono dim" style="font-size:11px">KU, Materials</div></div>
             </div>
             <p>“Passed my Materials exam after joining a study squad here.”</p>
           </div>
           <div class="review">
             <div class="review-hd">
-              <span class="avatar" aria-hidden="true">AK</span>
+              <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
               <div><div style="font-weight:600;font-size:15px">Aisha K.</div><div class="mono dim" style="font-size:11px">KU, Mechanical</div></div>
             </div>
             <p>“Got my first internship through the career pipeline. Worth every shilling.”</p>
           </div>
           <div class="review">
             <div class="review-hd">
-              <span class="avatar" aria-hidden="true">DO</span>
+              <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></span>
               <div><div style="font-weight:600;font-size:15px">Denis O.</div><div class="mono dim" style="font-size:11px">KU, Electrical</div></div>
             </div>
             <p>“The notes and past papers alone are worth it. Saved my semester.”</p>
@@ -1960,7 +1995,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         <aside class="hero-side" aria-label="The wall">
           <div class="hero-side-h"><span>The wall</span><span>Status</span></div>
           <div class="metric"><b>00</b><span>Builds<br>published</span></div>
-          <div class="metric"><b>06</b><span>Open<br>slots</span></div>
+          <div class="metric"><b>Any</b><span>Project<br>counts</span></div>
           <div class="metric"><b>03</b><span>Get pinned<br>to the front page</span></div>
           <div class="metric"><b>KES 0</b><span>Cost to<br>submit</span></div>
         </aside>
@@ -1973,57 +2008,23 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       <div class="sec-head">
         <div>
           <p class="eyebrow">/// The wall</p>
-          <h2 class="h2">Six slots.<br><em>All open.</em></h2>
+          <h2 class="h2">Empty by<br><em>design.</em></h2>
         </div>
-        <p class="lede" style="max-width:34ch">These are the builds we're waiting on. The first three to land get pinned to the front page.</p>
+        <p class="lede" style="max-width:34ch">We'd rather show you nothing than show you a render.</p>
       </div>
 
-      <div class="spread" id="buildSpread">
-        <div class="spread-bar">
-          <p class="mono dim spread-hint">Six open slots &middot; we would rather show you nothing than show you a render</p>
-          <label class="spread-toggle">
-            <input type="checkbox" class="spread-toggle-input">
-            <span class="spread-toggle-label-on">Spread the slots</span>
-            <span class="spread-toggle-label-off">Stack the slots</span>
-          </label>
+      <div class="empty-deck" id="emptyDeck">
+        <div class="empty-deck-stage" id="emptyDeckStage">
+          <div class="empty-deck-card"><span class="empty-deck-plus" aria-hidden="true">+</span></div>
+          <div class="empty-deck-card"><span class="empty-deck-plus" aria-hidden="true">+</span></div>
+          <div class="empty-deck-card"><span class="empty-deck-plus" aria-hidden="true">+</span></div>
+          <div class="empty-deck-card"><span class="empty-deck-plus" aria-hidden="true">+</span></div>
         </div>
-
-        <div class="spread-stage">
-          <div class="spread-row">
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">01</span>Four-wheel drive rover</figcaption>
-            </figure>
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">02</span>Water quality dashboard</figcaption>
-            </figure>
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">03</span>Truss bridge load test</figcaption>
-            </figure>
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">04</span>Smart irrigation controller</figcaption>
-            </figure>
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">05</span>Precision motion rig</figcaption>
-            </figure>
-            <figure class="spread-item">
-              <div class="plate plate--4x3"><div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div></div>
-              <figcaption class="spread-label"><span class="mono">06</span>Bench instrument</figcaption>
-            </figure>
-          </div>
+        <div class="empty-deck-actions">
+          <button class="btn btn--ghost" type="button" id="emptyDeckToggle" aria-expanded="false" aria-controls="emptyDeckStage">Spread the deck</button>
+          <button class="btn btn--primary" type="button" data-bwopen>Submit your build</button>
         </div>
       </div>
-
-      <div class="spread-cta">
-        <button class="btn btn--primary" type="button" data-bwopen>Claim a slot</button>
-        <a class="btn btn--ghost" href="#/starter-kit">Start with a kit</a>
-      </div>
-
-      <p class="mono dim spread-note">The first three builds published here get pinned to the front page.</p>
     </div>
   </section>
 
@@ -2058,7 +2059,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <label class="field"><span>What did you build?</span><input class="input" type="text" placeholder="e.g. 4WD rover with line following"></label>
         </div>
         <div style="margin-top:14px">
-          <label class="field"><span>Your name and university</span><input class="input" type="text" placeholder="e.g. Brian M. — JKUAT"></label>
+          <label class="field"><span>Your name and university</span><input class="input" type="text" placeholder="e.g. Brian M. — KU"></label>
         </div>
         <div style="margin-top:14px">
           <label class="field"><span>Parts and total cost (KSh)</span><textarea class="input" rows="3" placeholder="What you bought, and what it came to."></textarea></label>
@@ -2233,7 +2234,6 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
     });
     var fs = $("#footSheet"); if (fs) fs.textContent = SHEET[path] || SHEET["/404"];
     document.title = TITLES[path] || TITLES["/"];
-    if (window.__eshLayout) requestAnimationFrame(window.__eshLayout);
   }
 
   function route() { closeSd(); document.body.style.overflow = "";
@@ -2392,175 +2392,52 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       '</figure>';
   }
 
-  var HOME_IMG = { 2: "plate-03-truss-bridge.jpg", 3: "plate-04-iot-irrigation.jpg", 6: "plate-05-water-dashboard.jpg", 9: "plate-06-wind-tunnel.jpg" };
-  var FEATURED = [2, 3, 6, 9];
+  var HOME_IMG = { 1: "plate-03-truss-bridge.jpg", 3: "plate-04-iot-irrigation.jpg", 6: "plate-05-water-dashboard.jpg", 9: "plate-06-wind-tunnel.jpg" };
+  var HOME_WIP = { 3: 1, 9: 1 };
 
   function homePlate(id, alt) {
     var f = HOME_IMG[id];
     if (!f) return "";
-    return '<figure class="plate plate--21x9 deck-plate">' +
-      '<div class="plate-ph plate-ph--wip" aria-hidden="true"><b class="wip-badge">In progress</b></div>' +
+    return '<figure class="plate plate--16x9" style="border:0;border-bottom:1px solid var(--line-3)">' +
+      '<div class="plate-ph" aria-hidden="true"><b>PLATE</b><code>images/' + f + '</code>' +
+      (HOME_WIP[id] ? '<span class="plate-wip">In progress — photo coming soon</span>' : '') + '</div>' +
       '<img src="images/' + f + '" alt="' + esc(alt) + '" loading="lazy" onerror="this.style.display=\'none\'">' +
       '</figure>';
-  }
-
-  function deckCard(p) {
-    return '<article class="deck-card" data-pid="' + p.id + '" tabindex="0" role="button" aria-label="Open ' + esc(p.title) + '">' +
-      homePlate(p.id, p.title + " project") +
-      '<div class="card-b">' +
-      '<div class="card-t"><span class="tag tag--blue">' + esc(p.disc) + '</span><span class="tag">' + esc(p.diff) + '</span></div>' +
-      '<h3>' + esc(p.title) + '</h3>' +
-      '<p class="dim deck-desc" style="font-size:13.5px;margin:0">' + esc(p.desc) + '</p>' +
-      '<div class="divline"></div>' +
-      '<div class="row row--between"><span class="mono dim" style="font-size:10.5px">' + esc(p.budget) + '</span><span class="mono" style="color:var(--blue-ink);font-size:10.5px">OPEN SHEET &#8594;</span></div>' +
-      '</div></article>';
-  }
-
-  /* Card stack: one card on top, two peeking, tap Next or let it cycle. */
-  function setupDeck(deck) {
-    if (!deck) return;
-    var cards = Array.prototype.slice.call(deck.children);
-    if (cards.length < 2) return;
-    var order = cards.slice();
-    var pos = 0, busy = false, timer = null, INTERVAL = 4500;
-    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var tools = deck.parentNode ? deck.parentNode.querySelector(".deck-tools") : null;
-    var nextBtn = tools ? tools.querySelector(".deck-next") : null;
-    var countEl = tools ? tools.querySelector(".deck-count") : null;
-
-    function layerTransform(i) {
-      if (i === 1) return "translate3d(0,-5%,0) scale(.84) rotate(-1deg)";
-      if (i === 2) return "translate3d(0,-7.5%,0) scale(.72) rotate(1deg)";
-      return "translate3d(0,0,0)";
-    }
-    function paint() {
-      order.forEach(function (c, i) {
-        c.setAttribute("aria-hidden", i > 2 ? "true" : "false");
-        c.setAttribute("tabindex", i === 0 ? "0" : "-1");
-        c.style.zIndex = i === 0 ? 20 : (i === 1 ? 5 : (i === 2 ? 0 : -1));
-        c.style.opacity = i > 2 ? "0" : "1";
-        c.style.transform = layerTransform(i > 2 ? 2 : i);
-      });
-      if (countEl) countEl.textContent = (pos + 1) + " / " + order.length;
-    }
-    function schedule() {
-      window.clearTimeout(timer);
-      if (reduced || document.hidden) return;
-      timer = window.setTimeout(advance, INTERVAL);
-    }
-    function advance() {
-      if (busy || order.length < 2) return;
-      busy = true;
-      var top = order[0];
-      if (reduced) {
-        order.push(order.shift()); pos = (pos + 1) % order.length;
-        paint(); busy = false; schedule(); return;
-      }
-      top.style.transition = "transform 240ms cubic-bezier(.34,.9,.36,1), opacity 170ms linear";
-      top.style.zIndex = 30;
-      top.style.transform = "translate3d(" + ((Math.random() * 8) - 4).toFixed(1) + "%,200%,0) rotate(" + ((Math.random() * 5) - 2.5).toFixed(1) + "deg) scale(.9)";
-      top.style.opacity = "0";
-      window.setTimeout(function () {
-        order.push(order.shift()); pos = (pos + 1) % order.length;
-        top.style.transition = "none";
-        paint();
-        void top.offsetWidth;
-        top.style.transition = "";
-        busy = false;
-        schedule();
-      }, 250);
-    }
-
-    if (nextBtn) nextBtn.addEventListener("click", function () { advance(); });
-    deck.addEventListener("keydown", function (e) {
-      var c = e.target.closest ? e.target.closest(".deck-card") : null;
-      if (!c) return;
-      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
-        e.preventDefault();
-        openProject(parseInt(c.getAttribute("data-pid"), 10));
-      }
-    });
-    deck.addEventListener("pointerenter", function () { window.clearTimeout(timer); });
-    deck.addEventListener("pointerleave", schedule);
-    deck.addEventListener("focusin", function () { window.clearTimeout(timer); });
-    deck.addEventListener("focusout", schedule);
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) window.clearTimeout(timer); else schedule();
-    });
-    paint();
-    schedule();
-  }
-
-  /* Card spread: showcase slots explode from a deck into a row. */
-  function setupSpread(root) {
-    if (!root) return;
-    var row = root.querySelector(".spread-row");
-    if (!row) return;
-    var items = Array.prototype.slice.call(row.children);
-    var input = root.querySelector(".spread-toggle-input");
-    var dxs = items.map(function () { return 0; });
-
-    function measure() {
-      var r = row.getBoundingClientRect();
-      if (!r.width) return;
-      items.forEach(function (el) { el.style.transition = "none"; el.style.transform = "none"; });
-      var cx = r.left + r.width / 2;
-      dxs = items.map(function (el) {
-        var b = el.getBoundingClientRect();
-        return Math.round(cx - (b.left + b.width / 2));
-      });
-      items.forEach(function (el) { el.style.transition = ""; });
-    }
-    function paint() {
-      var spread = root.classList.contains("is-spread");
-      var tilt = [-2, 3, -1.5, 2, -2.5, 1.5];
-      items.forEach(function (el, i) {
-        el.style.zIndex = spread ? (10 + i) : (items.length - i);
-        el.style.transform = spread
-          ? "translate3d(0,0,0) rotate(" + tilt[i % 6] + "deg)"
-          : "translate3d(" + dxs[i] + "px," + (i * -4) + "px,0) rotate(" + ((i % 2) ? 1.4 : -1.4) + "deg)";
-      });
-    }
-    function centerScroll() {
-      var stage = root.querySelector(".spread-stage");
-      if (!stage || stage.scrollWidth <= stage.clientWidth + 2) return;
-      stage.scrollLeft = Math.round((stage.scrollWidth - stage.clientWidth) / 2);
-    }
-    /* animate=true only for the user's own toggle; route changes and resizes snap. */
-    function relayout(animate) {
-      measure();
-      if (animate === true) {
-        paint();
-      } else {
-        items.forEach(function (el) { el.style.transition = "none"; });
-        paint();
-        void row.offsetWidth;
-        items.forEach(function (el) { el.style.transition = ""; });
-      }
-      centerScroll();
-    }
-
-    if (input) input.addEventListener("change", function () {
-      root.classList.toggle("is-spread", input.checked);
-      relayout(true);
-    });
-    window.addEventListener("resize", function () { if (root.offsetParent) relayout(false); });
-    window.__eshLayout = function () { if (root.offsetParent) relayout(false); };
-    if (root.offsetParent) relayout(false);
   }
 
   function renderHome() {
     var hp = $("#homeProjects");
     if (hp) {
-      var cards = FEATURED.map(function (id) {
-        return PROJECTS.filter(function (x) { return x.id === id; })[0];
-      }).filter(Boolean);
-      hp.innerHTML = '<div class="deck" id="homeDeck">' + cards.map(deckCard).join("") + '</div>' +
-        '<div class="deck-tools">' +
-        '<button class="btn btn--ghost deck-next" type="button">Next project</button>' +
-        '<span class="mono dim deck-count" aria-live="polite"></span>' +
-        '</div>';
-      setupDeck($("#homeDeck"));
+      var order = [1, 3, 6, 9];
+      function cardHTML(id, pos) {
+        var p = PROJECTS.filter(function (x) { return x.id === id; })[0]; if (!p) return "";
+        return '<article class="card proj-card" data-pos="' + pos + '">' + homePlate(p.id, p.title + " project") + '<div class="card-b">' +
+          '<div class="card-t"><span class="tag tag--blue">' + esc(p.disc) + '</span><span class="tag">' + esc(p.diff) + '</span></div>' +
+          '<h3>' + esc(p.title) + '</h3>' +
+          '<p class="dim" style="font-size:13.5px;margin:0">' + esc(p.desc) + '</p>' +
+          '<div class="divline"></div>' +
+          '<div class="meta"><span>' + esc(p.dur) + '</span><span>' + esc(p.year) + '</span><span>' + esc(p.budget) + '</span></div>' +
+          '</div></article>';
+      }
+      hp.innerHTML = '<div class="proj-stack-viewport"></div><button class="btn btn--ghost" type="button" id="projStackNext">Next project \u2192</button>';
+      var viewport = hp.querySelector(".proj-stack-viewport");
+      var advancing = false;
+      function paint() {
+        viewport.innerHTML = order.map(function (id, i) { return cardHTML(id, i); }).join("");
+      }
+      function advance() {
+        if (advancing || order.length < 2) return;
+        advancing = true;
+        var front = viewport.querySelector('.proj-card[data-pos="0"]');
+        if (front) front.classList.add("is-leaving");
+        setTimeout(function () {
+          order.push(order.shift());
+          paint();
+          advancing = false;
+        }, 320);
+      }
+      paint();
+      hp.querySelector("#projStackNext").addEventListener("click", advance);
     }
     var ch = $("#challenges");
     if (ch) {
@@ -2792,8 +2669,16 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
      BOOT
   ========================================================= */
   renderHome();
-  setupSpread(document.getElementById("buildSpread"));
   setupProjectsPage();
+
+  var emptyDeckToggle = $("#emptyDeckToggle");
+  if (emptyDeckToggle) {
+    emptyDeckToggle.addEventListener("click", function () {
+      var open = $("#emptyDeck").classList.toggle("is-open");
+      emptyDeckToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      emptyDeckToggle.textContent = open ? "Gather the deck" : "Spread the deck";
+    });
+  }
   if (!location.hash) location.replace("#/");
   route();
 })();
