@@ -7,7 +7,7 @@ import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
 import logoImg from "@/assets/logo-new.jpeg";
-import { MessageCircle, Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench, Briefcase } from "lucide-react";
+import { Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench, Briefcase } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -205,10 +205,9 @@ const Index = () => {
                   <h1 className="font-display text-2xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.88] tracking-tighter uppercase mb-4 text-card">
                     Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
-                  {/* WhatsApp CTA — mobile first, before subtitle */}
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="sm:hidden btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] bg-whatsapp text-card border-4 border-foreground font-mono font-semibold text-base uppercase rounded-xl mb-4 shadow-brutal hover:-translate-y-1 transition-transform">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Chat on WhatsApp
+                  {/* Free-trial CTA — mobile first, before subtitle */}
+                  <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="sm:hidden btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] bg-primary text-foreground border-4 border-foreground font-mono font-semibold text-base uppercase rounded-xl mb-4 shadow-brutal hover:-translate-y-1 transition-transform">
+                    Start your free 7-day trial
                   </a>
                   <p className="font-body text-sm sm:text-base md:text-xl text-card/60 max-w-xl mt-2 md:mt-4 line-clamp-2 sm:line-clamp-none">
                     The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.
@@ -513,11 +512,10 @@ const Index = () => {
                   <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Priority Discord channels</li>
                   <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Direct access to project leads</li>
                 </ul>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] text-center border-4 border-accent bg-accent text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
-                  <MessageCircle size={20} />
+                <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] text-center border-4 border-accent bg-accent text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
                   Join Premium — KES 800 once
                 </a>
-                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-muted-foreground/30 pt-3 mt-4">Pay via M-Pesa • One payment. Lifetime access.</p>
+                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-muted-foreground/30 pt-3 mt-4">Pay by M-Pesa, then tap "I've paid" in Discord • Lifetime access</p>
               </div>
             </FadeIn>
 
@@ -530,7 +528,7 @@ const Index = () => {
                     <span className="font-mono text-5xl font-black">KES 50</span>
                     <span className="font-mono text-lg text-muted-foreground">/ semester</span>
                   </div>
-                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">Renew each semester. Cancel anytime.</div>
+                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">First 7 days free when you join. Then renew each semester.</div>
                 </div>
                 <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
                   <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>All university channels</li>
@@ -542,10 +540,10 @@ const Index = () => {
                   <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Homework & CAT support</li>
                   <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Career pipeline</li>
                 </ul>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
-                  Join Basic — KES 50
+                <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
+                  Start free 7-day trial
                 </a>
-                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-foreground pt-3 mt-4">Pay via M-Pesa • Renews every semester</p>
+                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-foreground pt-3 mt-4">Then KES 50/semester by M-Pesa • No card needed</p>
               </div>
             </FadeIn>
           </div>
@@ -577,7 +575,7 @@ const Index = () => {
           <FadeIn>
             <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-6 md:gap-10">
               <span className="text-xs text-muted-foreground font-mono">🔒 Secure payment via M-Pesa</span>
-              <span className="text-xs text-muted-foreground font-mono">📱 WhatsApp onboarding</span>
+              <span className="text-xs text-muted-foreground font-mono">⚡ Access within minutes</span>
               <span className="text-xs text-muted-foreground font-mono">✅ 200+ active members</span>
             </div>
           </FadeIn>
@@ -596,25 +594,27 @@ const Index = () => {
               <div className="space-y-6 md:space-y-8 mb-8 md:mb-12 relative border-l-4 border-foreground ml-4 pl-6 md:pl-8">
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-primary border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Reach Out</h3>
-                  <p className="font-body text-muted-foreground">Click the WhatsApp button below to message us directly.</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Join Free</h3>
+                  <p className="font-body text-muted-foreground">Join the Discord and pick your course and year. Your 7-day free trial starts straight away, with full access to the unit libraries.</p>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-card border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Share Your Details</h3>
-                  <p className="font-body text-muted-foreground">Tell us your university, year, and chosen tier (Basic or Premium).</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Pay by M-Pesa</h3>
+                  <p className="font-body text-muted-foreground">To keep access, send KES 50 (Basic) or KES 800 (Premium) to 0745947704. The name shown is Peter Mwangi.</p>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-foreground border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Pay &amp; Get Access</h3>
-                  <p className="font-body text-muted-foreground">Complete the M-Pesa transaction to receive your Discord invite link.</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Tap "I've Paid"</h3>
+                  <p className="font-body text-muted-foreground">In #upgrade-to-premium, tap "I've paid" and paste your M-Pesa code. You're usually in within minutes.</p>
                 </div>
               </div>
 
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-flex items-center gap-3 border-4 border-foreground bg-[#25D366] text-foreground font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal hover:-translate-y-1 transition-transform w-full md:w-auto justify-center">
-                <MessageCircle size={22} />
-                Chat on WhatsApp
+              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-flex items-center gap-3 border-4 border-foreground bg-primary text-foreground font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal hover:-translate-y-1 transition-transform w-full md:w-auto justify-center">
+                Start your free trial ↗
               </a>
+              <p className="font-body text-sm text-muted-foreground mt-4">
+                Questions? <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="underline font-bold">Chat with us on WhatsApp</a>
+              </p>
             </FadeIn>
 
             <FadeIn className="p-8 md:p-24 bg-foreground text-card relative overflow-hidden">
@@ -638,8 +638,8 @@ const Index = () => {
       </main>
 
       {showFloat && (
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="fixed bottom-4 right-4 z-50 md:hidden flex items-center gap-2 bg-[#25D366] text-white border-4 border-foreground font-mono font-bold text-xs uppercase px-4 py-3.5 shadow-brutal animate-in slide-in-from-bottom-2">
-          <MessageCircle size={16} /> Join — KES 50
+        <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="fixed bottom-4 right-4 z-50 md:hidden flex items-center gap-2 bg-primary text-foreground border-4 border-foreground font-mono font-bold text-xs uppercase px-4 py-3.5 shadow-brutal animate-in slide-in-from-bottom-2">
+          Free 7-day trial ↗
         </a>
       )}
 
@@ -657,7 +657,9 @@ const Index = () => {
             <div className="border-4 border-foreground bg-card shadow-brutal mb-16 md:mb-24">
               <FAQItem question="Who can join?" answer="Any engineering student enrolled in a Kenyan university (JKUAT, UoN, KU, TUK, etc.). The hub is optimized for undergraduates seeking structure." />
               <FAQItem question="Is the community entirely online?" answer="The primary hub operates on Discord. However, project squads often organize physical meetups for hardware fabrication and hackathons depending on geographic proximity." />
-              <FAQItem question="Can I upgrade from Basic to Premium?" answer="Yes. Upgrades are processed within 24 hours of clearing the tier difference via our WhatsApp channel." />
+              <FAQItem question="Is there a free trial?" answer="Yes. Every new member gets 7 days of full access to the unit libraries as soon as they join. After that, Basic is KES 50 per semester. The community and study channels stay free for everyone." />
+              <FAQItem question="How do I pay?" answer="Send the amount by M-Pesa (Send Money) to 0745947704. The name shown is Peter Mwangi. Then tap &quot;I've paid&quot; in the #upgrade-to-premium channel on Discord and paste the code from your M-Pesa SMS. You'll get a DM as soon as you're in, usually within minutes." />
+              <FAQItem question="Can I upgrade from Basic to Premium?" answer="Yes. Send the difference (KES 750) the same way, tap &quot;I've paid&quot; and choose Premium." />
               <FAQItem question="What's the refund policy?" answer="We offer a 7-day evaluation period. If the hub doesn't meet your needs, we'll issue a full refund and revoke access." />
             </div>
           </FadeIn>
