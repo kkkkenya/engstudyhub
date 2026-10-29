@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Download Study Desk (.EXE) — Engineering Study Hub</title>
-<meta name="description" content="Download Study Desk: The local-first desktop study companion for Kenyan engineering undergraduates. Runs 100% offline on localhost:5190.">
+<title>Study Desk (.EXE) — The Local-First Engineering Study Engine</title>
+<meta name="description" content="Study Desk: The local-first desktop study companion for Kenyan engineering undergraduates. 100% offline past papers, Breakpoint step diagnostics, and Discord sync.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -56,7 +56,10 @@ body {
   align-items: center;
   padding: 16px 24px;
   background: var(--card-bg);
-  border-bottom: 3px solid var(--border);
+  border-bottom: 4px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .brand {
   display: flex;
@@ -78,7 +81,7 @@ body {
 }
 .nav-links {
   display: flex;
-  gap: 16px;
+  gap: 18px;
   align-items: center;
   font-family: var(--mono);
   font-size: 12px;
@@ -102,7 +105,7 @@ body {
   font-weight: 900;
   text-transform: uppercase;
   padding: 14px 28px;
-  border: 3px solid #030712;
+  border: 4px solid #030712;
   text-decoration: none;
   cursor: pointer;
   box-shadow: 4px 4px 0px #030712;
@@ -121,13 +124,13 @@ body {
   color: inherit;
 }
 .wrap {
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 48px 20px;
 }
 .hero {
   text-align: center;
-  max-width: 840px;
+  max-width: 900px;
   margin: 0 auto 48px;
 }
 .pill {
@@ -142,14 +145,14 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   border: 2px solid #030712;
-  box-shadow: 2px 2px 0px #030712;
+  box-shadow: 3px 3px 0px #030712;
   margin-bottom: 20px;
 }
 h1 {
-  font-size: clamp(36px, 6vw, 68px);
+  font-size: clamp(38px, 6.5vw, 76px);
   font-weight: 900;
   text-transform: uppercase;
-  line-height: 1.0;
+  line-height: 0.95;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
@@ -163,23 +166,49 @@ h1 {
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
-.specs {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+.spec-grid {
+  border: 4px solid #030712;
+  background: var(--card-bg);
+  box-shadow: 6px 6px 0px #030712;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  text-align: left;
+  margin-top: 24px;
+}
+.spec-cell {
+  padding: 16px;
+  border-right: 2px solid #030712;
+  border-bottom: 2px solid #030712;
+}
+.spec-cell:last-child {
+  border-right: none;
+}
+.spec-k {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 10px;
+  font-weight: 700;
   color: #64748b;
+  text-transform: uppercase;
+  display: block;
+}
+.spec-v {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 4px 0 2px;
+}
+.spec-d {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #64748b;
+  display: block;
 }
 .window-frame {
   background: #030712;
   border: 4px solid #030712;
   box-shadow: 8px 8px 0px #10b981;
-  margin-top: 40px;
+  margin-top: 48px;
   overflow: hidden;
   text-align: left;
 }
@@ -232,26 +261,73 @@ h1 {
   font-weight: 800;
 }
 .window-body {
-  padding: 24px;
+  padding: 12px;
   background: #090d16;
-  color: #f8fafc;
-  min-height: 380px;
-  font-family: var(--mono);
 }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; }
-.grid-cards {
+.screenshot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 2px solid #1e293b;
+}
+.section-head {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+.section-head h2 {
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+}
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 40px;
+}
+.pillar-card {
+  border: 4px solid #030712;
+  background: var(--card-bg);
+  box-shadow: 6px 6px 0px #030712;
+  padding: 32px;
+}
+.showcase-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 64px;
+}
+@media (min-width: 900px) {
+  .showcase-row {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .showcase-row.reverse {
+    grid-template-columns: 1fr 1.2fr;
+  }
+  .showcase-row.reverse .shot-wrap {
+    order: 2;
+  }
+}
+.shot-wrap {
+  border: 4px solid #030712;
+  background: #030712;
+  box-shadow: 8px 8px 0px #10b981;
+  overflow: hidden;
+}
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-  margin-top: 64px;
 }
-.card {
+.feature-box {
   background: var(--card-bg);
   border: 4px solid #030712;
-  box-shadow: 6px 6px 0px #030712;
-  padding: 28px;
-  text-align: left;
+  box-shadow: 4px 4px 0px #030712;
+  padding: 24px;
 }
 .setup-step {
   display: flex;
@@ -272,47 +348,68 @@ h1 {
   padding: 8px 16px;
   border: 2px solid #030712;
 }
-.faq-box {
-  background: var(--card-bg);
-  border: 4px solid #030712;
-  box-shadow: 6px 6px 0px #030712;
-  padding: 24px;
-  margin-bottom: 16px;
+.faq-item {
+  border-bottom: 2px solid #030712;
+  padding: 20px;
+}
+.faq-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+}
+.faq-ans {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
 }
 footer {
-  border-top: 3px solid var(--border);
-  padding: 32px 24px;
-  text-align: center;
+  border-top: 4px solid #030712;
+  background: #030712;
+  color: #fff;
+  padding: 48px 24px;
   font-family: var(--mono);
   font-size: 12px;
-  color: #64748b;
-  margin-top: 64px;
 }
 </style>
 </head>
 <body>
 
 <div class="ticker">
-  ★ STUDY DESK V2026.10 ACTIVE /// LOCALHOST:5190 /// ZERO ADMIN PRIVILEGES /// 71 MB SELF-EXTRACTING /// OFFLINE PAST PAPERS
+  ★ STUDY DESK V2026.10 ACTIVE /// LOCALHOST:5190 /// ZERO ADMIN PRIVILEGES /// 71 MB STANDALONE BINARY /// 100% OFFLINE PAST PAPERS
 </div>
 
 <header class="nav">
   <a class="brand" href="/#/">
-    <img src="/logo-new.jpeg" alt="Logo" width="32" height="32" style="border:1.5px solid #030712">
+    <img src="/logo-new.jpeg" alt="Logo" width="32" height="32" style="border:2px solid #030712">
     <span>Study Desk<span style="color:#10b981">.EXE</span></span>
     <span class="brand-badge">WIN_X64</span>
   </a>
   <div class="nav-links">
-    <a href="/#/">Home</a>
-    <a href="/#/projects">Projects</a>
-    <a href="/downloads/StudyDesk.exe" download style="color:#10b981;border:2px solid #030712;padding:6px 14px;background:#030712;">Download (.EXE)</a>
+    <a href="#overview">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#matrix">Downloads</a>
+    <a href="#setup">Setup Guide</a>
+    <a href="#faq">FAQ</a>
+    <a href="/downloads/StudyDesk.exe" download style="color:#030712;border:2px solid #030712;padding:6px 14px;background:#10b981;">Download .EXE</a>
   </div>
 </header>
 
 <main class="wrap">
-  <section class="hero">
+  <!-- 1. HERO SECTION -->
+  <section class="hero" id="overview">
     <div class="pill">OFFICIAL DESKTOP CLIENT // LOCALHOST:5190</div>
-    <h1>The Local-First Engineering Study Engine.</h1>
+    <h1>Engineering Study <br><span style="color:#10b981">Made Local.</span></h1>
     <p class="sub">Flashcards don&apos;t pass engineering exams. Study Desk runs directly on your machine with real past papers, Breakpoint step-by-step diagnostics, and voice teach-back.</p>
     
     <div class="hero-btns">
@@ -323,17 +420,36 @@ footer {
       <a class="btn btn-outline" href="#setup">Setup Guide</a>
     </div>
 
-    <div class="specs">
-      <span><strong>Windows 10 / 11 (64-bit)</strong></span>
-      <span>•</span>
-      <span>71 MB Self-Extracting</span>
-      <span>•</span>
-      <span style="color:#f59e0b;font-weight:800">Zero Admin Rights Needed</span>
-      <span>•</span>
-      <span>Port: 5190</span>
+    <!-- SPEC READOUT MATRIX -->
+    <div class="spec-grid">
+      <div class="spec-cell">
+        <span class="spec-k">Release Build</span>
+        <div class="spec-v" style="color:#10b981">Study Desk</div>
+        <span class="spec-d">v2026.10</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-k">Binary Size</span>
+        <div class="spec-v">71 MB</div>
+        <span class="spec-d">Standalone binary</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-k">Security &amp; UAC</span>
+        <div class="spec-v" style="color:#f59e0b">0 Admin</div>
+        <span class="spec-d">Installs to %LOCALAPPDATA%</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-k">Syllabus Data</span>
+        <div class="spec-v" style="color:#10b981">100%</div>
+        <span class="spec-d">Offline-first past papers</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-k">Local Server</span>
+        <div class="spec-v">5190</div>
+        <span class="spec-d">Localhost port</span>
+      </div>
     </div>
 
-    <!-- KOODO-STYLE INTERACTIVE WINDOW MOCKUP -->
+    <!-- KOODO-STYLE WINDOW WITH REAL PLAYWRIGHT SCREENSHOTS -->
     <div class="window-frame">
       <div class="window-hdr">
         <div class="dots">
@@ -341,104 +457,239 @@ footer {
           <span class="dot dot-yellow"></span>
           <span class="dot dot-green"></span>
         </div>
-        <span style="color:#10b981;font-weight:700">STUDY DESK // RUNTIME LOCALHOST:5190</span>
-        <span style="color:#94a3b8">● SYNCED</span>
+        <span style="color:#10b981;font-weight:700">STUDY DESK // RUNTIME LOCALHOST:5190 // ACTUAL APP UI</span>
+        <span style="color:#94a3b8">● 2X RETINA CAPTURE</span>
       </div>
 
       <div class="band-tabs">
-        <button class="tab-btn" onclick="openBand('01', this)">[ 01 / TODAY ]</button>
-        <button class="tab-btn" onclick="openBand('02', this)">[ 02 / PLAN ]</button>
-        <button class="tab-btn active" onclick="openBand('03', this)">[ 03 / PRACTISE ]</button>
-        <button class="tab-btn" onclick="openBand('04', this)">[ 04 / REVIEW ]</button>
+        <button class="tab-btn active" onclick="switchBand('hero', this)">[ OVERVIEW ]</button>
+        <button class="tab-btn" onclick="switchBand('01', this)">[ 01 / TODAY ]</button>
+        <button class="tab-btn" onclick="switchBand('02', this)">[ 02 / PLAN ]</button>
+        <button class="tab-btn" onclick="switchBand('03', this)">[ 03 / PRACTISE ]</button>
+        <button class="tab-btn" onclick="switchBand('04', this)">[ 04 / REVIEW ]</button>
       </div>
 
       <div class="window-body">
-        <!-- PANE 01 -->
-        <div id="pane-01" class="tab-pane">
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
-            <span style="color:#10b981;font-weight:700">BAND 01 // TODAY'S MISSION</span>
-            <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">🔥 5-DAY STUDY STREAK</span>
-          </div>
-          <p style="font-size:18px;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:8px">Study Smarter, Pass Clean.</p>
-          <p style="color:#94a3b8;font-size:13px;margin-bottom:16px">Next exam: <strong style="color:#fff">EMM 302 (Solid Mechanics II)</strong> in 6 days. Target: Check answer on 2024 CAT 2 question.</p>
-          <div style="background:#030712;padding:12px;border:1px solid #1e293b;display:flex;justify-content:space-between;font-size:12px">
-            <span>WEEKLY DEDICATED STUDY TIME:</span>
-            <strong style="color:#10b981">14.5 HOURS</strong>
-          </div>
-        </div>
-
-        <!-- PANE 02 -->
-        <div id="pane-02" class="tab-pane">
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
-            <span style="color:#10b981;font-weight:700">BAND 02 // EXAM RADAR &amp; PREDICTION MATRIX</span>
-            <span style="color:#94a3b8">2.5X LECTURER HINT WEIGHTING</span>
-          </div>
-          <div style="margin-bottom:16px">
-            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-              <strong style="color:#fff">1. Mohr&apos;s Stress Circle &amp; Strain Rosettes</strong>
-              <span style="color:#10b981">92% FREQUENCY (25 MARKS)</span>
-            </div>
-            <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:92%"></div></div>
-          </div>
-          <div style="margin-bottom:16px">
-            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-              <strong style="color:#fff">2. Combined Bending &amp; Torsion (Shafts)</strong>
-              <span style="color:#10b981">80% FREQUENCY (15 MARKS)</span>
-            </div>
-            <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:80%"></div></div>
-          </div>
-        </div>
-
-        <!-- PANE 03 -->
-        <div id="pane-03" class="tab-pane active">
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
-            <span style="color:#10b981;font-weight:700">EMM 302 // KU CAT 2 QUESTION (15 MARKS)</span>
-            <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">BREAKPOINT ACTIVE</span>
-          </div>
-          <p style="color:#fff;font-size:14px;font-weight:700;margin-bottom:12px">Shaft under combined bending M = 4.2 kNm and torque T = 6.8 kNm. Allowable shear stress = 75 MPa. Calculate diameter d under Guest-Tresca theory.</p>
-          
-          <div style="background:#030712;border:1px solid #10b981;padding:10px;margin-bottom:8px;color:#10b981;display:flex;justify-content:space-between;font-size:12px">
-            <span>✓ STEP 1: Te = √(M² + T²) = 7.99 kNm</span>
-            <strong>PASSED</strong>
-          </div>
-          <div id="demo-step" style="background:#3b1219;border:1px solid #ef4444;padding:10px;margin-bottom:8px;color:#fca5a5;display:flex;justify-content:space-between;font-size:12px;align-items:center">
-            <span>✗ STEP 2: Section Modulus Zp = (π · d³) / 16</span>
-            <button onclick="toggleStep()" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer">BROKE HERE (LOGGED)</button>
-          </div>
-          <div style="background:#030712;border:1px solid #1e293b;padding:10px;color:#64748b;display:flex;justify-content:space-between;font-size:12px">
-            <span>○ STEP 3: Final Diameter d ≥ 81.6 mm</span>
-            <span>UNREACHED</span>
-          </div>
-        </div>
-
-        <!-- PANE 04 -->
-        <div id="pane-04" class="tab-pane">
-          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
-            <span style="color:#10b981;font-weight:700">BAND 04 // DEEP CONTEXT PROMPT BUILDER</span>
-            <span style="color:#94a3b8">~24,500 TOKENS</span>
-          </div>
-          <pre style="background:#030712;padding:12px;border:1px solid #1e293b;color:#10b981;font-size:11px;overflow-x:auto"># UNIT: EMM 302 // TOPIC: COMBINED LOADING
-## SYNCED NOTES &amp; LECTURER HINTS (2025 SEM 1)
-- Tresca: τmax = Te / Zp ≤ [τ]
-- Rankine: σmax = (M + Te) / (2*Z)
-## WEAKNESS TELEMETRY:
-- Failed Step 2 in CAT 2: Zp calculation formula slip.</pre>
-        </div>
+        <img id="main-shot" src="/screenshots/hero-app.png" alt="Study Desk Actual App UI" class="screenshot-img">
       </div>
     </div>
   </section>
 
-  <!-- SETUP SECTION -->
-  <section id="setup" style="margin-top:64px">
-    <div style="text-align:center;margin-bottom:40px">
-      <div class="pill">QUICK-START</div>
-      <h2 style="font-size:36px;font-weight:900;text-transform:uppercase">Get Started in 3 Steps.</h2>
+  <!-- 2. THREE PILLARS (POWER UP YOUR STUDY EXPERIENCE) -->
+  <section style="margin-top:80px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">THREE PILLARS</div>
+      <h2>Power Up Your Revision.</h2>
+      <p style="color:#64748b;font-size:16px;margin-top:12px">Engineered from the ground up for technical undergraduate curricula where flashcards fail.</p>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#10b981;margin-bottom:8px">[ 01 / LOCALHOST ]</div>
+        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Local-First Engine</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.6">Runs 100% on your laptop at <code>localhost:5190</code>. Opens instantly in Edge Application Mode with zero latency and zero mobile data consumption.</p>
+      </div>
+
+      <div class="pillar-card">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#f59e0b;margin-bottom:8px">[ 02 / EXAM RADAR ]</div>
+        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Past Paper Grounding</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.6">Calibrated across 10+ years of university examination patterns across KU, JKUAT, UoN, TUK, DeKUT, and Moi. 2.5× lecturer hint weighting.</p>
+      </div>
+
+      <div class="pillar-card">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#10b981;margin-bottom:8px">[ 03 / DIAGNOSTICS ]</div>
+        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Breakpoint Logic</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.6">Diagnostic step checkpoints instead of raw solution leaks. Pinpoints whether errors happen in setup, modulus choice, or basic algebra.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. OUR FEATURES (4 LARGE SHOWCASE ROWS WITH REAL SCREENSHOTS) -->
+  <section id="features" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">PRODUCT SHOWCASE</div>
+      <h2>Inside the Real Study Desk.</h2>
+      <p style="color:#64748b;font-size:16px;margin-top:12px">Actual screenshots captured from the running application.</p>
+    </div>
+
+    <!-- Row 1: Today's Mission -->
+    <div class="showcase-row">
+      <div class="shot-wrap">
+        <img src="/screenshots/band-01-today.png" alt="Band 01 Today" style="width:100%;height:auto;display:block">
+      </div>
+      <div>
+        <div class="pill" style="background:#10b981;color:#030712">BAND 01 // TODAY'S MISSION</div>
+        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Pass clean with structured daily focus.</h3>
+        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">Every morning, Study Desk analyzes your upcoming exam timetable and prepares your daily study mission. Tracks active study streaks, weekly dedicated hours, and urgent past-paper questions.</p>
+        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+          <li>✓ Dynamic 1-Week exam mode adjustment</li>
+          <li>✓ Active 5-day streak keeper telemetry</li>
+          <li>✓ Direct one-click task jump to Practice band</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 2: Exam Radar -->
+    <div class="showcase-row reverse">
+      <div>
+        <div class="pill" style="background:#f59e0b;color:#030712">BAND 02 // EXAM RADAR</div>
+        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Predictive past-paper frequency matrix.</h3>
+        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">Aggregates historical questions and marks. When your lecturer drops a hint, pin it in the matrix to apply a 2.5× weighting multiplier so your revision focuses on what counts.</p>
+        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+          <li>✓ 10-year historical topic occurrence rates</li>
+          <li>✓ 2.5× lecturer hint weighting multiplier</li>
+          <li>✓ 1-Page A4 formula triage sheet generation</li>
+        </ul>
+      </div>
+      <div class="shot-wrap">
+        <img src="/screenshots/band-02-radar.png" alt="Band 02 Radar" style="width:100%;height:auto;display:block">
+      </div>
+    </div>
+
+    <!-- Row 3: Breakpoint Checkpoints -->
+    <div class="showcase-row">
+      <div class="shot-wrap">
+        <img src="/screenshots/band-03-practise.png" alt="Band 03 Practise" style="width:100%;height:auto;display:block">
+      </div>
+      <div>
+        <div class="pill" style="background:#10b981;color:#030712">BAND 03 // BREAKPOINT CHECKPOINTS</div>
+        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Diagnostic checkpoints, not just answers.</h3>
+        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">When you miss an engineering problem, Study Desk walks you through intermediate checkpoints (Te, Zp, Diameter) and logs whether the slip was conceptual, modulus choice, or basic algebra.</p>
+        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+          <li>✓ Accepts any valid SI unit conversion (MPa, Pa, kNm)</li>
+          <li>✓ Clickable &quot;Broke Here&quot; telemetry tracking</li>
+          <li>✓ Differentiates Setup vs Modulus vs Sign errors</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 4: Review Pack -->
+    <div class="showcase-row reverse">
+      <div>
+        <div class="pill" style="background:#030712;color:#10b981">BAND 04 // DEEP CONTEXT PACKS</div>
+        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Zero-hallucination AI exam triage.</h3>
+        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">One-click compilation of your syllabus notes, lecturer slides, identified student weakspots, and past-paper diagrams into a structured Markdown prompt pack (~24,500 tokens) ready for Claude or DeepSeek.</p>
+        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+          <li>✓ Grounded in real Kenyan past papers and CATs</li>
+          <li>✓ One-click clipboard copy for LLM reasoning models</li>
+          <li>✓ Zero hallucinated references or formulas</li>
+        </ul>
+      </div>
+      <div class="shot-wrap">
+        <img src="/screenshots/band-04-review.png" alt="Band 04 Review" style="width:100%;height:auto;display:block">
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. MORE FEATURES (6 SHORT CARDS) -->
+  <section id="capabilities" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">CAPABILITIES</div>
+      <h2>More Engineering Tools.</h2>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">BAND FILTERING</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">4-Band Focused Workflow</h4>
+        <p style="color:#64748b;font-size:13px">Eliminates interface clutter by organizing 14 engineering subcomponents into four focused workspaces: Today, Plan, Practise, and Review.</p>
+      </div>
+
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">CALCULATION CHECKER</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Unit-Aware Checker</h4>
+        <p style="color:#64748b;font-size:13px">Understands engineering units natively (MPa, GPa, rad, kNm, mm). Detects order-of-magnitude slipups without penalizing concepts.</p>
+      </div>
+
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">EXAM-EVE TRIAGE</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">1-Page Survival Kit</h4>
+        <p style="color:#64748b;font-size:13px">Export worked formula ladders and personal calculation traps into a single printable A4 reference sheet for exam eve.</p>
+      </div>
+
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">VOICE EVALUATION</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">4-Min Teach-Back</h4>
+        <p style="color:#64748b;font-size:13px">Record a quick 4-minute verbal explanation of complex concepts to catch conceptual blind spots before entering the exam room.</p>
+      </div>
+
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">CAMPUS PORTABILITY</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">USB Lab Edition</h4>
+        <p style="color:#64748b;font-size:13px">Runs directly from a flash drive in restricted university computer labs where installer execution is blocked.</p>
+      </div>
+
+      <div class="feature-box">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">DAILY PRACTICE</div>
+        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Discord Companion</h4>
+        <p style="color:#64748b;font-size:13px">Pulls daily engineering questions on Discord. Earn +2 pts for attempting, +10 for solving, and unlock 7-day streak roles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DISTRIBUTION MATRIX -->
+  <section id="matrix" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">DISTRIBUTION PACKAGES</div>
+      <h2>Choose Your Deployment.</h2>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="pill" style="background:#10b981;color:#030712">RECOMMENDED</div>
+          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Windows Installer (.exe)</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px">The full 71 MB binary bundle with all offline course materials, past papers, and Edge Application Mode setup.</p>
+          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
+            <li>✓ Zero admin rights needed</li>
+            <li>✓ Desktop shortcut creation</li>
+            <li>✓ Local database in <code>study\data</code></li>
+          </ul>
+        </div>
+        <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="width:100%;margin-top:24px">Download (.EXE)</a>
+      </div>
+
+      <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="pill" style="background:#f59e0b;color:#030712">CAMPUS LABS</div>
+          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Portable USB Archive</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px">Designed for university lab workstations where executing setup wizards is restricted. Run directly from flash drive.</p>
+          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
+            <li>✓ No installation required</li>
+            <li>✓ Run directly from USB drive</li>
+            <li>✓ Safe for campus lab sessions</li>
+          </ul>
+        </div>
+        <a class="btn btn-outline" href="/downloads/StudyDesk.exe" download style="width:100%;margin-top:24px">Download Portable</a>
+      </div>
+
+      <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="pill" style="background:#030712;color:#fff">DISCORD BOT</div>
+          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Mobile Slash Bot</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px">Study on the go with daily practice questions (+2 attempt, +10 solve, 7-day streak roles) paired to your running desk.</p>
+          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
+            <li>✓ <code>/study today</code> morning plan</li>
+            <li>✓ <code>/study mark</code> photo check</li>
+            <li>✓ Daily problem streaks</li>
+          </ul>
+        </div>
+        <a class="btn btn-outline" href="https://discord.gg/7yUz2rXumm" target="_blank" style="width:100%;margin-top:24px">Join Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. SETUP SECTION -->
+  <section id="setup" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">INITIALIZATION</div>
+      <h2>Get Started in 3 Steps.</h2>
     </div>
 
     <div class="setup-step">
       <div class="step-num">01</div>
       <div>
-        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Download &amp; Extract StudyDesk.exe</h3>
+        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Download &amp; Extract StudyDesk.exe</h3>
         <p style="color:#64748b;font-size:14px">Double-click the binary installer. It self-extracts automatically to <code>%LOCALAPPDATA%\StudyDesk</code> with zero administrative permission required.</p>
       </div>
     </div>
@@ -446,7 +697,7 @@ footer {
     <div class="setup-step">
       <div class="step-num" style="color:#f59e0b">02</div>
       <div>
-        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Get Your Single-Use Key in Discord</h3>
+        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Get Your Key in Discord</h3>
         <p style="color:#64748b;font-size:14px">Open the Discord server and run <code>/study link</code>. The bot delivers your private onboarding code (e.g. <code>SD-7K2M-9QXA</code>).</p>
       </div>
     </div>
@@ -454,62 +705,130 @@ footer {
     <div class="setup-step">
       <div class="step-num">03</div>
       <div>
-        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Run setup.bat &amp; Study</h3>
+        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Run setup.bat &amp; Study</h3>
         <p style="color:#64748b;font-size:14px">Paste your key, pick your engineering units, and Study Desk opens in Edge App mode at <code>localhost:5190</code>.</p>
       </div>
     </div>
   </section>
 
-  <!-- DISTRIBUTION PACKAGES -->
-  <div class="grid-cards">
-    <div class="card">
-      <div class="pill">OFFICIAL RELEASE</div>
-      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Windows Installer (.exe)</h3>
-      <p style="color:#64748b;font-size:14px;margin-bottom:20px">The full 71 MB binary bundle with all offline course materials, past papers, and Edge Application Mode setup.</p>
-      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="width:100%">Download (.EXE)</a>
+  <!-- 7. FAQ ACCORDION -->
+  <section id="faq" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+    <div class="section-head">
+      <div class="pill">FAQ</div>
+      <h2>Frequently Asked Questions.</h2>
     </div>
 
-    <div class="card">
-      <div class="pill">CAMPUS LABS</div>
-      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Portable USB Archive</h3>
-      <p style="color:#64748b;font-size:14px;margin-bottom:20px">Designed for university lab workstations where executing setup wizards is restricted. Run directly from flash drive.</p>
-      <a class="btn btn-outline" href="/downloads/StudyDesk.exe" download style="width:100%">Download Portable</a>
-    </div>
+    <div style="border:4px solid #030712;background:var(--card-bg);box-shadow:6px 6px 0px #030712">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span>Is Study Desk really free and offline?</span>
+          <span>+</span>
+        </button>
+        <div class="faq-ans">
+          Yes. Study Desk runs 100% locally on localhost:5190 from your laptop. All your course outlines, past papers, notes, checkpoints, and formula ladders run completely offline without consuming your mobile internet data bundles.
+        </div>
+      </div>
 
-    <div class="card">
-      <div class="pill">DISCORD BOT</div>
-      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Mobile Slash Bot</h3>
-      <p style="color:#64748b;font-size:14px;margin-bottom:20px">Study on the go with daily practice questions (+2 attempt, +10 solve, 7-day streak roles) paired to your running desk.</p>
-      <a class="btn btn-outline" href="https://discord.gg/7yUz2rXumm" target="_blank" style="width:100%">Join Discord</a>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span>Do I need administrator privileges on my university laptop?</span>
+          <span>+</span>
+        </button>
+        <div class="faq-ans" style="display:none">
+          No. Study Desk installs directly to your user profile directory (%LOCALAPPDATA%\StudyDesk). It does not require administrative UAC passwords, registry edits, or elevated permissions.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span>How does the Discord Companion pairing work?</span>
+          <span>+</span>
+        </button>
+        <div class="faq-ans" style="display:none">
+          Join our community Discord and type /study link. The bot returns a single-use onboarding code. During setup.bat, paste that key to pair your desktop runtime with your phone, enabling daily practice questions (+2 attempt, +10 solve, streak roles).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span>What engineering disciplines and universities are supported?</span>
+          <span>+</span>
+        </button>
+        <div class="faq-ans" style="display:none">
+          EBK-aligned curricula for Mechanical, Civil, Electrical, Mechatronic, and Chemical engineering across Kenyatta University (KU), JKUAT, University of Nairobi (UoN), TUK, DeKUT, and Moi University.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span>Can I use my own Gemini or Claude API key?</span>
+          <span>+</span>
+        </button>
+        <div class="faq-ans" style="display:none">
+          Yes. In Study Desk Settings, you can add your own free Google Gemini API key or Anthropic Claude key. Your API keys are stored strictly on your local disk and are never sent to third-party tracking servers.
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- 8. CONTACT SECTION -->
+  <section style="margin-top:96px;text-align:center;padding:48px 20px;background:#f1f5f9;border:4px solid #030712;box-shadow:6px 6px 0px #030712">
+    <h3 style="font-size:26px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Need support or syllabus help?</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:20px">Reach out directly to the Engineering Study Hub maintenance team.</p>
+    <div style="display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center">
+      <span style="font-family:var(--mono);font-weight:700;padding:8px 16px;background:#fff;border:2px solid #030712">gregorykimemiah@gmail.com</span>
+      <button class="btn btn-primary" onclick="copyContactEmail(this)" style="padding:10px 18px;font-size:12px">Copy Email</button>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <p>© 2024–2026 ENGINEERING STUDY HUB // STUDY DESK LOCAL ENGINE // NAIROBI, KENYA</p>
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap;gap:24px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="/logo-new.jpeg" alt="Logo" width="30" height="30" style="border:1px solid #fff">
+      <span>STUDY DESK // V2026.10 // NAIROBI, KENYA</span>
+    </div>
+    <div style="display:flex;gap:20px">
+      <a href="/#/" style="color:#fff;text-decoration:none">Home</a>
+      <a href="https://github.com/kkkkenya/discord-sync-bot" target="_blank" style="color:#fff;text-decoration:none">GitHub</a>
+      <a href="https://discord.gg/7yUz2rXumm" target="_blank" style="color:#fff;text-decoration:none">Discord</a>
+    </div>
+    <a href="/downloads/StudyDesk.exe" download style="color:#030712;background:#10b981;padding:6px 14px;text-decoration:none;font-weight:700;border:1px solid #fff">Download .EXE (71 MB)</a>
+  </div>
 </footer>
 
 <script>
-function openBand(band, btn) {
+const shotMap = {
+  hero: '/screenshots/hero-app.png',
+  '01': '/screenshots/band-01-today.png',
+  '02': '/screenshots/band-02-radar.png',
+  '03': '/screenshots/band-03-practise.png',
+  '04': '/screenshots/band-04-review.png'
+};
+
+function switchBand(band, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
-  const target = document.getElementById('pane-' + band);
-  if (target) target.classList.add('active');
-}
-function toggleStep() {
-  const el = document.getElementById('demo-step');
-  if (el.style.background.includes('3b1219')) {
-    el.style.background = '#030712';
-    el.style.borderColor = '#10b981';
-    el.style.color = '#10b981';
-    el.innerHTML = '<span>✓ STEP 2: Modulus corrected</span><span style="font-weight:700">RESOLVED</span>';
-  } else {
-    el.style.background = '#3b1219';
-    el.style.borderColor = '#ef4444';
-    el.style.color = '#fca5a5';
-    el.innerHTML = '<span>✗ STEP 2: Section Modulus Zp = (π · d³) / 16</span><button onclick="toggleStep()" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer">BROKE HERE (LOGGED)</button>';
+  const img = document.getElementById('main-shot');
+  if (img && shotMap[band]) {
+    img.src = shotMap[band];
   }
+}
+
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  if (!ans) return;
+  const isHidden = ans.style.display === 'none';
+  ans.style.display = isHidden ? 'block' : 'none';
+  const icon = btn.querySelector('span:last-child');
+  if (icon) icon.textContent = isHidden ? '−' : '+';
+}
+
+function copyContactEmail(btn) {
+  navigator.clipboard.writeText('gregorykimemiah@gmail.com');
+  const orig = btn.textContent;
+  btn.textContent = 'Copied!';
+  setTimeout(() => { btn.textContent = orig; }, 2000);
 }
 </script>
 </body>

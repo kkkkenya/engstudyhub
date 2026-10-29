@@ -1,6 +1,5 @@
 {
-  "framework": null,
-  "installCommand": "echo no-install-needed",
-  "buildCommand": "echo static-site-no-build-step",
-  "outputDirectory": "public/redesign"
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
