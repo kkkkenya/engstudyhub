@@ -7,7 +7,12 @@ import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
 import logoImg from "@/assets/logo-new.jpeg";
-import { Quote, Home, Info, FolderOpen, CreditCard, UserPlus, Wrench, Briefcase } from "lucide-react";
+import { Quote, Home, Info, FolderOpen, UserPlus, Wrench, Briefcase, Terminal, Menu, X } from "lucide-react";
+
+import { StudyDeskShowcase } from "@/components/StudyDeskShowcase";
+import { BrutalistSlideDeck } from "@/components/BrutalistSlideDeck";
+import { FoundryDropWaitlist } from "@/components/FoundryDropWaitlist";
+import { MinimalistPricingBar } from "@/components/MinimalistPricingBar";
 
 const WHATSAPP_URL = "https://wa.me/254745947704";
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -19,12 +24,11 @@ const NAV_LINKS = [
   { href: "/projects", label: "Projects", icon: FolderOpen, isRoute: true },
   { href: "/tools", label: "Tools", icon: Wrench, isRoute: true },
   { href: "/jobs", label: "Jobs", icon: Briefcase, isRoute: true },
-  { href: "#pricing", label: "Pricing", icon: CreditCard },
+  { href: "/download", label: "Desk [.EXE]", icon: Terminal, isRoute: true },
   { href: "#join", label: "Join", icon: UserPlus },
 ];
 
-
-const FAQItem = ({ question, answer }: {question: string;answer: string;}) => {
+const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="border-b-4 border-foreground group cursor-pointer last:border-b-0" onClick={() => setOpen(!open)}>
@@ -32,13 +36,13 @@ const FAQItem = ({ question, answer }: {question: string;answer: string;}) => {
         <h4 className="font-display text-lg md:text-xl font-bold uppercase">{question}</h4>
         <span className="font-mono text-2xl font-black">{open ? "−" : "+"}</span>
       </div>
-      {open &&
-      <div className="p-4 md:p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
+      {open && (
+        <div className="p-4 md:p-6 pt-0 border-t-2 border-dashed border-foreground bg-card font-body text-muted-foreground">
           {answer}
         </div>
-      }
-    </div>);
-
+      )}
+    </div>
+  );
 };
 
 // Scroll-triggered fade-in hook
@@ -49,7 +53,12 @@ const useFadeIn = () => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => {if (entry.isIntersecting) {setVisible(true);obs.unobserve(el);}},
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.unobserve(el);
+        }
+      },
       { threshold: 0.1 }
     );
     obs.observe(el);
@@ -58,16 +67,16 @@ const useFadeIn = () => {
   return { ref, className: `transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}` };
 };
 
-const FadeIn = ({ children, className = "" }: {children: React.ReactNode;className?: string;}) => {
+const FadeIn = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const fade = useFadeIn();
   return <div ref={fade.ref} className={`${fade.className} ${className}`}>{children}</div>;
 };
 
 const TESTIMONIALS = [
-{ quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
-{ quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
-{ quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis }];
-
+  { quote: "Passed my Materials Exam after joining a study squad here.", name: "Brian M.", uni: "KU", avatar: avatarBrian },
+  { quote: "Got my first internship through the career pipeline. Worth every shilling.", name: "Aisha K.", uni: "KU", avatar: avatarAisha },
+  { quote: "The notes and past papers alone are worth it. Saved my semester.", name: "Denis O.", uni: "KU", avatar: avatarDenis }
+];
 
 const AutoplayVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -76,8 +85,11 @@ const AutoplayVideo = () => {
     if (!video) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {video.play().catch(() => {});} else
-        {video.pause();}
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
       },
       { threshold: 0.3 }
     );
@@ -93,16 +105,25 @@ const AutoplayVideo = () => {
       playsInline
       loop
       poster={heroAboutImg}
-      className="w-full h-full object-contain border-2 border-foreground bg-foreground" />);
-
-
+      className="w-full h-full object-contain border-2 border-foreground bg-foreground"
+    />
+  );
 };
-const PROJECTS = [
-{ tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
-{ tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
-{ tag: "Software #3", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "primary", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" },
-{ tag: "Drone Simulation #4", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80" }];
 
+const PROJECTS = [
+  { tag: "Hardware #1", techs: ["ARDUINO", "C++", "HARDWARE"], title: "Truss Bridge Build & Load Testing", desc: "Full truss bridge construction with structural analysis, load testing, and documentation. Completed by the structures squad.", accent: "primary", status: "Completed", timeline: "Jan 2026", img: trussBridgeImg },
+  { tag: "IoT System #2", techs: ["ESP32", "PYTHON", "AWS"], title: "IoT Smart Irrigation System", desc: "Soil moisture telemetry transmitted to a custom dashboard via MQTT. Real-world Kenyan application.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80" },
+  { tag: "Software #3", techs: ["REACT", "NODEJS", "DATA VIS"], title: "Engineering Metrics Dashboard", desc: "A full-stack application for visualizing structural stress data. Built by the software engineering sub-squad.", accent: "primary", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" },
+  { tag: "Drone Simulation #4", techs: ["MATLAB", "SIMULINK"], title: "Basic UAV Drone Simulation", desc: "Mathematical modeling of quadcopter flight dynamics before moving to physical prototyping.", accent: "accent", status: "Upcoming", timeline: "TBD", img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80" }
+];
+
+const scrollToSection = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+  e.preventDefault();
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -118,27 +139,19 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  // Smooth scroll handler
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="text-foreground font-body antialiased overflow-x-hidden">
       {/* Marquee ticker — hidden on mobile */}
       <div className="hidden sm:flex w-full bg-foreground text-primary font-mono text-xs uppercase tracking-widest py-1.5 border-b-2 border-foreground overflow-hidden whitespace-nowrap">
         <div className="flex animate-marquee">
-          {[...Array(2)].map((_, i) =>
-          <span key={i} className="flex">
+          {[...Array(2)].map((_, i) => (
+            <span key={i} className="flex">
               <span className="mx-4">★ NOW OPEN FOR NEW MEMBERS</span>
               <span className="mx-4">/// NAIROBI, KENYA</span>
               <span className="mx-4">/// 450+ ENGINEERS & COUNTING</span>
               <span className="mx-4">/// STUDY · BUILD · LAUNCH</span>
             </span>
-          )}
+          ))}
         </div>
       </div>
 
@@ -147,26 +160,143 @@ const Index = () => {
         <div className="flex items-center">
           <img src={logoImg} alt="Engineering Study Hub" className="h-10 md:h-12 w-auto" />
         </div>
-        <div className="hidden md:flex items-center gap-6 font-mono text-sm font-bold uppercase">
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-5 font-mono text-sm font-bold uppercase">
           {NAV_LINKS.map((link) =>
             link.isRoute ? (
               <Link key={link.href} to={link.href} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
                 {link.label}
               </Link>
             ) : (
-              <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1">
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={scrollToSection(link.href.replace("#", ""))}
+                className="hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-1"
+              >
                 {link.label}
               </a>
             )
           )}
+
+          {/* Desktop Nav Item 1: Study Desk (.EXE) */}
+          <button
+            type="button"
+            onClick={scrollToSection("study-desk")}
+            className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider px-3 py-1.5 border-2 border-[#030712] bg-[#f59e0b] text-[#030712] shadow-[3px_3px_0px_0px_#030712] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#030712] transition-all cursor-pointer"
+          >
+            <Terminal className="w-4 h-4 stroke-[2.5]" />
+            <span>Study Desk</span>
+            <span className="bg-[#030712] text-[#10b981] px-1.5 py-0.5 text-[10px] leading-none font-mono">
+              .EXE
+            </span>
+          </button>
+
+          {/* Desktop Nav Item 2: High-FOMO New Feature Drop */}
+          <button
+            type="button"
+            onClick={scrollToSection("foundry-drop")}
+            className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider px-3 py-1.5 border-2 border-[#030712] bg-[#030712] text-white dark:bg-white dark:text-[#030712] shadow-[3px_3px_0px_0px_#10b981] hover:translate-x-[1px] hover:translate-y-[1px] transition-all cursor-pointer"
+          >
+            <span className="w-2 h-2 bg-[#10b981] animate-pulse" />
+            <span>Foundry Lab</span>
+            <span className="bg-[#10b981] text-[#030712] px-1.5 py-0.5 text-[10px] leading-none font-mono font-black">
+              BATCH 01
+            </span>
+          </button>
         </div>
+
         <div className="hidden md:block">
-          <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal inline-block bg-primary text-foreground border-2 border-foreground font-mono font-bold uppercase text-sm px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform">
+          <a
+            href="#join"
+            onClick={scrollToSection("join")}
+            className="btn-brutal inline-block bg-primary text-foreground border-2 border-foreground font-mono font-bold uppercase text-sm px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform"
+          >
             Join Now
           </a>
         </div>
+
+        {/* Mobile quick actions */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={scrollToSection("study-desk")}
+            className="inline-flex items-center gap-1 font-mono text-[11px] font-bold uppercase px-2 py-1 border-2 border-[#030712] bg-[#f59e0b] text-[#030712] shadow-[2px_2px_0px_0px_#030712]"
+          >
+            <span>Desk</span>
+            <span className="bg-[#030712] text-[#10b981] px-1 py-0.5 text-[9px] font-mono leading-none">.EXE</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 border-2 border-foreground bg-primary text-foreground font-mono text-xs font-bold uppercase shadow-brutal-sm cursor-pointer"
+            aria-label="Toggle navigation"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </nav>
 
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-card border-b-4 border-foreground p-4 flex flex-col gap-3 font-mono text-sm font-bold uppercase animate-in slide-in-from-top-2">
+          {NAV_LINKS.map((link) =>
+            link.isRoute ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-primary transition-colors py-1.5 border-b border-foreground/10"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  scrollToSection(link.href.replace("#", ""))(e);
+                }}
+                className="hover:text-primary transition-colors py-1.5 border-b border-foreground/10"
+              >
+                {link.label}
+              </a>
+            )
+          )}
+          <button
+            type="button"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              scrollToSection("study-desk")(e);
+            }}
+            className="text-left py-1.5 text-[#f59e0b] font-bold border-b border-foreground/10"
+          >
+            ► Study Desk [.EXE]
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              scrollToSection("foundry-drop")(e);
+            }}
+            className="text-left py-1.5 text-[#10b981] font-bold border-b border-foreground/10"
+          >
+            ★ Foundry Lab [BATCH 01]
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              scrollToSection("pricing")(e);
+            }}
+            className="text-left py-1.5 text-primary font-bold"
+          >
+            $ Pricing / Pass
+          </button>
+        </div>
+      )}
 
       <main className="pb-0">
         {/* HERO */}
@@ -195,31 +325,33 @@ const Index = () => {
           </FadeIn>
 
           <FadeIn>
-
             <div className="border-4 border-foreground bg-foreground p-4 md:p-12 shadow-brutal mb-8 md:mb-12 relative overflow-hidden">
               <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
               <div className="absolute top-4 right-4 md:top-6 md:right-6 font-mono text-xs text-primary/60 uppercase tracking-widest hidden md:block">[ 001 / HOME ]</div>
               <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-start md:items-end">
                 <div className="w-full md:w-2/3">
-                  <span className="inline-block font-mono text-xs font-bold text-foreground bg-primary px-3 py-1 mb-4 md:mb-6 border-2 border-primary">/// FOR ENGINEERS, BY ENGINEERS</span>
+                  <span className="inline-block font-mono text-xs font-bold text-foreground bg-primary px-3 py-1 mb-4 md:mb-6 border-2 border-primary">
+                    /// FOR ENGINEERS, BY ENGINEERS · REV // 2026.10
+                  </span>
                   <h1 className="font-display text-2xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold leading-[0.88] tracking-tighter uppercase mb-4 text-card">
                     Study Smarter, <span className="text-primary">Build Reality.</span>
                   </h1>
-                  {/* Free-trial CTA — mobile first, before subtitle */}
-                  <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="sm:hidden btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] bg-primary text-foreground border-4 border-foreground font-mono font-semibold text-base uppercase rounded-xl mb-4 shadow-brutal hover:-translate-y-1 transition-transform">
-                    Start your free 7-day trial
-                  </a>
                   <p className="font-body text-sm sm:text-base md:text-xl text-card/60 max-w-xl mt-2 md:mt-4 line-clamp-2 sm:line-clamp-none">
                     The structured Discord community where Kenyan engineering students study smarter, build real projects, and land opportunities — together.
                   </p>
                 </div>
                 <div className="hidden sm:flex w-full md:w-1/3 md:border-l-4 md:border-primary/30 md:pl-8 py-4 flex-col gap-4">
-                  <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform w-full">
+                  <a href="#join" onClick={scrollToSection("join")} className="btn-brutal bg-primary text-foreground border-4 border-primary font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 text-center shadow-brutal-primary hover:-translate-y-1 transition-transform w-full">
                     Join the Hub ↗
                   </a>
-                  <a href="#about" onClick={(e) => handleNavClick(e, "#about")} className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 md:px-8 py-3 text-center hover:bg-card hover:text-foreground transition-colors w-full">
-                    Learn More
-                  </a>
+                  <button
+                    type="button"
+                    onClick={scrollToSection("study-desk")}
+                    className="bg-transparent text-card border-4 border-card/30 font-mono font-bold text-sm uppercase px-6 md:px-8 py-3 text-center hover:bg-card hover:text-foreground transition-colors w-full cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <Terminal className="w-4 h-4 text-primary" />
+                    <span>Study Desk [.EXE]</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -229,15 +361,15 @@ const Index = () => {
           <FadeIn>
             <div className="border-4 border-foreground bg-foreground text-card shadow-brutal-sm mb-8 md:mb-12 grid grid-cols-3 divide-x-4 divide-primary">
               {[
-              { value: "450+", label: "Members" },
-              { value: "4", label: "Universities" },
-              { value: "20+", label: "Projects Shipped" }].
-              map((stat) =>
-              <div key={stat.label} className="flex-1 p-4 md:p-6 text-center">
+                { value: "450+", label: "Members" },
+                { value: "4", label: "Universities" },
+                { value: "20+", label: "Projects Shipped" }
+              ].map((stat) => (
+                <div key={stat.label} className="flex-1 p-4 md:p-6 text-center">
                   <div className="font-mono text-3xl md:text-4xl font-black text-primary">{stat.value}</div>
                   <div className="font-mono text-xs uppercase tracking-wider text-card/70 mt-1">{stat.label}</div>
                 </div>
-              )}
+              ))}
             </div>
           </FadeIn>
 
@@ -287,13 +419,13 @@ const Index = () => {
 
           <div className="border-t-4 border-foreground flex flex-col">
             {[
-            { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated by university, year, and unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
-            { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
-            { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
-            { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
-            { num: "05", tag: "CHK", title: "Daily Accountability", desc: "Automated question threads and check-ins. Report progress. State blockers. Move forward.", hoverBg: "hover:bg-accent" }].
-            map((item) =>
-            <FadeIn key={item.num}>
+              { num: "01", tag: "///", title: "Organized Channels", desc: "Discord architecture separated by university, year, and unit. No clutter. Just the signal.", hoverBg: "hover:bg-primary" },
+              { num: "02", tag: "[+]", title: "Live Study Rooms", desc: "Pomodoro-timed voice channels. Lock in with others. Silence the noise. Execute your study block.", hoverBg: "hover:bg-accent" },
+              { num: "03", tag: "DOC", title: "Curated Archives", desc: "A centralized database of categorized notes and past papers. No more begging in WhatsApp groups.", hoverBg: "hover:bg-card" },
+              { num: "04", tag: "EXE", title: "Software Support", desc: "Dedicated help for MATLAB, Python, SolidWorks, AutoCAD, and C++.", hoverBg: "hover:bg-primary" },
+              { num: "05", tag: "QUIZ", title: "Daily Practice Drills & Streaks", desc: "Every morning at 07:00, a 5-minute past-paper problem drops in Discord. Tap A/B/C/D to answer, earn streak points (+2 for attempting, +10 for solving), and unlock 7-day and 30-day verified badges.", hoverBg: "hover:bg-accent" }
+            ].map((item) => (
+              <FadeIn key={item.num}>
                 <div className={`group border-b-4 border-foreground flex flex-col md:flex-row items-start md:items-center ${item.hoverBg} transition-colors p-4 md:p-8 cursor-default`}>
                   <div className="hidden md:block font-mono text-4xl md:text-5xl font-black text-outline-dark md:w-32 mb-2 md:mb-0 group-hover:text-foreground transition-all">{item.num}</div>
                   <div className="md:w-1/3 pr-4 md:pr-8 mb-2 md:mb-0">
@@ -305,7 +437,7 @@ const Index = () => {
                   </div>
                 </div>
               </FadeIn>
-            )}
+            ))}
           </div>
         </section>
 
@@ -326,8 +458,8 @@ const Index = () => {
             </FadeIn>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {PROJECTS.map((project, i) =>
-              <FadeIn key={i}>
+              {PROJECTS.map((project, i) => (
+                <FadeIn key={i}>
                   <div className="border-4 border-gray-700 bg-gray-900 group hover:border-primary transition-colors duration-300 relative flex flex-col h-full">
                     {/* Status + Timeline badges */}
                     <div className="absolute top-0 left-0 right-0 flex justify-between items-start z-10">
@@ -343,19 +475,22 @@ const Index = () => {
                     </div>
                     <div className="p-5 md:p-8 flex-1 flex flex-col">
                       <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-                        {project.techs.map((t) =>
-                      <span key={t} className="border border-gray-600 font-mono text-xs px-2 py-1 text-primary">{t}</span>
-                      )}
+                        {project.techs.map((t) => (
+                          <span key={t} className="border border-gray-600 font-mono text-xs px-2 py-1 text-primary">{t}</span>
+                        ))}
                       </div>
                       <h3 className="font-display text-2xl md:text-3xl font-bold uppercase mb-3 md:mb-4 text-card group-hover:text-primary transition-colors">{project.title}</h3>
                       <p className="font-body text-sm md:text-base text-gray-400 flex-1">{project.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
-              )}
+              ))}
             </div>
           </div>
         </section>
+
+        {/* BRUTALIST SLIDE DECK (DUAL-MODE CAD VIEWER + SPREAD THE DECK) */}
+        <BrutalistSlideDeck />
 
         {/* CHALLENGE PROJECTS */}
         <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24">
@@ -462,8 +597,8 @@ const Index = () => {
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {TESTIMONIALS.map((t, i) =>
-            <FadeIn key={i}>
+            {TESTIMONIALS.map((t, i) => (
+              <FadeIn key={i}>
                 <div className="border-4 border-foreground bg-card p-6 md:p-8 shadow-brutal hover:shadow-brutal-primary transition-shadow h-full flex flex-col">
                   <Quote className="text-primary mb-4" size={32} />
                   <p className="font-body text-base md:text-lg text-foreground font-medium mb-6 flex-1 leading-relaxed">"{t.quote}"</p>
@@ -476,116 +611,24 @@ const Index = () => {
                   </div>
                 </div>
               </FadeIn>
-            )}
+            ))}
           </div>
         </section>
 
-        {/* PRICING */}
-        <section id="pricing" className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24">
-          <FadeIn className="text-center mb-12 md:mb-16">
-            <span className="font-mono text-primary font-bold text-sm mb-4 block">/// PRICING</span>
-            <h2 className="font-display text-4xl md:text-7xl font-bold uppercase leading-none">
-              Choose Your <span className="text-outline-dark">Plan</span>
-            </h2>
-            <div className="w-16 h-1 bg-primary mx-auto mt-4" />
-          </FadeIn>
+        {/* FLAGSHIP STUDY DESK SHOWCASE (.EXE) */}
+        <StudyDeskShowcase />
 
-          <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
-            {/* Premium — appears FIRST on mobile */}
-            <FadeIn className="order-1 md:order-2">
-              <div className="border-4 border-foreground bg-foreground text-card p-6 md:p-12 shadow-brutal-primary relative flex flex-col h-full transform md:-translate-y-4">
-                <div className="absolute -top-5 left-6 md:left-8 bg-primary text-foreground font-mono font-black text-sm px-4 py-1 border-4 border-foreground">LIFETIME ACCESS</div>
-                <div className="border-b-4 border-muted-foreground/30 pb-6 md:pb-8 mb-6 md:mb-8 mt-4">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4 text-primary">Premium Access</h3>
-                  <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-5xl font-black text-card">KES 800</span>
-                    <span className="font-mono text-lg text-primary font-bold">/ LIFETIME</span>
-                  </div>
-                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">Pay once. Access everything. Forever.</div>
-                </div>
-                <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Everything in Basic</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Live Pomodoro study rooms</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Project build squads (per semester)</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Daily homework & CAT support</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Career & internship pipeline</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Priority Discord channels</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Direct access to project leads</li>
-                </ul>
-                <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full min-h-[56px] text-center border-4 border-accent bg-accent text-foreground font-mono font-bold text-lg uppercase py-4 hover:bg-card hover:border-card transition-colors">
-                  Join Premium — KES 800 once
-                </a>
-                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-muted-foreground/30 pt-3 mt-4">Pay by M-Pesa, then tap "I've paid" in Discord • Lifetime access</p>
-              </div>
-            </FadeIn>
+        {/* FOUNDRY DROP WAITLIST (BATCH 01) */}
+        <FoundryDropWaitlist />
 
-            {/* Basic */}
-            <FadeIn className="order-2 md:order-1">
-              <div className="border-4 border-foreground bg-card p-6 md:p-12 shadow-brutal flex flex-col h-full">
-                <div className="border-b-4 border-foreground pb-6 md:pb-8 mb-6 md:mb-8">
-                  <h3 className="font-display text-3xl md:text-4xl font-bold uppercase mb-4">Basic Access</h3>
-                  <div className="flex items-baseline gap-3 md:gap-4 mb-2">
-                    <span className="font-mono text-5xl font-black">KES 50</span>
-                    <span className="font-mono text-lg text-muted-foreground">/ semester</span>
-                  </div>
-                  <div className="font-body text-sm text-muted-foreground border-l-4 border-primary pl-3 mt-3">First 7 days free when you join. Then renew each semester.</div>
-                </div>
-                <ul className="font-mono text-sm space-y-3 md:space-y-4 mb-8 md:mb-12 flex-1">
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>All university channels</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Notes & past papers archive</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>Past exam papers (sorted by unit & year)</li>
-                  <li className="flex items-center gap-3"><span className="text-primary font-black text-lg">✓</span>PDF resource library</li>
-                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Live study rooms</li>
-                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Project build squads</li>
-                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Homework & CAT support</li>
-                  <li className="flex items-center gap-3 opacity-40"><span className="text-muted-foreground font-black text-lg">✗</span>Career pipeline</li>
-                </ul>
-                <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal flex items-center justify-center gap-2 w-full text-center border-4 border-foreground bg-card hover:bg-primary hover:text-foreground text-foreground font-mono font-bold text-lg uppercase py-4 transition-colors">
-                  Start free 7-day trial
-                </a>
-                <p className="font-mono text-xs text-muted-foreground text-center border-t-2 border-foreground pt-3 mt-4">Then KES 50/semester by M-Pesa • No card needed</p>
-              </div>
-            </FadeIn>
-          </div>
-
-          {/* Value breakdown */}
-          <FadeIn>
-            <div className="border-4 border-foreground bg-foreground text-card p-6 mt-8 max-w-5xl mx-auto">
-              <p className="font-body text-base text-card/70 text-center mb-4">
-                A Kenyan engineering degree takes 4 years. Premium costs less than one textbook — and lasts the whole degree.
-              </p>
-              <div className="flex divide-x-4 divide-primary">
-                <div className="flex-1 text-center px-2">
-                  <div className="font-mono text-2xl font-black text-primary">8 semesters</div>
-                  <div className="font-mono text-xs text-card/60 uppercase mt-1">Basic would cost KES 400 total</div>
-                </div>
-                <div className="flex-1 text-center px-2">
-                  <div className="font-mono text-2xl font-black text-primary">KES 800</div>
-                  <div className="font-mono text-xs text-card/60 uppercase mt-1">Premium costs this. Once. Ever.</div>
-                </div>
-                <div className="flex-1 text-center px-2">
-                  <div className="font-mono text-2xl font-black text-primary">KES 400 saved</div>
-                  <div className="font-mono text-xs text-card/60 uppercase mt-1">By going Premium from day one</div>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* Trust signals */}
-          <FadeIn>
-            <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-6 md:gap-10">
-              <span className="text-xs text-muted-foreground font-mono">🔒 Secure payment via M-Pesa</span>
-              <span className="text-xs text-muted-foreground font-mono">⚡ Access within minutes</span>
-              <span className="text-xs text-muted-foreground font-mono">✅ 200+ active members</span>
-            </div>
-          </FadeIn>
-        </section>
+        {/* MINIMALIST PRICING BAR & ON-DEMAND M-PESA MODAL */}
+        <MinimalistPricingBar />
 
         {/* JOIN + RECRUIT */}
         <section id="join" className="border-t-4 border-foreground">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <FadeIn className="p-8 md:p-24 bg-card border-b-4 md:border-b-0 md:border-r-4 border-foreground">
-              <span className="font-mono text-primary font-bold text-sm mb-4 block">/// HOW TO JOIN</span>
+              <span className="font-mono text-primary font-bold text-sm mb-4 block">/// ONBOARDING WORKFLOW</span>
               <h2 className="font-display text-4xl md:text-5xl font-bold uppercase leading-none mb-2">
                 Get <br /><span className="text-outline-dark">Started</span>
               </h2>
@@ -594,26 +637,26 @@ const Index = () => {
               <div className="space-y-6 md:space-y-8 mb-8 md:mb-12 relative border-l-4 border-foreground ml-4 pl-6 md:pl-8">
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-primary border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Join Free</h3>
-                  <p className="font-body text-muted-foreground">Join the Discord and pick your course and year. Your 7-day free trial starts straight away, with full access to the unit libraries.</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">1. Connect to Discord</h3>
+                  <p className="font-body text-muted-foreground">Select your university and year of study. Immediate access to campus channels and the 7-day baseline trial.</p>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-card border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Pay by M-Pesa</h3>
-                  <p className="font-body text-muted-foreground">To keep access, send KES 50 (Basic) or KES 800 (Premium) to 0745947704. The name shown is Peter Mwangi.</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">2. Sync Study Desk</h3>
+                  <p className="font-body text-muted-foreground">Download <code className="font-mono font-bold text-foreground">StudyDesk.exe</code> on your laptop. Pair with Discord using your single-use key.</p>
                 </div>
                 <div className="relative">
                   <div className="absolute -left-[38px] md:-left-[44px] top-1 w-6 h-6 bg-foreground border-4 border-foreground rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">Tap "I've Paid"</h3>
-                  <p className="font-body text-muted-foreground">In #upgrade-to-premium, tap "I've paid" and paste your M-Pesa code. You're usually in within minutes.</p>
+                  <h3 className="font-display text-xl md:text-2xl font-bold uppercase mb-2">3. Study, Build & Ship</h3>
+                  <p className="font-body text-muted-foreground">Access past-paper prediction kits, Pomodoro study blocks, and hardware project squads.</p>
                 </div>
               </div>
 
               <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-flex items-center gap-3 border-4 border-foreground bg-primary text-foreground font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal hover:-translate-y-1 transition-transform w-full md:w-auto justify-center">
-                Start your free trial ↗
+                Join Discord Server ↗
               </a>
               <p className="font-body text-sm text-muted-foreground mt-4">
-                Questions? <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="underline font-bold">Chat with us on WhatsApp</a>
+                Questions? <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="underline font-bold">Chat with team on WhatsApp</a>
               </p>
             </FadeIn>
 
@@ -625,9 +668,9 @@ const Index = () => {
                 We are actively looking for ambitious engineering students to help run the community. Gain leadership experience, build your portfolio, and impact the Kenyan engineering ecosystem.
               </p>
               <div className="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-12">
-                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map((role) =>
-                <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
-                )}
+                {["Moderators", "Study Hosts", "Project Leads", "Comms Coordinators"].map((role) => (
+                  <span key={role} className="border-2 border-gray-700 bg-gray-800 font-mono text-sm px-3 py-1 text-card">{role}</span>
+                ))}
               </div>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-brutal inline-block border-4 border-accent text-accent bg-transparent font-mono font-bold text-base md:text-lg uppercase px-6 md:px-8 py-4 shadow-brutal-accent hover:bg-accent hover:text-foreground transition-colors w-full md:w-auto text-center">
                 Apply to Join ↗
@@ -639,7 +682,7 @@ const Index = () => {
 
       {showFloat && (
         <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="fixed bottom-4 right-4 z-50 md:hidden flex items-center gap-2 bg-primary text-foreground border-4 border-foreground font-mono font-bold text-xs uppercase px-4 py-3.5 shadow-brutal animate-in slide-in-from-bottom-2">
-          Free 7-day trial ↗
+          Join Discord ↗
         </a>
       )}
 
@@ -655,18 +698,18 @@ const Index = () => {
 
           <FadeIn>
             <div className="border-4 border-foreground bg-card shadow-brutal mb-16 md:mb-24">
-              <FAQItem question="Who can join?" answer="Any engineering student enrolled in a Kenyan university (JKUAT, UoN, KU, TUK, etc.). The hub is optimized for undergraduates seeking structure." />
-              <FAQItem question="Is the community entirely online?" answer="The primary hub operates on Discord. However, project squads often organize physical meetups for hardware fabrication and hackathons depending on geographic proximity." />
-              <FAQItem question="Is there a free trial?" answer="Yes. Every new member gets 7 days of full access to the unit libraries as soon as they join. After that, Basic is KES 50 per semester. The community and study channels stay free for everyone." />
-              <FAQItem question="How do I pay?" answer="Send the amount by M-Pesa (Send Money) to 0745947704. The name shown is Peter Mwangi. Then tap &quot;I've paid&quot; in the #upgrade-to-premium channel on Discord and paste the code from your M-Pesa SMS. You'll get a DM as soon as you're in, usually within minutes." />
-              <FAQItem question="Can I upgrade from Basic to Premium?" answer="Yes. Send the difference (KES 750) the same way, tap &quot;I've paid&quot; and choose Premium." />
-              <FAQItem question="What's the refund policy?" answer="We offer a 7-day evaluation period. If the hub doesn't meet your needs, we'll issue a full refund and revoke access." />
+              <FAQItem question="Who can join?" answer="Any engineering student enrolled in a Kenyan university (JKUAT, UoN, KU, TUK, DeKUT, Moi, etc.). The hub is optimized for undergraduates seeking structure and technical peers." />
+              <FAQItem question="Is the community entirely online?" answer="The primary hub operates on Discord and Study Desk. However, project squads organize physical meetups for hardware fabrication and hackathons depending on campus location." />
+              <FAQItem question="What is Study Desk (.EXE)?" answer="Study Desk is our local-first desktop application designed specifically for engineering exam prep and project workflows. It runs offline on your machine with Breakpoint AI diagnostics, past-paper prediction kits, and local note syncing." />
+              <FAQItem question="Is there a free trial?" answer="Yes. Every new member receives 7 days of full access to the unit libraries upon joining Discord. Community discussions and general voice study channels remain free." />
+              <FAQItem question="How do I activate full membership?" answer="Click 'Initialize Pass' on the pricing bar to activate via M-Pesa (Send Money to 0745947704 - Peter Mwangi). Submit your M-Pesa confirmation in #upgrade-to-premium on Discord to get your role." />
+              <FAQItem question="What's the refund policy?" answer="We offer a 7-day evaluation period. If the hub doesn't meet your needs, we issue a full refund." />
             </div>
           </FadeIn>
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 border-t-4 border-foreground pt-8 font-mono text-sm font-bold uppercase">
             <div className="text-center md:text-left">
-              <div className="text-foreground mb-1">THE ENGINEERING HUB // 2024</div>
+              <div className="text-foreground mb-1">THE ENGINEERING HUB // REV 2026.10</div>
               <div className="text-muted-foreground">Building Kenya's Technical Future</div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
@@ -674,14 +717,14 @@ const Index = () => {
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">WhatsApp</a>
               <a href={`mailto:${EMAIL}`} className="hover:bg-foreground hover:text-card border-2 border-transparent hover:border-foreground px-2 py-1 transition-all">Email</a>
             </div>
-            <a href="#join" onClick={(e) => handleNavClick(e, "#join")} className="btn-brutal bg-primary text-foreground border-2 border-foreground px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform">
+            <a href="#join" onClick={scrollToSection("join")} className="btn-brutal bg-primary text-foreground border-2 border-foreground px-6 py-2 shadow-brutal-sm hover:-translate-y-1 transition-transform">
               Join Now
             </a>
           </div>
         </div>
       </footer>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Index;

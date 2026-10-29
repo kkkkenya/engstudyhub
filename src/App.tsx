@@ -10,6 +10,7 @@ import Projects from "./pages/Projects.tsx";
 import JobBoard from "./pages/JobBoard.tsx";
 import FormulaDirectory from "./pages/FormulaDirectory.tsx";
 import ToolsHub from "./pages/ToolsHub.tsx";
+import DownloadPage from "./pages/Download.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import BottomNav from "./components/BottomNav";
 
@@ -40,6 +41,8 @@ const App = () => (
             <Route path="/jobs" element={<JobBoard />} />
             <Route path="/formulas" element={<FormulaDirectory />} />
             <Route path="/tools" element={<ToolsHub />} />
+            <Route path="/download" element={<DownloadPage />} />
+            <Route path="/desk" element={<DownloadPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
