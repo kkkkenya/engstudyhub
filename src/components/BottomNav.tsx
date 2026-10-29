@@ -1,10 +1,11 @@
 import { useLocation, Link } from "react-router-dom";
-import { House, FolderOpen, Wrench, Briefcase, UserPlus } from "lucide-react";
+import { House, FolderOpen, Wrench, Briefcase, UserPlus, Terminal } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
 
 const NAV_ITEMS = [
   { label: "Home", icon: House, route: "/" },
+  { label: "Desk", icon: Terminal, route: "/download" },
   { label: "Projects", icon: FolderOpen, route: "/projects" },
   { label: "Tools", icon: Wrench, route: "/tools" },
   { label: "Jobs", icon: Briefcase, route: "/jobs" },

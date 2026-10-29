@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,6 +26,19 @@ const ScrollToTop = () => {
   return null;
 };
 
+const HashRedirect = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (window.location.hash) {
+      const hash = window.location.hash.replace(/^#\/?/, "/");
+      if (hash === "/download" || hash === "/desk") {
+        navigate(hash, { replace: true });
+      }
+    }
+  }, [navigate]);
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -33,6 +46,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <HashRedirect />
         <div className="pb-16 md:pb-0">
           <Routes>
             <Route path="/" element={<Index />} />

@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download Study Desk (.EXE) — Engineering Study Hub</title>
+<meta name="description" content="Download Study Desk: The local-first desktop study companion for Kenyan engineering undergraduates. Runs 100% offline on localhost:5190.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --fg: #030712;
+  --accent: #10b981;
+  --amber: #f59e0b;
+  --card-bg: #ffffff;
+  --border: #030712;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #030712;
+    --fg: #f8fafc;
+    --card-bg: #090d16;
+    --border: #334155;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--display);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.ticker {
+  background: #030712;
+  color: #10b981;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-bottom: 2px solid #030712;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--card-bg);
+  border-bottom: 3px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.brand-badge {
+  background: #10b981;
+  color: #030712;
+  padding: 3px 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  border: 2px solid #030712;
+}
+.nav-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav-links a:hover {
+  color: #10b981;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border: 3px solid #030712;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #030712;
+  transition: transform .1s, box-shadow .1s;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #030712;
+}
+.btn-primary {
+  background: #10b981;
+  color: #030712;
+}
+.btn-outline {
+  background: var(--card-bg);
+  color: inherit;
+}
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+.hero {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto 48px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #f59e0b;
+  color: #030712;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 2px solid #030712;
+  box-shadow: 2px 2px 0px #030712;
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #64748b;
+  margin-bottom: 32px;
+}
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.specs {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #64748b;
+}
+.window-frame {
+  background: #030712;
+  border: 4px solid #030712;
+  box-shadow: 8px 8px 0px #10b981;
+  margin-top: 40px;
+  overflow: hidden;
+  text-align: left;
+}
+.window-hdr {
+  background: #030712;
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #1e293b;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.dots {
+  display: flex;
+  gap: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+.band-tabs {
+  background: #0f172a;
+  padding: 10px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 3px solid #1e293b;
+}
+.tab-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: 2px solid #030712;
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.tab-btn.active {
+  background: #10b981;
+  color: #030712;
+  font-weight: 800;
+}
+.window-body {
+  padding: 24px;
+  background: #090d16;
+  color: #f8fafc;
+  min-height: 380px;
+  font-family: var(--mono);
+}
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 64px;
+}
+.card {
+  background: var(--card-bg);
+  border: 4px solid #030712;
+  box-shadow: 6px 6px 0px #030712;
+  padding: 28px;
+  text-align: left;
+}
+.setup-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--card-bg);
+  border: 4px solid #030712;
+  box-shadow: 6px 6px 0px #030712;
+  margin-bottom: 16px;
+}
+.step-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 900;
+  background: #030712;
+  color: #10b981;
+  padding: 8px 16px;
+  border: 2px solid #030712;
+}
+.faq-box {
+  background: var(--card-bg);
+  border: 4px solid #030712;
+  box-shadow: 6px 6px 0px #030712;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+footer {
+  border-top: 3px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 64px;
+}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  ★ STUDY DESK V2026.10 ACTIVE /// LOCALHOST:5190 /// ZERO ADMIN PRIVILEGES /// 71 MB SELF-EXTRACTING /// OFFLINE PAST PAPERS
+</div>
+
+<header class="nav">
+  <a class="brand" href="/#/">
+    <img src="/logo-new.jpeg" alt="Logo" width="32" height="32" style="border:1.5px solid #030712">
+    <span>Study Desk<span style="color:#10b981">.EXE</span></span>
+    <span class="brand-badge">WIN_X64</span>
+  </a>
+  <div class="nav-links">
+    <a href="/#/">Home</a>
+    <a href="/#/projects">Projects</a>
+    <a href="/downloads/StudyDesk.exe" download style="color:#10b981;border:2px solid #030712;padding:6px 14px;background:#030712;">Download (.EXE)</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="pill">OFFICIAL DESKTOP CLIENT // LOCALHOST:5190</div>
+    <h1>The Local-First Engineering Study Engine.</h1>
+    <p class="sub">Flashcards don&apos;t pass engineering exams. Study Desk runs directly on your machine with real past papers, Breakpoint step-by-step diagnostics, and voice teach-back.</p>
+    
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for Windows (.exe)
+      </a>
+      <a class="btn btn-outline" href="#setup">Setup Guide</a>
+    </div>
+
+    <div class="specs">
+      <span><strong>Windows 10 / 11 (64-bit)</strong></span>
+      <span>•</span>
+      <span>71 MB Self-Extracting</span>
+      <span>•</span>
+      <span style="color:#f59e0b;font-weight:800">Zero Admin Rights Needed</span>
+      <span>•</span>
+      <span>Port: 5190</span>
+    </div>
+
+    <!-- KOODO-STYLE INTERACTIVE WINDOW MOCKUP -->
+    <div class="window-frame">
+      <div class="window-hdr">
+        <div class="dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span style="color:#10b981;font-weight:700">STUDY DESK // RUNTIME LOCALHOST:5190</span>
+        <span style="color:#94a3b8">● SYNCED</span>
+      </div>
+
+      <div class="band-tabs">
+        <button class="tab-btn" onclick="openBand('01', this)">[ 01 / TODAY ]</button>
+        <button class="tab-btn" onclick="openBand('02', this)">[ 02 / PLAN ]</button>
+        <button class="tab-btn active" onclick="openBand('03', this)">[ 03 / PRACTISE ]</button>
+        <button class="tab-btn" onclick="openBand('04', this)">[ 04 / REVIEW ]</button>
+      </div>
+
+      <div class="window-body">
+        <!-- PANE 01 -->
+        <div id="pane-01" class="tab-pane">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
+            <span style="color:#10b981;font-weight:700">BAND 01 // TODAY'S MISSION</span>
+            <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">🔥 5-DAY STUDY STREAK</span>
+          </div>
+          <p style="font-size:18px;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:8px">Study Smarter, Pass Clean.</p>
+          <p style="color:#94a3b8;font-size:13px;margin-bottom:16px">Next exam: <strong style="color:#fff">EMM 302 (Solid Mechanics II)</strong> in 6 days. Target: Check answer on 2024 CAT 2 question.</p>
+          <div style="background:#030712;padding:12px;border:1px solid #1e293b;display:flex;justify-content:space-between;font-size:12px">
+            <span>WEEKLY DEDICATED STUDY TIME:</span>
+            <strong style="color:#10b981">14.5 HOURS</strong>
+          </div>
+        </div>
+
+        <!-- PANE 02 -->
+        <div id="pane-02" class="tab-pane">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
+            <span style="color:#10b981;font-weight:700">BAND 02 // EXAM RADAR &amp; PREDICTION MATRIX</span>
+            <span style="color:#94a3b8">2.5X LECTURER HINT WEIGHTING</span>
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+              <strong style="color:#fff">1. Mohr&apos;s Stress Circle &amp; Strain Rosettes</strong>
+              <span style="color:#10b981">92% FREQUENCY (25 MARKS)</span>
+            </div>
+            <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:92%"></div></div>
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+              <strong style="color:#fff">2. Combined Bending &amp; Torsion (Shafts)</strong>
+              <span style="color:#10b981">80% FREQUENCY (15 MARKS)</span>
+            </div>
+            <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:80%"></div></div>
+          </div>
+        </div>
+
+        <!-- PANE 03 -->
+        <div id="pane-03" class="tab-pane active">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
+            <span style="color:#10b981;font-weight:700">EMM 302 // KU CAT 2 QUESTION (15 MARKS)</span>
+            <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">BREAKPOINT ACTIVE</span>
+          </div>
+          <p style="color:#fff;font-size:14px;font-weight:700;margin-bottom:12px">Shaft under combined bending M = 4.2 kNm and torque T = 6.8 kNm. Allowable shear stress = 75 MPa. Calculate diameter d under Guest-Tresca theory.</p>
+          
+          <div style="background:#030712;border:1px solid #10b981;padding:10px;margin-bottom:8px;color:#10b981;display:flex;justify-content:space-between;font-size:12px">
+            <span>✓ STEP 1: Te = √(M² + T²) = 7.99 kNm</span>
+            <strong>PASSED</strong>
+          </div>
+          <div id="demo-step" style="background:#3b1219;border:1px solid #ef4444;padding:10px;margin-bottom:8px;color:#fca5a5;display:flex;justify-content:space-between;font-size:12px;align-items:center">
+            <span>✗ STEP 2: Section Modulus Zp = (π · d³) / 16</span>
+            <button onclick="toggleStep()" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer">BROKE HERE (LOGGED)</button>
+          </div>
+          <div style="background:#030712;border:1px solid #1e293b;padding:10px;color:#64748b;display:flex;justify-content:space-between;font-size:12px">
+            <span>○ STEP 3: Final Diameter d ≥ 81.6 mm</span>
+            <span>UNREACHED</span>
+          </div>
+        </div>
+
+        <!-- PANE 04 -->
+        <div id="pane-04" class="tab-pane">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:12px;margin-bottom:16px;">
+            <span style="color:#10b981;font-weight:700">BAND 04 // DEEP CONTEXT PROMPT BUILDER</span>
+            <span style="color:#94a3b8">~24,500 TOKENS</span>
+          </div>
+          <pre style="background:#030712;padding:12px;border:1px solid #1e293b;color:#10b981;font-size:11px;overflow-x:auto"># UNIT: EMM 302 // TOPIC: COMBINED LOADING
+## SYNCED NOTES &amp; LECTURER HINTS (2025 SEM 1)
+- Tresca: τmax = Te / Zp ≤ [τ]
+- Rankine: σmax = (M + Te) / (2*Z)
+## WEAKNESS TELEMETRY:
+- Failed Step 2 in CAT 2: Zp calculation formula slip.</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETUP SECTION -->
+  <section id="setup" style="margin-top:64px">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="pill">QUICK-START</div>
+      <h2 style="font-size:36px;font-weight:900;text-transform:uppercase">Get Started in 3 Steps.</h2>
+    </div>
+
+    <div class="setup-step">
+      <div class="step-num">01</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Download &amp; Extract StudyDesk.exe</h3>
+        <p style="color:#64748b;font-size:14px">Double-click the binary installer. It self-extracts automatically to <code>%LOCALAPPDATA%\StudyDesk</code> with zero administrative permission required.</p>
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="step-num" style="color:#f59e0b">02</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Get Your Single-Use Key in Discord</h3>
+        <p style="color:#64748b;font-size:14px">Open the Discord server and run <code>/study link</code>. The bot delivers your private onboarding code (e.g. <code>SD-7K2M-9QXA</code>).</p>
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="step-num">03</div>
+      <div>
+        <h3 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Run setup.bat &amp; Study</h3>
+        <p style="color:#64748b;font-size:14px">Paste your key, pick your engineering units, and Study Desk opens in Edge App mode at <code>localhost:5190</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISTRIBUTION PACKAGES -->
+  <div class="grid-cards">
+    <div class="card">
+      <div class="pill">OFFICIAL RELEASE</div>
+      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Windows Installer (.exe)</h3>
+      <p style="color:#64748b;font-size:14px;margin-bottom:20px">The full 71 MB binary bundle with all offline course materials, past papers, and Edge Application Mode setup.</p>
+      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="width:100%">Download (.EXE)</a>
+    </div>
+
+    <div class="card">
+      <div class="pill">CAMPUS LABS</div>
+      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Portable USB Archive</h3>
+      <p style="color:#64748b;font-size:14px;margin-bottom:20px">Designed for university lab workstations where executing setup wizards is restricted. Run directly from flash drive.</p>
+      <a class="btn btn-outline" href="/downloads/StudyDesk.exe" download style="width:100%">Download Portable</a>
+    </div>
+
+    <div class="card">
+      <div class="pill">DISCORD BOT</div>
+      <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin:12px 0">Mobile Slash Bot</h3>
+      <p style="color:#64748b;font-size:14px;margin-bottom:20px">Study on the go with daily practice questions (+2 attempt, +10 solve, 7-day streak roles) paired to your running desk.</p>
+      <a class="btn btn-outline" href="https://discord.gg/7yUz2rXumm" target="_blank" style="width:100%">Join Discord</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2024–2026 ENGINEERING STUDY HUB // STUDY DESK LOCAL ENGINE // NAIROBI, KENYA</p>
+</footer>
+
+<script>
+function openBand(band, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const target = document.getElementById('pane-' + band);
+  if (target) target.classList.add('active');
+}
+function toggleStep() {
+  const el = document.getElementById('demo-step');
+  if (el.style.background.includes('3b1219')) {
+    el.style.background = '#030712';
+    el.style.borderColor = '#10b981';
+    el.style.color = '#10b981';
+    el.innerHTML = '<span>✓ STEP 2: Modulus corrected</span><span style="font-weight:700">RESOLVED</span>';
+  } else {
+    el.style.background = '#3b1219';
+    el.style.borderColor = '#ef4444';
+    el.style.color = '#fca5a5';
+    el.innerHTML = '<span>✗ STEP 2: Section Modulus Zp = (π · d³) / 16</span><button onclick="toggleStep()" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer">BROKE HERE (LOGGED)</button>';
+  }
+}
+</script>
+</body>
+</html>
