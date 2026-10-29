@@ -307,487 +307,6 @@ section{position:relative;z-index:1}
 .livedot::after{content:"";position:absolute;inset:-4px;border:1px solid var(--ok);border-radius:50%;animation:ping 1.8s ease-out infinite}
 @keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.5);opacity:0}}
 @media (prefers-reduced-motion:reduce){.skel,.livedot::after{animation:none}}
-
-/* ============================================================
-   DESIGN TOKENS & DARK MODE
-   Default runs on system preference (prefers-color-scheme).
-   User manual toggle persisted in localStorage.
-============================================================ */
-:root {
-  --ink: #0B0F14;
-  --ink-2: #151C24;
-  --paper: #F8FAFC;
-  --paper-2: #FFFFFF;
-  --panel: #F1F5F9;
-  --line: rgba(11, 15, 20, 0.12);
-  --line-2: rgba(11, 15, 20, 0.24);
-  --line-3: rgba(11, 15, 20, 0.45);
-  --blue: #2563EB;
-  --blue-ink: #1D4ED8;
-  --blue-wash: rgba(37, 99, 235, 0.08);
-  --hivis: #F59E0B;
-  --danger: #DC2626;
-  --ok: #10B981;
-  --muted: #64748B;
-  --accent: var(--blue);
-  --accent-2: var(--blue-ink);
-  --sep: var(--line);
-  --bg-2: #F1F5F9;
-  --bg-3: var(--paper-2);
-  --label-2: var(--muted);
-  --ease: cubic-bezier(.16, 1, .3, 1);
-  --band-ink-fg: #FFFFFF;
-  --f-display: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --f-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  --hdr-bg: rgba(255, 255, 255, 0.72);
-  --hdr-border: rgba(255, 255, 255, 0.6);
-  --hdr-solid: #FFFFFF;
-  --hdr-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --grid-line: rgba(15, 23, 42, 0.04);
-  --card-bg: #FFFFFF;
-  --card-border: var(--line);
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) {
-    --ink: #F8FAFC;
-    --ink-2: #F1F5F9;
-    --paper: #090D16;
-    --paper-2: #0F172A;
-    --panel: #1E293B;
-    --line: rgba(255, 255, 255, 0.12);
-    --line-2: rgba(255, 255, 255, 0.22);
-    --line-3: rgba(255, 255, 255, 0.45);
-    --blue: #3B82F6;
-    --blue-ink: #60A5FA;
-    --blue-wash: rgba(59, 130, 246, 0.16);
-    --hivis: #FBBF24;
-    --danger: #EF4444;
-    --ok: #10B981;
-    --muted: #94A3B8;
-    --accent: var(--blue);
-    --accent-2: var(--blue-ink);
-    --sep: var(--line);
-    --bg-2: #0F172A;
-    --bg-3: #1E293B;
-    --label-2: var(--muted);
-    --band-ink-fg: #F8FAFC;
-    --hdr-bg: rgba(15, 23, 42, 0.75);
-    --hdr-border: rgba(255, 255, 255, 0.12);
-    --hdr-solid: #0F172A;
-    --hdr-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
-    --grid-line: rgba(255, 255, 255, 0.035);
-    --card-bg: #0F172A;
-    --card-border: rgba(255, 255, 255, 0.12);
-  }
-}
-
-html[data-theme="dark"] {
-  --ink: #F8FAFC;
-  --ink-2: #F1F5F9;
-  --paper: #090D16;
-  --paper-2: #0F172A;
-  --panel: #1E293B;
-  --line: rgba(255, 255, 255, 0.12);
-  --line-2: rgba(255, 255, 255, 0.22);
-  --line-3: rgba(255, 255, 255, 0.45);
-  --blue: #3B82F6;
-  --blue-ink: #60A5FA;
-  --blue-wash: rgba(59, 130, 246, 0.16);
-  --hivis: #FBBF24;
-  --danger: #EF4444;
-  --ok: #10B981;
-  --muted: #94A3B8;
-  --accent: var(--blue);
-  --accent-2: var(--blue-ink);
-  --sep: var(--line);
-  --bg-2: #0F172A;
-  --bg-3: #1E293B;
-  --label-2: var(--muted);
-  --band-ink-fg: #F8FAFC;
-  --hdr-bg: rgba(15, 23, 42, 0.75);
-  --hdr-border: rgba(255, 255, 255, 0.12);
-  --hdr-solid: #0F172A;
-  --hdr-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
-  --grid-line: rgba(255, 255, 255, 0.035);
-  --card-bg: #0F172A;
-  --card-border: rgba(255, 255, 255, 0.12);
-}
-
-/* Blueprint grid background */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 26px 26px;
-}
-
-/* Floating Island Liquid Glass Navbar */
-.hdr {
-  position: sticky;
-  top: 14px;
-  z-index: 100;
-  width: 100%;
-  padding: 0 16px;
-  pointer-events: none;
-  margin: 0 auto;
-}
-.hdr .wrap {
-  pointer-events: auto;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 8px 18px;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  background: var(--hdr-bg);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid var(--hdr-border);
-  box-shadow: var(--hdr-shadow);
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.hdr .wrap:hover {
-  background: var(--hdr-solid);
-  border-color: var(--line-2);
-  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.16);
-}
-html[data-theme="dark"] .hdr .wrap:hover {
-  background: #0B1120;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
-}
-.brand-mark {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--line-2);
-  background: var(--paper-2);
-  display: grid;
-  place-items: center;
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-size: 14px;
-  flex: none;
-  overflow: hidden;
-}
-.brand-mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.brand-txt strong {
-  display: block;
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  line-height: 1.05;
-}
-.brand-txt small {
-  display: block;
-  font-family: var(--f-mono);
-  font-size: 9px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.nav a {
-  font-family: var(--f-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 8px 13px;
-  border-radius: 9999px;
-  color: var(--ink);
-  transition: all 0.15s ease;
-}
-.nav a:hover {
-  background: var(--panel);
-  color: var(--ink);
-}
-.nav a[aria-current="page"] {
-  background: var(--ink);
-  color: var(--paper);
-}
-html[data-theme="dark"] .nav a[aria-current="page"] {
-  background: #F8FAFC;
-  color: #090D16;
-}
-.nav-desk-pill {
-  color: #10B981 !important;
-  font-weight: 700 !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.nav-desk-pill::after {
-  content: ".EXE";
-  font-size: 9px;
-  background: rgba(16, 185, 129, 0.15);
-  color: #10B981;
-  padding: 1px 5px;
-  border-radius: 9999px;
-  font-weight: 800;
-}
-.hdr-cta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-desk-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #10B981;
-  color: #030712 !important;
-  font-family: var(--f-mono);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 9999px;
-  border: 1px solid #059669;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-  transition: all 0.15s ease;
-}
-.btn-desk-download:hover {
-  background: #34D399;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
-  transform: translateY(-1px);
-}
-
-/* Theme Toggle Button */
-.icon-btn#themeBtn {
-  display: inline-flex !important;
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  border: 1px solid var(--line-2);
-  background: var(--paper-2);
-  color: var(--ink);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  transition: all .2s ease;
-  padding: 0;
-  box-shadow: none;
-  flex: none;
-}
-.icon-btn#themeBtn:hover {
-  background: var(--panel);
-  border-color: var(--ink);
-  transform: translateY(-1px);
-}
-.icon-sun { display: none; }
-.icon-moon { display: block; }
-
-html[data-theme="dark"] .icon-sun { display: block; }
-html[data-theme="dark"] .icon-moon { display: none; }
-
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) .icon-sun { display: block; }
-  html:not([data-theme="light"]) .icon-moon { display: none; }
-}
-
-/* Dark mode element styling */
-html[data-theme="dark"] body {
-  background: var(--paper);
-  color: var(--ink);
-}
-html[data-theme="dark"] .card {
-  background: var(--card-bg);
-  border-color: var(--card-border);
-}
-html[data-theme="dark"] .plate {
-  border-color: var(--card-border);
-  background: var(--paper-2);
-}
-html[data-theme="dark"] .input,
-html[data-theme="dark"] select,
-html[data-theme="dark"] textarea {
-  background: #090D16;
-  border-color: rgba(255, 255, 255, 0.18);
-  color: #F8FAFC;
-}
-html[data-theme="dark"] .tbl-x,
-html[data-theme="dark"] table.cmp {
-  border-color: var(--line-2);
-}
-html[data-theme="dark"] table.cmp th,
-html[data-theme="dark"] table.cmp td {
-  border-color: var(--line);
-}
-html[data-theme="dark"] table.cmp tr:hover td {
-  background: rgba(255, 255, 255, 0.03);
-}
-html[data-theme="dark"] .sidedrawer-panel {
-  background: #0F172A;
-  color: #F8FAFC;
-  border-left-color: rgba(255, 255, 255, 0.12);
-}
-html[data-theme="dark"] .drawer-panel {
-  background: #0F172A;
-  color: #F8FAFC;
-}
-html[data-theme="dark"] .block {
-  background: #090D16;
-  border-color: var(--line-2);
-}
-html[data-theme="dark"] .tag {
-  background: #1E293B;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #F8FAFC;
-}
-html[data-theme="dark"] .band--panel {
-  background: #0A0F1D;
-  border-color: var(--line);
-}
-html[data-theme="dark"] .band--ink {
-  background: #05070B;
-  border-color: var(--line);
-}
-html[data-theme="dark"] .btn {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-html[data-theme="dark"] .btn:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-}
-
-/* Minimalist Footer */
-.site-footer {
-  border-top: 1px solid var(--line);
-  background: var(--paper-2);
-  padding: 56px 0 36px;
-  margin-top: 64px;
-}
-html[data-theme="dark"] .site-footer {
-  background: #070B12;
-  border-top-color: var(--line);
-}
-.footer-wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 48px;
-  flex-wrap: wrap;
-}
-.footer-brand {
-  max-width: 340px;
-}
-.footer-tagline {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 14px;
-}
-.footer-nav {
-  display: flex;
-  gap: 48px;
-  flex-wrap: wrap;
-}
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer-heading {
-  font-family: var(--f-mono);
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.footer-col a {
-  font-size: 14px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color .15s ease;
-}
-.footer-col a:hover {
-  color: var(--ink);
-}
-.footer-bottom {
-  border-top: 1px solid var(--line);
-  margin-top: 40px;
-  padding-top: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-family: var(--f-mono);
-  font-size: 11px;
-  color: var(--muted);
-}
-
-/* Study Desk Spec Bar */
-.spec-readout-band {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1px;
-  background: var(--line-2);
-  border: 1px solid var(--line-2);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 28px;
-}
-.spec-cell {
-  background: var(--paper-2);
-  padding: 14px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-html[data-theme="dark"] .spec-cell {
-  background: #0F172A;
-}
-.sc-label {
-  font-family: var(--f-mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.sc-val {
-  font-family: var(--f-display);
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--ink);
-}
-.spec-cell:first-child .sc-val {
-  color: var(--ok);
-}
-
 </style>
 <style>
 /* Top spec bar ----------------------------------------- */
@@ -1293,7 +812,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 /* ===== V18 · mobile menu, made obvious and scroll-safe ===== */
 .menu-btn{display:none}
 @media(max-width:900px){
-  /* themeBtn visible */
+  #themeBtn{display:none}
   .menu-btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 15px;
     border:1px solid var(--line-2);border-radius:999px;background:var(--paper-2);color:var(--ink);
     font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;flex:none}
@@ -1344,36 +863,26 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 <header class="hdr">
   <div class="wrap">
     <a class="brand" href="#/" aria-label="Engineering Study Hub — home">
-      <span class="brand-mark" aria-hidden="true">
-        <img src="/favicon.png" alt="EH" width="34" height="34">
-      </span>
+      <span class="brand-mark" aria-hidden="true">EH</span>
       <span class="brand-txt">
         <strong>Engineering Hub</strong>
-        <small>Study · Build · Launch</small>
+        <small>Study, Build, Launch</small>
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="#/" data-nav="/">Home</a>
-      <a href="#/download" class="nav-desk-pill" data-nav="/download">Study Desk</a>
-      <a href="/units/">Units</a>
-      <a href="#/projects" data-nav="/projects">Projects</a>
+      <a href="#/download" data-nav="/download" style="color:var(--ok);font-weight:700;">Desk [.EXE]</a>
+      <a href="#/projects" data-nav="/projects">Project library</a>
       <a href="#/membership" data-nav="/membership">Membership</a>
-      <a href="#/starter-kit" data-nav="/starter-kit">Kits</a>
+      <a href="#/starter-kit" data-nav="/starter-kit">Starter kit</a>
+      <a href="#/showcase" data-nav="/showcase">Showcase</a>
     </nav>
     <div class="hdr-cta">
-      <a class="btn-desk-download" href="/downloads/StudyDesk.exe" download>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Desk (.EXE)</span>
-      </a>
-      <a class="btn btn--sm disc-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer" style="border-radius:9999px;padding:8px 12px">
-        <img class="disc-logo" src="images/discord-logo.png" alt="" width="16" height="16">
-        <span>Discord</span>
-      </a>
-      <button class="icon-btn theme-toggle" id="themeBtn" type="button" aria-label="Toggle dark/light mode">
-        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <button class="menu-btn" id="sdOpen" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidedrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="btn btn--primary btn--sm" href="/downloads/StudyDesk.exe" download style="background:#10b981;border-color:#030712;color:#030712;font-weight:800"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Desk (.EXE)</a>
+      <a class="btn btn--primary btn--sm" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Premium</a>
+      <a class="btn btn--discord btn--sm disc-cta" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo.png" alt="" width="18" height="18"><span>Join Discord</span></a>
+      <button class="menu-btn" id="sdOpen" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidedrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+      
     </div>
   </div>
 </header>
@@ -1399,7 +908,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       <a class="btn btn--primary btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Premium</a>
       <a class="btn btn--discord btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo.png" alt="" width="18" height="18"><span>Join Discord</span></a>
     </div>
-    <button class="sd-theme" id="sdTheme" type="button"><span>Appearance</span><span id="sdThemeVal">Light</span></button>
+    
     <p class="sd-fine">The Discord is free to join. Premium is KES 800, once.</p>
   </aside>
 </div>
@@ -1433,47 +942,15 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </aside>
       </div>
 
-      <!-- STUDY DESK SHOWCASE (ACTUAL APP UI & SPEC READOUT) -->
-      <div style="margin-top:40px;background:var(--paper-2);border:1px solid var(--line-2);border-radius:18px;padding:24px;box-shadow:0 12px 36px rgba(0,0,0,0.06);overflow:hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px">
-          <div>
-            <span style="font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ok)">Desktop Runtime v2026.10</span>
-            <h2 style="font-size:22px;font-weight:800;margin-top:4px">Inside Study Desk</h2>
-          </div>
-          <div style="display:flex;gap:10px">
-            <a href="/downloads/StudyDesk.exe" download class="btn btn--primary btn--sm" style="background:#10b981;border-color:#059669;color:#030712;font-weight:800;border-radius:9999px">Download .EXE (71 MB)</a>
-            <a href="#/download" class="btn btn--sm" style="border-radius:9999px">View Interactive Tabs</a>
-          </div>
+      <figure class="plate plate--21x9 mt-l">
+        <div class="plate-ph" aria-hidden="true">
+          <b>PLATE 01 — MAKERSPACE</b>
+          <code>images/plate-01-hub-workshop.jpg</code>
+          <span>2000 × 860, workshop or study-room photo</span>
         </div>
-
-        <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);background:#030712">
-          <img src="/screenshots/hero-app.png" alt="Study Desk v2026.10 Actual UI" style="width:100%;height:auto;display:block">
-        </div>
-
-        <!-- SPEC READOUT STRIP -->
-        <div class="spec-readout-band">
-          <div class="spec-cell">
-            <span class="sc-label">Study Desk</span>
-            <span class="sc-val">v2026.10</span>
-          </div>
-          <div class="spec-cell">
-            <span class="sc-label">Standalone binary</span>
-            <span class="sc-val">71 MB</span>
-          </div>
-          <div class="spec-cell">
-            <span class="sc-label">Installs to %LOCALAPPDATA%</span>
-            <span class="sc-val">0 Admin</span>
-          </div>
-          <div class="spec-cell">
-            <span class="sc-label">Past papers</span>
-            <span class="sc-val">100% Offline-first</span>
-          </div>
-          <div class="spec-cell">
-            <span class="sc-label">Localhost port</span>
-            <span class="sc-val">5190</span>
-          </div>
-        </div>
-      </div>
+        <img src="images/plate-01-hub-workshop.jpg" alt="Engineering students working together on a hardware project in a campus makerspace" onerror="this.style.display='none'">
+        <figcaption class="plate-cap"><span><b>FIG. 1</b> — The hub in session</span><span>Nairobi, Kenya</span></figcaption>
+      </figure>
     </div>
   </section>
 
@@ -2716,31 +2193,95 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </aside>
       </div>
 
-      <!-- INTERACTIVE SOFTWARE PREVIEW (REAL SCREENSHOTS) -->
-      <div style="background:#030712;border:2px solid var(--line-2);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,0.3);margin-top:40px;overflow:hidden">
-        <div style="background:#090d16;color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e293b;font-family:var(--f-mono);font-size:11px">
-          <div style="display:flex;gap:7px;align-items:center">
+      <!-- INTERACTIVE SOFTWARE PREVIEW -->
+      <div style="background:#030712;border:3px solid #030712;box-shadow:6px 6px 0 var(--ok);margin-top:40px;overflow:hidden">
+        <div style="background:#030712;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1e293b;font-family:var(--mono);font-size:11px">
+          <div style="display:flex;gap:6px;align-items:center">
             <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block"></span>
             <span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
             <span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:inline-block"></span>
-            <span style="margin-left:12px;color:#10b981;font-weight:700">STUDY DESK // RUNTIME LOCALHOST:5190</span>
+            <span style="margin-left:10px;color:#10b981;font-weight:700">STUDY DESK // LOCAL HOST RUNTIME // PORT 5190</span>
           </div>
-          <span style="color:#94a3b8;font-size:11px">● OFFLINE FIRST</span>
+          <span style="color:#94a3b8">● LIVE SYNCED</span>
         </div>
 
-        <div style="background:#0f172a;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #1e293b">
-          <button class="btn btn--sm" id="spaTabHero" onclick="switchSpaShot('hero', this)" style="background:#10b981;color:#030712;font-family:var(--f-mono);border:1px solid #030712;font-size:10.5px;font-weight:800;border-radius:9999px">OVERVIEW</button>
-          <button class="btn btn--sm" id="spaTab1" onclick="switchSpaShot('01', this)" style="background:#1e293b;color:#94a3b8;font-family:var(--f-mono);border:1px solid #334155;font-size:10.5px;border-radius:9999px">01 / TODAY</button>
-          <button class="btn btn--sm" id="spaTab2" onclick="switchSpaShot('02', this)" style="background:#1e293b;color:#94a3b8;font-family:var(--f-mono);border:1px solid #334155;font-size:10.5px;border-radius:9999px">02 / RADAR</button>
-          <button class="btn btn--sm" id="spaTab3" onclick="switchSpaShot('03', this)" style="background:#1e293b;color:#94a3b8;font-family:var(--f-mono);border:1px solid #334155;font-size:10.5px;border-radius:9999px">03 / PRACTISE</button>
-          <button class="btn btn--sm" id="spaTab4" onclick="switchSpaShot('04', this)" style="background:#1e293b;color:#94a3b8;font-family:var(--f-mono);border:1px solid #334155;font-size:10.5px;border-radius:9999px">04 / REVIEW</button>
+        <div style="background:#0f172a;padding:8px 16px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:2px solid #1e293b">
+          <button class="btn btn--sm" id="rbTab1" onclick="switchRedesignBand('01')" style="background:#1e293b;color:#94a3b8;font-family:var(--mono);border:1px solid #334155;font-size:10px">[ 01 / TODAY ]</button>
+          <button class="btn btn--sm" id="rbTab2" onclick="switchRedesignBand('02')" style="background:#1e293b;color:#94a3b8;font-family:var(--mono);border:1px solid #334155;font-size:10px">[ 02 / PLAN ]</button>
+          <button class="btn btn--sm" id="rbTab3" onclick="switchRedesignBand('03')" style="background:#10b981;color:#030712;font-family:var(--mono);border:1px solid #030712;font-size:10px;font-weight:800">[ 03 / PRACTISE ]</button>
+          <button class="btn btn--sm" id="rbTab4" onclick="switchRedesignBand('04')" style="background:#1e293b;color:#94a3b8;font-family:var(--mono);border:1px solid #334155;font-size:10px">[ 04 / REVIEW ]</button>
         </div>
 
-        <div style="background:#030712;padding:0;overflow:hidden">
-          <img id="spaMainShot" src="/screenshots/hero-app.png" alt="Study Desk Actual App UI" style="width:100%;height:auto;display:block">
+        <div style="padding:24px;background:#090d16;color:#f8fafc;min-height:340px;font-family:var(--mono)">
+          <div id="rbPane1" style="display:none">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:16px">
+              <span style="color:#10b981;font-weight:700">BAND 01 // TODAY'S MISSION</span>
+              <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">🔥 5-DAY STUDY STREAK</span>
+            </div>
+            <h3 style="color:#fff;font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Study Smarter, Pass Clean.</h3>
+            <p style="color:#94a3b8;font-size:13px;margin-bottom:16px">Next exam: <strong style="color:#fff">EMM 302 (Solid Mechanics II)</strong> in 6 days. Target: Check answer on 2024 CAT 2 question.</p>
+            <div style="background:#030712;padding:12px;border:1px solid #1e293b;display:flex;justify-content:space-between;font-size:12px">
+              <span>WEEKLY DEDICATED STUDY TIME:</span>
+              <strong style="color:#10b981">14.5 HOURS</strong>
+            </div>
+          </div>
+
+          <div id="rbPane2" style="display:none">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:16px">
+              <span style="color:#10b981;font-weight:700">BAND 02 // EXAM RADAR &amp; PREDICTION MATRIX</span>
+              <span style="color:#94a3b8">2.5X LECTURER HINT WEIGHTING</span>
+            </div>
+            <div style="margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+                <strong style="color:#fff">1. Mohr's Stress Circle &amp; Strain Rosettes</strong>
+                <span style="color:#10b981">92% FREQUENCY (25 MARKS)</span>
+              </div>
+              <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:92%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+                <strong style="color:#fff">2. Combined Bending &amp; Torsion (Shafts)</strong>
+                <span style="color:#10b981">80% FREQUENCY (15 MARKS)</span>
+              </div>
+              <div style="background:#1e293b;height:8px;width:100%"><div style="background:#10b981;height:8px;width:80%"></div></div>
+            </div>
+          </div>
+
+          <div id="rbPane3" style="display:block">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:16px">
+              <span style="color:#10b981;font-weight:700">EMM 302 // KU CAT 2 QUESTION (15 MARKS)</span>
+              <span style="background:#f59e0b;color:#030712;padding:2px 8px;font-weight:800">BREAKPOINT ACTIVE</span>
+            </div>
+            <p style="color:#fff;font-size:14px;font-weight:700;margin-bottom:12px">Shaft under combined bending M = 4.2 kNm and torque T = 6.8 kNm. Allowable shear stress = 75 MPa. Calculate diameter d under Guest-Tresca theory.</p>
+            <div style="background:#030712;border:1px solid #10b981;padding:10px;margin-bottom:8px;color:#10b981;display:flex;justify-content:space-between;font-size:12px">
+              <span>✓ STEP 1: Te = √(M² + T²) = 7.99 kNm</span>
+              <strong>PASSED</strong>
+            </div>
+            <div id="rbDemoStep" style="background:#3b1219;border:1px solid #ef4444;padding:10px;margin-bottom:8px;color:#fca5a5;display:flex;justify-content:space-between;font-size:12px;align-items:center">
+              <span>✗ STEP 2: Section Modulus Zp = (π · d³) / 16</span>
+              <button onclick="toggleRedesignStep()" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer">BROKE HERE (LOGGED)</button>
+            </div>
+            <div style="background:#030712;border:1px solid #1e293b;padding:10px;color:#64748b;display:flex;justify-content:space-between;font-size:12px">
+              <span>○ STEP 3: Final Diameter d ≥ 81.6 mm</span>
+              <span>UNREACHED</span>
+            </div>
+          </div>
+
+          <div id="rbPane4" style="display:none">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:16px">
+              <span style="color:#10b981;font-weight:700">BAND 04 // DEEP CONTEXT PROMPT BUILDER</span>
+              <span style="color:#94a3b8">~24,500 TOKENS</span>
+            </div>
+            <pre style="background:#030712;padding:12px;border:1px solid #1e293b;color:#10b981;font-size:11px;overflow-x:auto"># UNIT: EMM 302 // TOPIC: COMBINED LOADING
+## SYNCED NOTES &amp; LECTURER HINTS (2025 SEM 1)
+- Tresca: τmax = Te / Zp ≤ [τ]
+- Rankine: σmax = (M + Te) / (2*Z)
+## WEAKNESS TELEMETRY:
+- Failed Step 2 in CAT 2: Zp calculation formula slip.</pre>
+          </div>
         </div>
       </div>
-      
+
       <!-- 3-STEP SETUP GUIDE -->
       <div id="sdSetup" style="margin-top:56px">
         <p class="eyebrow">First-Time Initialization</p>
@@ -2818,11 +2359,11 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   </div>
 </div>
 <!-- ============ SLEEK MINIMALIST FOOTER ============ -->
-<footer class="site-footer">
-  <div class="wrap footer-wrap">
-    <div class="footer-brand">
+<footer class="band band--tight" style="border-top:1px solid var(--line-3);padding:48px 0 36px;background:var(--paper-2);margin-top:64px">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap">
+    <div style="max-width:340px">
       <a class="brand" href="#/" aria-label="Engineering Study Hub — home">
-        <span class="brand-mark" aria-hidden="true">
+        <span class="brand-mark" aria-hidden="true" style="overflow:hidden">
           <img src="/favicon.png" alt="EH" width="34" height="34">
         </span>
         <span class="brand-txt">
@@ -2830,25 +2371,25 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <small>Nairobi, Kenya</small>
         </span>
       </a>
-      <p class="footer-tagline">Study runtime, past papers, and project build sheets for engineering students in Kenya.</p>
+      <p class="dim" style="font-size:14px;margin-top:12px;line-height:1.5">Study runtime, past papers, and project build sheets for engineering students in Kenya.</p>
     </div>
-    <div class="footer-nav">
-      <div class="footer-col">
-        <span class="footer-heading">Platform</span>
-        <a href="#/download">Study Desk (.EXE)</a>
-        <a href="/units/">Browse Units</a>
-        <a href="#/projects">Project Library</a>
-        <a href="#/membership">Membership</a>
+    <div style="display:flex;gap:48px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="mono" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)">Platform</span>
+        <a href="#/download" style="font-size:13.5px;color:var(--muted);text-decoration:none">Study Desk (.EXE)</a>
+        <a href="/units/" style="font-size:13.5px;color:var(--muted);text-decoration:none">Browse Units</a>
+        <a href="#/projects" style="font-size:13.5px;color:var(--muted);text-decoration:none">Project Library</a>
+        <a href="#/membership" style="font-size:13.5px;color:var(--muted);text-decoration:none">Membership</a>
       </div>
-      <div class="footer-col">
-        <span class="footer-heading">Community</span>
-        <a href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Discord Server</a>
-        <a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
-        <a href="mailto:gregorykimemiah@gmail.com">gregorykimemiah@gmail.com</a>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="mono" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)">Community</span>
+        <a href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer" style="font-size:13.5px;color:var(--muted);text-decoration:none">Discord Server</a>
+        <a href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20to%20join%20the%20Engineering%20Hub" target="_blank" rel="noopener noreferrer" style="font-size:13.5px;color:var(--muted);text-decoration:none">WhatsApp Support</a>
+        <a href="mailto:gregorykimemiah@gmail.com" style="font-size:13.5px;color:var(--muted);text-decoration:none">gregorykimemiah@gmail.com</a>
       </div>
     </div>
   </div>
-  <div class="wrap footer-bottom">
+  <div class="wrap" style="border-top:1px solid var(--line);margin-top:36px;padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-family:var(--f-mono);font-size:11px;color:var(--muted)">
     <span>© 2024–2026 Engineering Study Hub. Built for engineers in Kenya.</span>
     <span>Study Desk v2026.10 · 5190 Localhost port</span>
   </div>
