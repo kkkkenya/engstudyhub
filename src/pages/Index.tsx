@@ -6,7 +6,7 @@ import trussBridgeImg from "@/assets/truss-bridge.jpg";
 import avatarBrian from "@/assets/avatar-brian.jpg";
 import avatarAisha from "@/assets/avatar-aisha.jpg";
 import avatarDenis from "@/assets/avatar-denis.jpg";
-import logoImg from "@/assets/logo-new.jpeg";
+
 import { Quote, Home, Info, FolderOpen, UserPlus, Wrench, Briefcase, Terminal, Menu, X } from "lucide-react";
 
 import { StudyDeskShowcase } from "@/components/StudyDeskShowcase";
@@ -158,7 +158,19 @@ const Index = () => {
       {/* Nav */}
       <nav className="w-full bg-card/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img src={logoImg} alt="Engineering Study Hub" className="h-10 md:h-12 w-auto" />
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-xl bg-[#f2c200] text-[#0b0f14] font-black text-xs flex items-center justify-center border border-[#0b0f14]/20 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+              EH
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-display font-bold text-sm tracking-tight text-foreground leading-tight">
+                Engineering Hub
+              </span>
+              <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider">
+                Study, Build, Launch
+              </span>
+            </div>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import logoImg from "@/assets/logo-new.jpeg";
+
 import { ArrowLeft, MessageCircle } from "lucide-react";
 
 const DISCORD_URL = "https://discord.gg/7yUz2rXumm";
@@ -1102,7 +1102,9 @@ export default function Projects() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
-              <img src={logoImg} alt="Engineering Hub" className="h-10 md:h-12 w-auto" />
+              <div className="w-8 h-8 rounded-xl bg-[#f2c200] text-[#0b0f14] font-black text-xs flex items-center justify-center border border-[#0b0f14]/20 shadow-sm shrink-0">
+                EH
+              </div>
               <span className="font-display font-black tracking-tight hidden sm:inline uppercase">Engineering Hub</span>
             </Link>
             <span className="text-muted-foreground hidden sm:inline font-mono">/</span>
