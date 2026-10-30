@@ -24,26 +24,51 @@ document.documentElement.classList.add("js");
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 
 :root {
   --bg: #F8FAFC;
   --fg: #0B0F14;
-  --accent: #10B981;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
   --amber: #F59E0B;
   --card-bg: #FFFFFF;
-  --border: rgba(11, 15, 20, 0.14);
-  --line-subtle: rgba(11, 15, 20, 0.08);
-  --hdr-bg: rgba(255, 255, 255, 0.72);
-  --hdr-border: rgba(255, 255, 255, 0.5);
+  --border: rgba(11, 15, 20, 0.12);
+  --line-subtle: rgba(11, 15, 20, 0.06);
+  --hdr-bg: rgba(255, 255, 255, 0.82);
+  --hdr-border: rgba(11, 15, 20, 0.08);
   --hdr-solid: #FFFFFF;
-  --hdr-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --hdr-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
   --mono: 'JetBrains Mono', monospace;
-  --display: 'Space Grotesk', sans-serif;
+  --display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --r-card: 20px;
+  --r-btn: 12px;
 }
 
+html[data-theme="dark"] {
+  --bg: #090D16;
+  --fg: #F8FAFC;
+  --accent: #3B82F6;
+  --accent-hover: #60A5FA;
+  --amber: #F59E0B;
+  --card-bg: #0F172A;
+  --border: rgba(255, 255, 255, 0.10);
+  --line-subtle: rgba(255, 255, 255, 0.05);
+  --hdr-bg: rgba(15, 23, 42, 0.82);
+  --hdr-border: rgba(255, 255, 255, 0.12);
+  --hdr-solid: #0F172A;
+  --hdr-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
+}
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--display);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
 
 /* Floating Island Liquid Glass Navbar */
 .nav-container {
@@ -59,7 +84,7 @@ document.documentElement.classList.add("js");
   pointer-events: auto;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 8px 18px;
+  padding: 10px 20px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
@@ -75,12 +100,7 @@ document.documentElement.classList.add("js");
 .nav:hover {
   background: var(--hdr-solid);
   border-color: var(--border);
-  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.16);
-}
-html[data-theme="dark"] .nav:hover {
-  background: #0B1120;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.12);
 }
 .brand {
   display: flex;
@@ -89,33 +109,43 @@ html[data-theme="dark"] .nav:hover {
   text-decoration: none;
   color: inherit;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 15px;
+}
+.brand-badge {
+  background: #f2c200;
+  color: #0b0f14;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: -0.02em;
 }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 11.5px;
+  gap: 4px;
+  font-size: 13px;
   font-weight: 600;
 }
 .nav-links a {
   text-decoration: none;
   color: var(--fg);
-  padding: 7px 13px;
+  padding: 6px 12px;
   border-radius: 9999px;
   transition: all 0.15s ease;
+  opacity: 0.85;
 }
 .nav-links a:hover {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(37, 99, 235, 0.08);
   color: var(--accent);
+  opacity: 1;
 }
 
 /* Theme Toggle Button */
 .icon-btn#themeBtn {
   display: inline-flex !important;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 9999px;
   border: 1px solid var(--border);
   background: var(--card-bg);
@@ -134,238 +164,115 @@ html[data-theme="dark"] .nav:hover {
 }
 .icon-sun { display: none; }
 .icon-moon { display: block; }
-
 html[data-theme="dark"] .icon-sun { display: block; }
 html[data-theme="dark"] .icon-moon { display: none; }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) .icon-sun { display: block; }
-  html:not([data-theme="light"]) .icon-moon { display: none; }
-}
-
-/* Minimalist Footer */
-.site-footer {
-  border-top: 1px solid var(--border);
-  background: var(--card-bg);
-  padding: 56px 0 36px;
-  margin-top: 64px;
-}
-html[data-theme="dark"] .site-footer {
-  background: #070B12;
-}
-.footer-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 48px;
-  flex-wrap: wrap;
-}
-.footer-brand {
-  max-width: 340px;
-}
-.footer-tagline {
-  color: #64748B;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 14px;
-}
-.footer-nav {
-  display: flex;
-  gap: 48px;
-  flex-wrap: wrap;
-}
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer-heading {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--fg);
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.footer-col a {
-  font-size: 14px;
-  color: #64748B;
-  text-decoration: none;
-  transition: color .15s ease;
-}
-.footer-col a:hover {
-  color: var(--fg);
-}
-.footer-bottom {
-  max-width: 1200px;
-  margin: 40px auto 0;
-  padding: 24px 20px 0;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #64748B;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--display);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-.ticker {
-  background: #030712;
-  color: #10b981;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  border-bottom: 2px solid #030712;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  background: var(--card-bg);
-  border-bottom: 4px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: inherit;
-  font-weight: 900;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-.brand-badge {
-  background: #10b981;
-  color: #030712;
-  padding: 3px 7px;
-  font-family: var(--mono);
-  font-size: 11px;
-  border: 2px solid #030712;
-}
-.nav-links {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.nav-links a {
-  color: inherit;
-  text-decoration: none;
-  transition: color .15s;
-}
-.nav-links a:hover {
-  color: #10b981;
-}
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-family: var(--display);
-  font-weight: 900;
-  text-transform: uppercase;
-  padding: 14px 28px;
-  border: 4px solid #030712;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: var(--r-btn);
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 4px 4px 0px #030712;
-  transition: transform .1s, box-shadow .1s;
+  border: 1px solid transparent;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 .btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #030712;
+  transform: translateY(-1px);
 }
 .btn-primary {
-  background: #10b981;
-  color: #030712;
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
 }
 .btn-outline {
   background: var(--card-bg);
-  color: inherit;
+  color: var(--fg);
+  border-color: var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
+.btn-outline:hover {
+  background: rgba(11, 15, 20, 0.04);
+}
+html[data-theme="dark"] .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .wrap {
-  max-width: 1200px;
+  max-width: 1140px;
   margin: 0 auto;
-  padding: 48px 20px;
+  padding: 48px 20px 80px;
 }
 .hero {
   text-align: center;
-  max-width: 900px;
-  margin: 0 auto 48px;
+  max-width: 860px;
+  margin: 0 auto 56px;
 }
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
-  background: #f59e0b;
-  color: #030712;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  border: 2px solid #030712;
-  box-shadow: 3px 3px 0px #030712;
-  margin-bottom: 20px;
+  padding: 5px 14px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  margin-bottom: 24px;
 }
 h1 {
-  font-size: clamp(38px, 6.5vw, 76px);
-  font-weight: 900;
-  text-transform: uppercase;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  font-size: clamp(36px, 5.5vw, 68px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   margin-bottom: 20px;
+  color: var(--fg);
 }
 .sub {
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 19px);
   color: #64748b;
   margin-bottom: 32px;
+  line-height: 1.6;
+}
+html[data-theme="dark"] .sub {
+  color: #94a3b8;
 }
 .hero-btns {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
+
+/* Specs Matrix */
 .spec-grid {
-  border: 4px solid #030712;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
   background: var(--card-bg);
-  box-shadow: 6px 6px 0px #030712;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   text-align: left;
-  margin-top: 24px;
+  margin-top: 28px;
+  overflow: hidden;
 }
 .spec-cell {
-  padding: 16px;
-  border-right: 2px solid #030712;
-  border-bottom: 2px solid #030712;
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .spec-cell:last-child {
   border-right: none;
@@ -377,34 +284,38 @@ h1 {
   color: #64748b;
   text-transform: uppercase;
   display: block;
+  letter-spacing: 0.06em;
 }
 .spec-v {
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 800;
   margin: 4px 0 2px;
+  color: var(--fg);
 }
 .spec-d {
-  font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   color: #64748b;
   display: block;
 }
+
+/* Window Frame (Apple / Koodo Modern Preview) */
 .window-frame {
-  background: #030712;
-  border: 4px solid #030712;
-  box-shadow: 8px 8px 0px #10b981;
+  background: #090d16;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.15);
   margin-top: 48px;
   overflow: hidden;
   text-align: left;
 }
 .window-hdr {
-  background: #030712;
+  background: #0b1120;
   color: #fff;
-  padding: 12px 16px;
+  padding: 12px 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid #1e293b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-family: var(--mono);
   font-size: 11px;
 }
@@ -422,62 +333,76 @@ h1 {
 .dot-yellow { background: #f59e0b; }
 .dot-green { background: #10b981; }
 .band-tabs {
-  background: #0f172a;
-  padding: 10px 16px;
+  background: #0b1120;
+  padding: 10px 18px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  border-bottom: 3px solid #1e293b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .tab-btn {
   font-family: var(--mono);
   font-size: 11px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border: 2px solid #030712;
-  background: #1e293b;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
   color: #94a3b8;
   cursor: pointer;
-  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
 }
 .tab-btn.active {
-  background: #10b981;
-  color: #030712;
-  font-weight: 800;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 700;
 }
 .window-body {
-  padding: 12px;
+  padding: 14px;
   background: #090d16;
 }
 .screenshot-img {
   width: 100%;
   height: auto;
   display: block;
-  border: 2px solid #1e293b;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
+
+/* Sections */
 .section-head {
   text-align: center;
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto 48px;
 }
 .section-head h2 {
-  font-size: clamp(32px, 5vw, 54px);
-  font-weight: 900;
-  text-transform: uppercase;
-  line-height: 1.0;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
   letter-spacing: -0.02em;
+  color: var(--fg);
 }
 .pillars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 28px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 24px;
+  margin-top: 36px;
 }
 .pillar-card {
-  border: 4px solid #030712;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
   background: var(--card-bg);
-  box-shadow: 6px 6px 0px #030712;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   padding: 32px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pillar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
 }
 .showcase-row {
   display: grid;
@@ -488,31 +413,38 @@ h1 {
 }
 @media (min-width: 900px) {
   .showcase-row {
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
   }
   .showcase-row.reverse {
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.25fr;
   }
   .showcase-row.reverse .shot-wrap {
     order: 2;
   }
 }
 .shot-wrap {
-  border: 4px solid #030712;
-  background: #030712;
-  box-shadow: 8px 8px 0px #10b981;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--card-bg);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  padding: 10px;
 }
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 .feature-box {
   background: var(--card-bg);
-  border: 4px solid #030712;
-  box-shadow: 4px 4px 0px #030712;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   padding: 24px;
+  transition: transform 0.2s ease;
+}
+.feature-box:hover {
+  transform: translateY(-2px);
 }
 .setup-step {
   display: flex;
@@ -520,22 +452,33 @@ h1 {
   align-items: flex-start;
   padding: 24px;
   background: var(--card-bg);
-  border: 4px solid #030712;
-  box-shadow: 6px 6px 0px #030712;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   margin-bottom: 16px;
 }
 .step-num {
   font-family: var(--mono);
-  font-size: 28px;
-  font-weight: 900;
-  background: #030712;
-  color: #10b981;
+  font-size: 22px;
+  font-weight: 800;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent);
   padding: 8px 16px;
-  border: 2px solid #030712;
+  border-radius: 12px;
+}
+.faq-box {
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--card-bg);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
 }
 .faq-item {
-  border-bottom: 2px solid #030712;
-  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+}
+.faq-item:last-child {
+  border-bottom: none;
 }
 .faq-btn {
   width: 100%;
@@ -545,11 +488,11 @@ h1 {
   background: none;
   border: none;
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 900;
-  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   text-align: left;
+  color: var(--fg);
 }
 .faq-ans {
   margin-top: 10px;
@@ -557,59 +500,133 @@ h1 {
   color: #64748b;
   line-height: 1.6;
 }
-footer {
-  border-top: 4px solid #030712;
-  background: #030712;
-  color: #fff;
-  padding: 48px 24px;
-  font-family: var(--mono);
-  font-size: 12px;
+html[data-theme="dark"] .faq-ans {
+  color: #94a3b8;
 }
+
+/* Minimalist Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 56px 0 36px;
+  margin-top: 64px;
+}
+.footer-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  max-width: 340px;
+}
+.footer-tagline {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+.footer-nav {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-heading {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.footer-col a {
+  font-size: 13.5px;
+  color: #64748b;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.footer-col a:hover {
+  color: var(--accent);
+}
+.footer-bottom {
+  max-width: 1140px;
+  margin: 40px auto 0;
+  padding: 24px 20px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
 </style>
 </head>
 <body>
 
-<div class="ticker">
-  ★ STUDY DESK V2026.10 ACTIVE · LOCALHOST:5190 · ZERO ADMIN PRIVILEGES · 71 MB STANDALONE BINARY · 100% OFFLINE PAST PAPERS
+<!-- Floating Island Navbar -->
+<div class="nav-container">
+  <header class="nav">
+    <a class="brand" href="/#/">
+      <div class="brand-badge">EH</div>
+      <div>
+        <span>Study Desk</span>
+        <small style="display:block;font-size:10px;color:#64748b;font-weight:600;line-height:1">v2026.10 · Localhost:5190</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#matrix">Downloads</a>
+      <a href="#setup">Setup Guide</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="padding:8px 16px;font-size:13px;border-radius:9999px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download (.exe)</span>
+      </a>
+    </div>
+  </header>
 </div>
-
-<header class="nav">
-  <a class="brand" href="/#/">
-    <img src="/logo-new.jpeg" alt="Logo" width="32" height="32" style="border:2px solid #030712">
-    <span>Study Desk<span style="color:#10b981">.EXE</span></span>
-    <span class="brand-badge">WIN_X64</span>
-  </a>
-  <div class="nav-links">
-    <a href="#overview">Overview</a>
-    <a href="#features">Features</a>
-    <a href="#capabilities">Capabilities</a>
-    <a href="#matrix">Downloads</a>
-    <a href="#setup">Setup Guide</a>
-    <a href="#faq">FAQ</a>
-    <a href="/downloads/StudyDesk.exe" download style="color:#030712;border:2px solid #030712;padding:6px 14px;background:#10b981;">Download .EXE</a>
-  </div>
-</header>
 
 <main class="wrap">
   <!-- 1. HERO SECTION -->
   <section class="hero" id="overview">
-    <div class="pill">OFFICIAL DESKTOP CLIENT // LOCALHOST:5190</div>
-    <h1>Engineering Study <br><span style="color:#10b981">Made Local.</span></h1>
-    <p class="sub">Flashcards don&apos;t pass engineering exams. Study Desk runs directly on your machine with real past papers, Breakpoint step-by-step diagnostics, and voice teach-back.</p>
+    <div class="pill">
+      <span>★ Zero flashcards ever · Built on the 3-Link Breakpoint Model</span>
+    </div>
+    <h1>Engineering Exam Prep, <br><span style="color:var(--accent)">Made Exact.</span></h1>
+    <p class="sub">Study Desk is a local-first Windows workbench designed to diagnose where your math working broke, predict KU exam topics, and sync daily plans via Discord.</p>
     
     <div class="hero-btns">
-      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="padding:14px 28px;font-size:15px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download for Windows (.exe)
       </a>
-      <a class="btn btn-outline" href="#setup">Setup Guide</a>
+      <a class="btn btn-outline" href="#setup" style="padding:14px 28px;font-size:15px">Setup Guide</a>
     </div>
 
     <!-- SPEC READOUT MATRIX -->
     <div class="spec-grid">
       <div class="spec-cell">
         <span class="spec-k">Release Build</span>
-        <div class="spec-v" style="color:#10b981">Study Desk</div>
+        <div class="spec-v" style="color:var(--accent)">Study Desk</div>
         <span class="spec-d">v2026.10</span>
       </div>
       <div class="spec-cell">
@@ -619,7 +636,7 @@ footer {
       </div>
       <div class="spec-cell">
         <span class="spec-k">Security &amp; UAC</span>
-        <div class="spec-v" style="color:#f59e0b">0 Admin</div>
+        <div class="spec-v" style="color:var(--amber)">0 Admin</div>
         <span class="spec-d">Installs to %LOCALAPPDATA%</span>
       </div>
       <div class="spec-cell">
@@ -642,71 +659,71 @@ footer {
           <span class="dot dot-yellow"></span>
           <span class="dot dot-green"></span>
         </div>
-        <span style="color:#10b981;font-weight:700">STUDY DESK // RUNTIME LOCALHOST:5190 // ACTUAL APP UI</span>
-        <span style="color:#94a3b8">● 2X RETINA CAPTURE</span>
+        <span style="color:#60a5fa;font-weight:600">Study Desk · localhost:5190</span>
+        <span style="color:#10b981;font-weight:600">● LIVE RUNTIME</span>
       </div>
 
       <div class="band-tabs">
-        <button class="tab-btn active" onclick="switchBand('hero', this)">[ OVERVIEW ]</button>
-        <button class="tab-btn" onclick="switchBand('01', this)">[ 01 / TODAY ]</button>
-        <button class="tab-btn" onclick="switchBand('02', this)">[ 02 / PLAN ]</button>
-        <button class="tab-btn" onclick="switchBand('03', this)">[ 03 / PRACTISE ]</button>
-        <button class="tab-btn" onclick="switchBand('04', this)">[ 04 / REVIEW ]</button>
+        <button class="tab-btn active" onclick="switchBand('01', this)">Today (01)</button>
+        <button class="tab-btn" onclick="switchBand('02', this)">Plan &amp; Radar (02)</button>
+        <button class="tab-btn" onclick="switchBand('03', this)">Practise (03)</button>
+        <button class="tab-btn" onclick="switchBand('04', this)">Review (04)</button>
+        <button class="tab-btn" onclick="switchBand('menu', this)">Quick Menu</button>
       </div>
 
       <div class="window-body">
-        
+        <img id="mainShot" class="screenshot-img" src="/screenshots/band-01-today.png" alt="Study Desk Today View">
       </div>
     </div>
   </section>
 
   <!-- 2. THREE PILLARS (POWER UP YOUR STUDY EXPERIENCE) -->
-  <section style="margin-top:80px;border-top:4px solid #030712;padding-top:64px">
+  <section style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
-      <div class="pill">THREE PILLARS</div>
-      <h2>Power Up Your Revision.</h2>
-      <p style="color:#64748b;font-size:16px;margin-top:12px">Engineered from the ground up for technical undergraduate curricula where flashcards fail.</p>
+      <div class="pill">SYSTEM ARCHITECTURE</div>
+      <h2>Power Up Your Engineering Prep.</h2>
+      <p style="color:#64748b;font-size:15px;margin-top:8px">Engineered from the ground up for technical undergraduate curricula where flashcards fail.</p>
     </div>
 
     <div class="pillars-grid">
       <div class="pillar-card">
-        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#10b981;margin-bottom:8px">[ 01 / LOCALHOST ]</div>
-        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Local-First Engine</h3>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px">[ 01 / LOCALHOST ]</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;color:var(--fg)">Local-First Engine</h3>
         <p style="color:#64748b;font-size:14px;line-height:1.6">Runs 100% on your laptop at <code>localhost:5190</code>. Opens instantly in Edge Application Mode with zero latency and zero mobile data consumption.</p>
       </div>
 
       <div class="pillar-card">
-        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#f59e0b;margin-bottom:8px">[ 02 / EXAM RADAR ]</div>
-        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Past Paper Grounding</h3>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber);margin-bottom:8px">[ 02 / EXAM RADAR ]</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;color:var(--fg)">Past Paper Grounding</h3>
         <p style="color:#64748b;font-size:14px;line-height:1.6">Calibrated across 10+ years of university examination patterns across KU, JKUAT, UoN, TUK, DeKUT, and Moi. 2.5× lecturer hint weighting.</p>
       </div>
 
       <div class="pillar-card">
-        <div style="font-family:var(--mono);font-size:12px;font-weight:800;color:#10b981;margin-bottom:8px">[ 03 / DIAGNOSTICS ]</div>
-        <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:12px">Breakpoint Logic</h3>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#10b981;margin-bottom:8px">[ 03 / DIAGNOSTICS ]</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;color:var(--fg)">Breakpoint Logic</h3>
         <p style="color:#64748b;font-size:14px;line-height:1.6">Diagnostic step checkpoints instead of raw solution leaks. Pinpoints whether errors happen in setup, modulus choice, or basic algebra.</p>
       </div>
     </div>
   </section>
 
   <!-- 3. OUR FEATURES (4 LARGE SHOWCASE ROWS WITH REAL SCREENSHOTS) -->
-  <section id="features" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+  <section id="features" style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
-      <div class="pill">PRODUCT SHOWCASE</div>
+      <div class="pill">CORE CAPABILITIES</div>
       <h2>Inside the Real Study Desk.</h2>
-      <p style="color:#64748b;font-size:16px;margin-top:12px">Actual screenshots captured from the running application.</p>
+      <p style="color:#64748b;font-size:15px;margin-top:8px">Actual pixel-perfect captures from the running application.</p>
     </div>
 
     <!-- Row 1: Today's Mission -->
     <div class="showcase-row">
       <div class="shot-wrap">
-        
+        <img class="screenshot-img" src="/screenshots/band-01-today.png" alt="Today's Mission View">
       </div>
       <div>
-        <div class="pill" style="background:#10b981;color:#030712">BAND 01 // TODAY'S MISSION</div>
-        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Pass clean with structured daily focus.</h3>
-        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">Every morning, Study Desk analyzes your upcoming exam timetable and prepares your daily study mission. Tracks active study streaks, weekly dedicated hours, and urgent past-paper questions.</p>
-        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+        <div class="pill" style="background:rgba(37,99,235,0.08);color:var(--accent)">BAND 01 · TODAY'S MISSION</div>
+        <h3 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:12px 0;color:var(--fg)">Pass clean with structured daily focus.</h3>
+        <p style="color:#64748b;font-size:14.5px;line-height:1.6;margin-bottom:16px">Every morning, Study Desk analyzes your upcoming exam timetable and prepares your daily study mission. Tracks active study streaks, weekly dedicated hours, and urgent past-paper questions.</p>
+        <ul style="font-size:13.5px;line-height:2;color:#64748b;list-style:none">
           <li>✓ Dynamic 1-Week exam mode adjustment</li>
           <li>✓ Active 5-day streak keeper telemetry</li>
           <li>✓ Direct one-click task jump to Practice band</li>
@@ -717,30 +734,30 @@ footer {
     <!-- Row 2: Exam Radar -->
     <div class="showcase-row reverse">
       <div>
-        <div class="pill" style="background:#f59e0b;color:#030712">BAND 02 // EXAM RADAR</div>
-        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Predictive past-paper frequency matrix.</h3>
-        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">Aggregates historical questions and marks. When your lecturer drops a hint, pin it in the matrix to apply a 2.5× weighting multiplier so your revision focuses on what counts.</p>
-        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+        <div class="pill" style="background:rgba(245,158,11,0.1);color:var(--amber)">BAND 02 · EXAM RADAR</div>
+        <h3 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:12px 0;color:var(--fg)">Predictive past-paper frequency matrix.</h3>
+        <p style="color:#64748b;font-size:14.5px;line-height:1.6;margin-bottom:16px">Aggregates historical questions and marks. When your lecturer drops a hint, pin it in the matrix to apply a 2.5× weighting multiplier so your revision focuses on what counts.</p>
+        <ul style="font-size:13.5px;line-height:2;color:#64748b;list-style:none">
           <li>✓ 10-year historical topic occurrence rates</li>
           <li>✓ 2.5× lecturer hint weighting multiplier</li>
           <li>✓ 1-Page A4 formula triage sheet generation</li>
         </ul>
       </div>
       <div class="shot-wrap">
-        
+        <img class="screenshot-img" src="/screenshots/band-02-radar.png" alt="Exam Radar Matrix">
       </div>
     </div>
 
     <!-- Row 3: Breakpoint Checkpoints -->
     <div class="showcase-row">
       <div class="shot-wrap">
-        
+        <img class="screenshot-img" src="/screenshots/band-03-practise.png" alt="Breakpoint Checkpoints">
       </div>
       <div>
-        <div class="pill" style="background:#10b981;color:#030712">BAND 03 // BREAKPOINT CHECKPOINTS</div>
-        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Diagnostic checkpoints, not just answers.</h3>
-        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">When you miss an engineering problem, Study Desk walks you through intermediate checkpoints (Te, Zp, Diameter) and logs whether the slip was conceptual, modulus choice, or basic algebra.</p>
-        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+        <div class="pill" style="background:rgba(16,185,129,0.1);color:#10b981">BAND 03 · BREAKPOINT CHECKPOINTS</div>
+        <h3 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:12px 0;color:var(--fg)">Diagnostic checkpoints, not just answers.</h3>
+        <p style="color:#64748b;font-size:14.5px;line-height:1.6;margin-bottom:16px">When you miss an engineering problem, Study Desk walks you through intermediate checkpoints (Te, Zp, Diameter) and logs whether the slip was conceptual, modulus choice, or basic algebra.</p>
+        <ul style="font-size:13.5px;line-height:2;color:#64748b;list-style:none">
           <li>✓ Accepts any valid SI unit conversion (MPa, Pa, kNm)</li>
           <li>✓ Clickable &quot;Broke Here&quot; telemetry tracking</li>
           <li>✓ Differentiates Setup vs Modulus vs Sign errors</li>
@@ -751,69 +768,69 @@ footer {
     <!-- Row 4: Review Pack -->
     <div class="showcase-row reverse">
       <div>
-        <div class="pill" style="background:#030712;color:#10b981">BAND 04 // DEEP CONTEXT PACKS</div>
-        <h3 style="font-size:32px;font-weight:900;text-transform:uppercase;margin:12px 0">Zero-hallucination AI exam triage.</h3>
-        <p style="color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px">One-click compilation of your syllabus notes, lecturer slides, identified student weakspots, and past-paper diagrams into a structured Markdown prompt pack (~24,500 tokens) ready for Claude or DeepSeek.</p>
-        <ul style="font-family:var(--mono);font-size:12px;line-height:2;color:#475569">
+        <div class="pill" style="background:rgba(37,99,235,0.08);color:var(--accent)">BAND 04 · DEEP CONTEXT PACKS</div>
+        <h3 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;margin:12px 0;color:var(--fg)">Zero-hallucination AI exam triage.</h3>
+        <p style="color:#64748b;font-size:14.5px;line-height:1.6;margin-bottom:16px">One-click compilation of your syllabus notes, lecturer slides, identified student weakspots, and past-paper diagrams into a structured Markdown prompt pack (~24,500 tokens) ready for Claude or DeepSeek.</p>
+        <ul style="font-size:13.5px;line-height:2;color:#64748b;list-style:none">
           <li>✓ Grounded in real Kenyan past papers and CATs</li>
           <li>✓ One-click clipboard copy for LLM reasoning models</li>
           <li>✓ Zero hallucinated references or formulas</li>
         </ul>
       </div>
       <div class="shot-wrap">
-        
+        <img class="screenshot-img" src="/screenshots/band-04-review.png" alt="Prompt Builder Pack">
       </div>
     </div>
   </section>
 
   <!-- 4. MORE FEATURES (6 SHORT CARDS) -->
-  <section id="capabilities" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+  <section id="capabilities" style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
-      <div class="pill">CAPABILITIES</div>
-      <h2>More Engineering Tools.</h2>
+      <div class="pill">EXTENDED TOOLSET</div>
+      <h2>More Features.</h2>
     </div>
 
     <div class="feature-grid">
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">BAND FILTERING</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">4-Band Focused Workflow</h4>
-        <p style="color:#64748b;font-size:13px">Eliminates interface clutter by organizing 14 engineering subcomponents into four focused workspaces: Today, Plan, Practise, and Review.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px">BAND FILTERING</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">4-Band Focused Workflow</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Eliminates interface clutter by organizing 14 engineering subcomponents into four focused workspaces: Today, Plan, Practise, and Review.</p>
       </div>
 
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">CALCULATION CHECKER</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Unit-Aware Checker</h4>
-        <p style="color:#64748b;font-size:13px">Understands engineering units natively (MPa, GPa, rad, kNm, mm). Detects order-of-magnitude slipups without penalizing concepts.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber);margin-bottom:6px">CALCULATION CHECKER</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">Unit-Aware Checker</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Understands engineering units natively (MPa, GPa, rad, kNm, mm). Detects order-of-magnitude slipups without penalizing concepts.</p>
       </div>
 
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">EXAM-EVE TRIAGE</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">1-Page Survival Kit</h4>
-        <p style="color:#64748b;font-size:13px">Export worked formula ladders and personal calculation traps into a single printable A4 reference sheet for exam eve.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#10b981;margin-bottom:6px">EXAM-EVE TRIAGE</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">1-Page Survival Kit</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Export worked formula ladders and personal calculation traps into a single printable A4 reference sheet for exam eve.</p>
       </div>
 
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">VOICE EVALUATION</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">4-Min Teach-Back</h4>
-        <p style="color:#64748b;font-size:13px">Record a quick 4-minute verbal explanation of complex concepts to catch conceptual blind spots before entering the exam room.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber);margin-bottom:6px">VOICE EVALUATION</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">Feynman Teach-Back</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Record a quick 4-minute verbal explanation of complex concepts to catch conceptual blind spots before entering the exam room.</p>
       </div>
 
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#10b981;margin-bottom:6px">CAMPUS PORTABILITY</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">USB Lab Edition</h4>
-        <p style="color:#64748b;font-size:13px">Runs directly from a flash drive in restricted university computer labs where installer execution is blocked.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px">CAMPUS PORTABILITY</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">USB Lab Edition</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Runs directly from a flash drive in restricted university computer labs where installer execution is blocked.</p>
       </div>
 
       <div class="feature-box">
-        <div style="font-family:var(--mono);font-size:11px;font-weight:800;color:#f59e0b;margin-bottom:6px">DAILY PRACTICE</div>
-        <h4 style="font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Discord Companion</h4>
-        <p style="color:#64748b;font-size:13px">Pulls daily engineering questions on Discord. Earn +2 pts for attempting, +10 for solving, and unlock 7-day streak roles.</p>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#10b981;margin-bottom:6px">DAILY PRACTICE</div>
+        <h4 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--fg)">Discord Companion</h4>
+        <p style="color:#64748b;font-size:13px;line-height:1.5">Pulls daily engineering questions on Discord. Earn +2 pts for attempting, +10 for solving, and unlock 7-day streak roles.</p>
       </div>
     </div>
   </section>
 
   <!-- 5. DISTRIBUTION MATRIX -->
-  <section id="matrix" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+  <section id="matrix" style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
       <div class="pill">DISTRIBUTION PACKAGES</div>
       <h2>Choose Your Deployment.</h2>
@@ -822,26 +839,26 @@ footer {
     <div class="pillars-grid">
       <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
         <div>
-          <div class="pill" style="background:#10b981;color:#030712">RECOMMENDED</div>
-          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Windows Installer (.exe)</h3>
-          <p style="color:#64748b;font-size:14px;margin-bottom:16px">The full 71 MB binary bundle with all offline course materials, past papers, and Edge Application Mode setup.</p>
-          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
+          <div class="pill" style="background:rgba(37,99,235,0.08);color:var(--accent)">RECOMMENDED</div>
+          <h3 style="font-size:20px;font-weight:800;margin:8px 0 12px;color:var(--fg)">Windows Installer (.exe)</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px;line-height:1.6">The full 71 MB binary bundle with all offline course materials, past papers, and Edge Application Mode setup.</p>
+          <ul style="font-size:13px;line-height:1.8;color:#64748b;list-style:none">
             <li>✓ Zero admin rights needed</li>
             <li>✓ Desktop shortcut creation</li>
             <li>✓ Local database in <code>study\data</code></li>
           </ul>
         </div>
-        <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="width:100%;margin-top:24px">Download (.EXE)</a>
+        <a class="btn btn-primary" href="/downloads/StudyDesk.exe" download style="width:100%;margin-top:24px">Download (.exe)</a>
       </div>
 
       <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
         <div>
-          <div class="pill" style="background:#f59e0b;color:#030712">CAMPUS LABS</div>
-          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Portable USB Archive</h3>
-          <p style="color:#64748b;font-size:14px;margin-bottom:16px">Designed for university lab workstations where executing setup wizards is restricted. Run directly from flash drive.</p>
-          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
+          <div class="pill" style="background:rgba(245,158,11,0.1);color:var(--amber)">PORTABLE CLI</div>
+          <h3 style="font-size:20px;font-weight:800;margin:8px 0 12px;color:var(--fg)">Localhost CLI / Portable</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px;line-height:1.6">Designed for university lab workstations where executing setup wizards is restricted. Run directly via Node.js LTS and <code>start.bat</code>.</p>
+          <ul style="font-size:13px;line-height:1.8;color:#64748b;list-style:none">
             <li>✓ No installation required</li>
-            <li>✓ Run directly from USB drive</li>
+            <li>✓ Runs on http://localhost:5190</li>
             <li>✓ Safe for campus lab sessions</li>
           </ul>
         </div>
@@ -850,64 +867,66 @@ footer {
 
       <div class="pillar-card" style="display:flex;flex-direction:column;justify-content:space-between">
         <div>
-          <div class="pill" style="background:#030712;color:#fff">DISCORD BOT</div>
-          <h3 style="font-size:24px;font-weight:900;text-transform:uppercase;margin:12px 0">Mobile Slash Bot</h3>
-          <p style="color:#64748b;font-size:14px;margin-bottom:16px">Study on the go with daily practice questions (+2 attempt, +10 solve, 7-day streak roles) paired to your running desk.</p>
-          <ul style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#475569">
-            <li>✓ <code>/study today</code> morning plan</li>
-            <li>✓ <code>/study mark</code> photo check</li>
-            <li>✓ Daily problem streaks</li>
+          <div class="pill" style="background:rgba(16,185,129,0.1);color:#10b981">BROWSER ACCESS</div>
+          <h3 style="font-size:20px;font-weight:800;margin:8px 0 12px;color:var(--fg)">Web Platform &amp; Archive</h3>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px;line-height:1.6">2,571+ KU Past Papers &amp; Lecture Notes across 113 engineering units with instant search and browser preview.</p>
+          <ul style="font-size:13px;line-height:1.8;color:#64748b;list-style:none">
+            <li>✓ 2,571+ categorized past papers</li>
+            <li>✓ Instant mobile/desktop reading</li>
+            <li>✓ Free community access</li>
           </ul>
         </div>
-        <a class="btn btn-outline" href="https://discord.gg/7yUz2rXumm" target="_blank" style="width:100%;margin-top:24px">Join Discord</a>
+        <a class="btn btn-outline" href="/#/" style="width:100%;margin-top:24px">Open Web Hub</a>
       </div>
     </div>
   </section>
 
-  <!-- 6. SETUP SECTION -->
-  <section id="setup" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+  <!-- 6. SETUP GUIDE -->
+  <section id="setup" style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
-      <div class="pill">INITIALIZATION</div>
-      <h2>Get Started in 3 Steps.</h2>
+      <div class="pill">SETUP IN 3 STEPS</div>
+      <h2>Get Started in Under 5 Minutes.</h2>
     </div>
 
-    <div class="setup-step">
-      <div class="step-num">01</div>
-      <div>
-        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Download &amp; Extract StudyDesk.exe</h3>
-        <p style="color:#64748b;font-size:14px">Double-click the binary installer. It self-extracts automatically to <code>%LOCALAPPDATA%\StudyDesk</code> with zero administrative permission required.</p>
+    <div style="max-width:800px;margin:0 auto">
+      <div class="setup-step">
+        <div class="step-num">01</div>
+        <div>
+          <h4 style="font-size:17px;font-weight:800;margin-bottom:4px;color:var(--fg)">Download StudyDesk.exe</h4>
+          <p style="color:#64748b;font-size:13.5px;line-height:1.6">Double-click the downloaded binary installer. It self-extracts automatically to <code>%LOCALAPPDATA%\StudyDesk</code> with zero administrative approval required.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="setup-step">
-      <div class="step-num" style="color:#f59e0b">02</div>
-      <div>
-        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Get Your Key in Discord</h3>
-        <p style="color:#64748b;font-size:14px">Open the Discord server and run <code>/study link</code>. The bot delivers your private onboarding code (e.g. <code>SD-7K2M-9QXA</code>).</p>
+      <div class="setup-step">
+        <div class="step-num">02</div>
+        <div>
+          <h4 style="font-size:17px;font-weight:800;margin-bottom:4px;color:var(--fg)">Get Your Key in Discord</h4>
+          <p style="color:#64748b;font-size:13.5px;line-height:1.6">Open the Discord server and type <code>/study link</code>. The bot generates your private single-use key (e.g. <code>SD-7K2M-9QXA</code>).</p>
+        </div>
       </div>
-    </div>
 
-    <div class="setup-step">
-      <div class="step-num">03</div>
-      <div>
-        <h3 style="font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:4px">Run setup.bat &amp; Study</h3>
-        <p style="color:#64748b;font-size:14px">Paste your key, pick your engineering units, and Study Desk opens in Edge App mode at <code>localhost:5190</code>.</p>
+      <div class="setup-step">
+        <div class="step-num">03</div>
+        <div>
+          <h4 style="font-size:17px;font-weight:800;margin-bottom:4px;color:var(--fg)">Run setup.bat &amp; Study</h4>
+          <p style="color:#64748b;font-size:13.5px;line-height:1.6">Paste your code, select your units, and Study Desk opens in Edge App mode at <code>localhost:5190</code>.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 7. FAQ ACCORDION -->
-  <section id="faq" style="margin-top:96px;border-top:4px solid #030712;padding-top:64px">
+  <!-- 7. FAQ -->
+  <section id="faq" style="margin-top:80px;border-top:1px solid var(--border);padding-top:64px">
     <div class="section-head">
-      <div class="pill">FAQ</div>
+      <div class="pill">DOCUMENTATION &amp; SUPPORT</div>
       <h2>Frequently Asked Questions.</h2>
     </div>
 
-    <div style="border:4px solid #030712;background:var(--card-bg);box-shadow:6px 6px 0px #030712">
+    <div class="faq-box" style="max-width:800px;margin:0 auto">
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">
           <span>Is Study Desk really free and offline?</span>
-          <span>+</span>
+          <span>−</span>
         </button>
         <div class="faq-ans">
           Yes. Study Desk runs 100% locally on localhost:5190 from your laptop. All your course outlines, past papers, notes, checkpoints, and formula ladders run completely offline without consuming your mobile internet data bundles.
@@ -916,7 +935,7 @@ footer {
 
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">
-          <span>Do I need administrator privileges on my university laptop?</span>
+          <span>Do I need administrator privileges on my laptop?</span>
           <span>+</span>
         </button>
         <div class="faq-ans" style="display:none">
@@ -956,13 +975,13 @@ footer {
     </div>
   </section>
 
-  <!-- 8. CONTACT SECTION -->
-  <section style="margin-top:96px;text-align:center;padding:48px 20px;background:#f1f5f9;border:4px solid #030712;box-shadow:6px 6px 0px #030712">
-    <h3 style="font-size:26px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Need support or syllabus help?</h3>
+  <!-- 8. CONTACT / SUPPORT -->
+  <section style="margin-top:80px;text-align:center;padding:48px 24px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--r-card);max-width:800px;margin-inline:auto">
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:8px;color:var(--fg)">Need support or setup help?</h3>
     <p style="color:#64748b;font-size:14px;margin-bottom:20px">Reach out directly to the Engineering Study Hub maintenance team.</p>
     <div style="display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center">
-      <span style="font-family:var(--mono);font-weight:700;padding:8px 16px;background:#fff;border:2px solid #030712">gregorykimemiah@gmail.com</span>
-      <button class="btn btn-primary" onclick="copyContactEmail(this)" style="padding:10px 18px;font-size:12px">Copy Email</button>
+      <span style="font-family:var(--mono);font-size:13px;font-weight:600;padding:8px 16px;background:rgba(11,15,20,0.04);border-radius:10px;border:1px solid var(--border)">support@engineeringhub.site</span>
+      <button class="btn btn-primary" onclick="copyContactEmail(this)" style="padding:10px 18px;font-size:13px">Copy Email</button>
     </div>
   </section>
 </main>
@@ -971,8 +990,8 @@ footer {
   <div class="footer-wrap">
     <div class="footer-brand">
       <a class="brand" href="/#/">
-        <img src="/favicon.png" alt="EH" width="30" height="30" style="border-radius:6px">
-        <span>Study Desk</span>
+        <div class="brand-badge">EH</div>
+        <span>Engineering Hub</span>
       </a>
       <p class="footer-tagline">Study runtime, past papers, and project build sheets for engineering students in Kenya.</p>
     </div>
@@ -1000,17 +1019,17 @@ footer {
 
 <script>
 const shotMap = {
-  hero: '/screenshots/hero-app.png',
   '01': '/screenshots/band-01-today.png',
   '02': '/screenshots/band-02-radar.png',
   '03': '/screenshots/band-03-practise.png',
-  '04': '/screenshots/band-04-review.png'
+  '04': '/screenshots/band-04-review.png',
+  'menu': '/screenshots/dropdown-compact.png'
 };
 
 function switchBand(band, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const img = document.getElementById('main-shot');
+  const img = document.getElementById('mainShot');
   if (img && shotMap[band]) {
     img.src = shotMap[band];
   }
@@ -1026,7 +1045,7 @@ function toggleFaq(btn) {
 }
 
 function copyContactEmail(btn) {
-  navigator.clipboard.writeText('gregorykimemiah@gmail.com');
+  navigator.clipboard.writeText('support@engineeringhub.site');
   const orig = btn.textContent;
   btn.textContent = 'Copied!';
   setTimeout(() => { btn.textContent = orig; }, 2000);
