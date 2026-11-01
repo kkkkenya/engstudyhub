@@ -2,5 +2,16 @@
   "framework": null,
   "installCommand": "echo no-install-needed",
   "buildCommand": "echo static-site-no-build-step",
-  "outputDirectory": "public/redesign"
+  "outputDirectory": "public/redesign",
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ]
 }
