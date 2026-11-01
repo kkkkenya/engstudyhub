@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crux · Engineering Study Hub</title>
+<meta name="description" content="A study app for KU engineering units. It reads your unit's past papers, ranks what is likely to come up, and shows the exact step where your working goes wrong.">
+<!-- noindex until crux.engineeringhub.site is live; then remove this line and add /crux/ to the nav and sitemap -->
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.engineeringhub.site/crux/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<style>
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--bg:#f2f2f7;--surface:#fff;--text:#1d1d1f;--text-2:#6e6e73;--separator:rgba(60,60,67,.18);--accent:#f2c200;--on-accent:#1d1d1f;--focus:#0a84ff;--shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06)}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--surface:#1c1c1e;--text:#f5f5f7;--text-2:#a1a1a6;--separator:rgba(84,84,88,.6)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 var(--font)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
+header,main,footer{max-width:1080px;margin:0 auto;padding:0 16px}
+header{display:flex;align-items:center;justify-content:space-between;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:8px}
+main{display:grid;gap:24px;padding-top:24px;padding-bottom:48px}
+h1{font-size:34px;line-height:1.1;margin:0}
+.lead{font-size:19px;color:var(--text-2);max-width:60ch;margin:0}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;max-width:60ch}
+li{background:var(--surface);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow)}
+li b{display:block}
+li span{color:var(--text-2);font-size:15px}
+picture img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--separator)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:12px;font-weight:600;text-decoration:none;background:var(--surface);box-shadow:var(--shadow)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.note{color:var(--text-2);font-size:15px;margin:0}
+footer{padding-bottom:32px;color:var(--text-2);font-size:15px}
+@media (min-width:900px){h1{font-size:44px}main{grid-template-columns:5fr 7fr;align-items:start}main>.media{grid-row:span 3}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Engineering Hub</a>
+</header>
+<main>
+  <div>
+    <h1>Crux</h1>
+    <p class="lead">A study app for KU engineering units. It reads your unit's past papers, ranks what is likely to come up, and shows the exact step where your working goes wrong.</p>
+  </div>
+  <div class="media">
+    <picture>
+      <source srcset="crux-today-dark.webp" media="(prefers-color-scheme: dark)">
+      <img src="crux-today-light.webp" width="1200" height="760" alt="Crux's Today screen: three next steps and every unit with the days left to its CAT" fetchpriority="high">
+    </picture>
+  </div>
+  <ul>
+    <li><b>Weakspots</b><span>The sub-topics costing you marks, ranked by how often they're examined.</span></li>
+    <li><b>Predictions</b><span>Topics ranked from past papers and what your lecturer said in class.</span></li>
+    <li><b>Checkpoints</b><span>When an answer is wrong, the step where your working broke.</span></li>
+  </ul>
+  <div>
+    <div class="actions">
+      <a class="btn primary" href="https://crux.engineeringhub.site">Open Crux</a>
+      <a class="btn" href="https://discord.gg/7yUz2rXumm">Join on Discord</a>
+    </div>
+    <p class="note">Included with Basic and Premium. 7-day free trial when you join.</p>
+  </div>
+</main>
+<footer>© Engineering Study Hub</footer>
+</body>
+</html>
