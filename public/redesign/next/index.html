@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering Study Hub</title>
+<meta name="description" content="Past papers, CATs, notes and study rooms for KU engineering students, sorted by unit on Discord.">
+<!-- Draft of the new home page (fixplan S3) for the owner to review. Not linked, not indexed. -->
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<style>
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--bg:#f2f2f7;--surface:#fff;--surface-2:#f5f5f7;--text:#1d1d1f;--text-2:#6e6e73;--separator:rgba(60,60,67,.18);--accent:#f2c200;--on-accent:#1d1d1f;--focus:#0a84ff;--shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06)}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--surface:#1c1c1e;--surface-2:#2c2c2e;--text:#f5f5f7;--text-2:#a1a1a6;--separator:rgba(84,84,88,.6)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 var(--font)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;margin-right:auto}
+.brand img{width:32px;height:32px;border-radius:8px}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;padding:10px 12px;border-radius:10px;font-size:15px;font-weight:500}
+nav a:hover{background:var(--surface-2)}
+section{padding:40px 0}
+h1{font-size:34px;line-height:1.1;margin:0 0 12px}
+h2{font-size:28px;line-height:1.2;margin:0 0 16px}
+h3{font-size:17px;margin:0 0 4px}
+p{margin:0 0 12px;max-width:65ch}
+.lead{font-size:19px;color:var(--text-2)}
+.muted{color:var(--text-2)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:12px;font-weight:600;text-decoration:none;background:var(--surface);box-shadow:var(--shadow)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.card .price{font-size:28px;font-weight:700;margin:4px 0 8px}
+.card ul{margin:8px 0 0;padding-left:18px;color:var(--text-2);font-size:15px}
+.card.featured{outline:2px solid var(--accent)}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:s}
+ol.steps li{background:var(--surface);border-radius:12px;padding:16px 16px 16px 56px;position:relative;box-shadow:var(--shadow)}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:16px;top:16px;width:28px;height:28px;border-radius:999px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700}
+details{background:var(--surface);border-radius:12px;padding:0 16px;box-shadow:var(--shadow)}
+details+details{margin-top:8px}
+summary{cursor:pointer;min-height:48px;display:flex;align-items:center;font-weight:600}
+details p{color:var(--text-2)}
+footer{padding:32px 0 48px;color:var(--text-2);font-size:15px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
+.hero-img{display:block;width:100%;height:auto;border-radius:18px;margin-top:24px}
+@media (min-width:900px){h1{font-size:44px}section{padding:56px 0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Engineering Study Hub</a>
+    <nav aria-label="Main">
+      <a href="/units/">Units</a>
+      <a href="/#/projects">Projects</a>
+      <a href="/crux/">Crux</a>
+      <a href="#join">Join</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section>
+    <div class="wrap">
+      <h1>Engineering Study Hub</h1>
+      <p class="lead">Past papers, CATs, notes and study rooms for KU engineering students, sorted by unit on Discord.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://discord.gg/7yUz2rXumm">Join on Discord</a>
+        <a class="btn" href="/units/">See units</a>
+      </div>
+      <img class="hero-img" src="/images/plate-01-hub-workshop-960.webp" srcset="/images/plate-01-hub-workshop-480.webp 480w, /images/plate-01-hub-workshop-960.webp 960w, /images/plate-01-hub-workshop-1440.webp 1440w" sizes="(min-width: 1080px) 1048px, 100vw" width="960" height="679" alt="Engineering students working on a hardware project in a campus makerspace" fetchpriority="high">
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Crux</h2>
+      <p>Crux is our study app. It reads your unit's past papers, ranks the topics likely to come up, and shows the step where your working goes wrong.</p>
+      <a class="btn" href="/crux/">About Crux</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What's inside</h2>
+      <div class="grid">
+        <div class="card"><h3>Unit libraries</h3><p class="muted">A channel for every unit, by course and year.</p></div>
+        <div class="card"><h3>Past papers and CATs</h3><p class="muted">Sorted by unit and year, with notes and books.</p></div>
+        <div class="card"><h3>Study rooms</h3><p class="muted">Timed voice rooms for working alongside others.</p></div>
+        <div class="card"><h3>Projects</h3><p class="muted">Build sheets with Nairobi parts lists and prices.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="membership">
+    <div class="wrap">
+      <h2>Membership</h2>
+      <div class="grid">
+        <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p class="muted">7 days of everything in Basic when you join.</p></div>
+        <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted">a semester</span></div>
+          <ul><li>Every unit library</li><li>Past papers, CATs and notes</li><li>Crux</li></ul></div>
+        <div class="card featured"><h3>Premium</h3><div class="price">KES 800 <span class="muted">once</span></div>
+          <ul><li>Everything in Basic</li><li>Full project build sheets</li><li>Build squads and study rooms</li><li>Daily homework and CAT help</li><li>Internship and career channel</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="wrap">
+      <h2>How to join</h2>
+      <ol class="steps">
+        <li><h3>Join the Discord</h3><p class="muted">Your 7-day trial starts straight away.</p></li>
+        <li><h3>Pay by M-Pesa</h3><p class="muted">Send KES 50 (Basic) or KES 800 (Premium) to 0745 947 704, Peter Mwangi.</p></li>
+        <li><h3>Tap "I've paid"</h3><p class="muted">In #upgrade-to-premium, paste the code from your M-Pesa message. Access usually follows within minutes.</p></li>
+      </ol>
+      <div class="actions"><a class="btn primary" href="https://discord.gg/7yUz2rXumm">Join on Discord</a></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details><summary>Which units are covered?</summary><p>Units across the KU engineering courses. <a href="/units/">See the list</a>.</p></details>
+      <details><summary>Can I get a refund?</summary><p>Yes, within 7 days of paying. Message us and we refund in full.</p></details>
+      <details><summary>Can I move from Basic to Premium?</summary><p>Yes. Send the difference, KES 750, and choose Premium after tapping "I've paid".</p></details>
+      <details><summary>Do I need a card?</summary><p>No. Payment is by M-Pesa only.</p></details>
+      <details><summary>Who runs the hub?</summary><p>A team of engineering students in Nairobi. Ask anything on <a href="https://wa.me/254745947704">WhatsApp</a>.</p></details>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <a href="https://wa.me/254745947704">WhatsApp</a>
+    <a href="https://discord.gg/7yUz2rXumm">Discord</a>
+    <span>© Engineering Study Hub</span>
+  </div>
+</footer>
+</body>
+</html>
