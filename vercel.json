@@ -13,5 +13,32 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/download",
+      "destination": "/crux/",
+      "permanent": false
+    },
+    {
+      "source": "/download/:path*",
+      "destination": "/crux/",
+      "permanent": false
+    },
+    {
+      "source": "/desk",
+      "destination": "/crux/",
+      "permanent": false
+    },
+    {
+      "source": "/desk/:path*",
+      "destination": "/crux/",
+      "permanent": false
+    },
+    {
+      "source": "/downloads/:file*",
+      "destination": "/crux/",
+      "permanent": false
+    }
   ]
 }

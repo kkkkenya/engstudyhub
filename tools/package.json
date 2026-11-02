@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "description": "Dev-only tools for the static site. The site itself has no build step.",
-  "scripts": { "images": "node images.mjs" },
+  "scripts": { "images": "node images.mjs", "crux-shots": "node crux-shots.mjs" },
   "devDependencies": { "sharp": "0.35.5" }
 }
