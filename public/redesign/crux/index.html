@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Crux · Engineering Study Hub</title>
 <meta name="description" content="A study app for KU engineering units. Questions from your past papers and books, full worked solutions, a study guide for each topic, and notes that stay on screen.">
 <link rel="canonical" href="https://www.engineeringhub.site/crux/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0e1210">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Engineering Study Hub">
 <meta property="og:title" content="Crux: a study app for KU engineering units">
@@ -19,86 +18,138 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--bg:#f2f2f7;--surface:#fff;--surface-2:#f5f5f7;--text:#1d1d1f;--text-2:#6e6e73;--separator:rgba(60,60,67,.18);--accent:#f2c200;--on-accent:#1d1d1f;--focus:#0a84ff;--shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06)}
-@media (prefers-color-scheme:dark){:root{--bg:#000;--surface:#1c1c1e;--surface-2:#2c2c2e;--text:#f5f5f7;--text-2:#a1a1a6;--separator:rgba(84,84,88,.6)}}
+/* Crux's palette from the app and the ad: ink, paper, Crux yellow, the lagoon. System fonts, as on the rest of the site. */
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ink:#0e1210;--ink-2:#151b18;--paper:#f4f1e8;--yellow:#f2c200;--yellow-soft:rgba(242,194,0,.38);--lagoon:#d9ece7;
+  --bg:#f4f1e8;--surface:#fffdf7;--surface-2:#ebe7da;--text:#14201c;--text-2:#56625c;--separator:rgba(20,32,28,.14);
+  --focus:#0a84ff;--shadow:0 1px 2px rgba(14,18,16,.06),0 10px 30px rgba(14,18,16,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1210;--surface:#161d1a;--surface-2:#1f2824;--text:#f4f1e8;--text-2:#a3aea8;--separator:rgba(244,241,232,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.35)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 var(--font)}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 var(--font);-webkit-text-size-adjust:100%}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
-header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
+p{margin:0 0 12px;max-width:60ch}
+mark{background:linear-gradient(transparent 58%,var(--yellow-soft) 58% 92%,transparent 92%);color:inherit;padding:0 .08em}
+.muted{color:var(--text-2)}
+.small{font-size:15px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:700;text-decoration:none;
+  border:1px solid var(--separator);background:var(--surface);transition:transform .2s ease,box-shadow .2s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.primary{background:var(--yellow);border-color:transparent;color:#17140a;box-shadow:0 10px 26px -12px rgba(242,194,0,.8)}
+.btn svg{width:20px;height:20px;flex:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 10px}
+
+/* header and the first section sit on ink in both themes */
+.top{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.top::before{content:"";position:absolute;inset:-30% -20% auto auto;width:70vmax;height:70vmax;background:radial-gradient(closest-side,rgba(242,194,0,.16),transparent 70%);pointer-events:none}
+header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;position:relative}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;margin-right:auto}
 .brand img{width:32px;height:32px;border-radius:8px}
 nav{display:flex;gap:4px;flex-wrap:wrap}
-nav a{text-decoration:none;padding:10px 12px;border-radius:10px;font-size:15px;font-weight:500}
-nav a:hover,nav a[aria-current="page"]{background:var(--surface-2)}
-h1{font-size:40px;line-height:1.05;margin:0 0 12px}
-h2{font-size:26px;line-height:1.2;margin:0 0 12px}
-p{margin:0 0 12px;max-width:60ch}
-.lead{font-size:19px;color:var(--text-2)}
-.muted{color:var(--text-2)}
-.small{font-size:15px}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 8px}
-.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:12px;font-weight:600;text-decoration:none;background:var(--surface);box-shadow:var(--shadow)}
-.btn.primary{background:var(--accent);color:var(--on-accent)}
-.hero{padding:24px 0 32px}
-.hero .shots{position:relative;margin-top:28px}
-.shot{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--separator);box-shadow:var(--shadow);background:var(--surface)}
-.phone{position:absolute;right:-8px;bottom:-24px;width:22%;max-width:210px;border-radius:22px;border:6px solid #1d1d1f}
-.feature{display:grid;gap:20px;padding:40px 16px;border-top:1px solid var(--separator)}
-.feature ul{margin:0;padding-left:20px;display:grid;gap:6px;max-width:60ch}
+nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;border-radius:10px;font-size:15px;font-weight:500;color:#cdd5d0}
+nav a:hover,nav a[aria-current="page"]{background:rgba(244,241,232,.08);color:var(--paper)}
+.hero{position:relative;display:grid;gap:32px;padding-top:28px;padding-bottom:56px}
+.eyebrow{margin:0 0 10px;color:var(--yellow);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.hero h1{font-size:56px;line-height:1;margin:0 0 16px}
+.hero h1 span{color:var(--yellow)}
+.hero .lead{font-size:19px;color:#c3ccc7}
+.hero .note{font-size:15px;color:#8f9b95}
+.hero .btn:not(.primary){background:rgba(244,241,232,.06);border-color:rgba(244,241,232,.16);color:var(--paper)}
+
+/* the ad: the vertical cut on phones, 16:9 on wider screens; nothing downloads until play */
+.film{position:relative;margin:0;justify-self:center;width:100%;max-width:400px}
+.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:24px;background:#000;box-shadow:0 30px 70px -30px #000,0 0 0 1px rgba(244,241,232,.1)}
+.film figcaption{margin-top:10px;font-size:14px;color:#8f9b95;text-align:center}
+.film .wide{display:none}
+
+/* the features: numbered, with the app's screenshots */
+.feature{display:grid;gap:22px;padding-top:48px;padding-bottom:48px;border-top:1px solid var(--separator)}
+.feature:first-of-type{border-top:0}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;margin-bottom:12px;border-radius:10px;background:var(--yellow);color:#17140a;font-weight:800;font-size:15px}
+.feature h2{font-size:28px;line-height:1.15;margin:0 0 14px}
+.feature ul{margin:0;padding-left:20px;display:grid;gap:8px;max-width:60ch}
 .feature li::marker{color:var(--text-2)}
-.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.card{background:var(--surface);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.shot{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--separator);box-shadow:var(--shadow);background:var(--surface)}
+
+/* the lagoon band behind "How to get it" */
+.get{background:var(--lagoon) url("lagoon-1600.webp") center/cover;color:#14201c;padding-top:56px;padding-bottom:56px}
+.get .panel{background:rgba(255,253,247,.86);border-radius:24px;padding:28px;box-shadow:0 20px 50px -24px rgba(16,48,56,.35);display:grid;gap:24px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.get h2{font-size:30px;margin:0 0 10px}
+.get .muted{color:#56625c}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:#fff;border:1px solid rgba(20,32,28,.1);border-radius:18px;padding:18px}
 .card h3{font-size:17px;margin:0 0 4px}
-.card p{margin:0;font-size:15px;color:var(--text-2)}
-.price{font-size:22px;font-weight:700;margin:2px 0 6px}
+.card p{margin:0;font-size:15px;color:#56625c}
+.card.pick{border:2px solid var(--yellow)}
+.price{font-size:24px;font-weight:800;margin:2px 0 6px}
+.get .btn:not(.primary){background:#fff}
+
 footer{padding:32px 0 40px;color:var(--text-2);font-size:15px}
 footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
-@media (max-width:640px){.phone{display:none}h1{font-size:34px}}
+
+@media (max-width:640px){.hero h1{font-size:44px}.get .panel{padding:20px}}
 @media (min-width:900px){
-  h1{font-size:52px}
-  .feature{grid-template-columns:5fr 7fr;align-items:center;gap:40px}
+  .hero{grid-template-columns:5fr 7fr;align-items:center;gap:48px;padding-top:40px;padding-bottom:72px}
+  .hero h1{font-size:72px}
+  .film{max-width:none}
+  .film .tall{display:none}
+  .film .wide{display:block;aspect-ratio:16/9}
+  .feature{grid-template-columns:5fr 7fr;align-items:center;gap:48px}
   .feature.flip{grid-template-columns:7fr 5fr}
   .feature.flip .text{order:2}
+  .get .panel{grid-template-columns:5fr 7fr;align-items:center;padding:36px}
 }
+@media (prefers-reduced-motion:no-preference){
+  .hero .text>*{animation:rise .6s ease both}
+  .hero .text>*:nth-child(2){animation-delay:.05s}.hero .text>*:nth-child(3){animation-delay:.1s}.hero .text>*:nth-child(4){animation-delay:.15s}
+  .film{animation:rise .7s .15s ease both}
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <a class="brand" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Engineering Study Hub</a>
-    <nav aria-label="Main">
-      <a href="/units/">Units</a>
-      <a href="/crux/" aria-current="page">Crux</a>
-      <a href="https://discord.gg/7yUz2rXumm">Join</a>
-    </nav>
-  </div>
-</header>
-<main>
+<div class="top">
+  <header>
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Engineering Study Hub</a>
+      <nav aria-label="Main">
+        <a href="/units/">Units</a>
+        <a href="/crux/" aria-current="page">Crux</a>
+        <a href="https://discord.gg/7yUz2rXumm">Join</a>
+      </nav>
+    </div>
+  </header>
   <section class="hero wrap">
-    <h1>Crux</h1>
-    <p class="lead">A study app for KU engineering units. It turns your unit's past papers and books into practice questions and shows the step where your working went wrong.</p>
-    <div class="actions">
-      <a class="btn primary" href="https://crux.engineeringhub.site">Open Crux</a>
-      <a class="btn" href="https://discord.gg/7yUz2rXumm">Join on Discord</a>
+    <div class="text">
+      <p class="eyebrow">For KU engineering units</p>
+      <h1>Crux<span>.</span></h1>
+      <p class="lead">A study app for KU engineering units. It turns your unit's past papers and books into practice questions and shows the step where your working went wrong.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://crux.engineeringhub.site/auth/login"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>Sign in with Discord</a>
+        <a class="btn" href="https://discord.gg/7yUz2rXumm">Join the Hub</a>
+      </div>
+      <p class="note">Included with Basic and Premium, and in the 7-day free trial when you join. On a computer, Discord shows a QR code you can scan with the Discord app on your phone.</p>
     </div>
-    <p class="muted small">Sign in with Discord. Included with Basic and Premium, and in the 7-day free trial when you join.</p>
-    <div class="shots">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="today-laptop-dark-960.webp 960w, today-laptop-dark-1440.webp 1440w" sizes="(min-width: 1120px) 1088px, 100vw">
-        <img class="shot" src="today-laptop-light-960.webp" srcset="today-laptop-light-960.webp 960w, today-laptop-light-1440.webp 1440w" sizes="(min-width: 1120px) 1088px, 100vw" width="1440" height="900" alt="Crux's Today screen: the next thing to study, each unit with the days to its CAT, and the notes bar on the right" fetchpriority="high">
-      </picture>
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="question-phone-dark-390.webp 390w, question-phone-dark-780.webp 780w" sizes="210px">
-        <img class="shot phone" src="question-phone-light-390.webp" srcset="question-phone-light-390.webp 390w, question-phone-light-780.webp 780w" sizes="210px" width="780" height="1688" alt="Crux on a phone: a question from a textbook with a button to open the book at its page" loading="lazy">
-      </picture>
-    </div>
+    <figure class="film">
+      <video class="tall" controls playsinline preload="none" poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="Crux in 47 seconds">
+        <source src="crux-ad-9x16.mp4" type="video/mp4">
+      </video>
+      <video class="wide" controls playsinline preload="none" poster="crux-ad-16x9-poster.webp" width="1280" height="720" aria-label="Crux in 47 seconds">
+        <source src="crux-ad-16x9.mp4" type="video/mp4">
+      </video>
+      <figcaption>Crux in 47 seconds · 8 MB, loads when you press play</figcaption>
+    </figure>
   </section>
+</div>
 
+<main>
   <section class="feature wrap">
     <div class="text">
-      <h2>Questions from your papers and your books</h2>
+      <span class="num">1</span>
+      <h2>Questions from your <mark>papers and your books</mark></h2>
       <ul>
         <li>Past papers and CATs, split into questions with each part on its own line.</li>
         <li>The worked examples and exercises in your unit's books, word for word, with the book's own solution kept as the answer.</li>
@@ -113,7 +164,8 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature flip wrap">
     <div class="text">
-      <h2>Worked solutions you can follow</h2>
+      <span class="num">2</span>
+      <h2>Worked solutions <mark>you can follow</mark></h2>
       <ul>
         <li>Type your final answer and Crux checks it. If it's wrong, you pick the step where your working went off, and that step is saved as a weak spot.</li>
         <li>Ask for the full solution: what's given, the method, numbered steps with the maths typeset, and a check at the end.</li>
@@ -128,7 +180,8 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature wrap">
     <div class="text">
-      <h2>What to read for each topic</h2>
+      <span class="num">3</span>
+      <h2>What to read <mark>for each topic</mark></h2>
       <ul>
         <li>A study guide per topic: what the course expects you to do, the formulas, and the chapter, section and pages in your own books.</li>
         <li>What to skip, how the topic is examined, and an order to study it in.</li>
@@ -143,7 +196,8 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature flip wrap">
     <div class="text">
-      <h2>Notes on screen, and a timer</h2>
+      <span class="num">4</span>
+      <h2>Notes on screen, <mark>and a timer</mark></h2>
       <ul>
         <li>Select a formula or a step anywhere in Crux and pin it. It stays in the notes bar while you work, ready to copy into any AI.</li>
         <li>A focus timer, alone or in a unit room with others studying the same unit.</li>
@@ -156,19 +210,23 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
     </picture>
   </section>
 
-  <section class="feature wrap" id="join">
-    <div class="text">
-      <h2>How to get it</h2>
-      <p>Join the Engineering Study Hub on Discord, then open Crux and sign in with the same Discord account.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://crux.engineeringhub.site">Open Crux</a>
-        <a class="btn" href="https://discord.gg/7yUz2rXumm">Join on Discord</a>
+  <section class="get" id="join">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <h2>How to get it</h2>
+          <p class="muted">Join the Engineering Study Hub on Discord, then sign in to Crux with the same Discord account.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://crux.engineeringhub.site/auth/login">Sign in with Discord</a>
+            <a class="btn" href="https://discord.gg/7yUz2rXumm">Join the Hub</a>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days when you join. 15 AI actions and 2 file downloads a day.</p></div>
+          <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
+          <div class="card pick"><h3>Premium</h3><div class="price">KES 800 <span class="muted small">once</span></div><p>40 AI actions a day and unlimited downloads.</p></div>
+        </div>
       </div>
-    </div>
-    <div class="cards">
-      <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days when you join. 15 AI actions and 2 file downloads a day.</p></div>
-      <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
-      <div class="card"><h3>Premium</h3><div class="price">KES 800 <span class="muted small">once</span></div><p>40 AI actions a day and unlimited downloads.</p></div>
     </div>
   </section>
 </main>
