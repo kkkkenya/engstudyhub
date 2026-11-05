@@ -17,9 +17,15 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* Crux's palette from the app and the ad: ink, paper, Crux yellow, the lagoon. System fonts, as on the rest of the site. */
-:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+/* Crux's palette from the app and the ad (ink, paper, Crux yellow, the lagoon) and Crux's own fonts: Fraunces for
+   headings, Manrope for text, as in the app. The one page on the site with web fonts, on the owner's call: it's
+   where people sign in to Crux. Served from this folder. */
+@font-face{font-family:"Manrope";src:url("fonts/manrope-latin-wght-normal.woff2") format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Fraunces";src:url("fonts/fraunces-latin-opsz-normal.woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{--font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--display:"Fraunces",Georgia,"Times New Roman",serif;
   --ink:#0e1210;--ink-2:#151b18;--paper:#f4f1e8;--yellow:#f2c200;--yellow-soft:rgba(242,194,0,.38);--lagoon:#d9ece7;
   --bg:#f4f1e8;--surface:#fffdf7;--surface-2:#ebe7da;--text:#14201c;--text-2:#56625c;--separator:rgba(20,32,28,.14);
   --focus:#0a84ff;--shadow:0 1px 2px rgba(14,18,16,.06),0 10px 30px rgba(14,18,16,.08)}
@@ -31,6 +37,8 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
+h1,h2,.price{font-family:var(--display);font-weight:600}
+.card h3{font-weight:800}
 p{margin:0 0 12px;max-width:60ch}
 mark{background:linear-gradient(transparent 58%,var(--yellow-soft) 58% 92%,transparent 92%);color:inherit;padding:0 .08em}
 .muted{color:var(--text-2)}
@@ -224,7 +232,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
         <div class="cards">
           <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days when you join. 15 AI actions and 2 file downloads a day.</p></div>
           <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
-          <div class="card pick"><h3>Premium</h3><div class="price">KES 800 <span class="muted small">once</span></div><p>40 AI actions a day and unlimited downloads.</p></div>
+          <div class="card pick"><h3>Premium</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>40 AI actions a day and unlimited downloads. On Basic already? Upgrade for KES 350.</p></div>
         </div>
       </div>
     </div>
