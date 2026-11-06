@@ -142,12 +142,23 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       <p class="note">Included with Basic and Premium, and in the 7-day free trial when you join. On a computer, Discord shows a QR code you can scan with the Discord app on your phone.</p>
     </div>
     <figure class="film">
-      <video class="tall" controls playsinline preload="none" poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="Crux in 47 seconds">
+      <video class="tall" controls playsinline preload="none" data-poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="Crux in 47 seconds">
         <source src="crux-ad-9x16.mp4" type="video/mp4">
       </video>
-      <video class="wide" controls playsinline preload="none" poster="crux-ad-16x9-poster.webp" width="1280" height="720" aria-label="Crux in 47 seconds">
+      <video class="wide" controls playsinline preload="none" data-poster="crux-ad-16x9-poster.webp" width="1280" height="720" aria-label="Crux in 47 seconds">
         <source src="crux-ad-16x9.mp4" type="video/mp4">
       </video>
+      <script>
+        // keep only the cut this screen shows, so a phone never downloads the 16:9 poster (and the reverse)
+        (function () {
+          var wide = window.matchMedia('(min-width: 900px)').matches;
+          var keep = document.querySelector(wide ? '.film .wide' : '.film .tall');
+          document.querySelector(wide ? '.film .tall' : '.film .wide').remove();
+          keep.poster = keep.dataset.poster;
+          keep.style.display = 'block'; // stays visible if the window is resized or the phone turned
+          keep.style.aspectRatio = wide ? '16 / 9' : '9 / 16';
+        })();
+      </script>
       <figcaption>Crux in 47 seconds · 8 MB, loads when you press play</figcaption>
     </figure>
   </section>
