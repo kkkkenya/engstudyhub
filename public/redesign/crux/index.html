@@ -7,7 +7,7 @@
 <meta name="description" content="A study app for KU engineering units. Questions from your past papers and books, full worked solutions, a study guide for each topic, and notes that stay on screen.">
 <link rel="canonical" href="https://www.engineeringhub.site/crux/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="theme-color" content="#0e1210">
+<meta name="theme-color" content="#0B0F14">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Engineering Study Hub">
 <meta property="og:title" content="Crux: a study app for KU engineering units">
@@ -20,87 +20,91 @@
 <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* Crux's palette from the app and the ad (ink, paper, Crux yellow, the lagoon) and Crux's own fonts: Fraunces for
-   headings, Manrope for text, as in the app. The one page on the site with web fonts, on the owner's call: it's
-   where people sign in to Crux. Served from this folder. */
+/* The Hub's palette and drawing-sheet look (ink, paper, Hub blue, the hi-vis yellow used flat), square corners and
+   hard edges, no glows. Crux's own fonts stay: Fraunces for headings, Manrope for text, as in the app, on the
+   owner's call (the one page on the site with web fonts). Served from this folder. */
 @font-face{font-family:"Manrope";src:url("fonts/manrope-latin-wght-normal.woff2") format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Fraunces";src:url("fonts/fraunces-latin-opsz-normal.woff2") format("woff2");font-weight:100 900;font-display:swap}
 :root{--font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--display:"Fraunces",Georgia,"Times New Roman",serif;
-  --ink:#0e1210;--ink-2:#151b18;--paper:#f4f1e8;--yellow:#f2c200;--yellow-soft:rgba(242,194,0,.38);--lagoon:#d9ece7;
-  --bg:#f4f1e8;--surface:#fffdf7;--surface-2:#ebe7da;--text:#14201c;--text-2:#56625c;--separator:rgba(20,32,28,.14);
-  --focus:#0a84ff;--shadow:0 1px 2px rgba(14,18,16,.06),0 10px 30px rgba(14,18,16,.08)}
-@media (prefers-color-scheme:dark){:root{--bg:#0e1210;--surface:#161d1a;--surface-2:#1f2824;--text:#f4f1e8;--text-2:#a3aea8;--separator:rgba(244,241,232,.12);
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.35)}}
+  --ink:#0B0F14;--ink-2:#151C24;--blue:#1B49E0;--blue-ink:#12339E;--hivis:#F2C200;
+  --bg:#F1F3F4;--surface:#FBFCFC;--panel:#E6EAEC;--text:#0B0F14;--text-2:#59636D;--line:rgba(11,15,20,.16);--line-2:rgba(11,15,20,.32);
+  --accent:var(--blue);--focus:#1B49E0;--hard:var(--ink)}
+@media (prefers-color-scheme:dark){:root{--bg:#0B0F14;--surface:#151C24;--panel:#11171E;--text:#E9EDF0;--text-2:#9AA4AE;
+  --line:rgba(233,237,240,.14);--line-2:rgba(233,237,240,.28);--accent:#7D9BFF;--focus:#7D9BFF;--hard:#000}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 var(--font);-webkit-text-size-adjust:100%}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
 h1,h2,.price{font-family:var(--display);font-weight:600}
 .card h3{font-weight:800}
 p{margin:0 0 12px;max-width:60ch}
-mark{background:linear-gradient(transparent 58%,var(--yellow-soft) 58% 92%,transparent 92%);color:inherit;padding:0 .08em}
+mark{background:none;color:var(--accent)}
 .muted{color:var(--text-2)}
 .small{font-size:15px}
-.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:700;text-decoration:none;
-  border:1px solid var(--separator);background:var(--surface);transition:transform .2s ease,box-shadow .2s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-.btn.primary{background:var(--yellow);border-color:transparent;color:#17140a;box-shadow:0 10px 26px -12px rgba(242,194,0,.8)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;font-weight:700;font-size:15px;text-decoration:none;
+  border:1px solid var(--ink);background:var(--surface);color:var(--text);box-shadow:2px 2px 0 var(--hard);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--hard)}
+.btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--hard)}
+.btn.primary{background:var(--blue);border-color:var(--blue-ink);color:#fff;box-shadow:2px 2px 0 var(--blue-ink)}
+.btn.primary:hover{box-shadow:3px 3px 0 var(--blue-ink)}
 .btn svg{width:20px;height:20px;flex:none}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 10px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 10px}
 
-/* header and the first section sit on ink in both themes */
-.top{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
-.top::before{content:"";position:absolute;inset:-30% -20% auto auto;width:70vmax;height:70vmax;background:radial-gradient(closest-side,rgba(242,194,0,.16),transparent 70%);pointer-events:none}
-header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;position:relative}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;margin-right:auto}
-.brand img{width:32px;height:32px;border-radius:8px}
-nav{display:flex;gap:4px;flex-wrap:wrap}
-nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;border-radius:10px;font-size:15px;font-weight:500;color:#cdd5d0}
-nav a:hover,nav a[aria-current="page"]{background:rgba(244,241,232,.08);color:var(--paper)}
-.hero{position:relative;display:grid;gap:32px;padding-top:28px;padding-bottom:56px}
-.eyebrow{margin:0 0 10px;color:var(--yellow);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+/* header and the first section sit on ink in both themes, like the Hub's ink bands */
+.top{background:var(--ink);color:#fff;border-bottom:3px solid var(--hivis)}
+header{border-bottom:1px solid rgba(255,255,255,.14)}
+header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;margin-right:auto}
+.brand img{width:32px;height:32px}
+nav{display:flex;gap:2px;flex-wrap:wrap}
+nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;font-size:15px;font-weight:600;color:rgba(255,255,255,.72);border-bottom:2px solid transparent}
+nav a:hover{color:#fff}
+nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--hivis)}
+.hero{display:grid;gap:32px;padding-top:32px;padding-bottom:56px}
+.eyebrow{margin:0 0 12px;color:var(--hivis);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .hero h1{font-size:56px;line-height:1;margin:0 0 16px}
-.hero h1 span{color:var(--yellow)}
-.hero .lead{font-size:19px;color:#c3ccc7}
-.hero .note{font-size:15px;color:#8f9b95}
-.hero .btn:not(.primary){background:rgba(244,241,232,.06);border-color:rgba(244,241,232,.16);color:var(--paper)}
+.hero h1 span{color:var(--hivis)}
+.hero .lead{font-size:19px;color:rgba(255,255,255,.8)}
+.hero .note{font-size:15px;color:rgba(255,255,255,.6)}
+.hero .btn{box-shadow:2px 2px 0 rgba(255,255,255,.28)}
+.hero .btn:hover{box-shadow:3px 3px 0 rgba(255,255,255,.28)}
+.hero .btn:not(.primary){background:transparent;border-color:rgba(255,255,255,.5);color:#fff}
 
 /* the ad: the vertical cut on phones, 16:9 on wider screens; nothing downloads until play */
-.film{position:relative;margin:0;justify-self:center;width:100%;max-width:400px}
-.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:24px;background:#000;box-shadow:0 30px 70px -30px #000,0 0 0 1px rgba(244,241,232,.1)}
-.film figcaption{margin-top:10px;font-size:14px;color:#8f9b95;text-align:center}
+.film{margin:0;justify-self:center;width:100%;max-width:400px}
+.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000;border:1px solid rgba(255,255,255,.28)}
+.film figcaption{margin-top:10px;font-size:14px;color:rgba(255,255,255,.6);text-align:center}
 .film .wide{display:none}
 
 /* the features: numbered, with the app's screenshots */
-.feature{display:grid;gap:22px;padding-top:48px;padding-bottom:48px;border-top:1px solid var(--separator)}
+.feature{display:grid;gap:22px;padding-top:48px;padding-bottom:48px;border-top:1px solid var(--line)}
 .feature:first-of-type{border-top:0}
-.num{display:inline-grid;place-items:center;width:34px;height:34px;margin-bottom:12px;border-radius:10px;background:var(--yellow);color:#17140a;font-weight:800;font-size:15px}
+.num{display:inline-grid;place-items:center;width:34px;height:34px;margin-bottom:12px;background:var(--blue);color:#fff;font-weight:800;font-size:15px}
 .feature h2{font-size:28px;line-height:1.15;margin:0 0 14px}
 .feature ul{margin:0;padding-left:20px;display:grid;gap:8px;max-width:60ch}
 .feature li::marker{color:var(--text-2)}
-.shot{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--separator);box-shadow:var(--shadow);background:var(--surface)}
+/* the screenshot's grey box shows while it loads, and its alt text stays hidden until then */
+.shot{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--line-2);background:var(--panel);color:transparent}
 
-/* the lagoon band behind "How to get it" */
-.get{background:var(--lagoon) url("lagoon-1600.webp") center/cover;color:#14201c;padding-top:56px;padding-bottom:56px}
-.get .panel{background:rgba(255,253,247,.86);border-radius:24px;padding:28px;box-shadow:0 20px 50px -24px rgba(16,48,56,.35);display:grid;gap:24px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* "How to get it" on the Hub's grey panel band */
+.get{background:var(--panel);border-top:1px solid var(--line-2);padding-top:56px;padding-bottom:56px}
+.get .panel{display:grid;gap:24px}
 .get h2{font-size:30px;margin:0 0 10px}
-.get .muted{color:#56625c}
 .cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.card{background:#fff;border:1px solid rgba(20,32,28,.1);border-radius:18px;padding:18px}
+.card{background:var(--surface);border:1px solid var(--line-2);padding:18px}
 .card h3{font-size:17px;margin:0 0 4px}
-.card p{margin:0;font-size:15px;color:#56625c}
-.card.pick{border:2px solid var(--yellow)}
+.card p{margin:0;font-size:15px;color:var(--text-2)}
+.card.pick{border:2px solid var(--blue);box-shadow:3px 3px 0 var(--blue-ink)}
 .price{font-size:24px;font-weight:800;margin:2px 0 6px}
-.get .btn:not(.primary){background:#fff}
 
-footer{padding:32px 0 40px;color:var(--text-2);font-size:15px}
+footer{padding:32px 0 40px;color:var(--text-2);font-size:15px;border-top:1px solid var(--line)}
 footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
-@media (max-width:640px){.hero h1{font-size:44px}.get .panel{padding:20px}}
+@media (max-width:640px){.hero h1{font-size:44px}}
 @media (min-width:900px){
-  .hero{grid-template-columns:5fr 7fr;align-items:center;gap:48px;padding-top:40px;padding-bottom:72px}
+  .hero{grid-template-columns:5fr 7fr;align-items:center;gap:48px;padding-top:44px;padding-bottom:72px}
   .hero h1{font-size:72px}
   .film{max-width:none}
   .film .tall{display:none}
@@ -108,14 +112,14 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
   .feature{grid-template-columns:5fr 7fr;align-items:center;gap:48px}
   .feature.flip{grid-template-columns:7fr 5fr}
   .feature.flip .text{order:2}
-  .get .panel{grid-template-columns:5fr 7fr;align-items:center;padding:36px}
+  .get .panel{grid-template-columns:5fr 7fr;align-items:center}
 }
 @media (prefers-reduced-motion:no-preference){
-  .hero .text>*{animation:rise .6s ease both}
+  .hero .text>*{animation:rise .5s ease both}
   .hero .text>*:nth-child(2){animation-delay:.05s}.hero .text>*:nth-child(3){animation-delay:.1s}.hero .text>*:nth-child(4){animation-delay:.15s}
-  .film{animation:rise .7s .15s ease both}
+  .film{animation:rise .6s .15s ease both}
 }
-@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
 </style>
 </head>
 <body>
@@ -142,10 +146,10 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       <p class="note">Included with Basic and Premium, and in the 7-day free trial when you join. On a computer, Discord shows a QR code you can scan with the Discord app on your phone.</p>
     </div>
     <figure class="film">
-      <video class="tall" controls playsinline preload="none" data-poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="Crux in 47 seconds">
+      <video class="tall" controls playsinline preload="none" data-poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="The Crux ad, 44 seconds">
         <source src="crux-ad-9x16.mp4" type="video/mp4">
       </video>
-      <video class="wide" controls playsinline preload="none" data-poster="crux-ad-16x9-poster.webp" width="1280" height="720" aria-label="Crux in 47 seconds">
+      <video class="wide" controls playsinline preload="none" data-poster="crux-ad-16x9-poster.webp" width="1280" height="720" aria-label="The Crux ad, 44 seconds">
         <source src="crux-ad-16x9.mp4" type="video/mp4">
       </video>
       <script>
@@ -159,7 +163,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
           keep.style.aspectRatio = wide ? '16 / 9' : '9 / 16';
         })();
       </script>
-      <figcaption>Crux in 47 seconds · 8 MB, loads when you press play</figcaption>
+      <figcaption>44 seconds, with sound. It only downloads when you press play.</figcaption>
     </figure>
   </section>
 </div>
