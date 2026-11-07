@@ -7,7 +7,8 @@
 <meta name="description" content="A study app for KU engineering units. Questions from your past papers and books, full worked solutions, a study guide for each topic, and notes that stay on screen.">
 <link rel="canonical" href="https://www.engineeringhub.site/crux/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="theme-color" content="#0B0F14">
+<meta name="theme-color" content="#eef2ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1112" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Engineering Study Hub">
 <meta property="og:title" content="Crux: a study app for KU engineering units">
@@ -20,84 +21,80 @@
 <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* The Hub's palette and drawing-sheet look (ink, paper, Hub blue, the hi-vis yellow used flat), square corners and
-   hard edges, no glows. Crux's own fonts stay: Fraunces for headings, Manrope for text, as in the app, on the
-   owner's call (the one page on the site with web fonts). Served from this folder. */
+/* Crux's own look: the app's default wallpaper colours, its yellow accent, Fraunces for headings and Manrope for
+   text, served from this folder. */
 @font-face{font-family:"Manrope";src:url("fonts/manrope-latin-wght-normal.woff2") format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Fraunces";src:url("fonts/fraunces-latin-opsz-normal.woff2") format("woff2");font-weight:100 900;font-display:swap}
 :root{--font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--display:"Fraunces",Georgia,"Times New Roman",serif;
-  --ink:#0B0F14;--ink-2:#151C24;--blue:#1B49E0;--blue-ink:#12339E;--hivis:#F2C200;
-  --bg:#F1F3F4;--surface:#FBFCFC;--panel:#E6EAEC;--text:#0B0F14;--text-2:#59636D;--line:rgba(11,15,20,.16);--line-2:rgba(11,15,20,.32);
-  --accent:var(--blue);--focus:#1B49E0;--hard:var(--ink)}
-@media (prefers-color-scheme:dark){:root{--bg:#0B0F14;--surface:#151C24;--panel:#11171E;--text:#E9EDF0;--text-2:#9AA4AE;
-  --line:rgba(233,237,240,.14);--line-2:rgba(233,237,240,.28);--accent:#7D9BFF;--focus:#7D9BFF;--hard:#000}}
+  --bg1:#eef2ee;--bg2:#dfe9e5;--surface:#faf9f6;--text:#16171b;--text-2:#5b606c;--line:rgba(20,22,30,.1);
+  --accent:#f2c200;--on-accent:#1a1a1a;--a2:#2b9c8f;--focus:#0a84ff;--shadow:0 6px 18px rgba(20,22,30,.08);--r:14px}
+@media (prefers-color-scheme:dark){:root{--bg1:#0b1112;--bg2:#0f1b1a;--surface:#1c1d22;--text:#eeeff1;--text-2:#a0a5af;--line:rgba(255,255,255,.09);
+  --a2:#43bfae;--shadow:0 8px 24px rgba(0,0,0,.4);color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 var(--font);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg1);color:var(--text);font:17px/1.55 var(--font);-webkit-text-size-adjust:100%}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
-h1,h2,.price{font-family:var(--display);font-weight:600}
-.card h3{font-weight:800}
+h1,h2{font-family:var(--display);font-weight:600}
 p{margin:0 0 12px;max-width:60ch}
-mark{background:none;color:var(--accent)}
 .muted{color:var(--text-2)}
 .small{font-size:15px}
-.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;font-weight:700;font-size:15px;text-decoration:none;
-  border:1px solid var(--ink);background:var(--surface);color:var(--text);box-shadow:2px 2px 0 var(--hard);transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--hard)}
-.btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--hard)}
-.btn.primary{background:var(--blue);border-color:var(--blue-ink);color:#fff;box-shadow:2px 2px 0 var(--blue-ink)}
-.btn.primary:hover{box-shadow:3px 3px 0 var(--blue-ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;font-weight:700;font-size:15px;text-decoration:none;
+  border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--on-accent)}
 .btn svg{width:20px;height:20px;flex:none}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 10px}
 
-/* header and the first section sit on ink in both themes, like the Hub's ink bands */
-.top{background:var(--ink);color:#fff;border-bottom:3px solid var(--hivis)}
-header{border-bottom:1px solid rgba(255,255,255,.14)}
+.top{background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg1) 75%)}
 header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;margin-right:auto}
 .brand img{width:32px;height:32px}
 nav{display:flex;gap:2px;flex-wrap:wrap}
-nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;font-size:15px;font-weight:600;color:rgba(255,255,255,.72);border-bottom:2px solid transparent}
-nav a:hover{color:#fff}
-nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--hivis)}
+nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;font-size:15px;font-weight:600;color:var(--text-2);border-radius:999px}
+nav a:hover{color:var(--text)}
+nav a[aria-current="page"]{color:var(--text);background:var(--surface)}
 .hero{display:grid;gap:32px;padding-top:32px;padding-bottom:56px}
-.eyebrow{margin:0 0 12px;color:var(--hivis);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .hero h1{font-size:56px;line-height:1;margin:0 0 16px}
-.hero h1 span{color:var(--hivis)}
-.hero .lead{font-size:19px;color:rgba(255,255,255,.8)}
-.hero .note{font-size:15px;color:rgba(255,255,255,.6)}
-.hero .btn{box-shadow:2px 2px 0 rgba(255,255,255,.28)}
-.hero .btn:hover{box-shadow:3px 3px 0 rgba(255,255,255,.28)}
-.hero .btn:not(.primary){background:transparent;border-color:rgba(255,255,255,.5);color:#fff}
+.hero .lead{font-size:19px}
+.hero .note{font-size:15px;color:var(--text-2)}
 
 /* the ad: the vertical cut on phones, 16:9 on wider screens; nothing downloads until play */
 .film{margin:0;justify-self:center;width:100%;max-width:400px}
-.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000;border:1px solid rgba(255,255,255,.28)}
-.film figcaption{margin-top:10px;font-size:14px;color:rgba(255,255,255,.6);text-align:center}
+.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000;border-radius:var(--r);box-shadow:var(--shadow)}
 .film .wide{display:none}
 
-/* the features: numbered, with the app's screenshots */
+/* setting up: numbered circles joined by one line, top to bottom */
+.setup{padding-top:56px;padding-bottom:64px}
+.setup h2{font-size:32px;margin:0 0 6px}
+.line{list-style:none;margin:32px 0 0;padding:0;max-width:560px}
+.line li{position:relative;display:grid;grid-template-columns:40px 1fr;column-gap:18px;padding-bottom:36px}
+.line li:last-child{padding-bottom:0}
+.line li::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:color-mix(in srgb,var(--accent) 45%,transparent)}
+.line li:last-child::before{display:none}
+.line .n{grid-row:span 2;display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--accent);color:var(--on-accent);font:600 18px var(--display);position:relative}
+.line h3{margin:7px 0 4px;font-size:19px}
+.line p{margin:0;font-size:15px;color:var(--text-2)}
+.line .btn{grid-column:2;justify-self:start;margin-top:12px;min-height:42px;padding:0 18px;font-size:14px}
+
+/* the features, with the app's screenshots */
 .feature{display:grid;gap:22px;padding-top:48px;padding-bottom:48px;border-top:1px solid var(--line)}
-.feature:first-of-type{border-top:0}
-.num{display:inline-grid;place-items:center;width:34px;height:34px;margin-bottom:12px;background:var(--blue);color:#fff;font-weight:800;font-size:15px}
 .feature h2{font-size:28px;line-height:1.15;margin:0 0 14px}
 .feature ul{margin:0;padding-left:20px;display:grid;gap:8px;max-width:60ch}
-.feature li::marker{color:var(--text-2)}
-/* the screenshot's grey box shows while it loads, and its alt text stays hidden until then */
-.shot{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--line-2);background:var(--panel);color:transparent}
+.feature li::marker{color:var(--a2)}
+/* the screenshot's box shows while it loads, and its alt text stays hidden until then */
+.shot{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);color:transparent;box-shadow:var(--shadow)}
 
-/* "How to get it" on the Hub's grey panel band */
-.get{background:var(--panel);border-top:1px solid var(--line-2);padding-top:56px;padding-bottom:56px}
-.get .panel{display:grid;gap:24px}
+.get{background:var(--bg2);padding-top:56px;padding-bottom:56px}
 .get h2{font-size:30px;margin:0 0 10px}
-.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.card{background:var(--surface);border:1px solid var(--line-2);padding:18px}
-.card h3{font-size:17px;margin:0 0 4px}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card h3{font-size:17px;font-weight:800;margin:0 0 4px}
 .card p{margin:0;font-size:15px;color:var(--text-2)}
-.card.pick{border:2px solid var(--blue);box-shadow:3px 3px 0 var(--blue-ink)}
-.price{font-size:24px;font-weight:800;margin:2px 0 6px}
+.card.pick{border:2px solid var(--accent)}
+.price{font-family:var(--display);font-size:24px;font-weight:600;margin:2px 0 6px}
 
 footer{padding:32px 0 40px;color:var(--text-2);font-size:15px;border-top:1px solid var(--line)}
 footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
@@ -112,7 +109,6 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
   .feature{grid-template-columns:5fr 7fr;align-items:center;gap:48px}
   .feature.flip{grid-template-columns:7fr 5fr}
   .feature.flip .text{order:2}
-  .get .panel{grid-template-columns:5fr 7fr;align-items:center}
 }
 @media (prefers-reduced-motion:no-preference){
   .hero .text>*{animation:rise .5s ease both}
@@ -136,14 +132,13 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
   </header>
   <section class="hero wrap">
     <div class="text">
-      <p class="eyebrow">For KU engineering units</p>
-      <h1>Crux<span>.</span></h1>
-      <p class="lead">A study app for KU engineering units. It turns your unit's past papers and books into practice questions and shows the step where your working went wrong.</p>
+      <h1>Crux</h1>
+      <p class="lead">Crux is a study app for KU engineering units. It takes the past papers and books for your units and turns them into practice questions. When you get one wrong, it helps you find the step where your working went off.</p>
       <div class="actions">
-        <a class="btn primary" href="https://crux.engineeringhub.site/auth/login"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>Sign in with Discord</a>
-        <a class="btn" href="https://discord.gg/7yUz2rXumm">Join the Hub</a>
+        <a class="btn primary" href="#setup">Get started</a>
+        <a class="btn" href="https://crux.engineeringhub.site/auth/login">Sign in</a>
       </div>
-      <p class="note">Included with Basic and Premium, and in the 7-day free trial when you join. On a computer, Discord shows a QR code you can scan with the Discord app on your phone.</p>
+      <p class="note">Crux comes with Engineering Study Hub membership, including the 7-day free trial you get when you join.</p>
     </div>
     <figure class="film">
       <video class="tall" controls playsinline preload="none" data-poster="crux-ad-9x16-poster.webp" width="720" height="1280" aria-label="The Crux ad, 44 seconds">
@@ -163,16 +158,25 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
           keep.style.aspectRatio = wide ? '16 / 9' : '9 / 16';
         })();
       </script>
-      <figcaption>44 seconds, with sound. It only downloads when you press play.</figcaption>
     </figure>
   </section>
 </div>
 
 <main>
+  <section class="setup wrap" id="setup">
+    <h2>Setting up Crux</h2>
+    <p class="muted">You only do this once.</p>
+    <ol class="line">
+      <li><span class="n">1</span><h3>Make a Discord account</h3><p>Skip this if you have one.</p><a class="btn" href="https://discord.com/register">Sign up on Discord</a></li>
+      <li><span class="n">2</span><h3>Join the Hub's server</h3><p>Your 7-day free trial starts here.</p><a class="btn" href="https://discord.gg/7yUz2rXumm">Join the server</a></li>
+      <li><span class="n">3</span><h3>Come back here and sign in</h3><p>Press Authorize when Discord asks.</p><a class="btn primary" href="https://crux.engineeringhub.site/auth/login">Sign in with Discord</a></li>
+      <li><span class="n">4</span><h3>Pick your course and units</h3><p>Crux asks for these the first time you open it.</p></li>
+    </ol>
+  </section>
+
   <section class="feature wrap">
     <div class="text">
-      <span class="num">1</span>
-      <h2>Questions from your <mark>papers and your books</mark></h2>
+      <h2>Practice questions from your papers and books</h2>
       <ul>
         <li>Past papers and CATs, split into questions with each part on its own line.</li>
         <li>The worked examples and exercises in your unit's books, word for word, with the book's own solution kept as the answer.</li>
@@ -187,8 +191,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature flip wrap">
     <div class="text">
-      <span class="num">2</span>
-      <h2>Worked solutions <mark>you can follow</mark></h2>
+      <h2>Worked solutions</h2>
       <ul>
         <li>Type your final answer and Crux checks it. If it's wrong, you pick the step where your working went off, and that step is saved as a weak spot.</li>
         <li>Ask for the full solution: what's given, the method, numbered steps with the maths typeset, and a check at the end.</li>
@@ -203,12 +206,11 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature wrap">
     <div class="text">
-      <span class="num">3</span>
-      <h2>What to read <mark>for each topic</mark></h2>
+      <h2>A study guide for each topic</h2>
       <ul>
-        <li>A study guide per topic: what the course expects you to do, the formulas, and the chapter, section and pages in your own books.</li>
-        <li>What to skip, how the topic is examined, and an order to study it in.</li>
-        <li>Made once and shared with your class.</li>
+        <li>What the course expects you to be able to do, the formulas, and the chapter, section and pages to read in your own books.</li>
+        <li>What you can skip, how the topic tends to be examined, and an order to study it in.</li>
+        <li>Each guide is made once and shared with your whole class.</li>
       </ul>
     </div>
     <picture>
@@ -219,12 +221,11 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="feature flip wrap">
     <div class="text">
-      <span class="num">4</span>
-      <h2>Notes on screen, <mark>and a timer</mark></h2>
+      <h2>Notes and a focus timer</h2>
       <ul>
-        <li>Select a formula or a step anywhere in Crux and pin it. It stays in the notes bar while you work, ready to copy into any AI.</li>
-        <li>A focus timer, alone or in a unit room with others studying the same unit.</li>
-        <li>Also: timed papers, a Prompt Builder for ChatGPT or Claude, and everything synced between your phone and laptop.</li>
+        <li>Select a formula or a step anywhere in Crux and pin it. It stays in the notes bar while you work, and you can copy it into any AI.</li>
+        <li>A focus timer you can run alone or in a unit room with others studying the same unit.</li>
+        <li>There are also timed papers, a Prompt Builder for ChatGPT or Claude, and your work syncs between your phone and laptop.</li>
       </ul>
     </div>
     <picture>
@@ -235,20 +236,12 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 
   <section class="get" id="join">
     <div class="wrap">
-      <div class="panel">
-        <div>
-          <h2>How to get it</h2>
-          <p class="muted">Join the Engineering Study Hub on Discord, then sign in to Crux with the same Discord account.</p>
-          <div class="actions">
-            <a class="btn primary" href="https://crux.engineeringhub.site/auth/login">Sign in with Discord</a>
-            <a class="btn" href="https://discord.gg/7yUz2rXumm">Join the Hub</a>
-          </div>
-        </div>
-        <div class="cards">
-          <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days when you join. 15 AI actions and 2 file downloads a day.</p></div>
-          <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
-          <div class="card pick"><h3>Premium</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>40 AI actions a day and unlimited downloads. On Basic already? Upgrade for KES 350.</p></div>
-        </div>
+      <h2>What it costs</h2>
+      <p class="muted">Crux is part of your Hub membership. There's nothing extra to pay for it.</p>
+      <div class="cards">
+        <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days from when you join. 15 AI actions and 2 file downloads a day.</p></div>
+        <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
+        <div class="card pick"><h3>Premium</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>40 AI actions a day and unlimited downloads. If you're on Basic already, the upgrade is KES 350.</p></div>
       </div>
     </div>
   </section>
