@@ -8,8 +8,8 @@
 <meta name="description" content="A study app for KU engineering units. Questions from your past papers and books, full worked solutions, a study guide for each topic, and notes that stay on screen.">
 <link rel="canonical" href="https://www.engineeringhub.site/crux/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="theme-color" content="#eef2ee" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1112" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F1F3F4">
+<script>(function(){var t;try{t=localStorage.getItem("esh-theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)})();</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Engineering Study Hub">
 <meta property="og:title" content="Crux: a study app for KU engineering units">
@@ -19,25 +19,26 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* Crux's own look: the app's default wallpaper colours, its yellow accent, Fraunces for headings and Manrope for
-   text, served from this folder. */
-@font-face{font-family:"Manrope";src:url("fonts/manrope-latin-wght-normal.woff2") format("woff2");font-weight:200 800;font-display:swap}
+/* The Hub's look, as on the main site: paper and ink, Hub blue, the hi-vis yellow (also Crux's yellow), and the
+   same header and footer. Light and dark use the main site's theme setting (esh-theme), so one choice holds on both.
+   Fraunces is kept for the Crux wordmark only. */
 @font-face{font-family:"Fraunces";src:url("fonts/fraunces-latin-opsz-normal.woff2") format("woff2");font-weight:100 900;font-display:swap}
-:root{--font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--display:"Fraunces",Georgia,"Times New Roman",serif;
-  --bg1:#eef2ee;--bg2:#dfe9e5;--surface:#faf9f6;--text:#16171b;--text-2:#5b606c;--line:rgba(20,22,30,.1);
-  --accent:#f2c200;--on-accent:#1a1a1a;--a2:#2b9c8f;--focus:#0a84ff;--shadow:0 6px 18px rgba(20,22,30,.08);--r:14px}
-@media (prefers-color-scheme:dark){:root{--bg1:#0b1112;--bg2:#0f1b1a;--surface:#1c1d22;--text:#eeeff1;--text-2:#a0a5af;--line:rgba(255,255,255,.09);
-  --a2:#43bfae;--shadow:0 8px 24px rgba(0,0,0,.4);color-scheme:dark}}
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--display:"Fraunces",Georgia,"Times New Roman",serif;
+  --bg1:#F1F3F4;--bg2:#E6EAEC;--surface:#FBFCFC;--text:#0B0F14;--text-2:#59636D;--line:rgba(11,15,20,.16);--line-2:rgba(11,15,20,.3);
+  --accent:#F2C200;--on-accent:#0B0F14;--blue:#1B49E0;--blue-ink:#12339E;--a2:#1B49E0;--focus:#1B49E0;--hdr:rgba(241,243,244,.9);
+  --shadow:0 6px 18px rgba(11,15,20,.08);--r:14px}
+:root[data-theme="dark"]{--bg1:#0B0F14;--bg2:#11171E;--surface:#151C24;--text:#E9EDF0;--text-2:#9AA4AE;--line:rgba(233,237,240,.12);--line-2:rgba(233,237,240,.26);
+  --blue:#3F6BFF;--blue-ink:#2A53E0;--a2:#7D9BFF;--focus:#7D9BFF;--hdr:rgba(11,15,20,.88);--shadow:0 8px 24px rgba(0,0,0,.45);color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--text);font:17px/1.55 var(--font);-webkit-text-size-adjust:100%}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
-h1,h2{font-family:var(--display);font-weight:600}
+h1{font-family:var(--display);font-weight:600}
+h2{font-weight:800}
 p{margin:0 0 12px;max-width:60ch}
 .muted{color:var(--text-2)}
 .small{font-size:15px}
@@ -49,14 +50,59 @@ p{margin:0 0 12px;max-width:60ch}
 .btn svg{width:20px;height:20px;flex:none}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 10px}
 
-.top{background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg1) 75%)}
-header .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;margin-right:auto}
-.brand img{width:32px;height:32px}
-nav{display:flex;gap:2px;flex-wrap:wrap}
-nav a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;padding:0 12px;font-size:15px;font-weight:600;color:var(--text-2);border-radius:999px}
-nav a:hover{color:var(--text)}
-nav a[aria-current="page"]{color:var(--text);background:var(--surface)}
+/* ===== V25 · one header for the whole site (main, Crux, units): the EH mark, four sections in a track, the
+   light/dark switch, Join Discord. Phones keep everything in the header: the sections drop to a second row. ===== */
+.hdr{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--h-bg) 86%,transparent);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--h-line);transition:box-shadow .2s}
+.hdr.is-scrolled{box-shadow:0 8px 24px -16px rgba(11,15,20,.35)}
+.hdr .wrap{display:flex;align-items:center;gap:16px;min-height:66px;padding-top:10px;padding-bottom:10px}
+.hdr .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--h-fg);flex:none}
+.hdr .brand-mark{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:11px;background:#F2C200;color:#0B0F14;
+  border:1px solid #0B0F14;font:800 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:-.02em;
+  box-shadow:inset 0 -2px 0 rgba(11,15,20,.18)}
+.hdr .brand-txt strong{display:block;font:700 15px/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:-.01em;text-transform:none}
+.hdr .brand-txt small{display:block;margin-top:3px;font:600 9.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--h-mute)}
+/* the four sections sit in one track; the current one is a solid pill */
+.hnav{display:flex;align-items:center;gap:2px;margin:0 auto;padding:4px;border-radius:999px;background:var(--h-track);border:1px solid var(--h-line)}
+.hnav a{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 16px;border-radius:999px;
+  font:500 14px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--h-mute);text-decoration:none;white-space:nowrap;
+  transition:color .15s,background-color .15s}
+.hnav a:hover{color:var(--h-fg)}
+.hnav a[aria-current="page"]{background:var(--h-fg);color:var(--h-bg);font-weight:600;box-shadow:0 1px 2px rgba(11,15,20,.2)}
+/* Crux carries a small yellow light, so it reads as the new thing without a second button */
+.hnav .spark{width:6px;height:6px;border-radius:50%;background:#F2C200;box-shadow:0 0 0 3px rgba(242,194,0,.22);flex:none}
+.hacts{display:flex;align-items:center;gap:8px;flex:none}
+.hicon{display:grid;place-items:center;width:40px;height:40px;border-radius:999px;border:1px solid var(--h-line);background:var(--h-track);color:var(--h-fg);cursor:pointer;padding:0}
+.hicon svg{width:18px;height:18px}
+.hicon .moon,:root[data-theme="dark"] .hicon .sun{display:none}
+:root[data-theme="dark"] .hicon .moon{display:block}
+.hjoin{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;background:#1B49E0;color:#fff;
+  font:600 13.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;text-decoration:none;white-space:nowrap;transition:background-color .15s,transform .15s}
+.hjoin:hover{background:#12339E;transform:translateY(-1px)}
+.hjoin svg{width:18px;height:18px;flex:none}
+.hdr :focus-visible{outline:2px solid #1B49E0;outline-offset:2px}
+/* phones and narrow windows: the brand row, then the sections as a full-width track */
+@media (max-width:820px){
+  .hdr .wrap{flex-wrap:wrap;row-gap:10px;column-gap:8px;min-height:0;padding-bottom:10px}
+  .hdr .brand{margin-right:auto}
+  .hnav{order:3;width:100%;margin:0}
+  .hnav a{flex:1 1 auto;min-height:40px;padding:0 10px;font-size:13.5px}
+}
+@media (max-width:420px){
+  .hdr .brand-txt small{display:none}
+  .hjoin span{display:none}
+  .hjoin{width:40px;padding:0;justify-content:center}
+}
+@media (max-width:360px){.hnav a{font-size:12.5px;padding:0 6px}.hnav .spark{display:none}}
+@media (prefers-reduced-motion:reduce){.hdr,.hnav a,.hjoin{transition:none}}
+:root{--h-bg:#F1F3F4;--h-fg:#0B0F14;--h-mute:#4E5862;--h-line:rgba(11,15,20,.14);--h-track:rgba(255,255,255,.7)}
+:root[data-theme="dark"]{--h-bg:#0B0F14;--h-fg:#E9EDF0;--h-mute:#A3ADB7;--h-line:rgba(233,237,240,.14);--h-track:rgba(255,255,255,.06)}
+:root[data-theme="dark"] .hdr.is-scrolled{box-shadow:0 8px 24px -14px rgba(0,0,0,.8)}
+/* the footer's brand, as on the main site */
+footer .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+footer .brand-mark{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:11px;background:#F2C200;color:#0B0F14;border:1px solid #0B0F14;font-weight:800;font-size:15px}
+footer .brand-txt strong{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+footer .brand-txt small{display:block;margin-top:3px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
 .hero{display:grid;gap:32px;padding-top:32px;padding-bottom:56px}
 .hero h1{font-size:56px;line-height:1;margin:0 0 16px}
 .hero .lead{font-size:19px}
@@ -75,7 +121,7 @@ nav a[aria-current="page"]{color:var(--text);background:var(--surface)}
 .line li:last-child{padding-bottom:0}
 .line li::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:color-mix(in srgb,var(--accent) 45%,transparent)}
 .line li:last-child::before{display:none}
-.line .n{grid-row:span 2;display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--accent);color:var(--on-accent);font:600 18px var(--display);position:relative}
+.line .n{grid-row:span 2;display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:800;font-size:17px;position:relative}
 .line h3{margin:7px 0 4px;font-size:19px}
 .line p{margin:0;font-size:15px;color:var(--text-2)}
 .line .btn{grid-column:2;justify-self:start;margin-top:12px;min-height:42px;padding:0 18px;font-size:14px}
@@ -95,11 +141,18 @@ nav a[aria-current="page"]{color:var(--text);background:var(--surface)}
 .card h3{font-size:17px;font-weight:800;margin:0 0 4px}
 .card p{margin:0;font-size:15px;color:var(--text-2)}
 .card.pick{border:2px solid var(--accent)}
-.price{font-family:var(--display);font-size:24px;font-weight:600;margin:2px 0 6px}
+.price{font-size:24px;font-weight:800;margin:2px 0 6px}
 
-footer{padding:32px 0 40px;color:var(--text-2);font-size:15px;border-top:1px solid var(--line)}
-footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
-
+/* the main site's footer */
+footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--line-2);font-size:14px}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+.foot p{font-size:14px;color:var(--text-2);margin-top:12px;line-height:1.5;max-width:340px}
+.foot-cols{display:flex;gap:48px;flex-wrap:wrap}
+.foot-cols div{display:flex;flex-direction:column;gap:8px}
+.foot-cols span{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.foot-cols a{font-size:13.5px;color:var(--text-2);text-decoration:none}
+.foot-cols a:hover{color:var(--text)}
+.foot-end{border-top:1px solid var(--line);margin-top:36px;padding-top:20px;font-size:11px;color:var(--text-2)}
 @media (max-width:640px){.hero h1{font-size:44px}}
 @media (min-width:900px){
   .hero{grid-template-columns:5fr 7fr;align-items:center;gap:48px;padding-top:44px;padding-bottom:72px}
@@ -117,20 +170,74 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
   .film{animation:rise .6s .15s ease both}
 }
 @keyframes rise{from{opacity:0;transform:translateY(12px)}}
+
+/* ===== V26 · the header floats off as Crux's glass once you scroll, and turns solid under the pointer.
+   Scroll animations are CSS scroll timelines only: browsers without them (and anyone with reduced motion) see
+   the page as it is, nothing hidden. ===== */
+:root{--g-bg:rgba(250,249,246,.62);--g-solid:#FBFCFC;--g-bd:rgba(255,255,255,.6);--g-hi:rgba(255,255,255,.45);--g-sh:0 12px 32px -14px rgba(11,15,20,.32)}
+:root[data-theme="dark"]{--g-bg:rgba(28,29,34,.6);--g-solid:#1A2129;--g-bd:rgba(255,255,255,.09);--g-hi:rgba(255,255,255,.05);--g-sh:0 14px 36px -14px rgba(0,0,0,.75)}
+.hdr{transition:background-color .35s ease,border-color .35s ease,-webkit-backdrop-filter .35s ease,backdrop-filter .35s ease}
+.hdr .wrap{position:relative;border:1px solid transparent;
+  transition:max-width .5s cubic-bezier(.2,.8,.2,1),translate .5s cubic-bezier(.2,.8,.2,1),border-radius .5s cubic-bezier(.2,.8,.2,1),
+    background-color .25s ease,border-color .35s ease,box-shadow .35s ease,padding .4s ease}
+.hdr.is-scrolled{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;pointer-events:none}
+.hdr.is-scrolled .wrap{pointer-events:auto;max-width:min(1060px,calc(100% - 20px));translate:0 8px;border-radius:22px;padding-left:12px;padding-right:12px;
+  background-color:var(--g-bg);border-color:var(--g-bd);box-shadow:var(--g-sh),inset 0 1px 0 var(--g-hi);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeColorMatrix values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 .14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-blend-mode:soft-light;-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3)}
+.hdr.is-scrolled .wrap:hover,.hdr.is-scrolled .wrap:focus-within{background-color:var(--g-solid)}
+@media (max-width:820px){.hdr.is-scrolled .wrap{max-width:calc(100% - 16px);border-radius:24px;padding-left:10px;padding-right:10px}}
+@media (prefers-reduced-motion:reduce){.hdr,.hdr .wrap{transition:none}}
+
+@supports (animation-timeline:view()){
+@media (prefers-reduced-motion:no-preference){
+  /* a hairline of Crux yellow along the floating header shows how far down the page you are */
+  .hdr .wrap::after{content:"";position:absolute;left:22px;right:22px;bottom:-1px;height:2px;border-radius:2px;background:#F2C200;
+    transform-origin:left;opacity:0;transition:opacity .3s;animation:esh-progress linear both;animation-timeline:scroll(root)}
+  .hdr.is-scrolled .wrap::after{opacity:.9}
+  @keyframes esh-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+  /* headings settle in from a soft blur; cards, rows and steps rise a little as they arrive */
+  .sec-head,.h2,.setup h2,.feature h2,main h2{animation:esh-focus linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+  .card,.spec-row,.faq-item,.metric,.step,.feat-row,.part-row,.plan-m,.cta,.feature ul li,.cards .card,.line li{
+    animation:esh-rise linear both;animation-timeline:view();animation-range:entry 5% cover 24%}
+  .card:nth-child(2),.cards .card:nth-child(2),.metric:nth-child(2),.step:nth-child(2){animation-range:entry 12% cover 30%}
+  .card:nth-child(3),.cards .card:nth-child(3),.metric:nth-child(3),.step:nth-child(3){animation-range:entry 19% cover 36%}
+  @keyframes esh-focus{from{opacity:0;translate:0 14px;filter:blur(6px)}to{opacity:1;translate:0 0;filter:none}}
+  @keyframes esh-rise{from{opacity:0;translate:0 22px}to{opacity:1;translate:0 0}}
+
+  /* photos and screenshots settle: a slow zoom-out as they come into view */
+  .plate img,.shot,.film video{animation:esh-settle linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+  @keyframes esh-settle{from{scale:1.06;opacity:.4}to{scale:1;opacity:1}}
+
+  /* the Crux setup guide: the line between the steps draws itself, and each number pops as you reach it */
+  .line li::before{transform-origin:top;animation:esh-draw linear both;animation-timeline:view();animation-range:entry 30% cover 60%}
+  .line .n{animation:esh-pop linear both;animation-timeline:view();animation-range:entry 20% cover 35%}
+  @keyframes esh-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes esh-pop{from{scale:.5;opacity:0}60%{scale:1.12;opacity:1}to{scale:1;opacity:1}}
+}}
 </style>
 </head>
 <body>
-<div class="top">
-  <header>
-    <div class="wrap">
-      <a class="brand" href="/"><img src="/favicon.svg" alt="" width="32" height="32">Engineering Study Hub</a>
-      <nav aria-label="Main">
-        <a href="/units/">Units</a>
-        <a href="/crux/" aria-current="page">Crux</a>
-        <a href="https://discord.gg/7yUz2rXumm">Join</a>
-      </nav>
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Engineering Study Hub, home">
+      <span class="brand-mark" aria-hidden="true">EH</span>
+      <span class="brand-txt"><strong>Engineering Hub</strong><small>Study, Build, Launch</small></span>
+    </a>
+    <nav class="hnav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/crux/" aria-current="page"><span class="spark" aria-hidden="true"></span>Crux</a>
+      <a href="/units/">Units</a>
+      <a href="/#/membership">Membership</a>
+    </nav>
+    <div class="hacts">
+      <button class="hicon" id="themeBtn" type="button" aria-label="Dark mode" aria-pressed="false"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+      <a class="hjoin" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg><span>Join Discord</span></a>
     </div>
-  </header>
+  </div>
+</header>
+<div class="top">
   <section class="hero wrap">
     <div class="text">
       <h1>Crux</h1>
@@ -185,7 +292,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       </ul>
     </div>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="question-laptop-dark-960.webp 960w, question-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
+      <source class="dark-shot" media="(prefers-color-scheme: dark)" srcset="question-laptop-dark-960.webp 960w, question-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
       <img class="shot" src="question-laptop-light-960.webp" srcset="question-laptop-light-960.webp 960w, question-laptop-light-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw" width="1440" height="900" alt="A practice question from Fundamentals of Strength of Materials, Example 1.1, with Open in book at page 22" loading="lazy">
     </picture>
   </section>
@@ -200,7 +307,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       </ul>
     </div>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="solution-laptop-dark-960.webp 960w, solution-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
+      <source class="dark-shot" media="(prefers-color-scheme: dark)" srcset="solution-laptop-dark-960.webp 960w, solution-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
       <img class="shot" src="solution-laptop-light-960.webp" srcset="solution-laptop-light-960.webp 960w, solution-laptop-light-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw" width="1440" height="900" alt="A worked solution with a free body diagram of a simply supported beam: a 5 kN load and the two reactions" loading="lazy">
     </picture>
   </section>
@@ -215,7 +322,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       </ul>
     </div>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="guide-laptop-dark-960.webp 960w, guide-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
+      <source class="dark-shot" media="(prefers-color-scheme: dark)" srcset="guide-laptop-dark-960.webp 960w, guide-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
       <img class="shot" src="guide-laptop-light-960.webp" srcset="guide-laptop-light-960.webp 960w, guide-laptop-light-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw" width="1440" height="900" alt="The study guide for Stress and Strain: what you should be able to do, the formulas, and the sections to read in Gere" loading="lazy">
     </picture>
   </section>
@@ -230,7 +337,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
       </ul>
     </div>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="focus-laptop-dark-960.webp 960w, focus-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
+      <source class="dark-shot" media="(prefers-color-scheme: dark)" srcset="focus-laptop-dark-960.webp 960w, focus-laptop-dark-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw">
       <img class="shot" src="focus-laptop-light-960.webp" srcset="focus-laptop-light-960.webp 960w, focus-laptop-light-1440.webp 1440w" sizes="(min-width: 900px) 620px, 100vw" width="1440" height="900" alt="The focus timer with the notes bar beside it" loading="lazy">
     </picture>
   </section>
@@ -249,10 +356,39 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap}
 </main>
 <footer>
   <div class="wrap">
-    <a href="https://wa.me/254745947704">WhatsApp</a>
-    <a href="https://discord.gg/7yUz2rXumm">Discord</a>
-    <span>© Engineering Study Hub</span>
+    <div class="foot">
+      <div>
+        <a class="brand" href="/" aria-label="Engineering Study Hub, home">
+          <span class="brand-mark" aria-hidden="true">EH</span>
+          <span class="brand-txt"><strong>Engineering Hub</strong><small>Nairobi, Kenya</small></span>
+        </a>
+        <p>Study runtime, past papers, and project build sheets for engineering students in Kenya.</p>
+      </div>
+      <div class="foot-cols">
+        <div><span>Platform</span><a href="/">Home</a><a href="/crux/">Crux</a><a href="/units/">Browse Units</a><a href="/#/projects">Project Library</a><a href="/#/membership">Membership</a></div>
+        <div><span>Community</span><a href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Discord Server</a><a href="https://wa.me/254745947704" target="_blank" rel="noopener noreferrer">WhatsApp Support</a></div>
+      </div>
+    </div>
+    <div class="foot-end">© 2024–2026 Engineering Study Hub. Built for engineers in Kenya.</div>
   </div>
 </footer>
+<script>
+  (function () {
+    var b = document.getElementById('themeBtn'), root = document.documentElement, h = document.querySelector('.hdr');
+    var sync = function () {
+      var d = root.getAttribute('data-theme') === 'dark';
+      b.setAttribute('aria-pressed', d); b.setAttribute('aria-label', d ? 'Light mode' : 'Dark mode');
+      document.querySelectorAll('.dark-shot').forEach(function (s) { s.media = d ? 'all' : 'not all'; });
+    };
+    b.addEventListener('click', function () {
+      var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', t);
+      try { localStorage.setItem('esh-theme', t); } catch (e) {}
+      sync();
+    });
+    var s = function () { h.classList.toggle('is-scrolled', scrollY > 6); };
+    addEventListener('scroll', s, { passive: true }); s(); sync();
+  })();
+</script>
 </body>
 </html>

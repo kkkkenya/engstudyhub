@@ -41,12 +41,18 @@ const fresh = Object.entries(timetable.titles).filter(([code]) => !covered.has(c
   return { code, codes: [code], title, slug: slugOf([code], title), label: `${code} — ${esc(title)}`, dept: DEPT[prefix] || 'Common Units', year, files: 0, home, others: [...new Set(others)] };
 });
 
-const style = readFileSync(join(unitsDir, existing[0].slug, 'index.html'), 'utf8').match(/<style>[\s\S]*?<\/style>/)[0];
+// the look comes from an existing unit page: its style, the site's shared header and the light/dark scripts
+const page0 = readFileSync(join(unitsDir, existing[0].slug, 'index.html'), 'utf8');
+const style = page0.match(/<style>[\s\S]*?<\/style>/)[0];
+const themeInit = page0.match(/<script>\(function\(\)\{var t;[\s\S]*?<\/script>/)[0];
+const header = page0.match(/<header class="hdr">[\s\S]*?<\/header>/)[0];
+const themeJs = page0.match(/<script>\s*\(function \(\) \{\s*var b = document\.getElementById\('themeBtn'\)[\s\S]*?<\/script>/)[0];
 const head = (title, desc, url, crumbs) => `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+${themeInit}
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
@@ -58,11 +64,12 @@ ${style}
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([name, item], n) => ({ '@type': 'ListItem', position: n + 1, name, item })) })}</script>
 </head>
 <body>
-<header><div class="wrap"><a class="brand" href="/">Engineering Study Hub</a><a class="btn" href="${INVITE}" rel="noopener">Start free trial</a></div></header>
+${header}
 `;
 const ACCESS = `<h2>How to get access</h2>
 <ol class="steps"><li><b>Join the Discord free.</b> You get 7 days of full access to every unit library straight away.</li><li><b>Keep it for KES 50 a semester.</b> Send it by M-Pesa to 0745947704 (the name shows as Peter Mwangi).</li><li><b>Tap "I've paid"</b> in #upgrade-to-premium and paste your M-Pesa code. You're usually in within minutes.</li></ol>`;
 const FOOT = `<footer><div class="wrap">Engineering Study Hub, a study community for Kenyan engineering students on Discord. <a href="/units/">All units</a> · <a href="/">Home</a> · <a href="/crux/">Crux</a> · <a href="/#/membership">Membership</a></div></footer>
+${themeJs}
 </body>
 </html>
 `;
