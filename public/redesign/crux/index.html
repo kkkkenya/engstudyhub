@@ -134,6 +134,13 @@ footer .brand-txt small{display:block;margin-top:3px;font-size:9.5px;letter-spac
 /* the screenshot's box shows while it loads, and its alt text stays hidden until then */
 .shot{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);color:transparent;box-shadow:var(--shadow)}
 
+.download{padding-top:48px;padding-bottom:48px;border-top:1px solid var(--line)}
+#setup,#download,#join{scroll-margin-top:96px}
+.download h2{font-size:28px;line-height:1.15;margin:0 0 14px}
+.download p{max-width:60ch}
+.download ul{margin:0 0 20px;padding-left:20px;display:grid;gap:8px;max-width:60ch}
+.download li::marker{color:var(--a2)}
+.download .small{margin-top:14px}
 .get{background:var(--bg2);padding-top:56px;padding-bottom:56px}
 .get h2{font-size:30px;margin:0 0 10px}
 .cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px}
@@ -203,7 +210,7 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
   @keyframes esh-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
   /* headings, cards, rows and steps rise a little and fade in as they arrive */
-  .sec-head,.setup>h2,.feature .text,.card,.metric,.step,.plan-m,.cta,.line li,body>.wrap>h2,main>.wrap>h2{
+  .sec-head,.setup>h2,.feature .text,.download .text,.card,.metric,.step,.plan-m,.cta,.line li,body>.wrap>h2,main>.wrap>h2{
     animation:esh-rise linear both;animation-timeline:view();animation-range:entry 5% cover 22%}
   .card:nth-child(2),.metric:nth-child(2),.step:nth-child(2){animation-range:entry 12% cover 28%}
   .card:nth-child(3),.metric:nth-child(3),.step:nth-child(3){animation-range:entry 19% cover 34%}
@@ -281,6 +288,23 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
     </ol>
   </section>
 
+  <section class="download wrap" id="download">
+    <div class="text">
+      <h2>Crux for Windows</h2>
+      <p>The desktop app teaches a unit one step at a time, from your own notes and the Hub's past papers. It runs best on a laptop or desktop computer.</p>
+      <ul>
+        <li>Windows 10 or 11, 64-bit. About 160 MB.</li>
+        <li>Sign in with the same Discord account as here.</li>
+        <li>On a phone, keep using Crux in your browser.</li>
+      </ul>
+      <a class="btn primary" href="https://github.com/kkkkenya/crux-desktop/releases/latest/download/Crux-Setup.exe">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        Download for Windows
+      </a>
+      <p class="muted small">If Windows says it protected your PC, choose <b>More info</b>, then <b>Run anyway</b>. The app tells you when a new version is out.</p>
+    </div>
+  </section>
+
   <section class="feature wrap">
     <div class="text">
       <h2>Practice questions from your papers and books</h2>
@@ -344,11 +368,11 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
   <section class="get" id="join">
     <div class="wrap">
       <h2>What it costs</h2>
-      <p class="muted">Crux is part of your Hub membership. There's nothing extra to pay for it.</p>
+      <p class="muted">Crux is part of your Hub membership. There's nothing extra to pay for it. Each plan is named after a star in the Southern Cross; the brighter the star, the more you get.</p>
       <div class="cards">
-        <div class="card"><h3>Free trial</h3><div class="price">KES 0</div><p>7 days from when you join. 15 AI actions and 2 file downloads a day.</p></div>
-        <div class="card"><h3>Basic</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
-        <div class="card pick"><h3>Premium</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>40 AI actions a day and unlimited downloads. If you're on Basic already, the upgrade is KES 350.</p></div>
+        <div class="card"><h3>Imai <span class="muted small">free trial</span></h3><div class="price">KES 0</div><p>7 days from when you join. 15 AI actions and 2 file downloads a day.</p></div>
+        <div class="card"><h3>Gacrux</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>15 AI actions and 2 file downloads a day.</p></div>
+        <div class="card pick"><h3>Mimosa</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>40 AI actions a day and unlimited downloads. If you're on Gacrux already, the upgrade is KES 350.</p></div>
       </div>
     </div>
   </section>
