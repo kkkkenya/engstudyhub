@@ -67,7 +67,7 @@ ${style}
 ${header}
 `;
 const ACCESS = `<h2>How to get access</h2>
-<ol class="steps"><li><b>Join the Discord free.</b> You get 7 days of full access to every unit library straight away.</li><li><b>Keep it for KES 50 a semester.</b> Send it by M-Pesa to 0745947704 (the name shows as Peter Mwangi).</li><li><b>Tap "I've paid"</b> in #upgrade-to-premium and paste your M-Pesa code. You're usually in within minutes.</li></ol>`;
+<ol class="steps"><li><b>Join the Discord free.</b> You get 7 days of full access to every unit library straight away.</li><li><b>Keep it for KES 50 a semester.</b> Send it by M-Pesa to 0745947704 (the name shows as Peter Mwangi).</li><li><b>Tap "I've paid"</b> in #plans and paste your M-Pesa code. You're usually in within minutes.</li></ol>`;
 const FOOT = `<footer><div class="wrap">Engineering Study Hub, a study community for Kenyan engineering students on Discord. <a href="/units/">All units</a> · <a href="/">Home</a> · <a href="/crux/">Crux</a> · <a href="/#/membership">Membership</a></div></footer>
 ${themeJs}
 </body>
