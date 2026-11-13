@@ -960,6 +960,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
 }}
 </style>
 <script>/* Study Desk is now Crux: old #/download and #/desk links go to its page */if(/^#\/(download|desk)/.test(location.hash))location.replace("/crux/");</script>
+<link rel="stylesheet" href="assets/sky.v1.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -1081,7 +1082,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       </div>
       <div class="row mt-l">
         <a class="btn btn--discord" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer"><img class="disc-logo" src="images/discord-logo-480.webp" alt="" width="18" height="18"> Join free on Discord</a>
-        <a class="btn btn--ghost" href="#/membership">Compare the two plans</a>
+        <a class="btn btn--ghost" href="#/membership">Compare plans</a>
         <a class="btn btn--ghost" href="/units/">Browse past papers by unit</a>
       </div>
     </div>
@@ -1254,99 +1255,97 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       </div>
     </div>
   </section>
-  <section class="band band--panel" id="plans">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
+  <section class="sky" id="plans" aria-labelledby="plans-title">
+    <div class="sky-stage">
+      <div class="sky-cam">
+        <img class="sky-photo" src="images/crux-sky-1600.webp" srcset="images/crux-sky-1600.webp 1600w, images/crux-sky-2400.webp 2400w, images/crux-sky-3200.webp 3200w" sizes="(orientation: portrait) 133vh, 100vw" width="3200" height="2400" loading="lazy" decoding="async" alt="The Southern Cross in the night sky over the Milky Way, with the dark Coalsack nebula beside it">
+        <svg class="sky-lines" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
+          <line pathLength="1" x1=".4784" y1=".3433" x2=".5594" y2=".6571"/>
+          <line pathLength="1" x1=".4213" y1=".5121" x2=".5788" y2=".4079"/>
+        </svg>
+        <span class="star star--imai" style="--fx:.5788;--fy:.4079" aria-hidden="true"><i class="glow"></i></span>
+        <span class="star star--gacrux" style="--fx:.4784;--fy:.3433" aria-hidden="true"><i class="glow"></i></span>
+        <span class="star star--mimosa" style="--fx:.4213;--fy:.5121" aria-hidden="true"><i class="glow"></i></span>
+        <span class="star star--acrux" style="--fx:.5594;--fy:.6571" aria-hidden="true"><i class="glow"></i><i class="spikes"></i><i class="pair"><i></i><i></i></i></span>
+      </div>
+      <div class="sky-shade" aria-hidden="true"></div>
+      <div class="sky-bloom" aria-hidden="true"></div>
+      <div class="sky-cards">
+        <div class="sky-card sky-card--intro">
           <p class="eyebrow">Section 08 — Membership</p>
-          <h2 class="h2">Choose your <em>plan</em></h2>
+          <h2 id="plans-title">Four stars, four plans</h2>
+          <p>Crux is named after the Southern Cross, the stars people once used to find south at night. Each plan takes the name of one of them. The brighter the star, the more the plan gives you. Pay by M-Pesa, once a semester.</p>
+          <a class="sky-skip" href="#plans-prices">Skip to prices</a>
         </div>
-        <p class="lede" style="max-width:32ch">Start with a 7-day free trial. Then pay by M-Pesa. No card, no hidden fees. Plans are named after stars of the Southern Cross: the brighter the star, the more you get.</p>
+        <article class="sky-card" data-plan="imai">
+          <h3>Imai</h3>
+          <p class="sky-price"><b>Free</b>for 7 days</p>
+          <p class="star-line">The faintest star in the cross. Its name comes from the Mursi people of Ethiopia, who watch it to know when the Omo River will flood.</p>
+          <p class="for">Everything Gacrux has, free for your first week.</p>
+          <p>Join the Discord to start. No payment, no card.</p>
+          <a class="btn btn--primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+        </article>
+        <article class="sky-card" data-plan="gacrux">
+          <h3>Gacrux</h3>
+          <p class="sky-price"><b>KES 50</b>a semester</p>
+          <p class="star-line">A red giant at the top of the cross.</p>
+          <p class="for">For the past papers and notes.</p>
+          <ul>
+            <li>Every unit library: past papers, CATs, notes and tutorials, sorted by unit</li>
+            <li>Homework help and study rooms</li>
+            <li>Crux: 15 AI actions and 2 downloads a day</li>
+          </ul>
+          <a class="btn btn--primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join and start free</a>
+        </article>
+        <article class="sky-card sky-card--pick" data-plan="mimosa">
+          <span class="sky-pick">Our pick</span>
+          <h3>Mimosa</h3>
+          <p class="sky-price"><b>KES 500</b>a semester</p>
+          <p class="star-line">The second brightest.</p>
+          <p class="for">For studying with Crux most days, and building projects.</p>
+          <ul>
+            <li>Everything in Gacrux</li>
+            <li>Crux: 40 AI actions a day and unlimited downloads</li>
+            <li>Project build guides with Nairobi parts and prices</li>
+            <li>Members' channels: worked solutions, projects, dev help, hackathons and portfolio reviews</li>
+          </ul>
+          <p class="up">On Gacrux? Upgrade for KES 350.</p>
+          <a class="btn btn--primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Mimosa</a>
+        </article>
+        <article class="sky-card" data-plan="acrux">
+          <h3>Acrux</h3>
+          <p class="sky-price"><b>KES 999</b>a semester</p>
+          <p class="star-line">The brightest. Look through a telescope and it splits into two stars.</p>
+          <p class="for">For students who use Crux the most.</p>
+          <ul>
+            <li>Everything in Mimosa</li>
+            <li>Crux: 80 AI actions a day</li>
+            <li>The strongest models in the Crux desktop app, at their most thorough</li>
+          </ul>
+          <p class="up">On Mimosa? Upgrade for KES 499.</p>
+          <a class="btn btn--primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Acrux</a>
+        </article>
       </div>
-
-      <div class="grid-3" style="align-items:start">
-        <div class="card">
-          <div class="card-b" style="padding:22px">
-            <span class="tag">Gacrux access</span>
-            <div class="row row--between" style="align-items:baseline">
-              <h3 style="font-size:30px">KES 50</h3>
-              <span class="mono dim">/ SEMESTER</span>
-            </div>
-            <p class="mono dim" style="margin:0">7 days free when you join. Then renew each semester.</p>
-            <div class="divline"></div>
-            <ul class="mono" style="list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:12.5px">
-              <li><i class="tick" aria-hidden="true"></i>All university channels</li>
-              <li><i class="tick" aria-hidden="true"></i>Notes &amp; past papers archive</li>
-              <li><i class="tick" aria-hidden="true"></i>Past exam papers, sorted by unit &amp; year</li>
-              <li><i class="tick" aria-hidden="true"></i>PDF resource library</li>
-              <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Live study rooms</li>
-              <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Project build squads</li>
-              <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Homework &amp; CAT support</li>
-              <li class="dim" style="opacity:.55"><i class="cross" aria-hidden="true"></i>Career pipeline</li>
-            </ul>
-            <a class="btn btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Start free 7-day trial</a>
-            <p class="mono dim center" style="margin:0;font-size:10px">THEN KES 50 A SEMESTER BY M-PESA</p>
-          </div>
+      <nav class="sky-nav" aria-label="The four plans">
+        <button type="button" data-go="imai">Imai</button><button type="button" data-go="gacrux">Gacrux</button><button type="button" data-go="mimosa">Mimosa</button><button type="button" data-go="acrux">Acrux</button>
+      </nav>
+    </div>
+    <div class="sky-after" id="plans-prices">
+      <div class="wrap" style="padding:0">
+        <p class="fine">An AI action is one thing Crux does with AI: a worked solution, an explanation, an answer to a follow-up. Share 10 files the Hub doesn't have in a semester and you get Mimosa free until it ends. Not for you? There's a 7-day refund.</p>
+        <div class="spec mt-l">
+          <div class="spec-row"><span class="spec-k">Imai</span><span class="spec-v">Free for 7 days from when you join</span></div>
+          <div class="spec-row"><span class="spec-k">Gacrux</span><span class="spec-v">KES 50 a semester</span></div>
+          <div class="spec-row"><span class="spec-k">Mimosa</span><span class="spec-v">KES 500 a semester</span></div>
+          <div class="spec-row"><span class="spec-k">Acrux</span><span class="spec-v">KES 999 a semester</span></div>
+          <div class="spec-row"><span class="spec-k">Upgrades</span><span class="spec-v">Gacrux to Mimosa KES 350, Mimosa to Acrux KES 499. Each lasts until your current semester ends</span></div>
+          <div class="spec-row"><span class="spec-k">Already Mimosa</span><span class="spec-v">Paid KES 800 for Premium before 5 November 2026? Mimosa stays yours for good</span></div>
         </div>
-
-        <div class="card" style="border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)">
-          <div class="card-b" style="padding:22px">
-            <div class="row row--between">
-              <span class="tag tag--hivis">Mimosa access</span>
-              <span class="tag tag--ink">With Crux in full</span>
-            </div>
-            <div class="row row--between" style="align-items:baseline">
-              <h3 style="font-size:30px">KES 500</h3>
-              <span class="mono dim">/ SEMESTER</span>
-            </div>
-            <p class="mono dim" style="margin:0">On Gacrux already? Upgrade for KES 350.</p>
-            <div class="divline"></div>
-            <ul class="mono" style="list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:12.5px">
-              <li><i class="tick" aria-hidden="true"></i>Everything in Gacrux</li>
-              <li><i class="tick" aria-hidden="true"></i>Crux: 40 AI actions a day, unlimited downloads</li>
-              <li><i class="tick" aria-hidden="true"></i>Live Pomodoro study rooms</li>
-              <li><i class="tick" aria-hidden="true"></i>Project build squads, per semester</li>
-              <li><i class="tick" aria-hidden="true"></i>Daily homework &amp; CAT support</li>
-              <li><i class="tick" aria-hidden="true"></i>Career &amp; internship pipeline</li>
-              <li><i class="tick" aria-hidden="true"></i>Priority Discord channels</li>
-              <li><i class="tick" aria-hidden="true"></i>Direct access to project leads</li>
-            </ul>
-            <a class="btn btn--primary btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Mimosa — KES 500</a>
-            <p class="mono dim center" style="margin:0;font-size:10px">PAY BY M-PESA, THEN TAP "I'VE PAID" IN DISCORD</p>
-          </div>
+        <div class="row mt-l">
+          <a class="btn btn--primary" href="#/membership">Compare every plan</a>
+          <a class="btn btn--ghost" href="#/starter-kit">Browse starter kits</a>
         </div>
-
-        <div class="card">
-          <div class="card-b" style="padding:22px">
-            <span class="tag tag--ink">Acrux access</span>
-            <div class="row row--between" style="align-items:baseline">
-              <h3 style="font-size:30px">KES 999</h3>
-              <span class="mono dim">/ SEMESTER</span>
-            </div>
-            <p class="mono dim" style="margin:0">On Mimosa already? Upgrade for KES 499, until your Mimosa semester ends.</p>
-            <div class="divline"></div>
-            <ul class="mono" style="list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:12.5px">
-              <li><i class="tick" aria-hidden="true"></i>Everything in Mimosa</li>
-              <li><i class="tick" aria-hidden="true"></i>Crux: 80 AI actions a day, unlimited downloads</li>
-              <li><i class="tick" aria-hidden="true"></i>Every hosted model in the Crux desktop app</li>
-              <li><i class="tick" aria-hidden="true"></i>DeepSeek V4 Pro and GLM 5.3, at any effort level</li>
-            </ul>
-            <a class="btn btn--block" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Acrux — KES 999</a>
-            <p class="mono dim center" style="margin:0;font-size:10px">PAY BY M-PESA, THEN TAP "I'VE PAID" IN DISCORD</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="spec mt-l">
-        <div class="spec-row"><span class="spec-k">Gacrux total</span><span class="spec-v">KES 50 per semester</span></div>
-        <div class="spec-row"><span class="spec-k">Mimosa total</span><span class="spec-v">KES 500 per semester</span></div>
-        <div class="spec-row"><span class="spec-k">Acrux total</span><span class="spec-v">KES 999 per semester</span></div>
-        <div class="spec-row"><span class="spec-k">Upgrade</span><span class="spec-v">KES 350 from Gacrux to Mimosa, for the rest of your semester. KES 499 from Mimosa to Acrux, until your Mimosa semester ends</span></div>
-        <div class="spec-row"><span class="spec-k">Already Mimosa</span><span class="spec-v">Paid KES 800 before 5 November 2026? You keep Mimosa for good.</span></div>
-      </div>
-      <div class="row mt-l">
-        <a class="btn btn--primary" href="#/membership">See full membership details</a>
-        <a class="btn btn--ghost" href="#/starter-kit">Browse starter kits</a>
+        <p class="sky-credit">Photo: <a href="https://www.eso.org/public/images/2019_07_03_SouthernCross_SSpikes_Fin-CC/" target="_blank" rel="noopener noreferrer">ESO/P. Horálek</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>, cropped</p>
       </div>
     </div>
   </section>
@@ -1434,7 +1433,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">Gacrux or Mimosa? <i>+</i></button>
-          <div class="faq-a">Start on Gacrux at KES 50: the unit libraries and Crux with 15 AI actions and 2 downloads a day. If you hit those limits, or want the build sheets, squads and career pipeline, upgrade for KES 350. That's KES 400 for the semester, against KES 500 for Mimosa on its own. Anyone who paid KES 800 for Mimosa before 5 November 2026 keeps it.</div>
+          <div class="faq-a">Start on Gacrux at KES 50: the unit libraries and Crux with 15 AI actions and 2 downloads a day. If you hit those limits, or want the build sheets, squads and members' channels, upgrade for KES 350. That's KES 400 for the semester, against KES 500 for Mimosa on its own. Anyone who paid KES 800 for Mimosa before 5 November 2026 keeps it.</div>
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">What if I only need notes and past papers? <i>+</i></button>
@@ -1442,7 +1441,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">What happens after I pay? <i>+</i></button>
-          <div class="faq-a">Tap "I've paid" in #plans and paste your M-Pesa code. We check it and unlock your access, usually within minutes, and you get a DM when it's done. Gacrux covers the semester; Mimosa is a single payment.</div>
+          <div class="faq-a">Tap "I've paid" in #plans and paste your M-Pesa code. We check it and unlock your access, usually within minutes, and you get a DM when it's done. Every plan lasts a semester.</div>
         </div>
       </div>
     </div>
@@ -1609,15 +1608,16 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <tr><th scope="row">Browse all 12 project sheets</th><td data-label="Free" class="yes">Yes</td><td data-label="Gacrux" class="yes">Yes</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
             <tr><th scope="row">Project overview, topics and tooling</th><td data-label="Free" class="yes">Yes</td><td data-label="Gacrux" class="yes">Yes</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
 
-            <tr><th scope="row">Full step-by-step build sequence</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Unlocked</td><td data-label="Acrux" class="yes">Yes</td></tr>
-            <tr><th scope="row">Nairobi materials list with real KES prices</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Unlocked</td><td data-label="Acrux" class="yes">Yes</td></tr>
-            <tr><th scope="row">Squad channel — build with people, not alone</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Unlocked</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">Full step-by-step build sequence</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">Nairobi materials list with real KES prices</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">Squad channel — build with people, not alone</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
             <tr><th scope="row">Notes and past papers archive</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="yes">Yes</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">Homework help and study rooms</th><td data-label="Free" class="yes">Yes</td><td data-label="Gacrux" class="yes">Yes</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
             <tr><th scope="row">Crux AI actions a day</th><td data-label="Free" class="yes">15</td><td data-label="Gacrux" class="yes">15</td><td data-label="Mimosa" class="yes col-hi">40</td><td data-label="Acrux" class="yes">80</td></tr>
-            <tr><th scope="row">Every hosted model in the Crux app, any effort level</th><td data-label="Free" class="no">No</td><td data-label="Gacrux" class="no">No</td><td data-label="Mimosa" class="no col-hi">No</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">The strongest models in the Crux desktop app</th><td data-label="Free" class="no">No</td><td data-label="Gacrux" class="no">No</td><td data-label="Mimosa" class="no col-hi">No</td><td data-label="Acrux" class="yes">Yes</td></tr>
 
 
-            <tr><th scope="row">Career and internship pipeline</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
+            <tr><th scope="row">Members' channels: worked solutions, hackathons, portfolio reviews</th><td data-label="Free" class="no">Locked</td><td data-label="Gacrux" class="no">Locked</td><td data-label="Mimosa" class="yes col-hi">Yes</td><td data-label="Acrux" class="yes">Yes</td></tr>
 
 
           </tbody>
@@ -1644,7 +1644,9 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
             <li><i class="tick" aria-hidden="true"></i>Everything in Free</li>
             <li><i class="tick" aria-hidden="true"></i>Notes &amp; past papers archive, sorted by unit &amp; year</li>
             <li><i class="tick" aria-hidden="true"></i>PDF resource library</li>
-            <li class="off"><i class="cross" aria-hidden="true"></i>Build sequences, squads, career pipeline</li>
+            <li><i class="tick" aria-hidden="true"></i>Homework help and study rooms</li>
+            <li><i class="tick" aria-hidden="true"></i>Crux: 15 AI actions and 2 downloads a day</li>
+            <li class="off"><i class="cross" aria-hidden="true"></i>Build sequences, squads, members' channels</li>
           </ul>
           <p class="plan-m-note">For revision. Mimosa is for the building side of the hub.</p>
           <a class="btn" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Start free 7-day trial</a>
@@ -1653,10 +1655,11 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <div class="plan-m-hd"><h3>Mimosa</h3><span class="plan-m-price">KES 500 / semester</span></div>
           <ul>
             <li><i class="tick" aria-hidden="true"></i>Everything in Gacrux</li>
+            <li><i class="tick" aria-hidden="true"></i>Crux: 40 AI actions a day, unlimited downloads</li>
             <li><i class="tick" aria-hidden="true"></i>Full step-by-step build sequence, every project</li>
             <li><i class="tick" aria-hidden="true"></i>Nairobi materials list with real KES prices</li>
             <li><i class="tick" aria-hidden="true"></i>Squad channel — build with people, not alone</li>
-            <li><i class="tick" aria-hidden="true"></i>Career &amp; internship pipeline</li>
+            <li><i class="tick" aria-hidden="true"></i>Worked solutions, hackathons and portfolio reviews</li>
           </ul>
           <p class="plan-m-note">On Gacrux already? Upgrade for KES 350 for the rest of your semester.</p>
           <a class="btn btn--primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Mimosa — KES 500</a>
@@ -1666,7 +1669,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
           <ul>
             <li><i class="tick" aria-hidden="true"></i>Everything in Mimosa</li>
             <li><i class="tick" aria-hidden="true"></i>Crux: 80 AI actions a day, unlimited downloads</li>
-            <li><i class="tick" aria-hidden="true"></i>Every hosted model in the Crux desktop app, at any effort level</li>
+            <li><i class="tick" aria-hidden="true"></i>The strongest models in the Crux desktop app, at their most thorough</li>
           </ul>
           <p class="plan-m-note">On Mimosa already? Upgrade for KES 499, until your Mimosa semester ends.</p>
           <a class="btn" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Acrux — KES 999</a>
@@ -1769,7 +1772,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
       <div class="faq">
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">Gacrux or Mimosa? <i>+</i></button>
-          <div class="faq-a">Start on Gacrux at KES 50: the unit libraries and Crux with 15 AI actions and 2 downloads a day. If you hit those limits, or want the build sheets, squads and career pipeline, upgrade for KES 350. That's KES 400 for the semester, against KES 500 for Mimosa on its own. Anyone who paid KES 800 for Mimosa before 5 November 2026 keeps it.</div>
+          <div class="faq-a">Start on Gacrux at KES 50: the unit libraries and Crux with 15 AI actions and 2 downloads a day. If you hit those limits, or want the build sheets, squads and members' channels, upgrade for KES 350. That's KES 400 for the semester, against KES 500 for Mimosa on its own. Anyone who paid KES 800 for Mimosa before 5 November 2026 keeps it.</div>
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">Mimosa or Acrux? <i>+</i></button>
@@ -1777,7 +1780,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">What exactly do I get that Gacrux doesn't? <i>+</i></button>
-          <div class="faq-a">Three things Gacrux never unlocks: the full build sequence on every project sheet, the Nairobi materials list with real KES prices, and the squad channel. Gacrux is notes and past papers. Mimosa is the building side of the hub.</div>
+          <div class="faq-a">Three things Gacrux never unlocks: the full build sequence on every project sheet, the Nairobi materials list with real KES prices, and the squad channel. Gacrux is for revision: the unit libraries, homework help and Crux. Mimosa adds the building side of the hub.</div>
         </div>
         <div class="faq-item" data-open="false">
           <button class="faq-q" aria-expanded="false">What if I only need notes and past papers? <i>+</i></button>
@@ -2048,7 +2051,7 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
               <li><i class="tick tick--light" aria-hidden="true"></i>Full build sequence, no gate</li>
               <li><i class="tick tick--light" aria-hidden="true"></i>Squad channel for the build</li>
               <li><i class="tick tick--light" aria-hidden="true"></i>Daily homework &amp; CAT support</li>
-              <li><i class="tick tick--light" aria-hidden="true"></i>Career &amp; internship pipeline</li>
+              <li><i class="tick tick--light" aria-hidden="true"></i>Worked solutions, hackathons and portfolio reviews</li>
             </ul>
             <a class="btn btn--hivis btn--block" href="https://wa.me/254745947704?text=Hi%2C%20I%20want%20the%20bundle%3A%20Rover%20Kit%20%2B%20Premium%20(KSh%205%2C550)">Take the bundle — KSh 5,550</a>
             <p class="mono center" style="font-size:10px;color:rgba(255,255,255,.6);margin:0">ONE PAYMENT, NO SUBSCRIPTION, 7-DAY REFUND</p>
@@ -2897,5 +2900,8 @@ h1,h2,h3,h4,.h1,.h2,.h3,.lede,p,li,.spec-v,td,th,.part-row b{overflow-wrap:anywh
   route();
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+<script src="assets/sky.v1.js" defer></script>
 </body>
 </html>

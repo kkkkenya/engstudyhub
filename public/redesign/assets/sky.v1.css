@@ -1,0 +1,111 @@
+/* Membership as the Southern Cross (home page #plans). The sky is always night, in both themes.
+   Without JS or with reduced motion: the photo with the four stars lit, then the plan cards in a grid.
+   With .sky--live (assets/sky.v1.js): the stage pins and the camera moves star to star as you scroll. */
+.sky{
+  --sky-bg:#05070D;--sky-fg:#EEF2F8;--sky-dim:rgba(238,242,248,.66);--sky-line:rgba(238,242,248,.16);
+  --sky-card:rgba(7,10,18,.86);--sky-gold:#F2C200;
+  background:var(--sky-bg);color:var(--sky-fg);position:relative;overflow:hidden;
+}
+.sky-credit a,.sky-skip{color:inherit}
+.sky-stage{position:relative;overflow:hidden;aspect-ratio:4/3;max-height:78vh;width:100%}
+.sky-cam{position:absolute;inset:0;transform-origin:0 0;--z:1}
+.sky-photo{display:block;width:100%;height:100%;object-fit:cover}
+.sky-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0}
+.sky-lines line{stroke:rgba(238,242,248,.62);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:0}
+
+/* Stars sit on the photo's own stars. --z counter-scales them so zooming moves them, not enlarges them. */
+.sky .star{position:absolute;left:calc(var(--fx) * 100%);top:calc(var(--fy) * 100%);width:0;height:0;
+  transform:scale(calc(1 / var(--z)));pointer-events:none}
+.sky .glow{position:absolute;left:0;top:0;width:var(--d,72px);height:var(--d,72px);margin:calc(var(--d,72px) / -2) 0 0 calc(var(--d,72px) / -2);
+  border-radius:50%;opacity:.55;
+  background:radial-gradient(circle,#fff 0 5%,var(--c) 10%,color-mix(in srgb,var(--c) 38%,transparent) 24%,transparent 62%)}
+.star--imai{--c:#D7E4FF;--d:46px}
+.star--gacrux{--c:#FF9450;--d:60px}
+.star--mimosa{--c:#A9C8FF;--d:64px}
+.star--acrux{--c:#BFD6FF;--d:84px}
+/* Gacrux is a red giant: a slow warm breath */
+.star--gacrux .sky .glow::after{content:"";position:absolute;inset:-30%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,120,60,.42),transparent 62%);animation:sky-breathe 4.8s ease-in-out infinite}
+@keyframes sky-breathe{0%,100%{opacity:.35;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+/* Acrux: diffraction spikes, and the two stars a telescope splits it into */
+.sky .spikes{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.sky .spikes::before,.sky .spikes::after{content:"";position:absolute;left:-46vmax;top:-1px;width:92vmax;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(200,220,255,.08) 30%,rgba(235,243,255,.95) 50%,rgba(200,220,255,.08) 70%,transparent)}
+.sky .spikes::after{transform:rotate(90deg)}
+.sky .pair{position:absolute;left:0;top:0;width:0;height:0}
+.sky .pair i{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#fff;
+  box-shadow:0 0 10px 3px rgba(190,215,255,.95),0 0 28px 8px rgba(150,190,255,.5)}
+.sky .pair i + i{width:8px;height:8px;left:-4px;top:-4px}
+.sky-bloom{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--bx,50%) var(--by,50%),rgba(190,214,255,.34),rgba(120,160,255,.10) 28%,transparent 58%)}
+.sky-shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,7,13,.55),transparent 22%,transparent 70%,rgba(5,7,13,.7))}
+
+/* Cards */
+.sky-cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  padding:22px max(16px,4vw) 8px;position:relative;z-index:2}
+.sky-card{background:var(--sky-card);border:1px solid var(--sky-line);border-radius:14px;padding:22px;display:grid;gap:10px;align-content:start}
+.sky-card h2,.sky-card h3{margin:0;color:var(--sky-fg);font-family:var(--f-display);font-weight:800;line-height:1.05}
+.sky-card h2{font-size:clamp(30px,4.2vw,50px)}
+.sky-card h3{font-size:clamp(26px,3vw,36px)}
+.sky-card .eyebrow{color:var(--sky-gold);margin:0}
+.sky-card p{margin:0;color:var(--sky-dim);font-size:15px;line-height:1.55}
+.sky-card .star-line{font-style:italic;color:rgba(238,242,248,.8)}
+.sky-card .for{color:var(--sky-fg);font-weight:600}
+.sky-price{font-family:var(--f-mono);font-size:13px;letter-spacing:.06em;color:var(--sky-fg)}
+.sky-price b{font-family:var(--f-display);font-size:22px;letter-spacing:0;margin-right:6px}
+.sky-card ul{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:8px;font-size:14px;color:var(--sky-fg)}
+.sky-card li{position:relative;padding-left:18px;line-height:1.45}
+.sky-card li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--c,#BFD6FF);box-shadow:0 0 8px var(--c,#BFD6FF)}
+.sky-card .up{font-family:var(--f-mono);font-size:12px;color:var(--sky-dim)}
+.sky-card .btn{margin-top:4px;justify-self:start}
+.sky-card--pick{border-color:var(--sky-gold);box-shadow:0 0 0 1px var(--sky-gold) inset}
+.sky-pick{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#0B0F14;background:var(--sky-gold);
+  padding:4px 8px;border-radius:4px;justify-self:start}
+.sky-skip{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sky-gold) !important;text-decoration:none;justify-self:start}
+.sky-skip:hover{text-decoration:underline}
+.sky-card[data-plan=imai]{--c:#D7E4FF}.sky-card[data-plan=gacrux]{--c:#FF9450}.sky-card[data-plan=mimosa]{--c:#A9C8FF}.sky-card[data-plan=acrux]{--c:#DCE8FF}
+.sky-nav{display:none}
+.sky-credit{margin:14px 0 0;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--sky-dim)}
+.sky-credit a{color:inherit}
+
+/* After the sequence: small print and the price summary, on the night background */
+.sky-after{padding:28px max(16px,4vw) clamp(48px,7vw,88px);position:relative;z-index:2}
+.sky-after .spec{border-color:var(--sky-line);background:rgba(238,242,248,.04)}
+.sky-after .spec-row{border-color:var(--sky-line)}
+.sky-after .spec-k{color:var(--sky-dim);background:transparent}
+.sky-after .spec-v{color:var(--sky-fg);background:transparent}
+.sky-after .fine{color:var(--sky-dim);font-size:14px;max-width:70ch;margin:0 0 10px}
+.sky-after .btn--ghost{color:var(--sky-fg);border-color:var(--sky-line)}
+
+/* Static (no JS, reduced motion): the photo as a framed picture, the cards below it */
+.sky:not(.sky--live) .sky-stage{aspect-ratio:auto;max-height:none;overflow:visible}
+.sky:not(.sky--live) .sky-cam{position:relative;inset:auto;margin:0 auto;width:min(100%,calc(78vh * 4 / 3));aspect-ratio:4/3;overflow:hidden}
+.sky:not(.sky--live) .sky-shade,.sky:not(.sky--live) .sky-bloom{display:none}
+
+/* ── Live: pinned, one star at a time ── */
+.sky--live .sky-stage{aspect-ratio:auto;max-height:none;height:100vh;height:100svh}
+.sky--live .sky-cam{inset:auto}
+.sky--live .sky .glow{will-change:transform,opacity}
+.sky--live .sky-cards{position:absolute;z-index:3;padding:0;display:grid;grid-template-columns:1fr;
+  top:0;bottom:0;right:max(16px,5vw);width:min(430px,40vw);align-items:center}
+.sky--live .sky-card{grid-area:1/1;opacity:0;pointer-events:none;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.sky--live .sky-card--pick{box-shadow:0 0 0 1px var(--sky-gold) inset,0 30px 80px rgba(0,0,0,.45)}
+.sky--live .sky-card--intro{opacity:1}
+.sky--live .sky-card[data-on]{pointer-events:auto}
+.sky--live .sky-nav{display:flex;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;gap:6px;position:absolute;left:max(16px,4vw);bottom:22px;z-index:3}
+.sky--active .sky-nav{opacity:1;visibility:visible}
+.sky-nav button{font:600 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(238,242,248,.82);
+  background:rgba(7,10,18,.78);border:1px solid var(--sky-line);border-radius:999px;padding:9px 12px;cursor:pointer}
+.sky-nav button[aria-current=step]{color:#0B0F14;background:var(--sky-fg);border-color:var(--sky-fg)}
+.sky-nav button:focus-visible{outline:2px solid var(--sky-gold);outline-offset:2px}
+@media (max-width:759px){
+  .sky--live .sky-cards{left:12px;right:12px;width:auto;top:auto;bottom:calc(12px + env(safe-area-inset-bottom));align-items:end}
+  .sky--live .sky-card{padding:16px 16px 18px;gap:7px;max-height:calc(100svh - 150px);overflow-y:auto;overscroll-behavior:contain}
+  .sky--live .sky-card p{font-size:14px}
+  .sky--live .sky-card ul{gap:5px;font-size:13.5px}
+  .sky--live .sky-card h2{font-size:30px}
+  .sky--live .sky-card h3{font-size:26px}
+  .sky--live .sky-nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){.star--gacrux .sky .glow::after{animation:none}}
