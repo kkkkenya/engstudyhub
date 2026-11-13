@@ -42,7 +42,7 @@ one from another page the site switches home first.
 | You want to change | Go to |
 |---|---|
 | Contact links (WhatsApp, email, Discord) | Search the file for `wa.me/254745947704`, `mailto:` and `discord.gg` — there is one `CFG` block near the bottom of the script that holds them for the interactive parts |
-| Prices and plan features | Search for `KES 50` and `KES 800` |
+| Prices and plan features | Search for `KES 50`, `KES 500`, `KES 999` and `KES 800` |
 | Kit contents and part prices | The `SHEET 04 — Starter kits` section; each kit is a `<ul class="parts">` list and a `TOTAL` line. Re-total by hand after any change |
 | Kit order messages | Every kit button already opens WhatsApp with the order written. Search for `wa.me/254745947704?text=` and edit the encoded message |
 | The bestseller badge | Search for `kit--hero` and `Most popular` — that is the card being promoted |

@@ -27,3 +27,6 @@ dist-ssr
 .env*
 
 .vercel/
+
+# Local screenshots and previews
+.claude/preview/
