@@ -225,6 +225,7 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
   @keyframes esh-pop{from{scale:.5;opacity:0}60%{scale:1.12;opacity:1}to{scale:1;opacity:1}}
 }}
 </style>
+<link rel="stylesheet" href="../assets/sky.v2.css">
 </head>
 <body>
 <header class="hdr">
@@ -253,7 +254,7 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
       <div class="actions">
         <a class="btn primary" href="#setup">Get started</a>
         <a class="btn" href="https://crux.engineeringhub.site/auth/login">Sign in</a>
-        <a class="btn" href="#join">See plans</a>
+        <a class="btn" href="#plans">See plans</a>
       </div>
       <p class="note">Crux comes with Engineering Study Hub membership, including the 7-day free trial you get when you join. The Hub's library covers KU engineering units today. On any other course, you add your own units and paste in your papers.</p>
     </div>
@@ -368,16 +369,89 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
     </picture>
   </section>
 
+  <section class="sky" id="plans" aria-labelledby="plans-title" style="--f-display:var(--font);--f-mono:var(--font)">
+    <div class="sky-stage">
+      <div class="sky-rig">
+      <div class="sky-cam">
+        <img class="sky-photo" src="../images/crux-night-1600.webp" srcset="../images/crux-night-1600.webp 1600w, ../images/crux-night-2400.webp 2400w, ../images/crux-night-3200.webp 3200w" sizes="(orientation: portrait) 133vh, 100vw" width="3200" height="2400" loading="lazy" decoding="async" alt="The Southern Cross in the night sky over the Milky Way, with the dark Coalsack nebula beside it">
+        <svg class="sky-lines" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
+          <line pathLength="1" x1=".4784" y1=".3433" x2=".5594" y2=".6571"/>
+          <line pathLength="1" x1=".4213" y1=".5121" x2=".5788" y2=".4079"/>
+        </svg>
+        <span class="star star--imai" style="--fx:.5788;--fy:.4079" aria-hidden="true"><i class="glow"></i><i class="ring"></i><span class="star-name"><b>Imai</b><small>Free trial</small></span></span>
+        <span class="star star--gacrux" style="--fx:.4784;--fy:.3433" aria-hidden="true"><i class="glow"></i><i class="ring"></i><span class="star-name"><b>Gacrux</b><small>KES 50</small></span></span>
+        <span class="star star--mimosa" style="--fx:.4213;--fy:.5121" aria-hidden="true"><i class="glow"></i><i class="ring"></i><span class="star-name"><b>Mimosa</b><small>KES 500</small></span></span>
+        <span class="star star--acrux" style="--fx:.5594;--fy:.6571" aria-hidden="true"><i class="glow"></i><i class="ring"></i><span class="star-name"><b>Acrux</b><small>KES 999</small></span><i class="spikes"></i><i class="pair"><i></i><i></i></i></span>
+      </div>
+      </div>
+      <div class="sky-near" aria-hidden="true"></div>
+      <div class="sky-spot" aria-hidden="true"></div>
+      <div class="sky-shade" aria-hidden="true"></div>
+      <div class="sky-bloom" aria-hidden="true"></div>
+      <div class="sky-cards">
+        <div class="sky-card sky-card--intro">
+          <p class="eyebrow">Plans</p>
+          <h2 id="plans-title">Four stars, four plans</h2>
+          <p>Crux comes with Hub membership, with nothing extra to pay. It's named after the Southern Cross, the stars people once used to find south at night, and each plan takes the name of one of them. The brighter the star, the more the plan gives you.</p>
+          <a class="sky-skip" href="#join">Skip to how to pay</a>
+        </div>
+        <article class="sky-card" data-plan="imai">
+          <h3>Imai</h3>
+          <p class="sky-price"><b>Free</b>for 7 days</p>
+          <p class="star-line">The faintest star in the cross. Its name comes from the Mursi people of Ethiopia, who watch it to know when the Omo River will flood.</p>
+          <p class="for">Everything Gacrux has, free for your first week.</p>
+          <p>Join the Discord to start. No payment, no card.</p>
+          <a class="btn primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+        </article>
+        <article class="sky-card" data-plan="gacrux">
+          <h3>Gacrux</h3>
+          <p class="sky-price"><b>KES 50</b>a semester</p>
+          <p class="star-line">A red giant at the top of the cross.</p>
+          <p class="for">For the past papers and notes.</p>
+          <ul>
+            <li>Every unit library: past papers, CATs, notes and tutorials, sorted by unit</li>
+            <li>Homework help and study rooms</li>
+            <li>Crux: 15 AI actions and 2 downloads a day</li>
+          </ul>
+          <a class="btn primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join and start free</a>
+        </article>
+        <article class="sky-card sky-card--pick" data-plan="mimosa">
+          <span class="sky-pick">Our pick</span>
+          <h3>Mimosa</h3>
+          <p class="sky-price"><b>KES 500</b>a semester</p>
+          <p class="star-line">The second brightest.</p>
+          <p class="for">For studying with Crux most days, and building projects.</p>
+          <ul>
+            <li>Everything in Gacrux</li>
+            <li>Crux: 40 AI actions a day and unlimited downloads</li>
+            <li>Project build guides with Nairobi parts and prices</li>
+            <li>Members' channels: worked solutions, projects, dev help, hackathons and portfolio reviews</li>
+          </ul>
+          <p class="up">On Gacrux? Upgrade for KES 350.</p>
+          <a class="btn primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Mimosa</a>
+        </article>
+        <article class="sky-card" data-plan="acrux">
+          <h3>Acrux</h3>
+          <p class="sky-price"><b>KES 999</b>a semester</p>
+          <p class="star-line">The brightest. Look through a telescope and it splits into two stars.</p>
+          <p class="for">For students who use Crux the most.</p>
+          <ul>
+            <li>Everything in Mimosa</li>
+            <li>Crux: 80 AI actions a day</li>
+            <li>The strongest models in the Crux desktop app, at their most thorough</li>
+          </ul>
+          <p class="up">On Mimosa? Upgrade for KES 499.</p>
+          <a class="btn primary" href="https://discord.gg/7yUz2rXumm" target="_blank" rel="noopener noreferrer">Join Acrux</a>
+        </article>
+      </div>
+      <nav class="sky-nav" aria-label="The four plans">
+        <button type="button" data-go="imai">Imai</button><button type="button" data-go="gacrux">Gacrux</button><button type="button" data-go="mimosa">Mimosa</button><button type="button" data-go="acrux">Acrux</button>
+      </nav>
+    </div>
+  </section>
   <section class="get" id="join">
     <div class="wrap">
-      <h2>What it costs</h2>
-      <p class="muted">Crux is part of your Hub membership. There's nothing extra to pay for it. Each plan is named after a star in the Southern Cross; the brighter the star, the more you get.</p>
-      <div class="cards">
-        <div class="card"><h3>Imai <span class="muted small">free trial</span></h3><div class="price">KES 0</div><p>7 days from when you join the Discord. Every unit library, and Crux with 15 AI actions and 2 file downloads a day.</p></div>
-        <div class="card"><h3>Gacrux</h3><div class="price">KES 50 <span class="muted small">a semester</span></div><p>Every unit library: past papers, CATs and notes. Homework help and study rooms. Crux with 15 AI actions and 2 file downloads a day.</p></div>
-        <div class="card pick"><h3>Mimosa</h3><div class="price">KES 500 <span class="muted small">a semester</span></div><p>Everything in Gacrux. Crux with 40 AI actions a day and unlimited downloads, project build guides, and the members' channels. On Gacrux already? The upgrade is KES 350.</p></div>
-        <div class="card"><h3>Acrux</h3><div class="price">KES 999 <span class="muted small">a semester</span></div><p>Everything in Mimosa. Crux with 80 AI actions a day, and the strongest models in the Crux desktop app at their most thorough. On Mimosa already? The upgrade is KES 499, until your Mimosa semester ends.</p></div>
-      </div>
+      <p class="muted small">An AI action is one thing Crux does with AI: a worked solution, an explanation, an answer to a follow-up. Upgrades last until your current semester ends.</p>
       <p class="muted small">Add 10 files the Hub doesn't have in a semester and you get Mimosa free until it ends.</p>
       <h3 class="pay-h">How to pay</h3>
       <ol class="line">
@@ -386,6 +460,7 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
         <li><span class="n">3</span><h3>Press I've paid in #plans</h3><p>Paste the code from your M-Pesa SMS and type the plan: Gacrux, Upgrade, Mimosa, Acrux or Acrux upgrade.</p></li>
         <li><span class="n">4</span><h3>Get a DM when you're in</h3><p>Usually within minutes. There's a 7-day refund if it's not for you. Questions: <a href="https://wa.me/254745947704">WhatsApp</a>.</p></li>
       </ol>
+      <p class="muted small">Sky photo: <a href="https://www.eso.org/public/images/2019_07_03_SouthernCross_SSpikes_Fin-CC/" target="_blank" rel="noopener noreferrer">ESO/P. Horálek</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>, cropped</p>
     </div>
   </section>
 </main>
@@ -425,5 +500,8 @@ footer{padding:48px 0 36px;background:var(--surface);border-top:1px solid var(--
     addEventListener('scroll', s, { passive: true }); s(); sync();
   })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+<script src="../assets/sky.v2.js" defer></script>
 </body>
 </html>
