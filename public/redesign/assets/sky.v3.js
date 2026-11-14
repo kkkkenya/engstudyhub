@@ -65,7 +65,7 @@
     }
     var SCALE = { intro: [1.45, 1.3], imai: [2.0, 2.2], gacrux: [2.1, 2.3], mimosa: [2.2, 2.4], acrux: [3.0, 3.2], end: [1.15, 1.1] };
     var ROLL = { intro: 0, imai: -4, gacrux: 3, mimosa: -3, acrux: 5, end: 0 };
-    function aim() { return m.phone ? [m.vw * 0.5, m.vh * 0.24] : [m.vw * 0.31, m.vh * 0.5]; } // phones: full screen, the star in the top quarter
+    function aim() { return m.phone ? [m.vw * 0.5, m.vh * (m.vh <= 760 ? 0.17 : 0.24)] : [m.vw * 0.31, m.vh * 0.5]; } // phones: full screen, the star in the top quarter
     function shot(name, point) {
       var s = SCALE[name][m.phone ? 1 : 0], f = pos[point || name];
       // the whole cross: clear of the site header on phones, and of the card in the opening

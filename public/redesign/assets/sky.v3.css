@@ -150,4 +150,12 @@
   .sky .star-name small{font-size:10px}
   .sky .star--mimosa .star-name{left:24px;right:auto;text-align:left;top:12px}
 }
+/* short phones: a taller card, the star higher, and the card keeps only what decides the plan */
+@media (max-width:759px) and (max-height:760px){
+  .sky--live .sky-card{max-height:calc(var(--sky-h,100svh) * .7 - 76px);gap:5px;padding:12px 14px 14px}
+  .sky--live .sky-card .for,.sky--live .sky-card .up{display:none}
+  .sky--live .sky-card .star-line,.sky--live .sky-card li{font-size:12.5px}
+  .sky--live .sky-card h3{font-size:22px}
+  .sky--live .sky-card .btn{min-height:40px}
+}
 @media (prefers-reduced-motion:reduce){.sky .star--gacrux .glow::after,.sky .star.is-on .glow::before{animation:none}}
