@@ -1,6 +1,6 @@
 /* Membership as the Southern Cross (home page #plans and the Crux page). The sky is always night, in both themes.
    Without JS or with reduced motion: the photo with the four stars named and lit, then the plan cards in a grid.
-   With .sky--live (assets/sky.v3.js): the stage pins and the camera flies star to star as you scroll. */
+   With .sky--live (assets/sky.v4.js): the stage pins and the camera flies star to star as you scroll. */
 .sky{
   --sky-bg:#03050A;--sky-fg:#EEF2F8;--sky-dim:rgba(238,242,248,.68);--sky-line:rgba(238,242,248,.16);
   --sky-card:rgba(5,8,15,.88);--sky-gold:#F2C200;

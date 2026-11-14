@@ -3,11 +3,14 @@
    brightest). Each move banks and pulls back mid-flight, near stars drift past faster than the sky, and on arrival
    the star flickers, sends out a ring and the sky darkens around it. Acrux ends it: the deepest zoom, light spills,
    spikes open and it splits into two. Then the camera pulls back to the cross, every star lit.
-   Reduced motion, no GSAP or a failure: the static photo and the cards (assets/sky.v3.css) stay as they are. */
+   Reduce Motion (iPhone setting, or the OS's): a calm version. It pins and steps through the plans, but the camera
+   never moves: the sky fades out, the view cuts to the next star, and fades back in. No zoom, roll, flicker or near
+   stars.
+   No GSAP or a failure: the static photo and the cards (assets/sky.v4.css) stay as they are. */
 (function () {
   var sky = document.getElementById('plans');
   if (!sky || !window.gsap || !window.ScrollTrigger) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var calm = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   try { start(); } catch (e) {
     // back to the static layout, with no pin left behind
     try { window.ScrollTrigger.getAll().forEach(function (t) { t.kill(true); }); } catch (_) {}
@@ -21,6 +24,7 @@
     // phones: the address bar sliding in and out resizes the screen; don't recalculate (and jump) for that
     ST.config({ ignoreMobileResize: true });
     sky.classList.add('sky--live');
+    if (calm) sky.classList.add('sky--calm');
 
     var stage = sky.querySelector('.sky-stage'), rig = sky.querySelector('.sky-rig'), cam = sky.querySelector('.sky-cam');
     var near = sky.querySelector('.sky-near'), spot = sky.querySelector('.sky-spot'), bloom = sky.querySelector('.sky-bloom');
@@ -101,7 +105,7 @@
     var first = shot('intro', 'cross');
     gsap.set(cam, { x: first.x, y: first.y, scale: first.s, '--z': first.s });
     gsap.set(spot, { opacity: 0.35 });
-    gsap.set(near, { opacity: 0.55 });
+    gsap.set(near, { opacity: calm ? 0 : 0.55 });
 
     var tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
@@ -118,25 +122,35 @@
     PLANS.forEach(function (p, i) {
       var t = i + 0.35; // each step: 0.65 of flight, then the card holds
       var big = p === 'acrux';
-      tl.to(cam, camTo(p), t)
-        // bank and pull back mid-flight, then settle
-        .to(rig, { rotation: ROLL[p], '--rot': ROLL[p], duration: 0.6, ease: 'power2.inOut' }, t)
-        .to(rig, { scale: big ? 0.74 : 0.82, duration: 0.3, ease: 'power2.out' }, t)
-        .to(rig, { scale: 1, duration: 0.32, ease: 'power2.in' }, t + 0.3)
-        .to(spot, { opacity: 0.25, duration: 0.25 }, t)
-        .to(spot, { opacity: 1, duration: 0.3 }, t + 0.35)
-        .to(near, { opacity: 0.9, duration: 0.2 }, t)
-        .to(near, { opacity: 0.45, duration: 0.3 }, t + 0.4)
-        // the old star fades back, the new one comes up
-        .to(card[prev], { opacity: 0, y: -24, duration: 0.22, ease: 'power1.in' }, t)
-        .fromTo(card[p], { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', immediateRender: false }, t + 0.32)
+      if (calm) {
+        // cut, don't fly: fade the sky out, move the camera in the dark, fade back in
+        var cut = camTo(p); delete cut.duration; delete cut.ease;
+        tl.to(rig, { opacity: 0, duration: 0.22, ease: 'power1.in' }, t)
+          .set(cam, cut, t + 0.24)
+          .to(rig, { opacity: 1, duration: 0.3, ease: 'power1.out' }, t + 0.26)
+          .to(spot, { opacity: 1, duration: 0.3 }, t + 0.26);
+      } else {
+        tl.to(cam, camTo(p), t)
+          // bank and pull back mid-flight, then settle
+          .to(rig, { rotation: ROLL[p], '--rot': ROLL[p], duration: 0.6, ease: 'power2.inOut' }, t)
+          .to(rig, { scale: big ? 0.74 : 0.82, duration: 0.3, ease: 'power2.out' }, t)
+          .to(rig, { scale: 1, duration: 0.32, ease: 'power2.in' }, t + 0.3)
+          .to(spot, { opacity: 0.25, duration: 0.25 }, t)
+          .to(spot, { opacity: 1, duration: 0.3 }, t + 0.35)
+          .to(near, { opacity: 0.9, duration: 0.2 }, t)
+          .to(near, { opacity: 0.45, duration: 0.3 }, t + 0.4);
+      }
+      // the old star fades back, the new one comes up
+      var slide = calm ? 0 : 1; // calm: cards fade in place
+      tl.to(card[prev], { opacity: 0, y: -24 * slide, duration: 0.22, ease: 'power1.in' }, t)
+        .fromTo(card[p], { opacity: 0, y: 34 * slide }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', immediateRender: false }, t + 0.32)
         .to(allGlows.filter(function (g) { return g !== glow[p]; }), { opacity: 0.22, scale: 0.85, duration: 0.4 }, t)
         .to(allLabels.filter(function (l) { return l !== label[p]; }), { opacity: 0.28, duration: 0.4 }, t)
-        .to(glow[p], { scale: big ? 1.85 : 1.7, opacity: 1, duration: 0.5 }, t + 0.1)
-        .to(label[p], { opacity: 1, x: p === 'mimosa' && !m.phone ? -6 : 6, scale: 1.25, transformOrigin: p === 'mimosa' && !m.phone ? '100% 50%' : '0% 50%', duration: 0.4 }, t + 0.25)
-        .fromTo(ring[p], { opacity: 0.95, scale: 0.25 }, { opacity: 0, scale: big ? 4.6 : 3.2, duration: 0.36, ease: 'power2.out', immediateRender: false }, t + 0.28);
+        .to(glow[p], { scale: calm ? 1.35 : big ? 1.85 : 1.7, opacity: 1, duration: 0.5 }, t + 0.1)
+        .to(label[p], { opacity: 1, x: calm ? 0 : p === 'mimosa' && !m.phone ? -6 : 6, scale: calm ? 1.15 : 1.25, transformOrigin: p === 'mimosa' && !m.phone ? '100% 50%' : '0% 50%', duration: 0.4 }, t + 0.25);
+      if (!calm) tl.fromTo(ring[p], { opacity: 0.95, scale: 0.25 }, { opacity: 0, scale: big ? 4.6 : 3.2, duration: 0.36, ease: 'power2.out', immediateRender: false }, t + 0.28);
       if (prev !== 'intro') tl.to(label[prev], { x: 0, scale: 1, duration: 0.3 }, t);
-      if (big) {
+      if (big && !calm) {
         // the finale: light spills, the spotlight tightens, spikes open, a second ring, and one star becomes two
         tl.to(bloom, { opacity: 1, duration: 0.55 }, t + 0.1)
           .fromTo(spikes, { opacity: 0, scale: 0.35 }, { opacity: 0.95, scale: 1, duration: 0.55, ease: 'power3.out', immediateRender: false }, t + 0.2)
@@ -149,9 +163,11 @@
     });
     // pull back: the whole cross, every star lit and named, its lines drawn bright
     var e = PLANS.length + 0.35;
-    tl.to(cam, camTo('end', 'cross'), e)
-      .to(rig, { rotation: 0, '--rot': 0, scale: 1, duration: 0.6 }, e)
-      .to(card.acrux, { opacity: 0, y: -24, duration: 0.22, ease: 'power1.in' }, e)
+    if (calm) {
+      var back = camTo('end', 'cross'); delete back.duration; delete back.ease;
+      tl.to(rig, { opacity: 0, duration: 0.22, ease: 'power1.in' }, e).set(cam, back, e + 0.24).to(rig, { opacity: 1, duration: 0.3 }, e + 0.26);
+    } else tl.to(cam, camTo('end', 'cross'), e).to(rig, { rotation: 0, '--rot': 0, scale: 1, duration: 0.6 }, e);
+    tl.to(card.acrux, { opacity: 0, y: calm ? 0 : -24, duration: 0.22, ease: 'power1.in' }, e)
       .to([bloom, spikes], { opacity: 0, duration: 0.4 }, e)
       .to(spot, { opacity: 0.3, duration: 0.5 }, e)
       .to(pair, { x: 0, y: 0, duration: 0.4 }, e)
