@@ -3,7 +3,7 @@
    brightest). Each move banks and pulls back mid-flight, near stars drift past faster than the sky, and on arrival
    the star flickers, sends out a ring and the sky darkens around it. Acrux ends it: the deepest zoom, light spills,
    spikes open and it splits into two. Then the camera pulls back to the cross, every star lit.
-   Reduced motion, no GSAP or a failure: the static photo and the cards (assets/sky.v2.css) stay as they are. */
+   Reduced motion, no GSAP or a failure: the static photo and the cards (assets/sky.v3.css) stay as they are. */
 (function () {
   var sky = document.getElementById('plans');
   if (!sky || !window.gsap || !window.ScrollTrigger) return;
@@ -18,6 +18,8 @@
   function start() {
     var gsap = window.gsap, ST = window.ScrollTrigger;
     gsap.registerPlugin(ST);
+    // phones: the address bar sliding in and out resizes the screen; don't recalculate (and jump) for that
+    ST.config({ ignoreMobileResize: true });
     sky.classList.add('sky--live');
 
     var stage = sky.querySelector('.sky-stage'), rig = sky.querySelector('.sky-rig'), cam = sky.querySelector('.sky-cam');
@@ -46,7 +48,12 @@
 
     // the camera: the photo box covers the stage at scale 1; a shot puts a point of it at a spot on screen
     var m = {};
+    var lockedW = 0;
     function measure() {
+      // phones: lock the stage to the screen's height, and only change it when the width does (rotation)
+      if (window.innerWidth < 760) {
+        if (window.innerWidth !== lockedW) { lockedW = window.innerWidth; sky.style.setProperty('--sky-h', window.innerHeight + 'px'); }
+      } else { lockedW = 0; sky.style.removeProperty('--sky-h'); }
       var vw = stage.clientWidth, vh = stage.clientHeight;
       var W = Math.max(vw, vh * 4 / 3), H = W * 3 / 4;
       m = { vw: vw, vh: vh, W: W, H: H, L: (vw - W) / 2, T: (vh - H) / 2, phone: window.innerWidth < 760 }; // same test as the CSS
@@ -56,16 +63,16 @@
       gsap.set([spot, bloom], { '--ax': a[0] + 'px', '--ay': a[1] + 'px' });
       gsap.set(near, { transformOrigin: (a[0] + m.vw) + 'px ' + (a[1] + m.vh) + 'px' }); // the layer starts one screen up-left
     }
-    var SCALE = { intro: [1.45, 1.15], imai: [2.0, 2.2], gacrux: [2.1, 2.3], mimosa: [2.2, 2.4], acrux: [3.0, 3.2], end: [1.15, 1.1] };
+    var SCALE = { intro: [1.45, 1.3], imai: [2.0, 2.2], gacrux: [2.1, 2.3], mimosa: [2.2, 2.4], acrux: [3.0, 3.2], end: [1.15, 1.1] };
     var ROLL = { intro: 0, imai: -4, gacrux: 3, mimosa: -3, acrux: 5, end: 0 };
-    function aim() { return m.phone ? [m.vw * 0.5, m.vh * (m.vh < 720 ? 0.25 : 0.33)] : [m.vw * 0.31, m.vh * 0.5]; } // short phones: above the card
+    function aim() { return m.phone ? [m.vw * 0.5, m.vh * 0.24] : [m.vw * 0.31, m.vh * 0.5]; } // phones: full screen, the star in the top quarter
     function shot(name, point) {
       var s = SCALE[name][m.phone ? 1 : 0], f = pos[point || name];
       // the whole cross: clear of the site header on phones, and of the card in the opening
-      var a = name === 'end' ? [m.vw / 2, m.phone ? m.vh * 0.46 : m.vh / 2] : name === 'intro' && m.phone ? [m.vw / 2, m.vh * 0.36] : aim();
+      var a = name === 'end' ? [m.vw / 2, m.phone ? m.vh * 0.42 : m.vh / 2] : name === 'intro' && m.phone ? [m.vw / 2, m.vh * 0.3] : aim();
       var x = a[0] - m.L - s * f[0] * m.W, y = a[1] - m.T - s * f[1] * m.H;
       // never show the photo's edge (with room for the roll)
-      var pad = 0.06 * Math.max(m.vw, m.vh);
+      var pad = (m.phone ? 0.035 : 0.06) * Math.max(m.vw, m.vh);
       x = Math.min(-m.L - pad, Math.max(m.vw - m.L - s * m.W + pad, x));
       y = Math.min(-m.T - pad, Math.max(m.vh - m.T - s * m.H + pad, y));
       return { x: x, y: y, s: s };
@@ -102,7 +109,7 @@
       scrollTrigger: {
         trigger: sky, pin: stage, start: 'top top', end: function () { return '+=' + Math.round(stage.clientHeight * 5.4); },
         scrub: 0.9, invalidateOnRefresh: true, anticipatePin: 1, toggleClass: { targets: sky, className: 'sky--active' },
-        snap: { snapTo: 'labels', inertia: false, duration: { min: 0.3, max: 0.8 }, delay: 0.12, ease: 'power1.inOut' }
+        snap: { snapTo: 'labelsDirectional', inertia: false, duration: { min: 0.3, max: 0.8 }, delay: 0.12, ease: 'power1.inOut' }
       }
     });
 

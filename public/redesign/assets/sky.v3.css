@@ -1,6 +1,6 @@
 /* Membership as the Southern Cross (home page #plans and the Crux page). The sky is always night, in both themes.
    Without JS or with reduced motion: the photo with the four stars named and lit, then the plan cards in a grid.
-   With .sky--live (assets/sky.v2.js): the stage pins and the camera flies star to star as you scroll. */
+   With .sky--live (assets/sky.v3.js): the stage pins and the camera flies star to star as you scroll. */
 .sky{
   --sky-bg:#03050A;--sky-fg:#EEF2F8;--sky-dim:rgba(238,242,248,.68);--sky-line:rgba(238,242,248,.16);
   --sky-card:rgba(5,8,15,.88);--sky-gold:#F2C200;
@@ -90,6 +90,7 @@
 .sky-skip:hover{text-decoration:underline}
 .sky-card[data-plan=imai]{--c:#D7E4FF}.sky-card[data-plan=gacrux]{--c:#FF9450}.sky-card[data-plan=mimosa]{--c:#A9C8FF}.sky-card[data-plan=acrux]{--c:#DCE8FF}
 .sky-nav{display:none}
+.sky-skipbar{display:none}
 .sky-credit{margin:14px 0 0;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--sky-dim)}
 .sky-credit a{color:inherit}
 
@@ -127,12 +128,23 @@
 .sky-nav button[aria-current=step]{color:#0B0F14;background:var(--sky-fg);border-color:var(--sky-fg)}
 .sky-nav button:focus-visible{outline:2px solid var(--sky-gold);outline-offset:2px}
 @media (max-width:759px){
-  .sky--live .sky-cards{left:12px;right:12px;width:auto;top:auto;bottom:calc(12px + env(safe-area-inset-bottom));align-items:end}
-  .sky--live .sky-card{padding:16px 16px 18px;gap:7px;max-height:calc(100svh - 150px);overflow-y:auto;overscroll-behavior:contain}
-  .sky--live .sky-card p{font-size:14px}
-  .sky--live .sky-card ul{gap:5px;font-size:13.5px}
-  .sky--live .sky-card h2{font-size:30px}
-  .sky--live .sky-card h3{font-size:26px}
+  /* phones: the sequence takes the whole screen (over the site header) with a white Skip to prices bar */
+  .sky--live .sky-stage{z-index:50;height:var(--sky-h,100svh)}
+  .sky--active{z-index:51}  /* the home page gives sections z-index 1, under the header's 40 */
+  .sky--live .sky-skipbar{display:flex;position:absolute;z-index:4;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom));
+    min-height:50px;align-items:center;justify-content:center;gap:10px;border-radius:999px;background:#fff;color:#0B0F14 !important;
+    font:700 15px/1 var(--f-body,var(--font,system-ui));text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .sky--live .sky-skipbar::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+  .sky--live .sky-skipbar:focus-visible{outline:3px solid var(--sky-gold);outline-offset:3px}
+  .sky--live .sky-card--intro .sky-skip{display:none}
+  .sky--live .sky-cards{left:12px;right:12px;width:auto;top:auto;bottom:calc(76px + env(safe-area-inset-bottom));align-items:end}
+  .sky--live .sky-card{padding:14px 16px 16px;gap:6px;max-height:calc(var(--sky-h,100svh) * .56 - 76px);overflow:hidden}
+  .sky--live .sky-card p{font-size:13.5px;line-height:1.45}
+  .sky--live .sky-card ul{gap:4px;font-size:13.5px}
+  .sky--live .sky-card h2{font-size:28px}
+  .sky--live .sky-card h3{font-size:25px}
+  .sky--live .sky-price b{font-size:19px}
+  .sky--live .sky-card .btn{min-height:42px}
   .sky--live .sky-nav{display:none}
   .sky .star-name b{font-size:11px}
   .sky .star-name small{font-size:10px}
